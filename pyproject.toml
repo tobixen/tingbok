@@ -31,8 +31,8 @@ ean = ["niquests>=3.0"]
 dev = ["pytest>=8.0", "anyio[trio]>=4.0", "httpx>=0.25", "ruff>=0.4", "pre-commit>=4.0"]
 
 [project.urls]
-Repository = "https://github.com/tobiasbp/tingbok"
-Issues = "https://github.com/tobiasbp/tingbok/issues"
+Repository = "https://github.com/tobixen/tingbok"
+Issues = "https://github.com/tobixen/tingbok/issues"
 
 [tool.hatch.version]
 source = "vcs"
