@@ -43,6 +43,7 @@ version-file = "src/tingbok/_version.py"
 [tool.ruff]
 line-length = 120
 target-version = "py311"
+exclude = ["src/tingbok/_version.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "C4", "PT"]
