@@ -26,6 +26,10 @@ All this information belongs to a global database.
 
 I wanted to slap some standard hierarchical category system on the inventories.  According to Wikipedia, "Simple Knowledge Organization System (SKOS) is a W3C recommendation designed for representation of (...) classification schemes", so it seemed a perfect fit.  Unfortunately, this standard is just describing the schema of a classification scheme.  I found three public databases, AGROVOC, DBpedia and WikiData.  All three of them have very slow query APIs, so a local cache was paramount - but even that seemed insufficient as the API calls was timing out frequently - when managing to get hold of data from the source it seemed important to keep it and share it with all instances.  I've found better ways of accessing the information, but still the public databases are slow, so it's nice to have a public cache available.  It's also possible to download the complete database from upstream and serve it, but even the smallest (Agrovoc) is big and takes long time to load, so better to do this from some separate service than to do it every time the inventory is changed.
 
+**Sources:** Agrovoc/DBpedia/Wikidata
+
+**Data flow:** Caching
+
 ### EANs, ISBNs, price information etc
 
 To make it easier to populate the database, it's an important feature to look up EANs and find both product information and category information.
@@ -34,9 +38,17 @@ There exists a public database of food-related EANs, the OpenFoodFacts database.
 
 Another source (which in some cases seems essential as some shop chains may have their local article numbers and bar code systems) is to simply compare bar codes with shopping receipts.  This way one gets price information as well.  It may involve a lot of work, but now with AI-tools it's possible to get it done relatively quickly.
 
+**Sources:** OpenFoodFacts and various other sources, including user contributions through the API (in the beginning we'll try without any kind of authentication, perhaps we should require signed data in the future).
+
+**Data flow:** This is more than just caching, since user contributions are allowed, we're actually building up a database here that neesd to be backed up as well.  The database should be considered free and it should be possible not only to look up things but also download the full database.
+
 ### The global tingbok category vocabulary
 
 As none of the sources have a category hierachy suitable for easy navigation, it was sadly necessary to build yet another vocabulary.  The tingbok category vocabulary is mostly meant to link up the concepts from the other category sources into a neat category tree.  It may also be the "official source" of what's true when different databases shows different things - like "bedding" are things optimized for absorbing animal pee in AGROVOC, while in most domestic inventory lists this category are for things optimized for human having a quality sleep.
+
+**Sources:** Curated database with user contributions, but we can take it as pull requests in GitHub as for now.
+
+**Data flow:** The service will serve data from a local static database.
 
 ## Name
 
@@ -82,4 +94,4 @@ ruff check src/
 
 ## License
 
-MIT
+AGPL 3
