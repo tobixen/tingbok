@@ -42,7 +42,9 @@ As none of the sources have a category hierachy suitable for easy navigation, it
 
 *Tingbok* is Norwegian, and it was an official registry from 1633-03-05 to 1931.  The word "ting" was in this context meant to refer to a court or other group of people making decisions.  In the beginning it contained court decisions, but gradually contained mostly ownership information on properties and special clausules on property.  Admittedly it's not much related to a category and EAN database.
 
-The word "ting" has multiple meanings, and by today the strongest connection is to "thing".  An inventory listing is basically a list of things.  Both as a "book containing my things" and as a "registry of property", the word "Tingbok" seems to fit my inventory-md service quite well.  I'm considering to rename it - but until further notice, "Tingbok" is the name of the "official" product and category lookup service.
+The word "ting" has multiple meanings, and by today the strongest connection is to "thing".  An inventory listing is basically a list of things.  Both as a "book containing my things" and as a "registry of property", the word "Tingbok" seems to fit my inventory-md service quite well.  As for now, "Tingbok" is the name of the "official" product and category lookup service, but I'm consiering to rename my inventory-md as well.
+
+To me, a Norwegian born 40 years after the last tingbok entry was written, "Tingbok" does not sound like a very official thing, it has a bit of a funny sound to it.  Claude suggested it, and I decided to stick with it.
 
 ## Quick start
 
