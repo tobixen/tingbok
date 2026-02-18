@@ -7,12 +7,13 @@ name = "tingbok"
 dynamic = ["version"]
 description = "Product and category lookup service for domestic inventory systems"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 license = {text = "AGPL-3.0-or-later"}
 authors = [{ name = "Tobias Brox", email = "tobias@tobixen.no" }]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python",
+    "Programming Language :: python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
