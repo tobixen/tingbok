@@ -8,15 +8,23 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 ## [Unreleased]
 
 ### Added
-- **SKOS cache-serving** — `/api/skos/lookup` and `/api/skos/labels` now serve
-  from the local SKOS cache (format-compatible with inventory-md's cache) and
-  fall back to upstream REST APIs (AGROVOC Skosmos, DBpedia Lookup, Wikidata
-  Action API) for cache misses
+- **SKOS API — feature-complete** — all four SKOS endpoints are now operational:
+  - `GET /api/skos/lookup` — concept lookup (cache → upstream fallback)
+  - `GET /api/skos/labels` — multilingual label fetch (cache → upstream fallback)
+  - `GET /api/skos/hierarchy` — recursive path-to-root hierarchy building with
+    root mapping (e.g. AGROVOC "plant products" → "food") and cycle detection
+  - `POST /api/skos/labels/batch` — batch label fetch for multiple URIs
+  - `GET /api/skos/cache` — cache statistics (concept / labels / not-found counts)
+- Cache format is compatible with inventory-md's SKOS cache; the cache dir can
+  be pre-seeded from an existing `~/.cache/inventory-md/skos/` directory
   - Cache directory controlled by `TINGBOK_CACHE_DIR` env var (default:
     `~/.cache/tingbok/`; SKOS sub-dir: `skos/`)
   - Cache TTL: 60 days (matches inventory-md)
-  - `hierarchy` endpoint remains a 501 stub (recursive path-to-root requires
-    SPARQL; deferred to a later phase)
+- Upstream fallback REST APIs: AGROVOC Skosmos, DBpedia Lookup + Data,
+  Wikidata Action API (`wbsearchentities` / `wbgetentities`)
+  - `skos:broader` / P279 traversal for DBpedia and Wikidata hierarchy building
+  - Graceful handling of empty or malformed upstream responses (no crash on
+    empty JSON body from AGROVOC data endpoint)
 - `make run` target starts the dev server with `TINGBOK_CACHE_DIR` pointing at
   the local inventory-md SKOS cache (`~/.cache/inventory-md`)
 - `httpx` added as a main dependency (used for upstream REST calls)

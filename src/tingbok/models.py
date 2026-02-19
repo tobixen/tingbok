@@ -18,12 +18,14 @@ class ConceptResponse(BaseModel):
 
 
 class HierarchyResponse(BaseModel):
-    """Hierarchy paths for a label."""
+    """Hierarchy paths for a concept label."""
 
     label: str
     paths: list[str] = []
     found: bool
     source: str
+    #: Maps each path segment (e.g. ``"food/vegetables/potatoes"``) to its source URI.
+    uri_map: dict[str, str] = {}
 
 
 class LabelsResponse(BaseModel):
@@ -32,6 +34,31 @@ class LabelsResponse(BaseModel):
     uri: str
     labels: dict[str, str] = {}
     source: str
+
+
+class BatchLabelsRequest(BaseModel):
+    """Request body for batch label fetching."""
+
+    uris: list[str]
+    languages: list[str]
+    source: str = "agrovoc"
+
+
+class BatchLabelsResponse(BaseModel):
+    """Translations for multiple URIs."""
+
+    #: Maps each URI to a ``{lang: label}`` dict.
+    labels: dict[str, dict[str, str]] = {}
+    source: str
+
+
+class CacheStatsResponse(BaseModel):
+    """Statistics about the SKOS cache."""
+
+    concept_count: int
+    labels_count: int
+    not_found_count: int
+    cache_dir: str
 
 
 class ProductResponse(BaseModel):
