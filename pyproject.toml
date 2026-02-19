@@ -24,12 +24,13 @@ dependencies = [
     "fastapi>=0.100",
     "uvicorn[standard]>=0.20",
     "pyyaml>=6.0",
+    "httpx>=0.25",
 ]
 
 [project.optional-dependencies]
 skos = ["niquests>=3.0", "pyoxigraph>=0.3"]
 ean = ["niquests>=3.0"]
-dev = ["pytest>=8.0", "anyio[trio]>=4.0", "httpx>=0.25", "ruff>=0.4", "pre-commit>=4.0"]
+dev = ["pytest>=8.0", "anyio[trio]>=4.0", "ruff>=0.4", "pre-commit>=4.0"]
 
 [project.urls]
 Repository = "https://github.com/tobixen/tingbok"

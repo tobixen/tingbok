@@ -1,5 +1,6 @@
 """FastAPI application for tingbok."""
 
+import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
@@ -13,6 +14,12 @@ from tingbok.models import HealthResponse, VocabularyConcept
 from tingbok.routers import ean, skos
 
 VOCABULARY_PATH = Path(__file__).parent / "data" / "vocabulary.yaml"
+
+#: Root of the tingbok cache.  Set ``TINGBOK_CACHE_DIR`` to override.
+_CACHE_BASE = Path(os.environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache" / "tingbok")))
+
+#: Directory used for SKOS concept/label caches.
+SKOS_CACHE_DIR: Path = _CACHE_BASE / "skos"
 
 vocabulary: dict[str, Any] = {}
 

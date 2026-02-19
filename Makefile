@@ -28,6 +28,9 @@ format:  ## Auto-format code
 	python -m ruff check --fix src/ tests/
 	python -m ruff format src/ tests/
 
+run:  ## Run the dev server using the local inventory-md SKOS cache
+	TINGBOK_CACHE_DIR=$$HOME/.cache/inventory-md uvicorn tingbok.app:app --reload --port 5100
+
 test:  ## Run tests
 	python -m pytest
 
