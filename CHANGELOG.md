@@ -7,6 +7,11 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ## [Unreleased]
 
+### Changed
+- **`ConceptResponse.broader`** now returns `list[{uri, label}]` objects instead
+  of plain URI strings, so callers can traverse the hierarchy without an extra
+  label-fetch round-trip
+
 ### Added
 - **SKOS API — feature-complete** — all four SKOS endpoints are now operational:
   - `GET /api/skos/lookup` — concept lookup (cache → upstream fallback)

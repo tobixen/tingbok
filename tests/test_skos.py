@@ -419,7 +419,8 @@ async def test_skos_lookup_cache_hit(client, skos_cache_dir: Path) -> None:
     assert data["uri"] == "http://aims.fao.org/aos/agrovoc/c_13551"
     assert data["prefLabel"] == "potatoes"
     assert data["source"] == "agrovoc"
-    assert "http://aims.fao.org/aos/agrovoc/c_8079" in data["broader"]
+    broader_uris = [b["uri"] for b in data["broader"]]
+    assert "http://aims.fao.org/aos/agrovoc/c_8079" in broader_uris
 
 
 @pytest.mark.anyio

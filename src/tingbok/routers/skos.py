@@ -37,10 +37,17 @@ async def lookup(
             detail=f"Concept '{label}' not found in {source}",
         )
 
-    broader = skos_service._broader_to_uris(concept.get("broader", []))
     alt_labels = concept.get("altLabel", {})
     if not isinstance(alt_labels, dict):
         alt_labels = {}
+
+    # Preserve broader with labels (list[dict] with uri/label keys)
+    broader_raw = concept.get("broader", [])
+    broader = [
+        {"uri": item["uri"], "label": item.get("label", "")} if isinstance(item, dict) else {"uri": item, "label": ""}
+        for item in broader_raw
+        if (item.get("uri") if isinstance(item, dict) else item)
+    ]
 
     return ConceptResponse(
         uri=concept.get("uri"),

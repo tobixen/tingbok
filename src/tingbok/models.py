@@ -3,13 +3,20 @@
 from pydantic import BaseModel
 
 
+class BroaderRef(BaseModel):
+    """A broader (parent) concept reference."""
+
+    uri: str
+    label: str = ""
+
+
 class ConceptResponse(BaseModel):
     """A SKOS concept with labels, hierarchy, and metadata."""
 
     uri: str | None = None
     prefLabel: str
     altLabels: dict[str, list[str]] = {}
-    broader: list[str] = []
+    broader: list[BroaderRef] = []
     narrower: list[str] = []
     source: str
     labels: dict[str, str] = {}
