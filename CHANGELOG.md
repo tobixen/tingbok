@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
-## [Unreleased]
+## [v0.1.0] - 2026-02-24
 
 ### Changed
 - **`ConceptResponse.broader`** now returns `list[{uri, label}]` objects instead
@@ -13,7 +13,7 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   label-fetch round-trip
 
 ### Added
-- **SKOS API — feature-complete** — all four SKOS endpoints are now operational:
+- **SKOS API — feature-complete** — all five SKOS endpoints are now operational:
   - `GET /api/skos/lookup` — concept lookup (cache → upstream fallback)
   - `GET /api/skos/labels` — multilingual label fetch (cache → upstream fallback)
   - `GET /api/skos/hierarchy` — recursive path-to-root hierarchy building with
