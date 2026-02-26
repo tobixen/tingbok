@@ -246,6 +246,7 @@ concepts:
     narrower:
       - household/cleaning
       - household/storage
+      - personal-care
       - office
       - books
       - documents
@@ -285,6 +286,13 @@ concepts:
       en: ["papers", "paperwork"]
       nb: ["dokumenter", "papirer"]
     broader: household
+
+  registration-plate:
+    prefLabel: "Registration plate"
+    altLabel:
+      en: ["license plate", "number plate", "boat registration", "vehicle registration plate"]
+      nb: ["registreringsskilt", "nummerskilt"]
+    broader: documents
 
   # =============================================================================
   # FOOD SUBCATEGORIES
@@ -1047,6 +1055,13 @@ concepts:
   # HOUSEHOLD SUBCATEGORIES
   # =============================================================================
 
+  personal-care:
+    prefLabel: "Personal care"
+    altLabel:
+      en: ["hygiene", "toiletries", "grooming", "bathroom products"]
+      nb: ["personlig hygiene", "toalettartikler", "hygiene"]
+    broader: household
+
   household/cleaning:
     prefLabel: "Cleaning supplies"
     altLabel:
@@ -1686,6 +1701,13 @@ concepts:
   pump_service_kit:
     prefLabel: "Pump service kit"
     broader: boat-equipment
+
+  sail:
+    prefLabel: "Sail"
+    altLabel:
+      en: ["sails", "sail cover", "UV cover", "sail accessories"]
+      nb: ["seil", "seilrekke", "seilbeskyttelse"]
+    broader: boat-equipment/rigging
 
   sailing_ship_components:
     prefLabel: "Sailing ship components"

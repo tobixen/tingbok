@@ -1,26 +1,28 @@
 # tingbok
 
-Product and category lookup service for domestic inventory systems - this service provides a centralized API for:
+Product and category lookup service for domestic inventory systems - this service provides a centralized (pull requests to make it federated will be accepted) API for:
 
 - **Global tingbok category vocabulary** — a curated ~258-concept taxonomy for household inventory categorization
 - **SKOS category lookups** — hierarchy paths from AGROVOC, DBpedia, Wikidata
 - **EAN/barcode product lookups** — product data from Open Food Facts, Open Library, shopping receipts and various other lookup services
 
-In the future, I'm also considering to organize other infomation into the vocabulary, information currently stored in free-text "tags" to the vocabulary, including weather a product is "broken", "worn" or "brand new", weather a product is meant for ladies, gents or children, etc.
+In the future, I may also consider adding other "information dimensions", including weather a product is "broken", "worn" or "brand new", weather a product is meant for ladies, gents or children, etc.
 
 ## Background
 
-I'm working on a domestic inventory service [inventory-md](https://github.com/tobixen/inventory-md), and I already have two database instances - one for my boat and one for my home.
+I'm working on a domestic inventory service [inventory-md](https://github.com/tobixen/inventory-md), and I already have two instances - one for my boat and one for my home (plus the demo instance).
 
 What I (or you) actually have in stock is *local* information.  Information on the things one *may* have in the inventory belongs to a global database.  As there is overlapping between the two inventories, I already want those two to share information.  Since the services out there that exists and can be queried for free often have restricted capacity and may be rate-limited it's important with caching - so the caching system was created early on - but how to share the caches?  Not only between the instances, but I also have the data duplicated on my laptop and on a server.
 
-We have sort of an hierarchy here, at the very bottom are the "root categories".  Clothes and food are usually two very different things and fits well as root categories in a domestic inventory system.  (Of course, personal opinions as well as local needs may vary.  It should be possible to override those things).  Intermediate categories exists, like "food/fruits" - and very specific categories like "food/diary/milk/fresh full fat milk".  This is important when generating shopping lists - I do want to always have fresh full fat milk in the fridge as well as some fruits and nuts.
+We have sort of an hierarchy here, at the very top are the "root categories".  Clothes and food are usually two very different things and fits well as root categories in a domestic inventory system.  (Of course, personal opinions as well as local needs may vary.  It should be possible to override those things).  Intermediate categories exists, like "food/fruits" - and very specific categories like "food/diary/milk/fresh full fat milk".
+
+This is important when generating shopping lists - I do want to always have fresh full fat milk in the fridge as well as some fruits and nuts.  Hence the fruits, nuts and "fresh full fat milk" categories are listed on the shopping list generator "wanted items".
 
 Near the bottom there may be very specific information about brand/producer, package size, etc, this is often linked with a European/International Article Number (EAN).  Perhaps it had a price tag when purchasing it as well.
 
-All this information belongs to a global database.
+All this information, from the root category "food" and down to the specific EAN for 1l of milk from your favorite milk brand, belongs to a global database.
 
-(At the very bottom, there may also be information about a specific item.  A teddy bear may have an EAN, but your daughters teddy bear should be considered unique and may also have a name.  This does not belong to a global database).
+At the very bottom, there may be local information about a specific item.  A teddy bear may have an EAN, but your daughters teddy bear may also have a name and should be considered to be unique.
 
 ### SKOS
 
@@ -42,7 +44,7 @@ Another source (which in some cases seems essential as some shop chains may have
 
 **Data flow:** This is more than just caching, since user contributions are allowed, we're actually building up a database here that neesd to be backed up as well.  The database should be considered free and it should be possible not only to look up things but also download the full database.
 
-### The global tingbok category vocabulary
+### The "tingbok" vocabulary
 
 As none of the sources have a category hierachy suitable for easy navigation, it was sadly necessary to build yet another vocabulary.  The tingbok category vocabulary is mostly meant to link up the concepts from the other category sources into a neat category tree.  It may also be the "official source" of what's true when different databases shows different things - like "bedding" are things optimized for absorbing animal pee in AGROVOC, while in most domestic inventory lists this category are for things optimized for human having a quality sleep.
 
