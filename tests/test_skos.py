@@ -8,6 +8,7 @@ from unittest.mock import patch
 import pytest
 
 from tingbok.services.skos import (
+    UpstreamError,
     _add_to_not_found_cache,
     _get_cache_path,
     _is_in_not_found_cache,
@@ -165,12 +166,12 @@ def test_lookup_concept_cache_miss_upstream_not_found(tmp_path: Path) -> None:
     assert _is_in_not_found_cache(tmp_path, "concept:agrovoc:en:xyzzy")
 
 
-def test_lookup_concept_query_failed_not_cached(tmp_path: Path) -> None:
-    """When upstream query fails (network error), result is not cached."""
+def test_lookup_concept_query_failed_raises_upstream_error(tmp_path: Path) -> None:
+    """When upstream query fails transiently, UpstreamError is raised and nothing is cached."""
     with patch("tingbok.services.skos._upstream_lookup", return_value=(None, True)):
-        result = lookup_concept("potato", "en", "agrovoc", tmp_path)
+        with pytest.raises(UpstreamError):
+            lookup_concept("potato", "en", "agrovoc", tmp_path)
 
-    assert result is None
     assert not _is_in_not_found_cache(tmp_path, "concept:agrovoc:en:potato")
 
 
@@ -455,6 +456,15 @@ async def test_skos_lookup_cache_miss_upstream_not_found(client, skos_cache_dir:
     with patch("tingbok.services.skos._upstream_lookup", return_value=(None, False)):
         response = await client.get("/api/skos/lookup", params={"label": "xyzzy", "lang": "en", "source": "agrovoc"})
     assert response.status_code == 404
+
+
+@pytest.mark.anyio
+async def test_skos_lookup_upstream_error_returns_502(client, skos_cache_dir: Path) -> None:
+    """Transient upstream error (e.g. 403) returns 502, not 404, and is not cached."""
+    with patch("tingbok.services.skos._upstream_lookup", return_value=(None, True)):
+        response = await client.get("/api/skos/lookup", params={"label": "cumin", "lang": "nb", "source": "wikidata"})
+    assert response.status_code == 502
+    assert not _is_in_not_found_cache(skos_cache_dir, "concept:wikidata:nb:cumin")
 
 
 @pytest.mark.anyio

@@ -30,7 +30,10 @@ async def lookup(
     upstream REST query for cache misses.  Returns 404 when the concept is
     not found in either the cache or the upstream source.
     """
-    concept = await asyncio.to_thread(skos_service.lookup_concept, label, lang, source, _app.SKOS_CACHE_DIR)
+    try:
+        concept = await asyncio.to_thread(skos_service.lookup_concept, label, lang, source, _app.SKOS_CACHE_DIR)
+    except skos_service.UpstreamError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
     if concept is None:
         raise HTTPException(
             status_code=404,

@@ -16,6 +16,13 @@ import httpx
 logger = logging.getLogger(__name__)
 
 
+class UpstreamError(Exception):
+    """Raised by :func:`lookup_concept` when an upstream source returns a transient error.
+
+    The result must not be cached as a not-found entry.
+    """
+
+
 def _parse_json(response: httpx.Response, context: str = "") -> dict | None:
     """Parse a JSON response, returning None on empty or malformed bodies."""
     try:
@@ -189,11 +196,13 @@ def lookup_concept(label: str, lang: str, source: str, cache_dir: Path) -> dict 
 
     concept, query_failed = _upstream_lookup(label, lang, source)
 
-    if not query_failed:
-        if concept:
-            _save_to_cache(cache_path, concept)
-        else:
-            _add_to_not_found_cache(cache_dir, cache_key)
+    if query_failed:
+        raise UpstreamError(f"{source} request failed transiently for '{label}'")
+
+    if concept:
+        _save_to_cache(cache_path, concept)
+    else:
+        _add_to_not_found_cache(cache_dir, cache_key)
 
     return concept
 
@@ -290,7 +299,10 @@ def build_hierarchy_paths(
         logger.warning("Max hierarchy depth reached for label '%s'", label)
         return [], False, {}
 
-    concept = lookup_concept(label, lang, source, cache_dir)
+    try:
+        concept = lookup_concept(label, lang, source, cache_dir)
+    except UpstreamError:
+        return [], False, {}
     if concept is None:
         return [], False, {}
 
