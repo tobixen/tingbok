@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
+## [v0.1.2] - 2026-03-03
+
+### Fixed
+- Replaced `httpx` with `niquests` as the HTTP client.  Wikimedia's Varnish
+  cache returns 403 to `httpx` due to TLS fingerprint filtering, while
+  `niquests` (a `requests`-compatible fork with modern TLS handling) is
+  accepted.  `httpx` is no longer a dependency.
+
 ## [v0.1.1] - 2026-03-03
 
 ### Fixed
@@ -12,10 +20,6 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   Gateway** to the client instead of 404, and are no longer written to the
   not-found cache.  Previously a 403 was indistinguishable from a genuine
   not-found result, causing the concept to be permanently cached as missing.
-- Replaced `httpx` with `niquests` as the HTTP client.  Wikimedia's Varnish
-  cache returns 403 to `httpx` due to TLS fingerprint filtering, while
-  `niquests` (a `requests`-compatible fork with modern TLS handling) is
-  accepted.  `httpx` is no longer a dependency.
 
 ## [v0.1.0] - 2026-02-24
 
