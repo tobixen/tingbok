@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
+## [v0.1.1] - 2026-03-03
+
+### Fixed
+- Transient upstream errors (e.g. HTTP 403 from Wikidata) now return **502 Bad
+  Gateway** to the client instead of 404, and are no longer written to the
+  not-found cache.  Previously a 403 was indistinguishable from a genuine
+  not-found result, causing the concept to be permanently cached as missing.
+
 ## [v0.1.0] - 2026-02-24
 
 ### Changed
