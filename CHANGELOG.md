@@ -11,7 +11,10 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 - Replaced `httpx` with `niquests` as the HTTP client.  Wikimedia's Varnish
   cache returns 403 to `httpx` due to TLS fingerprint filtering, while
   `niquests` (a `requests`-compatible fork with modern TLS handling) is
-  accepted.  `httpx` is no longer a dependency.
+  accepted.  `httpx` is no longer a runtime dependency.
+- `httpx` is retained as a dev dependency for the ASGI test client
+  (`httpx.ASGITransport` + `AsyncClient`), which has no equivalent in
+  `niquests`.
 
 ## [v0.1.1] - 2026-03-03
 
