@@ -12,6 +12,10 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   Gateway** to the client instead of 404, and are no longer written to the
   not-found cache.  Previously a 403 was indistinguishable from a genuine
   not-found result, causing the concept to be permanently cached as missing.
+- Replaced `httpx` with `niquests` as the HTTP client.  Wikimedia's Varnish
+  cache returns 403 to `httpx` due to TLS fingerprint filtering, while
+  `niquests` (a `requests`-compatible fork with modern TLS handling) is
+  accepted.  `httpx` is no longer a dependency.
 
 ## [v0.1.0] - 2026-02-24
 

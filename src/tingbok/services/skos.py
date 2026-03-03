@@ -11,7 +11,7 @@ import logging
 import time
 from pathlib import Path
 
-import httpx
+import niquests
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class UpstreamError(Exception):
     """
 
 
-def _parse_json(response: httpx.Response, context: str = "") -> dict | None:
+def _parse_json(response: niquests.Response, context: str = "") -> dict | None:
     """Parse a JSON response, returning None on empty or malformed bodies."""
     try:
         return response.json()
@@ -458,13 +458,13 @@ def _lookup_agrovoc(label: str, lang: str) -> tuple[dict | None, bool]:
     url = f"{rest_base}/search/"
     params = {"query": label, "lang": lang}
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT) as client:
-            response = client.get(url, params=params)
+        with niquests.Session() as session:
+            response = session.get(url, params=params, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.TimeoutException as e:
+    except niquests.exceptions.Timeout as e:
         logger.warning("AGROVOC search timed out for '%s': %s", label, e)
         return None, True
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.warning("AGROVOC search failed for '%s': %s", label, e)
         return None, True
     data = _parse_json(response, label)
@@ -505,10 +505,10 @@ def _get_broader_agrovoc(concept_uri: str, rest_base: str, lang: str) -> list[di
     url = f"{rest_base}/data/"
     params = {"uri": concept_uri}
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT) as client:
-            response = client.get(url, params=params)
+        with niquests.Session() as session:
+            response = session.get(url, params=params, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.warning("AGROVOC data fetch failed for %s: %s", concept_uri, e)
         return []
     concept_data = _parse_json(response, concept_uri)
@@ -555,13 +555,13 @@ def _lookup_dbpedia(label: str, lang: str) -> tuple[dict | None, bool]:
     if lang:
         params["language"] = lang
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT) as client:
-            response = client.get(url, params=params)
+        with niquests.Session() as session:
+            response = session.get(url, params=params, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.TimeoutException as e:
+    except niquests.exceptions.Timeout as e:
         logger.warning("DBpedia lookup timed out for '%s': %s", label, e)
         return None, True
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.warning("DBpedia lookup failed for '%s': %s", label, e)
         return None, True
     data = _parse_json(response, label)
@@ -609,10 +609,10 @@ def _get_broader_dbpedia(uri: str, lang: str) -> list[dict]:
     """Fetch skos:broader concepts for a DBpedia URI via the data API."""
     data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT, follow_redirects=True) as client:
-            response = client.get(data_uri)
+        with niquests.Session() as session:
+            response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.debug("DBpedia data fetch failed for %s: %s", uri, e)
         return []
     data = _parse_json(response, uri)
@@ -658,13 +658,13 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
     }
     headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT) as client:
-            response = client.get(url, params=search_params, headers=headers)
+        with niquests.Session() as session:
+            response = session.get(url, params=search_params, headers=headers, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.TimeoutException as e:
+    except niquests.exceptions.Timeout as e:
         logger.warning("Wikidata search timed out for '%s': %s", label, e)
         return None, True
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.warning("Wikidata search failed for '%s': %s", label, e)
         return None, True
     data = _parse_json(response, label)
@@ -710,10 +710,10 @@ def _get_broader_wikidata(qid: str, lang: str, headers: dict | None = None) -> l
     if headers is None:
         headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT) as client:
-            response = client.get(url, params=params, headers=headers)
+        with niquests.Session() as session:
+            response = session.get(url, params=params, headers=headers, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.debug("Wikidata wbgetentities failed for %s: %s", qid, e)
         return []
     data = _parse_json(response, qid)
@@ -744,10 +744,10 @@ def _get_broader_wikidata(qid: str, lang: str, headers: dict | None = None) -> l
         "format": "json",
     }
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT) as client:
-            response = client.get(url, params=label_params, headers=headers)
+        with niquests.Session() as session:
+            response = session.get(url, params=label_params, headers=headers, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.debug("Wikidata label fetch for broader failed: %s", e)
         return [{"uri": f"http://www.wikidata.org/entity/{bqid}", "label": ""} for bqid in broader_qids]
     label_data = _parse_json(response, "|".join(broader_qids))
@@ -781,10 +781,10 @@ def _get_agrovoc_labels(uri: str, languages: list[str]) -> dict[str, str]:
     url = f"{rest_base}/data/"
     params = {"uri": uri}
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT) as client:
-            response = client.get(url, params=params)
+        with niquests.Session() as session:
+            response = session.get(url, params=params, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.warning("AGROVOC data fetch failed for %s: %s", uri, e)
         return {}
     data = _parse_json(response, uri)
@@ -808,10 +808,10 @@ def _get_dbpedia_labels(uri: str, languages: list[str]) -> dict[str, str]:
     """Fetch multilingual labels for a DBpedia URI via the Data REST API."""
     data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT, follow_redirects=True) as client:
-            response = client.get(data_uri)
+        with niquests.Session() as session:
+            response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.warning("DBpedia data fetch failed for %s: %s", uri, e)
         return {}
     data = _parse_json(response, uri)
@@ -835,10 +835,10 @@ def _get_wikidata_labels(uri: str, languages: list[str]) -> dict[str, str]:
         return {}
     url = f"https://www.wikidata.org/w/rest.php/wikibase/v0/entities/items/{qid}/labels"
     try:
-        with httpx.Client(timeout=DEFAULT_TIMEOUT) as client:
-            response = client.get(url)
+        with niquests.Session() as session:
+            response = session.get(url, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
-    except httpx.HTTPError as e:
+    except niquests.exceptions.RequestException as e:
         logger.warning("Wikidata labels fetch failed for %s: %s", uri, e)
         return {}
     data = _parse_json(response, uri)
