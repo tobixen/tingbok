@@ -76,9 +76,7 @@ async def _discover_source_uris_background() -> None:
             if source in excluded:
                 continue
             try:
-                concept = await asyncio.to_thread(
-                    skos_service.lookup_concept, label, "en", source, SKOS_CACHE_DIR
-                )
+                concept = await asyncio.to_thread(skos_service.lookup_concept, label, "en", source, SKOS_CACHE_DIR)
                 if concept and concept.get("uri"):
                     discovered[source] = concept["uri"]
             except Exception as exc:  # noqa: BLE001

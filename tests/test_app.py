@@ -74,17 +74,20 @@ async def test_full_vocabulary_has_source_uris(client):
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize(("concept_id", "expected_uri"), [
-    ("food", "http://dbpedia.org/resource/Food"),
-    ("tools", "http://dbpedia.org/resource/Tool"),
-    ("medicine", "http://dbpedia.org/resource/Medicine"),
-    ("bedding", "http://dbpedia.org/resource/Bedding"),
-    ("washer", "http://dbpedia.org/resource/Washer_(hardware)"),
-    ("seal", "http://dbpedia.org/resource/Hermetic_seal"),
-    ("disc", "http://dbpedia.org/resource/Disc"),
-    ("tubing", "http://dbpedia.org/resource/Tubing_(material)"),
-    ("gps", "http://dbpedia.org/resource/Global_Positioning_System"),
-])
+@pytest.mark.parametrize(
+    ("concept_id", "expected_uri"),
+    [
+        ("food", "http://dbpedia.org/resource/Food"),
+        ("tools", "http://dbpedia.org/resource/Tool"),
+        ("medicine", "http://dbpedia.org/resource/Medicine"),
+        ("bedding", "http://dbpedia.org/resource/Bedding"),
+        ("washer", "http://dbpedia.org/resource/Washer_(hardware)"),
+        ("seal", "http://dbpedia.org/resource/Hermetic_seal"),
+        ("disc", "http://dbpedia.org/resource/Disc"),
+        ("tubing", "http://dbpedia.org/resource/Tubing_(material)"),
+        ("gps", "http://dbpedia.org/resource/Global_Positioning_System"),
+    ],
+)
 async def test_concept_has_external_uri_in_source_uris(client, concept_id, expected_uri):
     """Concepts with a known URI should include it in source_uris."""
     response = await client.get(f"/api/vocabulary/{concept_id}")
@@ -96,18 +99,26 @@ async def test_concept_has_external_uri_in_source_uris(client, concept_id, expec
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("concept_id", [
-    "washer", "seal", "disc", "tubing", "gps", "tool", "snacks",
-    "bedding", "peanuts",
-])
+@pytest.mark.parametrize(
+    "concept_id",
+    [
+        "washer",
+        "seal",
+        "disc",
+        "tubing",
+        "gps",
+        "tool",
+        "snacks",
+        "bedding",
+        "peanuts",
+    ],
+)
 async def test_agrovoc_excluded_for_mismatch_concepts(client, concept_id):
     """Concepts known to cause AGROVOC mismatches must exclude agrovoc."""
     response = await client.get(f"/api/vocabulary/{concept_id}")
     assert response.status_code == 200
     data = response.json()
-    assert "agrovoc" in data["excluded_sources"], (
-        f"Concept '{concept_id}' should have agrovoc in excluded_sources"
-    )
+    assert "agrovoc" in data["excluded_sources"], f"Concept '{concept_id}' should have agrovoc in excluded_sources"
 
 
 @pytest.mark.anyio
@@ -116,6 +127,7 @@ async def test_discover_source_uris_populates_memory(client):
     import tingbok.app as app_module
 
     fake_uri = "http://dbpedia.org/resource/Electronics"
+
     def fake_lookup(label, lang, source, cache_dir):
         if source == "dbpedia" and label.lower() == "electronics":
             return {"uri": fake_uri, "prefLabel": "Electronics", "source": "dbpedia", "broader": []}
@@ -139,6 +151,7 @@ async def test_discover_skips_concepts_with_known_uris(client):
     app_module._discovered_source_uris.clear()
 
     call_count = 0
+
     def counting_lookup(label, lang, source, cache_dir):
         nonlocal call_count
         call_count += 1
@@ -150,9 +163,7 @@ async def test_discover_skips_concepts_with_known_uris(client):
     # food, tools, mushrooms, snacks, peanuts, bedding, washer, medicine, gps, tool,
     # marine_propulsion, seal, tubing, disc all have source_uris → skipped
     # Only concepts without source_uris should be looked up
-    concepts_with_uris = sum(
-        1 for data in app_module.vocabulary.values() if data.get("source_uris")
-    )
+    concepts_with_uris = sum(1 for data in app_module.vocabulary.values() if data.get("source_uris"))
     total_concepts = len(app_module.vocabulary)
     # 2 sources when no Oxigraph (dbpedia + wikidata), 3 when Oxigraph available
     expected_max_calls = (total_concepts - concepts_with_uris) * 3
@@ -257,6 +268,7 @@ async def test_discover_skips_agrovoc_when_store_unavailable(tmp_path, monkeypat
 def test_get_agrovoc_store_returns_none_when_file_missing(tmp_path):
     """get_agrovoc_store should return None when agrovoc.nt does not exist."""
     from tingbok.services.skos import get_agrovoc_store
+
     result = get_agrovoc_store(tmp_path)
     assert result is None
 

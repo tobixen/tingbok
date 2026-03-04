@@ -60,13 +60,19 @@ def _run_populate(tmp_path: Path, extra_args: list[str] | None = None) -> tuple[
 
 def test_populate_uris_adds_dbpedia_uri(tmp_path):
     """Should add DBpedia source_uris to concepts with no external URIs."""
+
     def fake_lookup(label, lang, source, cache_dir):
         if source == "dbpedia" and label.lower() == "electronics":
-            return {"uri": "http://dbpedia.org/resource/Electronics", "prefLabel": "Electronics",
-                    "source": "dbpedia", "broader": []}
+            return {
+                "uri": "http://dbpedia.org/resource/Electronics",
+                "prefLabel": "Electronics",
+                "source": "dbpedia",
+                "broader": [],
+            }
         return None
 
     from tingbok.services import skos as skos_service
+
     with patch.object(skos_service, "lookup_concept", side_effect=fake_lookup):
         with patch.object(skos_service, "get_agrovoc_store", return_value=None):
             rc, _ = _run_populate(tmp_path)
@@ -86,6 +92,7 @@ def test_populate_uris_skips_concepts_with_existing_uris(tmp_path):
         return None
 
     from tingbok.services import skos as skos_service
+
     with patch.object(skos_service, "lookup_concept", side_effect=recording_lookup):
         with patch.object(skos_service, "get_agrovoc_store", return_value=None):
             _run_populate(tmp_path)
@@ -104,11 +111,16 @@ def test_populate_uris_dry_run_does_not_write(tmp_path):
 
     def fake_lookup(label, lang, source, cache_dir):
         if source == "dbpedia":
-            return {"uri": f"http://dbpedia.org/resource/{label.title()}", "prefLabel": label.title(),
-                    "source": "dbpedia", "broader": []}
+            return {
+                "uri": f"http://dbpedia.org/resource/{label.title()}",
+                "prefLabel": label.title(),
+                "source": "dbpedia",
+                "broader": [],
+            }
         return None
 
     from tingbok.services import skos as skos_service
+
     with patch.object(skos_service, "lookup_concept", side_effect=fake_lookup):
         with patch.object(skos_service, "get_agrovoc_store", return_value=None):
             rc, output = _run_populate(tmp_path, extra_args=["--dry-run"])
@@ -122,13 +134,19 @@ def test_populate_uris_dry_run_does_not_write(tmp_path):
 
 def test_populate_uris_preserves_yaml_comments(tmp_path):
     """ruamel.yaml round-trip should preserve existing comments."""
+
     def fake_lookup(label, lang, source, cache_dir):
         if source == "dbpedia" and label.lower() == "electronics":
-            return {"uri": "http://dbpedia.org/resource/Electronics", "prefLabel": "Electronics",
-                    "source": "dbpedia", "broader": []}
+            return {
+                "uri": "http://dbpedia.org/resource/Electronics",
+                "prefLabel": "Electronics",
+                "source": "dbpedia",
+                "broader": [],
+            }
         return None
 
     from tingbok.services import skos as skos_service
+
     with patch.object(skos_service, "lookup_concept", side_effect=fake_lookup):
         with patch.object(skos_service, "get_agrovoc_store", return_value=None):
             _run_populate(tmp_path)
@@ -147,6 +165,7 @@ def test_populate_uris_queries_agrovoc_when_store_present(tmp_path):
 
     fake_store = object()
     from tingbok.services import skos as skos_service
+
     with patch.object(skos_service, "lookup_concept", side_effect=recording_lookup):
         with patch.object(skos_service, "get_agrovoc_store", return_value=fake_store):
             _run_populate(tmp_path)

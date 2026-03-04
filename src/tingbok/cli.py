@@ -173,8 +173,11 @@ def main() -> None:
 
     if args.command == "populate-uris":
         from os import environ  # noqa: PLC0415
-        cache_dir = Path(args.cache_dir) if args.cache_dir else (
-            Path(environ.get("TINGBOK_CACHE_DIR", Path.home() / ".cache" / "tingbok")) / "skos"
+
+        cache_dir = (
+            Path(args.cache_dir)
+            if args.cache_dir
+            else (Path(environ.get("TINGBOK_CACHE_DIR", Path.home() / ".cache" / "tingbok")) / "skos")
         )
         rc = _populate_uris(
             Path(args.vocabulary),
