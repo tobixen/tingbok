@@ -33,6 +33,7 @@ tingbok = "tingbok.cli:main"
 
 [project.optional-dependencies]
 skos = ["pyoxigraph>=0.3"]
+off = ["openfoodfacts>=3.0"]
 ean = []
 dev = ["pytest>=8.0", "anyio[trio]>=4.0", "ruff>=0.4", "pre-commit>=4.0", "httpx>=0.25"]
 
