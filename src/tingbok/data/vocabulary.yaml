@@ -9,6 +9,15 @@
 #       nb: ["norsk synonym"]
 #     broader: "parent-category"  # or list: ["parent1", "parent2"]
 #     narrower: ["child1", "child2"]
+#     uri: "https://..."            # Preferred/canonical URI for this concept
+#                                   # (e.g. DBpedia, AGROVOC, Wikidata).
+#                                   # Used as the concept's primary identifier.
+#     source_uris:                  # All known external source URIs for this concept.
+#       - "http://dbpedia.org/..."  #   Every source that maps to this concept.
+#       - "off:en:some-category"    #   Prefixes: off:, http://aims.fao.org/ (agrovoc),
+#                                   #   http://dbpedia.org/, http://www.wikidata.org/
+#     excluded_sources:             # Sources explicitly checked and found inapplicable.
+#       - agrovoc                   #   The builder will skip lookup for these sources.
 #
 # Categories without broader are top-level roots.
 
@@ -42,6 +51,8 @@ concepts:
       en: ["groceries", "provisions", "foodstuffs"]
       nb: ["mat", "matvarer"]
     uri: "http://dbpedia.org/resource/Food"
+    source_uris:
+      - "http://dbpedia.org/resource/Food"
     labels:
       en: "Food"
       nb: "Mat"
@@ -77,6 +88,10 @@ concepts:
       en: ["equipment", "implements"]
       nb: ["verktøy", "utstyr"]
     uri: "http://dbpedia.org/resource/Tool"
+    source_uris:
+      - "http://dbpedia.org/resource/Tool"
+    excluded_sources:
+      - agrovoc
     labels:
       en: "Tools"
       nb: "Verktøy"
@@ -688,6 +703,8 @@ concepts:
       bg: ["гъби"]
     broader: food/vegetables
     uri: "http://dbpedia.org/resource/Mushroom"
+    source_uris:
+      - "http://dbpedia.org/resource/Mushroom"
 
   preserved-vegetables:
     prefLabel: "Preserved vegetables"
@@ -804,6 +821,10 @@ concepts:
       en: ["snack foods"]
     broader: food
     uri: "http://dbpedia.org/resource/Snack"
+    source_uris:
+      - "http://dbpedia.org/resource/Snack"
+    excluded_sources:
+      - agrovoc
 
   chips:
     prefLabel: "Chips"
@@ -832,6 +853,10 @@ concepts:
       bg: ["фъстъци"]
     broader: food/snacks
     uri: "http://dbpedia.org/resource/Peanut"
+    source_uris:
+      - "http://dbpedia.org/resource/Peanut"
+    excluded_sources:
+      - agrovoc
     # AGROVOC uses "groundnuts" which is less common
 
   biscuits:
@@ -1080,6 +1105,10 @@ concepts:
       nb: ["sengetøy"]
     broader: household
     uri: "http://dbpedia.org/resource/Bedding"
+    source_uris:
+      - "http://dbpedia.org/resource/Bedding"
+    excluded_sources:
+      - agrovoc
     # AGROVOC returns "litter for animals" (farm bedding) - use DBpedia
 
   # =============================================================================
@@ -1329,6 +1358,8 @@ concepts:
       en: ["wood", "timber"]
     broader: construction
     uri: "http://dbpedia.org/resource/Lumber"
+    source_uris:
+      - "http://dbpedia.org/resource/Lumber"
 
   construction/electrical:
     prefLabel: "Electrical"
@@ -1341,6 +1372,10 @@ concepts:
       en: ["washers", "flat washer"]
     broader: construction
     uri: "http://dbpedia.org/resource/Washer_(hardware)"
+    source_uris:
+      - "http://dbpedia.org/resource/Washer_(hardware)"
+    excluded_sources:
+      - agrovoc
     # AGROVOC returns "cleaning equipment" (washing machine) - use DBpedia
 
   # =============================================================================
@@ -1479,6 +1514,8 @@ concepts:
       en: ["medication", "drugs"]
     broader: medical
     uri: "http://dbpedia.org/resource/Medicine"
+    source_uris:
+      - "http://dbpedia.org/resource/Medicine"
 
   # =============================================================================
   # DBpedia category mappings (underscore format)
@@ -1577,6 +1614,10 @@ concepts:
       en: ["Global Positioning System", "sat nav", "navigation"]
     broader: electronics
     uri: "http://dbpedia.org/resource/Global_Positioning_System"
+    source_uris:
+      - "http://dbpedia.org/resource/Global_Positioning_System"
+    excluded_sources:
+      - agrovoc
 
   led_controller:
     prefLabel: "LED controller"
@@ -1635,6 +1676,10 @@ concepts:
     prefLabel: "Tool"
     broader: tools
     uri: "http://dbpedia.org/resource/Tool"
+    source_uris:
+      - "http://dbpedia.org/resource/Tool"
+    excluded_sources:
+      - agrovoc
     # AGROVOC returns "equipment" - use DBpedia for general tools
 
   welding_electrode:
@@ -1689,6 +1734,8 @@ concepts:
     prefLabel: "Marine propulsion"
     broader: boat-equipment/engine
     uri: "http://dbpedia.org/resource/Marine_propulsion"
+    source_uris:
+      - "http://dbpedia.org/resource/Marine_propulsion"
 
   maritime_book:
     prefLabel: "Maritime book"
@@ -1764,6 +1811,10 @@ concepts:
       en: ["rubber seal", "gasket", "o-ring"]
     broader: consumables
     uri: "http://dbpedia.org/resource/Hermetic_seal"
+    source_uris:
+      - "http://dbpedia.org/resource/Hermetic_seal"
+    excluded_sources:
+      - agrovoc
     # AGROVOC returns marine mammals - use DBpedia for hardware seals
 
   tubing:
@@ -1772,6 +1823,10 @@ concepts:
       en: ["tube", "pipes", "hose"]
     broader: consumables
     uri: "http://dbpedia.org/resource/Tubing_(material)"
+    source_uris:
+      - "http://dbpedia.org/resource/Tubing_(material)"
+    excluded_sources:
+      - agrovoc
     # AGROVOC returns agricultural pipes
 
   # More DBpedia mappings - Safety
@@ -1782,6 +1837,10 @@ concepts:
     prefLabel: "Disc"
     broader: misc
     uri: "http://dbpedia.org/resource/Disc"
+    source_uris:
+      - "http://dbpedia.org/resource/Disc"
+    excluded_sources:
+      - agrovoc
     # AGROVOC returns "cultivators" (disc harrow) - use DBpedia
 
   pedal:

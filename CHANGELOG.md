@@ -9,6 +9,21 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 By a mistake the v0.7.0-tag, dedicated the inventory-md package, got applied in the wrong directory.  Oh well.  I may as well keep the version numbers in sync and release them together - because as it is now, it's sort of two parts of the same system.
 
+### Added (as part of v0.7.0 sync)
+- **`source_uris` populated in `vocabulary.yaml`** for all 15 concepts that have a known
+  external URI.  Each concept's `source_uris` list now includes the corresponding DBpedia
+  URI (e.g. `food` → `http://dbpedia.org/resource/Food`).
+- **`excluded_sources: [agrovoc]`** added to 9 concepts known to cause AGROVOC mismatches:
+  `bedding`, `disc`, `gps`, `peanuts`, `seal`, `snacks`, `tool`, `tools`, `tubing`, `washer`.
+  The vocabulary builder will skip AGROVOC lookups for these concepts.
+- **`vocabulary.yaml` format documentation** — added comments to the file header explaining
+  the semantics of `uri:` (preferred/canonical URI), `source_uris:` (all external source URIs),
+  and `excluded_sources:` (sources checked and found inapplicable).
+- **Background URI auto-discovery** (`_discover_source_uris_background()` in `app.py`) —
+  on startup, tingbok now queries DBpedia and Wikidata for concepts that have no external
+  `source_uris` in `vocabulary.yaml`.  Discovered URIs are merged into API responses
+  at serving time.  Results are in-memory and rebuilt from the SKOS cache on next restart.
+
 ## [v0.2.0] - 2026-03-04
 
 ### Added
