@@ -25,7 +25,11 @@ dependencies = [
     "uvicorn[standard]>=0.20",
     "pyyaml>=6.0",
     "niquests>=3.0",
+    "ruamel.yaml>=0.18",
 ]
+
+[project.scripts]
+tingbok = "tingbok.cli:main"
 
 [project.optional-dependencies]
 skos = ["pyoxigraph>=0.3"]
