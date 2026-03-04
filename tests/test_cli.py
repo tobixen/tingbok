@@ -6,7 +6,6 @@ from unittest.mock import patch
 import pytest
 import yaml
 
-
 MINIMAL_VOCAB = """\
 concepts:
   food:
@@ -36,6 +35,7 @@ def _run_populate(tmp_path: Path, extra_args: list[str] | None = None) -> tuple[
     import sys
     from io import StringIO
     from unittest.mock import patch as _patch
+
     import tingbok.cli as cli_module
 
     vocab_file = tmp_path / "vocabulary.yaml"
@@ -157,6 +157,7 @@ def test_populate_uris_queries_agrovoc_when_store_present(tmp_path):
 def test_populate_uris_nonexistent_vocab_exits_with_error(tmp_path):
     """Should exit with a non-zero code when the vocabulary file does not exist."""
     import sys
+
     import tingbok.cli as cli_module
 
     argv = ["populate-uris", str(tmp_path / "no_such_file.yaml"), "--cache-dir", str(tmp_path)]

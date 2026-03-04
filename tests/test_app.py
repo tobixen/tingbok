@@ -1,7 +1,8 @@
 """Tests for the main FastAPI application."""
 
-import pytest
 from unittest.mock import patch
+
+import pytest
 
 
 @pytest.mark.anyio
@@ -73,7 +74,7 @@ async def test_full_vocabulary_has_source_uris(client):
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("concept_id,expected_uri", [
+@pytest.mark.parametrize(("concept_id", "expected_uri"), [
     ("food", "http://dbpedia.org/resource/Food"),
     ("tools", "http://dbpedia.org/resource/Tool"),
     ("medicine", "http://dbpedia.org/resource/Medicine"),
@@ -146,10 +147,6 @@ async def test_discover_skips_concepts_with_known_uris(client):
     with patch("tingbok.app.skos_service.lookup_concept", side_effect=counting_lookup):
         await app_module._discover_source_uris_background()
 
-    # "food" already has a DBpedia URI in vocabulary.yaml → should not be looked up
-    food_calls = [
-        1 for _ in range(call_count)  # just check call count is reduced
-    ]
     # food, tools, mushrooms, snacks, peanuts, bedding, washer, medicine, gps, tool,
     # marine_propulsion, seal, tubing, disc all have source_uris → skipped
     # Only concepts without source_uris should be looked up
@@ -267,6 +264,7 @@ def test_get_agrovoc_store_returns_none_when_file_missing(tmp_path):
 def test_get_agrovoc_store_returns_none_when_pyoxigraph_absent(tmp_path):
     """get_agrovoc_store should return None when pyoxigraph is not installed."""
     import sys
+
     from tingbok.services import skos as skos_module
     from tingbok.services.skos import get_agrovoc_store
 
