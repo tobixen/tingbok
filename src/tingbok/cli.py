@@ -9,10 +9,10 @@ populate-uris
     write the results back into the vocabulary YAML file.
 
     For each concept in ``vocabulary.yaml`` that lacks external ``source_uris``,
-    the command queries DBpedia, Wikidata, and (when ``agrovoc.nt`` is present in
-    the SKOS cache directory) AGROVOC via the local Oxigraph store.  Discovered
-    URIs are written back to ``vocabulary.yaml`` using ruamel.yaml so that
-    existing comments and formatting are preserved.
+    the command queries AGROVOC (Oxigraph if available, else REST), DBpedia,
+    Wikidata, and Google Product Taxonomy (GPT, if taxonomy files are present in
+    the cache directory).  Discovered URIs are written back to ``vocabulary.yaml``
+    using ruamel.yaml so that existing comments and formatting are preserved.
 
     Run ``tingbok populate-uris --help`` for details.
 
@@ -68,6 +68,7 @@ def _populate_uris(
         print(f"Error: vocabulary file not found: {vocab_path}", file=sys.stderr)
         return 1
 
+    from tingbok.services import gpt as gpt_service  # noqa: PLC0415
     from tingbok.services import skos as skos_service  # noqa: PLC0415
 
     # --- Load vocabulary preserving comments ---
@@ -78,12 +79,10 @@ def _populate_uris(
 
     concepts: dict = doc.get("concepts", {})
 
-    # --- Determine available sources ---
-    store = skos_service.get_agrovoc_store(cache_dir)
-    sources = []
-    if store is not None:
-        sources.append("agrovoc")
-    sources.extend(["dbpedia", "wikidata"])
+    # cache_dir is the root cache directory.
+    # SKOS (agrovoc/dbpedia/wikidata) caches live in cache_dir/skos/.
+    # GPT files live in cache_dir/gpt/.
+    skos_dir = cache_dir / "skos"
 
     # --- Discover URIs ---
     updates: dict[str, list[str]] = {}  # concept_id -> list of new URIs
@@ -102,17 +101,29 @@ def _populate_uris(
         label: str = data.get("prefLabel") or concept_id.split("/")[-1].replace("_", " ")
         discovered: list[str] = []
 
-        for source in sources:
+        # SKOS sources: agrovoc always included (Oxigraph if available, REST fallback)
+        for source in ("agrovoc", "dbpedia", "wikidata"):
             if source in excluded:
                 continue
             try:
-                concept = skos_service.lookup_concept(label, lang, source, cache_dir)
+                concept = skos_service.lookup_concept(label, lang, source, skos_dir)
                 if concept and concept.get("uri"):
                     uri = concept["uri"]
                     if uri not in static_uris and uri not in discovered:
                         discovered.append(uri)
             except Exception as exc:  # noqa: BLE001
                 print(f"  Warning: lookup failed for '{concept_id}' via {source}: {exc}", file=sys.stderr)
+
+        # GPT source (local taxonomy files, no network required)
+        if "gpt" not in excluded:
+            try:
+                gpt_concept = gpt_service.lookup_concept(label, lang, cache_dir)
+                if gpt_concept and gpt_concept.get("uri"):
+                    uri = gpt_concept["uri"]
+                    if uri not in static_uris and uri not in discovered:
+                        discovered.append(uri)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  Warning: GPT lookup failed for '{concept_id}': {exc}", file=sys.stderr)
 
         if discovered:
             updates[concept_id] = discovered
@@ -269,7 +280,7 @@ def _build_parser() -> argparse.ArgumentParser:
         "--cache-dir",
         metavar="DIR",
         default=None,
-        help="SKOS cache directory (default: ~/.cache/tingbok/skos)",
+        help="Cache root directory (default: ~/.cache/tingbok).  SKOS caches are read from DIR/skos/, GPT files from DIR/gpt/.",
     )
     p.add_argument("--dry-run", action="store_true", help="Print proposed changes without modifying the file")
     p.add_argument("--lang", default="en", metavar="LANG", help="Language for concept lookup (default: en)")
@@ -326,7 +337,7 @@ def main() -> None:
         cache_dir = (
             Path(args.cache_dir)
             if args.cache_dir
-            else (Path(environ.get("TINGBOK_CACHE_DIR", Path.home() / ".cache" / "tingbok")) / "skos")
+            else Path(environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache" / "tingbok")))
         )
         rc = _populate_uris(
             Path(args.vocabulary),

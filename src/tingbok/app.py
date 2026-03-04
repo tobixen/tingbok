@@ -14,6 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tingbok import __version__
 from tingbok.models import HealthResponse, VocabularyConcept
 from tingbok.routers import ean, skos
+from tingbok.services import gpt as gpt_service
 from tingbok.services import skos as skos_service
 
 logger = logging.getLogger(__name__)
@@ -58,7 +59,7 @@ async def _discover_source_uris_background() -> None:
     # Include AGROVOC only when the local Oxigraph store is available — the REST
     # API has too many false positives for a reliable auto-discovery pass.
     agrovoc_available = skos_service.get_agrovoc_store(SKOS_CACHE_DIR) is not None
-    sources_to_try = ("agrovoc", "dbpedia", "wikidata") if agrovoc_available else ("dbpedia", "wikidata")
+    skos_sources = ("agrovoc", "dbpedia", "wikidata") if agrovoc_available else ("dbpedia", "wikidata")
 
     for concept_id, data in vocabulary.items():
         static_uris: list[str] = data.get("source_uris", [])
@@ -72,7 +73,7 @@ async def _discover_source_uris_background() -> None:
         label: str = data.get("prefLabel") or concept_id.split("/")[-1].replace("_", " ")
         discovered: dict[str, str] = {}
 
-        for source in sources_to_try:
+        for source in skos_sources:
             if source in excluded:
                 continue
             try:
@@ -81,6 +82,15 @@ async def _discover_source_uris_background() -> None:
                     discovered[source] = concept["uri"]
             except Exception as exc:  # noqa: BLE001
                 logger.debug("URI discovery failed for '%s' via %s: %s", concept_id, source, exc)
+
+        # GPT: local taxonomy files in _CACHE_BASE/gpt/ (no network required)
+        if "gpt" not in excluded:
+            try:
+                gpt_concept = await asyncio.to_thread(gpt_service.lookup_concept, label, "en", _CACHE_BASE)
+                if gpt_concept and gpt_concept.get("uri"):
+                    discovered["gpt"] = gpt_concept["uri"]
+            except Exception as exc:  # noqa: BLE001
+                logger.debug("GPT URI discovery failed for '%s': %s", concept_id, exc)
 
         if discovered:
             _discovered_source_uris[concept_id] = discovered
