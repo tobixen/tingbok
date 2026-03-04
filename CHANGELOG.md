@@ -5,11 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
-## [v0.7.0] - 2026-03-04
+## [v0.8.0] - 2026-03-04
 
-By a mistake the v0.7.0-tag, dedicated the inventory-md package, got applied in the wrong directory.  Oh well.  I may as well keep the version numbers in sync and release them together - because as it is now, it's sort of two parts of the same system.
-
-### Added (as part of v0.7.0 sync)
+### Added
 - **`source_uris` populated in `vocabulary.yaml`** for all 15 concepts that have a known
   external URI.  Each concept's `source_uris` list now includes the corresponding DBpedia
   URI (e.g. `food` → `http://dbpedia.org/resource/Food`).
@@ -30,6 +28,11 @@ By a mistake the v0.7.0-tag, dedicated the inventory-md package, got applied in 
   `lookup_concept(..., source="agrovoc")` uses the local store instead of the REST API.
   Mirrors inventory-md's SKOS-XL SPARQL queries and singular/plural label variations.
   Requires `tingbok[skos]` (pyoxigraph).  Gracefully degrades to REST when unavailable.
+
+
+## [v0.7.0] - 2026-03-04
+
+By a mistake the v0.7.0-tag, dedicated the inventory-md package, got applied in the wrong directory.  Oh well.  I may as well keep the version numbers in sync and release them together - because as it is now, it's sort of two parts of the same system.
 
 ## [v0.2.0] - 2026-03-04
 
