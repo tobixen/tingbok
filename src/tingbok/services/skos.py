@@ -654,7 +654,7 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
         "language": lang,
         "type": "item",
         "format": "json",
-        "limit": "5",
+        "limit": "15",
     }
     headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
     try:
