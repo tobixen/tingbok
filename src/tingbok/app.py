@@ -96,7 +96,7 @@ async def _discover_source_uris_background() -> None:
         # OFF: openfoodfacts package (food taxonomy only; no network calls at lookup time)
         if "off" not in excluded:
             try:
-                off_concept = await asyncio.to_thread(off_service.lookup_concept, label, "en")
+                off_concept = await asyncio.to_thread(off_service.lookup_concept, label, "en", SKOS_CACHE_DIR)
                 if off_concept and off_concept.get("uri"):
                     discovered["off"] = off_concept["uri"]
             except Exception as exc:  # noqa: BLE001

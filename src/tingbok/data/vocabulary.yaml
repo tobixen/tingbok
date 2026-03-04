@@ -50,7 +50,7 @@ concepts:
       - agrovoc
       - dbpedia
       - wikidata
-      - off
+      - "off"
       - gpt
 
   food:
@@ -314,8 +314,8 @@ concepts:
     labels:
       nb: "Båtutstyr"
     broader: ["transport"]
-    source_uris:
-    - http://dbpedia.org/resource/List_of_equipment_of_the_British_Army
+    excluded_sources:
+    - dbpedia
 
   household:
     prefLabel: "Household"

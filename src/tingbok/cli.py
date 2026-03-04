@@ -94,6 +94,11 @@ def _populate_uris(
         static_uris: list[str] = list(data.get("source_uris") or [])
         excluded: set[str] = set(data.get("excluded_sources") or [])
 
+        # Skip if already has at least one non-tingbok external URI
+        has_external = any(not u.startswith("https://tingbok.plann.no/") for u in static_uris)
+        if has_external:
+            continue
+
         label: str = data.get("prefLabel") or concept_id.split("/")[-1].replace("_", " ")
         discovered: list[str] = []
 
@@ -124,7 +129,7 @@ def _populate_uris(
         # OFF source (openfoodfacts package, food taxonomy only)
         if "off" not in excluded:
             try:
-                off_concept = off_service.lookup_concept(label, lang)
+                off_concept = off_service.lookup_concept(label, lang, skos_dir)
                 if off_concept and off_concept.get("uri"):
                     uri = off_concept["uri"]
                     if uri not in static_uris and uri not in discovered:

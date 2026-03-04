@@ -15,6 +15,7 @@ Install the optional dependency to enable OFF support::
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -120,21 +121,41 @@ def _generate_variations(label: str) -> list[str]:
     return variations
 
 
-def lookup_concept(label: str, lang: str = "en") -> dict[str, Any] | None:
+def lookup_concept(label: str, lang: str = "en", cache_dir: Path | None = None) -> dict[str, Any] | None:
     """Look up a food concept by label in the OFF taxonomy.
 
     Tries exact match (case-insensitive), then synonyms, then
-    singular/plural variations.
+    singular/plural variations.  When *cache_dir* is provided, results are
+    read from and written to the file cache (same format as the SKOS cache).
 
     Args:
-        label: Human-readable label (e.g. ``"potatoes"``).
-        lang:  BCP-47 language code for the returned prefLabel.
+        label:     Human-readable label (e.g. ``"potatoes"``).
+        lang:      BCP-47 language code for the returned prefLabel.
+        cache_dir: Optional directory for persistent JSON cache.
 
     Returns:
         Concept dict with ``uri``, ``prefLabel``, ``source``, ``broader``
         keys (compatible with the SKOS lookup format), or ``None`` if not
         found or the ``openfoodfacts`` package is unavailable.
     """
+    from tingbok.services.skos import (  # noqa: PLC0415
+        _add_to_not_found_cache,
+        _get_cache_path,
+        _is_in_not_found_cache,
+        _load_from_cache,
+        _save_to_cache,
+    )
+
+    cache_key = f"concept:off:{lang}:{label.lower()}"
+
+    if cache_dir is not None:
+        cache_path = _get_cache_path(cache_dir, cache_key)
+        cached = _load_from_cache(cache_path)
+        if cached is not None and cached.get("uri"):
+            return cached
+        if _is_in_not_found_cache(cache_dir, cache_key):
+            return None
+
     taxonomy = _get_taxonomy()
     if taxonomy is None:
         return None
@@ -151,6 +172,8 @@ def lookup_concept(label: str, lang: str = "en") -> dict[str, Any] | None:
                 break
 
     if node_id is None:
+        if cache_dir is not None:
+            _add_to_not_found_cache(cache_dir, cache_key)
         return None
 
     node = taxonomy[node_id]  # type: ignore[index]
@@ -170,9 +193,14 @@ def lookup_concept(label: str, lang: str = "en") -> dict[str, Any] | None:
                 parent_label = en_name
         broader.append({"uri": f"off:{parent.id}", "label": parent_label})
 
-    return {
+    result: dict[str, Any] = {
         "uri": f"off:{node_id}",
         "prefLabel": pref_label,
         "source": "off",
         "broader": broader,
     }
+
+    if cache_dir is not None:
+        _save_to_cache(cache_path, result)
+
+    return result

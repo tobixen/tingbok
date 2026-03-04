@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 
@@ -131,3 +132,51 @@ def test_off_lookup_non_food_label_returns_none() -> None:
             result = off_service.lookup_concept("Hammer", "en")
 
     assert result is None
+
+
+def test_off_lookup_result_is_written_to_cache(tmp_path: Path) -> None:
+    """A found concept is written to the file cache for future lookups."""
+
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=_SAMPLE_TAXONOMY):
+        with patch("tingbok.services.off._label_index", None):
+            result = off_service.lookup_concept("Potatoes", "en", tmp_path)
+
+    assert result is not None
+    # A cache file should have been created
+    cache_files = list(tmp_path.glob("concept_off_*.json"))
+    assert len(cache_files) == 1
+
+
+def test_off_lookup_not_found_is_cached(tmp_path: Path) -> None:
+    """A not-found result is added to the not-found cache."""
+
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=_SAMPLE_TAXONOMY):
+        with patch("tingbok.services.off._label_index", None):
+            result = off_service.lookup_concept("Hammer", "en", tmp_path)
+
+    assert result is None
+    not_found_file = tmp_path / "_not_found.json"
+    assert not_found_file.exists()
+
+
+def test_off_lookup_served_from_cache(tmp_path: Path) -> None:
+    """Second lookup is served from cache without touching the taxonomy."""
+
+    from tingbok.services import off as off_service
+
+    # Prime the cache
+    with patch("tingbok.services.off._get_taxonomy", return_value=_SAMPLE_TAXONOMY):
+        with patch("tingbok.services.off._label_index", None):
+            off_service.lookup_concept("Potatoes", "en", tmp_path)
+
+    # Second call — taxonomy should not be consulted
+    with patch("tingbok.services.off._get_taxonomy") as mock_get:
+        result = off_service.lookup_concept("Potatoes", "en", tmp_path)
+
+    mock_get.assert_not_called()
+    assert result is not None
+    assert result["uri"] == "off:en:potatoes"

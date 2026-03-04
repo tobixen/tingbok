@@ -130,18 +130,20 @@ async def test_discover_source_uris_populates_memory(client):
     fake_uri = "http://dbpedia.org/resource/Boat_equipment"
 
     def fake_lookup(label, lang, source, cache_dir):
-        if source == "dbpedia" and "boat" in label.lower():
-            return {"uri": fake_uri, "prefLabel": "Boat equipment", "source": "dbpedia", "broader": []}
+        if source == "wikidata" and "boat" in label.lower():
+            return {"uri": fake_uri, "prefLabel": "Boat equipment", "source": "wikidata", "broader": []}
         return None
 
     # Reset discovered uris before test
     app_module._discovered_source_uris.clear()
 
     with patch("tingbok.app.skos_service.lookup_concept", side_effect=fake_lookup):
-        await app_module._discover_source_uris_background()
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                await app_module._discover_source_uris_background()
 
     assert "boat-equipment" in app_module._discovered_source_uris
-    assert app_module._discovered_source_uris["boat-equipment"].get("dbpedia") == fake_uri
+    assert app_module._discovered_source_uris["boat-equipment"].get("wikidata") == fake_uri
 
 
 @pytest.mark.anyio
@@ -159,7 +161,9 @@ async def test_discover_skips_concepts_with_known_uris(client):
         return None
 
     with patch("tingbok.app.skos_service.lookup_concept", side_effect=counting_lookup):
-        await app_module._discover_source_uris_background()
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                await app_module._discover_source_uris_background()
 
     # food, tools, mushrooms, snacks, peanuts, bedding, washer, medicine, gps, tool,
     # marine_propulsion, seal, tubing, disc all have source_uris → skipped
@@ -184,7 +188,9 @@ async def test_discover_skips_excluded_sources(client):
         return None
 
     with patch("tingbok.app.skos_service.lookup_concept", side_effect=recording_lookup):
-        await app_module._discover_source_uris_background()
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                await app_module._discover_source_uris_background()
 
     # No concept that has agrovoc in excluded_sources should be queried for agrovoc
     for concept_id, data in app_module.vocabulary.items():
@@ -234,10 +240,13 @@ async def test_discover_queries_agrovoc_when_store_available(tmp_path, monkeypat
             return {"uri": fake_agrovoc_uri, "prefLabel": "Boat equipment", "source": "agrovoc", "broader": []}
         return None
 
+    # boat-equipment excludes dbpedia but not agrovoc/wikidata, so it will be discovered
+
     with patch.object(skos_service, "lookup_concept", side_effect=recording_lookup):
-        # Patch get_agrovoc_store to return a truthy mock (store "available")
         with patch.object(skos_service, "get_agrovoc_store", return_value=object()):
-            await app_module._discover_source_uris_background()
+            with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                    await app_module._discover_source_uris_background()
 
     assert "agrovoc" in queried_sources, "AGROVOC should be queried when Oxigraph store is available"
     assert app_module._discovered_source_uris.get("boat-equipment", {}).get("agrovoc") == fake_agrovoc_uri
@@ -261,7 +270,9 @@ async def test_discover_skips_agrovoc_when_store_unavailable(tmp_path, monkeypat
 
     with patch.object(skos_service, "lookup_concept", side_effect=recording_lookup):
         with patch.object(skos_service, "get_agrovoc_store", return_value=None):
-            await app_module._discover_source_uris_background()
+            with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                    await app_module._discover_source_uris_background()
 
     assert "agrovoc" not in queried_sources, "AGROVOC should not be queried when Oxigraph store is unavailable"
 
