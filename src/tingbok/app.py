@@ -15,6 +15,7 @@ from tingbok import __version__
 from tingbok.models import HealthResponse, VocabularyConcept
 from tingbok.routers import ean, skos
 from tingbok.services import gpt as gpt_service
+from tingbok.services import off as off_service
 from tingbok.services import skos as skos_service
 
 logger = logging.getLogger(__name__)
@@ -91,6 +92,15 @@ async def _discover_source_uris_background() -> None:
                     discovered["gpt"] = gpt_concept["uri"]
             except Exception as exc:  # noqa: BLE001
                 logger.debug("GPT URI discovery failed for '%s': %s", concept_id, exc)
+
+        # OFF: openfoodfacts package (food taxonomy only; no network calls at lookup time)
+        if "off" not in excluded:
+            try:
+                off_concept = await asyncio.to_thread(off_service.lookup_concept, label, "en")
+                if off_concept and off_concept.get("uri"):
+                    discovered["off"] = off_concept["uri"]
+            except Exception as exc:  # noqa: BLE001
+                logger.debug("OFF URI discovery failed for '%s': %s", concept_id, exc)
 
         if discovered:
             _discovered_source_uris[concept_id] = discovered

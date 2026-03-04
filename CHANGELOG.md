@@ -18,7 +18,7 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   cache directory:
   - `--gpt [LOCALE ...]` downloads Google Product Taxonomy files from
     `https://www.google.com/basepages/producttype/taxonomy-with-ids.{locale}.txt`.
-    Without a locale argument defaults to `en-US`.  Known locales are listed in the
+    Without a locale argument defaults to `en-GB`.  Known locales are listed in the
     help text (`nb-NO`, `sv-SE`, `de-DE`, `fr-FR`, etc.).  Files are stored as
     `{cache_dir}/gpt/taxonomy-with-ids.{locale}.txt`.
   - `--agrovoc` downloads the latest AGROVOC LOD N-Triples zip from FAO

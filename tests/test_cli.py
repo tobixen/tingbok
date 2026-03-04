@@ -212,7 +212,7 @@ def test_populate_uris_queries_gpt_when_files_present(tmp_path):
     SAMPLE_GPT = "# Google_Product_Taxonomy_Version: 2021-09-21\n632 - Electronics\n"
     gpt_dir = tmp_path / "gpt"
     gpt_dir.mkdir()
-    (gpt_dir / "taxonomy-with-ids.en-US.txt").write_text(SAMPLE_GPT)
+    (gpt_dir / "taxonomy-with-ids.en-GB.txt").write_text(SAMPLE_GPT)
 
     def fake_skos_lookup(label, lang, source, cache_dir):
         return None
@@ -233,7 +233,7 @@ def test_populate_uris_skips_gpt_when_excluded(tmp_path):
     SAMPLE_GPT = "# Google_Product_Taxonomy_Version: 2021-09-21\n632 - Electronics\n"
     gpt_dir = tmp_path / "gpt"
     gpt_dir.mkdir()
-    (gpt_dir / "taxonomy-with-ids.en-US.txt").write_text(SAMPLE_GPT)
+    (gpt_dir / "taxonomy-with-ids.en-GB.txt").write_text(SAMPLE_GPT)
 
     vocab_with_excluded = MINIMAL_VOCAB.replace(
         '  electronics:\n    prefLabel: "Electronics"\n    narrower:\n      - electronics/audio',

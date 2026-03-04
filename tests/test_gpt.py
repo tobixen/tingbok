@@ -47,7 +47,7 @@ def _write_gpt_file(cache_dir: Path, locale: str, content: str) -> Path:
 
 def test_gpt_lookup_by_label_exact(tmp_path: Path) -> None:
     """Exact label match returns the correct concept with gpt: URI."""
-    _write_gpt_file(tmp_path, "en-US", SAMPLE_GPT_EN)
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
 
     from tingbok.services import gpt as gpt_service
 
@@ -60,7 +60,7 @@ def test_gpt_lookup_by_label_exact(tmp_path: Path) -> None:
 
 def test_gpt_lookup_case_insensitive(tmp_path: Path) -> None:
     """Lookup is case-insensitive."""
-    _write_gpt_file(tmp_path, "en-US", SAMPLE_GPT_EN)
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
 
     from tingbok.services import gpt as gpt_service
 
@@ -71,7 +71,7 @@ def test_gpt_lookup_case_insensitive(tmp_path: Path) -> None:
 
 def test_gpt_lookup_missing_label_returns_none(tmp_path: Path) -> None:
     """Lookup for unknown label returns None."""
-    _write_gpt_file(tmp_path, "en-US", SAMPLE_GPT_EN)
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
 
     from tingbok.services import gpt as gpt_service
 
@@ -89,7 +89,7 @@ def test_gpt_lookup_no_file_returns_none(tmp_path: Path) -> None:
 
 def test_gpt_lookup_broader_hierarchy(tmp_path: Path) -> None:
     """Concept with a parent path includes a broader entry."""
-    _write_gpt_file(tmp_path, "en-US", SAMPLE_GPT_EN)
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
 
     from tingbok.services import gpt as gpt_service
 
@@ -115,7 +115,7 @@ def test_gpt_lookup_norwegian_locale(tmp_path: Path) -> None:
 
 def test_gpt_get_labels_from_multiple_locales(tmp_path: Path) -> None:
     """get_labels returns labels from available language files."""
-    _write_gpt_file(tmp_path, "en-US", SAMPLE_GPT_EN)
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
     _write_gpt_file(tmp_path, "nb-NO", SAMPLE_GPT_NB)
 
     from tingbok.services import gpt as gpt_service
@@ -127,7 +127,7 @@ def test_gpt_get_labels_from_multiple_locales(tmp_path: Path) -> None:
 
 def test_gpt_get_labels_unknown_uri_returns_empty(tmp_path: Path) -> None:
     """get_labels for an unknown gpt: URI returns empty dict."""
-    _write_gpt_file(tmp_path, "en-US", SAMPLE_GPT_EN)
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
 
     from tingbok.services import gpt as gpt_service
 
@@ -159,7 +159,7 @@ def _run_download(tmp_path: Path, extra_args: list[str]) -> tuple[int, str]:
 
 
 def test_download_taxonomy_gpt_writes_file(tmp_path: Path) -> None:
-    """--gpt should download the en-US GPT file into cache_dir/gpt/."""
+    """--gpt should download the en-GB GPT file into cache_dir/gpt/."""
     fake_response = MagicMock()
     fake_response.status_code = 200
     fake_response.iter_content = MagicMock(return_value=[SAMPLE_GPT_EN.encode()])
@@ -168,7 +168,7 @@ def test_download_taxonomy_gpt_writes_file(tmp_path: Path) -> None:
         rc, output = _run_download(tmp_path, ["--gpt"])
 
     assert rc == 0
-    gpt_file = tmp_path / "cache" / "gpt" / "taxonomy-with-ids.en-US.txt"
+    gpt_file = tmp_path / "cache" / "gpt" / "taxonomy-with-ids.en-GB.txt"
     assert gpt_file.exists()
 
 

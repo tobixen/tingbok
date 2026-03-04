@@ -21,7 +21,7 @@ download-taxonomy
 
     ``--gpt [LOCALE ...]``
         Download Google Product Taxonomy (GPT) files.  When no locales are
-        given, downloads the English (en-US) file.  Locale codes are the
+        given, downloads the English (en-GB) file.  Locale codes are the
         BCP-47 locale tags used in the GPT filenames, e.g. ``nb-NO``,
         ``sv-SE``, ``de-DE``.  Files are stored as
         ``{cache_dir}/gpt/taxonomy-with-ids.{locale}.txt``.
@@ -69,6 +69,7 @@ def _populate_uris(
         return 1
 
     from tingbok.services import gpt as gpt_service  # noqa: PLC0415
+    from tingbok.services import off as off_service  # noqa: PLC0415
     from tingbok.services import skos as skos_service  # noqa: PLC0415
 
     # --- Load vocabulary preserving comments ---
@@ -124,6 +125,17 @@ def _populate_uris(
                         discovered.append(uri)
             except Exception as exc:  # noqa: BLE001
                 print(f"  Warning: GPT lookup failed for '{concept_id}': {exc}", file=sys.stderr)
+
+        # OFF source (openfoodfacts package, food taxonomy only)
+        if "off" not in excluded:
+            try:
+                off_concept = off_service.lookup_concept(label, lang)
+                if off_concept and off_concept.get("uri"):
+                    uri = off_concept["uri"]
+                    if uri not in static_uris and uri not in discovered:
+                        discovered.append(uri)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  Warning: OFF lookup failed for '{concept_id}': {exc}", file=sys.stderr)
 
         if discovered:
             updates[concept_id] = discovered
@@ -309,7 +321,7 @@ def _build_parser() -> argparse.ArgumentParser:
         nargs="*",
         metavar="LOCALE",
         help=(
-            "Download Google Product Taxonomy file(s).  Without arguments downloads en-US. "
+            "Download Google Product Taxonomy file(s).  Without arguments downloads en-GB. "
             f"Known locales: {', '.join(GPT_LOCALES)}"
         ),
     )
@@ -351,7 +363,7 @@ def main() -> None:
         cache_dir = Path(args.cache_dir)
         gpt_locales: list[str] | None = None
         if args.gpt is not None:
-            # --gpt with no arguments → default to en-US
-            gpt_locales = args.gpt if args.gpt else ["en-US"]
+            # --gpt with no arguments → default to en-GB
+            gpt_locales = args.gpt if args.gpt else ["en-GB"]
         rc = _download_taxonomy(cache_dir, gpt_locales=gpt_locales, agrovoc=args.agrovoc)
         sys.exit(rc)

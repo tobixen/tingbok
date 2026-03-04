@@ -20,7 +20,7 @@ Language files are stored as::
     {cache_dir}/gpt/taxonomy-with-ids.{locale}.txt
 
 The ``lang`` parameter (e.g. ``"en"``, ``"nb"``) is mapped to the closest
-available locale (e.g. ``"en"`` → ``en-US``, ``"nb"`` → ``nb-NO``).
+available locale (e.g. ``"en"`` → ``en-GB``, ``"nb"`` → ``nb-NO``).
 """
 
 from __future__ import annotations
@@ -37,8 +37,8 @@ logger = logging.getLogger(__name__)
 #: Known GPT locale filenames published by Google.
 #: https://www.google.com/basepages/producttype/taxonomy-with-ids.{locale}.txt
 GPT_LOCALES: list[str] = [
-    "en-US",
     "en-GB",
+    "en-US",
     "de-DE",
     "fr-FR",
     "it-IT",
@@ -59,11 +59,11 @@ GPT_LOCALES: list[str] = [
 ]
 
 #: Default locale to try first when no language-specific file is found.
-_DEFAULT_LOCALE = "en-US"
+_DEFAULT_LOCALE = "en-GB"
 
 #: Map from short BCP-47 language tag to preferred GPT locale.
 _LANG_TO_LOCALE: dict[str, str] = {
-    "en": "en-US",
+    "en": "en-GB",
     "de": "de-DE",
     "fr": "fr-FR",
     "it": "it-IT",
@@ -100,7 +100,7 @@ def _locale_for_lang(lang: str) -> str:
 
 
 def _locale_candidates(lang: str) -> list[str]:
-    """Return ordered list of locale candidates for *lang*, falling back to en-US."""
+    """Return ordered list of locale candidates for *lang*, falling back to en-GB."""
     primary = _locale_for_lang(lang)
     if primary == _DEFAULT_LOCALE:
         return [_DEFAULT_LOCALE]
