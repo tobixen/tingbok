@@ -15,6 +15,25 @@ populate-uris
     existing comments and formatting are preserved.
 
     Run ``tingbok populate-uris --help`` for details.
+
+download-taxonomy
+    Download external taxonomy databases into the local cache directory.
+
+    ``--gpt [LOCALE ...]``
+        Download Google Product Taxonomy (GPT) files.  When no locales are
+        given, downloads the English (en-US) file.  Locale codes are the
+        BCP-47 locale tags used in the GPT filenames, e.g. ``nb-NO``,
+        ``sv-SE``, ``de-DE``.  Files are stored as
+        ``{cache_dir}/gpt/taxonomy-with-ids.{locale}.txt``.
+
+    ``--agrovoc``
+        Download the latest AGROVOC LOD N-Triples dump from FAO and extract
+        ``agrovoc.nt`` into ``{cache_dir}/skos/``.
+
+    ``--cache-dir DIR``
+        Override the cache root (default: ``/var/cache/tingbok``).
+
+    Run ``tingbok download-taxonomy --help`` for details.
 """
 
 from __future__ import annotations
@@ -128,6 +147,102 @@ def _populate_uris(
 
 
 # ---------------------------------------------------------------------------
+# download-taxonomy
+# ---------------------------------------------------------------------------
+
+#: Default cache root used by download-taxonomy (system-wide).
+_DEFAULT_DOWNLOAD_CACHE_DIR = "/var/cache/tingbok"
+
+#: URL template for GPT taxonomy files.
+_GPT_URL_TEMPLATE = "https://www.google.com/basepages/producttype/taxonomy-with-ids.{locale}.txt"
+
+#: URL for the latest AGROVOC LOD N-Triples zip.
+_AGROVOC_NT_ZIP_URL = "https://agrovoc.fao.org/latestAgrovoc/agrovoc_lod.nt.zip"
+
+
+def _download_file(url: str, dest: Path, *, description: str = "") -> bool:
+    """Download *url* to *dest*, streaming the response.
+
+    Returns True on success, False on error.
+    """
+    import niquests  # noqa: PLC0415
+
+    label = description or url
+    print(f"Downloading {label} ...")
+    try:
+        response = niquests.get(url, stream=True, timeout=60)
+        if response.status_code != 200:
+            print(f"  Error: HTTP {response.status_code} for {url}", file=sys.stderr)
+            return False
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        with open(dest, "wb") as f:
+            for chunk in response.iter_content(chunk_size=65536):
+                if chunk:
+                    f.write(chunk)
+        print(f"  Saved to {dest}")
+        return True
+    except Exception as exc:  # noqa: BLE001
+        print(f"  Error downloading {url}: {exc}", file=sys.stderr)
+        return False
+
+
+def _download_taxonomy(
+    cache_dir: Path,
+    *,
+    gpt_locales: list[str] | None = None,
+    agrovoc: bool = False,
+) -> int:
+    """Core logic for the ``download-taxonomy`` subcommand.
+
+    Returns an exit code (0 = success, 1 = one or more downloads failed).
+    """
+    import zipfile  # noqa: PLC0415
+
+    if not gpt_locales and not agrovoc:
+        print("Nothing to download.  Use --gpt and/or --agrovoc.  Run with --help for details.")
+        return 0
+
+    errors = 0
+
+    # --- Google Product Taxonomy ---
+    if gpt_locales is not None:
+        gpt_dir = cache_dir / "gpt"
+        for locale in gpt_locales:
+            url = _GPT_URL_TEMPLATE.format(locale=locale)
+            dest = gpt_dir / f"taxonomy-with-ids.{locale}.txt"
+            if not _download_file(url, dest, description=f"GPT taxonomy ({locale})"):
+                errors += 1
+
+    # --- AGROVOC LOD ---
+    if agrovoc:
+        skos_dir = cache_dir / "skos"
+        zip_dest = skos_dir / "_agrovoc_lod.nt.zip"
+        if _download_file(_AGROVOC_NT_ZIP_URL, zip_dest, description="AGROVOC LOD (N-Triples zip)"):
+            print("  Extracting agrovoc.nt ...")
+            try:
+                with zipfile.ZipFile(zip_dest) as zf:
+                    # Find the .nt member (name varies by release)
+                    nt_members = [m for m in zf.namelist() if m.endswith(".nt")]
+                    if not nt_members:
+                        print("  Error: no .nt file found in zip archive", file=sys.stderr)
+                        errors += 1
+                    else:
+                        member = nt_members[0]
+                        dest_nt = skos_dir / "agrovoc.nt"
+                        with zf.open(member) as src, open(dest_nt, "wb") as dst:
+                            dst.write(src.read())
+                        print(f"  Saved to {dest_nt}")
+                zip_dest.unlink(missing_ok=True)
+            except zipfile.BadZipFile as exc:
+                print(f"  Error: bad zip file: {exc}", file=sys.stderr)
+                errors += 1
+        else:
+            errors += 1
+
+    return 0 if errors == 0 else 1
+
+
+# ---------------------------------------------------------------------------
 # Argument parsing + dispatch
 # ---------------------------------------------------------------------------
 
@@ -159,6 +274,40 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--dry-run", action="store_true", help="Print proposed changes without modifying the file")
     p.add_argument("--lang", default="en", metavar="LANG", help="Language for concept lookup (default: en)")
 
+    # download-taxonomy
+    from tingbok.services.gpt import GPT_LOCALES  # noqa: PLC0415
+
+    dt = sub.add_parser(
+        "download-taxonomy",
+        help="Download external taxonomy databases (GPT, AGROVOC) into the local cache",
+        description=(
+            "Download taxonomy data files into the cache directory.\n\n"
+            "Use --gpt to download Google Product Taxonomy files and --agrovoc to\n"
+            "download the latest AGROVOC LOD N-Triples dump from FAO.\n"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    dt.add_argument(
+        "--cache-dir",
+        metavar="DIR",
+        default=_DEFAULT_DOWNLOAD_CACHE_DIR,
+        help=f"Cache root directory (default: {_DEFAULT_DOWNLOAD_CACHE_DIR})",
+    )
+    dt.add_argument(
+        "--gpt",
+        nargs="*",
+        metavar="LOCALE",
+        help=(
+            "Download Google Product Taxonomy file(s).  Without arguments downloads en-US. "
+            f"Known locales: {', '.join(GPT_LOCALES)}"
+        ),
+    )
+    dt.add_argument(
+        "--agrovoc",
+        action="store_true",
+        help="Download the latest AGROVOC LOD N-Triples dump from FAO",
+    )
+
     return parser
 
 
@@ -185,4 +334,13 @@ def main() -> None:
             dry_run=args.dry_run,
             lang=args.lang,
         )
+        sys.exit(rc)
+
+    if args.command == "download-taxonomy":
+        cache_dir = Path(args.cache_dir)
+        gpt_locales: list[str] | None = None
+        if args.gpt is not None:
+            # --gpt with no arguments → default to en-US
+            gpt_locales = args.gpt if args.gpt else ["en-US"]
+        rc = _download_taxonomy(cache_dir, gpt_locales=gpt_locales, agrovoc=args.agrovoc)
         sys.exit(rc)

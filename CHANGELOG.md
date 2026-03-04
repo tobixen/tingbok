@@ -5,9 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
+
 ## [v0.8.0] - 2026-03-04
 
 ### Added
+- **Google Product Taxonomy (GPT) source** (`services/gpt.py`) — parses locally cached
+  GPT taxonomy files and provides concept lookup by label.  URI scheme: `gpt:{id}`
+  (e.g. `gpt:632` for "Electronics"), mirroring OFF's `off://` synthetic URIs.
+  `lookup_concept` supports label-based lookup with broader-parent resolution.
+  `get_labels` fetches translations from all cached language files.
+- **`download-taxonomy` CLI subcommand** — downloads taxonomy data files into the local
+  cache directory:
+  - `--gpt [LOCALE ...]` downloads Google Product Taxonomy files from
+    `https://www.google.com/basepages/producttype/taxonomy-with-ids.{locale}.txt`.
+    Without a locale argument defaults to `en-US`.  Known locales are listed in the
+    help text (`nb-NO`, `sv-SE`, `de-DE`, `fr-FR`, etc.).  Files are stored as
+    `{cache_dir}/gpt/taxonomy-with-ids.{locale}.txt`.
+  - `--agrovoc` downloads the latest AGROVOC LOD N-Triples zip from FAO
+    (`https://agrovoc.fao.org/latestAgrovoc/agrovoc_lod.nt.zip`), extracts
+    `agrovoc.nt` into `{cache_dir}/skos/`, and removes the zip.
+  - Default cache root: `/var/cache/tingbok` (override with `--cache-dir`).
 - **`source_uris` populated in `vocabulary.yaml`** for all 15 concepts that have a known
   external URI.  Each concept's `source_uris` list now includes the corresponding DBpedia
   URI (e.g. `food` → `http://dbpedia.org/resource/Food`).

@@ -126,11 +126,12 @@ async def test_discover_source_uris_populates_memory(client):
     """Auto-discovery should add external URIs for concepts with empty source_uris."""
     import tingbok.app as app_module
 
-    fake_uri = "http://dbpedia.org/resource/Electronics"
+    # Use a concept that has no external source_uris in vocabulary.yaml
+    fake_uri = "http://dbpedia.org/resource/Boat_equipment"
 
     def fake_lookup(label, lang, source, cache_dir):
-        if source == "dbpedia" and label.lower() == "electronics":
-            return {"uri": fake_uri, "prefLabel": "Electronics", "source": "dbpedia", "broader": []}
+        if source == "dbpedia" and "boat" in label.lower():
+            return {"uri": fake_uri, "prefLabel": "Boat equipment", "source": "dbpedia", "broader": []}
         return None
 
     # Reset discovered uris before test
@@ -139,8 +140,8 @@ async def test_discover_source_uris_populates_memory(client):
     with patch("tingbok.app.skos_service.lookup_concept", side_effect=fake_lookup):
         await app_module._discover_source_uris_background()
 
-    assert "electronics" in app_module._discovered_source_uris
-    assert app_module._discovered_source_uris["electronics"].get("dbpedia") == fake_uri
+    assert "boat-equipment" in app_module._discovered_source_uris
+    assert app_module._discovered_source_uris["boat-equipment"].get("dbpedia") == fake_uri
 
 
 @pytest.mark.anyio
@@ -229,8 +230,8 @@ async def test_discover_queries_agrovoc_when_store_available(tmp_path, monkeypat
 
     def recording_lookup(label, lang, source, cache_dir):
         queried_sources.add(source)
-        if source == "agrovoc" and label.lower() == "electronics":
-            return {"uri": fake_agrovoc_uri, "prefLabel": "Electronics", "source": "agrovoc", "broader": []}
+        if source == "agrovoc" and "boat" in label.lower():
+            return {"uri": fake_agrovoc_uri, "prefLabel": "Boat equipment", "source": "agrovoc", "broader": []}
         return None
 
     with patch.object(skos_service, "lookup_concept", side_effect=recording_lookup):
@@ -239,7 +240,7 @@ async def test_discover_queries_agrovoc_when_store_available(tmp_path, monkeypat
             await app_module._discover_source_uris_background()
 
     assert "agrovoc" in queried_sources, "AGROVOC should be queried when Oxigraph store is available"
-    assert app_module._discovered_source_uris.get("electronics", {}).get("agrovoc") == fake_agrovoc_uri
+    assert app_module._discovered_source_uris.get("boat-equipment", {}).get("agrovoc") == fake_agrovoc_uri
 
 
 @pytest.mark.anyio
