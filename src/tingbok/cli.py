@@ -94,11 +94,6 @@ def _populate_uris(
         static_uris: list[str] = list(data.get("source_uris") or [])
         excluded: set[str] = set(data.get("excluded_sources") or [])
 
-        # Skip if already has at least one non-tingbok external URI
-        has_external = any(not u.startswith("https://tingbok.plann.no/") for u in static_uris)
-        if has_external:
-            continue
-
         label: str = data.get("prefLabel") or concept_id.split("/")[-1].replace("_", " ")
         discovered: list[str] = []
 

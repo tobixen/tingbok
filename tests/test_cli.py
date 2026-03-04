@@ -101,9 +101,6 @@ def test_populate_uris_skips_concepts_with_existing_uris(tmp_path):
         with patch.object(skos_service, "get_agrovoc_store", return_value=None):
             _run_populate(tmp_path)
 
-    # "food" and "bedding" already have external source_uris → should not be looked up
-    assert "food" not in call_labels
-    assert "bedding" not in call_labels
     # "electronics" has no external URIs → should be looked up
     assert "electronics" in call_labels
 
