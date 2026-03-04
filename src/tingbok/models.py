@@ -89,6 +89,8 @@ class VocabularyConcept(BaseModel):
     broader: list[str] = []
     narrower: list[str] = []
     uri: str | None = None
+    source_uris: list[str] = []
+    excluded_sources: list[str] = []
     labels: dict[str, str] = {}
     description: str | None = None
     wikipediaUrl: str | None = None

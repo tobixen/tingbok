@@ -14,6 +14,7 @@ from tingbok.models import HealthResponse, VocabularyConcept
 from tingbok.routers import ean, skos
 
 VOCABULARY_PATH = Path(__file__).parent / "data" / "vocabulary.yaml"
+TINGBOK_BASE_URL = "https://tingbok.plann.no"
 
 #: Root of the tingbok cache.  Set ``TINGBOK_CACHE_DIR`` to override.
 _CACHE_BASE = Path(os.environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache" / "tingbok")))
@@ -71,6 +72,10 @@ async def get_vocabulary() -> dict[str, VocabularyConcept]:
         broader = data.get("broader", [])
         if isinstance(broader, str):
             broader = [broader]
+        self_uri = f"{TINGBOK_BASE_URL}/api/vocabulary/{concept_id}"
+        source_uris: list[str] = list(data.get("source_uris", []))
+        if self_uri not in source_uris:
+            source_uris.insert(0, self_uri)
         result[concept_id] = VocabularyConcept(
             id=concept_id,
             prefLabel=data.get("prefLabel", concept_id),
@@ -78,6 +83,8 @@ async def get_vocabulary() -> dict[str, VocabularyConcept]:
             broader=broader,
             narrower=data.get("narrower", []),
             uri=data.get("uri"),
+            source_uris=source_uris,
+            excluded_sources=data.get("excluded_sources", []),
             labels=data.get("labels", {}),
             description=data.get("description"),
             wikipediaUrl=data.get("wikipediaUrl"),
@@ -96,6 +103,10 @@ async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
     broader = data.get("broader", [])
     if isinstance(broader, str):
         broader = [broader]
+    self_uri = f"{TINGBOK_BASE_URL}/api/vocabulary/{concept_id}"
+    source_uris: list[str] = list(data.get("source_uris", []))
+    if self_uri not in source_uris:
+        source_uris.insert(0, self_uri)
     return VocabularyConcept(
         id=concept_id,
         prefLabel=data.get("prefLabel", concept_id),
@@ -103,6 +114,8 @@ async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
         broader=broader,
         narrower=data.get("narrower", []),
         uri=data.get("uri"),
+        source_uris=source_uris,
+        excluded_sources=data.get("excluded_sources", []),
         labels=data.get("labels", {}),
         description=data.get("description"),
         wikipediaUrl=data.get("wikipediaUrl"),

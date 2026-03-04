@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
+## [Unreleased]
+
+### Added
+- **`source_uris` and `excluded_sources` fields** on `VocabularyConcept` model and
+  `/api/vocabulary` / `/api/vocabulary/{concept_id}` endpoints.
+  - `source_uris` is a list of URIs for all external sources the concept is
+    present in (including the canonical tingbok self-URI for every concept).
+  - `excluded_sources` lists source names that have been checked and found
+    inapplicable for this concept.
+  - Both fields are populated from `vocabulary.yaml`; the tingbok self-URI
+    (`https://tingbok.plann.no/api/vocabulary/{id}`) is always prepended
+    automatically even if absent from YAML.
+
 ## [v0.1.2] - 2026-03-03
 
 ### Fixed
