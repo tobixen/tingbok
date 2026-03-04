@@ -45,9 +45,14 @@ concepts:
   # TOP-LEVEL CATEGORIES
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Root_name_server
-    - http://www.wikidata.org/entity/Q111029
+    source_uris: []
+    excluded_sources:
+      - agrovoc
+      - dbpedia
+      - wikidata
+      - off
+      - gpt
+
   food:
     prefLabel: "Food"
     altLabel:
@@ -56,6 +61,9 @@ concepts:
     uri: "http://dbpedia.org/resource/Food"
     source_uris:
     - "http://dbpedia.org/resource/Food"
+    - http://aims.fao.org/aos/agrovoc/c_3032
+    - http://dbpedia.org/resource/Beetle
+    - http://www.wikidata.org/entity/Q2095
     labels:
       en: "Food"
       nb: "Mat"
@@ -93,6 +101,7 @@ concepts:
     uri: "http://dbpedia.org/resource/Tool"
     source_uris:
     - "http://dbpedia.org/resource/Tool"
+    - http://www.wikidata.org/entity/Q37013115
     excluded_sources:
     - agrovoc
     labels:
@@ -150,6 +159,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Transport
     - http://www.wikidata.org/entity/Q7590
+    - http://aims.fao.org/aos/agrovoc/c_7874
   electronics:
     prefLabel: "Electronics"
     altLabel:
@@ -169,6 +179,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Electronics
     - http://www.wikidata.org/entity/Q11650
+    - http://aims.fao.org/aos/agrovoc/c_2522
   electronics/connectors:
     prefLabel: "Connectors"
     altLabel:
@@ -212,6 +223,8 @@ concepts:
       en: ["ac_cable", "mains cable", "power cord"]
     broader: electronics
 
+    source_uris:
+    - http://dbpedia.org/resource/Television
   dc-cable:
     prefLabel: "DC cable"
     altLabel:
@@ -238,6 +251,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Cable
     - http://www.wikidata.org/entity/Q37492867
+    - http://aims.fao.org/aos/agrovoc/c_a8bcf3c5
   electrical-connector:
     prefLabel: "Electrical connector"
     altLabel:
@@ -281,6 +295,8 @@ concepts:
       en: ["adc_module", "analog to digital converter"]
     broader: electronics/components
 
+    source_uris:
+    - http://dbpedia.org/resource/Galois_module
   analog-circuits:
     prefLabel: "Analog circuits"
     altLabel:
@@ -298,6 +314,8 @@ concepts:
     labels:
       nb: "Båtutstyr"
     broader: ["transport"]
+    source_uris:
+    - http://dbpedia.org/resource/List_of_equipment_of_the_British_Army
 
   household:
     prefLabel: "Household"
@@ -340,6 +358,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Clothing
     - http://www.wikidata.org/entity/Q11460
+    - http://aims.fao.org/aos/agrovoc/c_a71a1006
   books:
     prefLabel: "Books"
     altLabel:
@@ -360,6 +379,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Document
     - http://www.wikidata.org/entity/Q124381809
+    - http://aims.fao.org/aos/agrovoc/c_4f435f4f
   registration-plate:
     prefLabel: "Registration plate"
     altLabel:
@@ -390,6 +410,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Drink
     - http://www.wikidata.org/entity/Q50816708
+    - http://aims.fao.org/aos/agrovoc/c_896
   food/dairy:
     prefLabel: "Dairy"
     altLabel:
@@ -405,6 +426,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Dairy
     - http://www.wikidata.org/entity/Q637776
+    - http://aims.fao.org/aos/agrovoc/c_34761
   food/grains:
     prefLabel: "Grains & cereals"
     altLabel:
@@ -438,6 +460,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Meat
     - http://www.wikidata.org/entity/Q10990
+    - http://aims.fao.org/aos/agrovoc/c_4669
   food/meat/pork:
     prefLabel: "Pork"
     broader: food/meat
@@ -445,6 +468,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pork
     - http://www.wikidata.org/entity/Q191768
+    - http://aims.fao.org/aos/agrovoc/c_6120
   food/meat/chicken:
     prefLabel: "Chicken"
     altLabel:
@@ -476,6 +500,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Canned_fish
     - http://www.wikidata.org/entity/Q5032629
+    - http://aims.fao.org/aos/agrovoc/c_16479
   food/vegetables:
     prefLabel: "Vegetables"
     altLabel:
@@ -494,6 +519,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Vegetable
     - http://www.wikidata.org/entity/Q1413783
+    - http://aims.fao.org/aos/agrovoc/c_8174
   food/fruits:
     prefLabel: "Fruits"
     altLabel:
@@ -508,6 +534,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Fruit
     - http://www.wikidata.org/entity/Q3089329
+    - http://aims.fao.org/aos/agrovoc/c_3131
   food/legumes:
     prefLabel: "Legumes"
     altLabel:
@@ -523,6 +550,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Legume
     - http://www.wikidata.org/entity/Q145909
+    - http://aims.fao.org/aos/agrovoc/c_4255
   food/condiments:
     prefLabel: "Condiments & sauces"
     altLabel:
@@ -557,6 +585,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Snack
     - http://www.wikidata.org/entity/Q60749309
+    - http://aims.fao.org/aos/agrovoc/c_34338
   food/preserved:
     prefLabel: "Preserved foods"
     altLabel:
@@ -581,6 +610,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pickles
     - http://www.wikidata.org/entity/Q29565778
+    - http://aims.fao.org/aos/agrovoc/c_5864
   food/baking:
     prefLabel: "Baking"
     altLabel:
@@ -594,6 +624,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Baking
     - http://www.wikidata.org/entity/Q720398
+    - http://aims.fao.org/aos/agrovoc/c_786
   food/spices:
     prefLabel: "Spices & herbs"
     altLabel:
@@ -609,6 +640,8 @@ concepts:
     - food/spices/oregano
     - food/spices/basil
 
+    source_uris:
+    - http://dbpedia.org/resource/List_of_culinary_herbs_and_spices
   food/spices/pepper:
     prefLabel: "Pepper"
     altLabel:
@@ -618,6 +651,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pepper
     - http://www.wikidata.org/entity/Q22907699
+    - http://aims.fao.org/aos/agrovoc/c_25495
   food/spices/curry:
     prefLabel: "Curry"
     altLabel:
@@ -640,6 +674,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Thyme
     - http://www.wikidata.org/entity/Q3215980
+    - http://aims.fao.org/aos/agrovoc/c_14877
   beer:
     prefLabel: "Beer"
     altLabel:
@@ -668,6 +703,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Alcoholic_beverage
     - http://www.wikidata.org/entity/Q3775653
+    - http://aims.fao.org/aos/agrovoc/c_248
   coffee:
     prefLabel: "Coffee"
     altLabel:
@@ -678,6 +714,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Coffee
     - http://www.wikidata.org/entity/Q8486
+    - http://aims.fao.org/aos/agrovoc/c_1731
   tea:
     prefLabel: "Tea"
     altLabel:
@@ -687,6 +724,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Tea
     - http://www.wikidata.org/entity/Q15885810
+    - http://aims.fao.org/aos/agrovoc/c_7634
   juice:
     prefLabel: "Juice"
     altLabel:
@@ -706,6 +744,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Milk
     - http://www.wikidata.org/entity/Q8495
+    - http://aims.fao.org/aos/agrovoc/c_4826
   cheese:
     prefLabel: "Cheese"
     altLabel:
@@ -715,6 +754,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Cheese
     - http://www.wikidata.org/entity/Q10943
+    - http://aims.fao.org/aos/agrovoc/c_1507
   yogurt:
     prefLabel: "Yogurt"
     altLabel:
@@ -734,6 +774,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Butter
     - http://www.wikidata.org/entity/Q34172
+    - http://aims.fao.org/aos/agrovoc/c_1162
   cream:
     prefLabel: "Cream"
     altLabel:
@@ -745,6 +786,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Cream
     - http://www.wikidata.org/entity/Q13228
+    - http://aims.fao.org/aos/agrovoc/c_1951
   pasta:
     prefLabel: "Pasta"
     altLabel:
@@ -755,6 +797,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pasta
     - http://www.wikidata.org/entity/Q3897473
+    - http://aims.fao.org/aos/agrovoc/c_5621
   rice:
     prefLabel: "Rice"
     altLabel:
@@ -764,6 +807,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Rice
     - http://www.wikidata.org/entity/Q5090
+    - http://aims.fao.org/aos/agrovoc/c_6599
   bread:
     prefLabel: "Bread"
     altLabel:
@@ -773,6 +817,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Bread
     - http://www.wikidata.org/entity/Q7802
+    - http://aims.fao.org/aos/agrovoc/c_1071
   noodles:
     prefLabel: "Noodles"
     broader: food/grains
@@ -780,6 +825,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Noodle
     - http://www.wikidata.org/entity/Q113012299
+    - http://aims.fao.org/aos/agrovoc/c_12848
   flour:
     prefLabel: "Flour"
     altLabel:
@@ -799,6 +845,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Buckwheat
     - http://www.wikidata.org/entity/Q37328861
+    - http://aims.fao.org/aos/agrovoc/c_9471
   meat:
     prefLabel: "Meat"
     altLabel:
@@ -808,6 +855,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Meat
     - http://www.wikidata.org/entity/Q10990
+    - http://aims.fao.org/aos/agrovoc/c_4669
   ham:
     prefLabel: "Ham"
     altLabel:
@@ -837,6 +885,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Fish
     - http://www.wikidata.org/entity/Q152
+    - http://aims.fao.org/aos/agrovoc/c_15903
   tuna:
     prefLabel: "Tuna"
     altLabel:
@@ -846,6 +895,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Tuna
     - http://www.wikidata.org/entity/Q1245536
+    - http://aims.fao.org/aos/agrovoc/c_8003
   sardines:
     prefLabel: "Sardines"
     altLabel:
@@ -856,6 +906,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Sardine
     - http://www.wikidata.org/entity/Q16746397
+    - http://aims.fao.org/aos/agrovoc/c_6813
   potatoes:
     prefLabel: "Potatoes"
     altLabel:
@@ -866,6 +917,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Potato
     - http://www.wikidata.org/entity/Q135021431
+    - http://aims.fao.org/aos/agrovoc/c_13551
   onions:
     prefLabel: "Onions"
     altLabel:
@@ -876,6 +928,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Onion
     - http://www.wikidata.org/entity/Q7093938
+    - http://aims.fao.org/aos/agrovoc/c_12934
   garlic:
     prefLabel: "Garlic"
     altLabel:
@@ -885,6 +938,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Garlic
     - http://www.wikidata.org/entity/Q21546392
+    - http://aims.fao.org/aos/agrovoc/c_11091
   tomatoes:
     prefLabel: "Tomatoes"
     altLabel:
@@ -895,6 +949,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Tomato
     - http://www.wikidata.org/entity/Q11898003
+    - http://aims.fao.org/aos/agrovoc/c_7805
   mushrooms:
     prefLabel: "Mushrooms"
     altLabel:
@@ -903,12 +958,15 @@ concepts:
     uri: "http://dbpedia.org/resource/Mushroom"
     source_uris:
     - "http://dbpedia.org/resource/Mushroom"
-
+    - http://aims.fao.org/aos/agrovoc/c_2487
+    - http://www.wikidata.org/entity/Q22442668
   preserved-vegetables:
     prefLabel: "Preserved vegetables"
     broader: food/preserved
 
   # Fruits
+    source_uris:
+    - http://dbpedia.org/resource/Tianjin_preserved_vegetable
   bananas:
     prefLabel: "Bananas"
     altLabel:
@@ -919,6 +977,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Banana
     - http://www.wikidata.org/entity/Q4853898
+    - http://aims.fao.org/aos/agrovoc/c_806
   olive:
     prefLabel: "Olives"
     altLabel:
@@ -930,6 +989,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Olive
     - http://www.wikidata.org/entity/Q56400385
+    - http://aims.fao.org/aos/agrovoc/c_12926
   beans:
     prefLabel: "Beans"
     altLabel:
@@ -940,6 +1000,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Bean
     - http://www.wikidata.org/entity/Q3637169
+    - http://aims.fao.org/aos/agrovoc/c_331566
   lentils:
     prefLabel: "Lentils"
     altLabel:
@@ -950,6 +1011,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Lentil
     - http://www.wikidata.org/entity/Q16590111
+    - http://aims.fao.org/aos/agrovoc/c_12140
   chickpeas:
     prefLabel: "Chickpeas"
     altLabel:
@@ -960,6 +1022,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Chickpea
     - http://www.wikidata.org/entity/Q81375
+    - http://aims.fao.org/aos/agrovoc/c_9785
   soybeans:
     prefLabel: "Soybeans"
     altLabel:
@@ -972,6 +1035,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Soybean
     - http://www.wikidata.org/entity/Q11006
+    - http://aims.fao.org/aos/agrovoc/c_14477
   oil:
     prefLabel: "Oil"
     altLabel:
@@ -990,6 +1054,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Vinegar
     - http://www.wikidata.org/entity/Q41354
+    - http://aims.fao.org/aos/agrovoc/c_8253
   mayonnaise:
     prefLabel: "Mayonnaise"
     altLabel:
@@ -1000,6 +1065,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Mayonnaise
     - http://www.wikidata.org/entity/Q167893
+    - http://aims.fao.org/aos/agrovoc/c_12442
   ketchup:
     prefLabel: "Ketchup"
     altLabel:
@@ -1019,6 +1085,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Mustard
     - http://www.wikidata.org/entity/Q131748
+    - http://aims.fao.org/aos/agrovoc/c_25488
   pesto:
     prefLabel: "Pesto"
     broader: food/condiments
@@ -1051,6 +1118,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Soy_sauce
     - http://www.wikidata.org/entity/Q229385
+    - http://aims.fao.org/aos/agrovoc/c_24246
   spread:
     prefLabel: "Spread"
     altLabel:
@@ -1069,6 +1137,7 @@ concepts:
     uri: "http://dbpedia.org/resource/Snack"
     source_uris:
     - "http://dbpedia.org/resource/Snack"
+    - http://www.wikidata.org/entity/Q60749309
     excluded_sources:
     - agrovoc
 
@@ -1091,6 +1160,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Nut
     - http://www.wikidata.org/entity/Q130392098
+    - http://aims.fao.org/aos/agrovoc/c_12873
   cashews:
     prefLabel: "Cashews"
     altLabel:
@@ -1101,6 +1171,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Cashew
     - http://www.wikidata.org/entity/Q34007
+    - http://aims.fao.org/aos/agrovoc/c_9647
   peanuts:
     prefLabel: "Peanuts"
     altLabel:
@@ -1110,6 +1181,8 @@ concepts:
     uri: "http://dbpedia.org/resource/Peanut"
     source_uris:
     - "http://dbpedia.org/resource/Peanut"
+    - http://dbpedia.org/resource/Peanuts
+    - http://www.wikidata.org/entity/Q7115636
     excluded_sources:
     - agrovoc
     # AGROVOC uses "groundnuts" which is less common
@@ -1124,6 +1197,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Biscuit
     - http://www.wikidata.org/entity/Q19801756
+    - http://aims.fao.org/aos/agrovoc/c_16475
   chocolate:
     prefLabel: "Chocolate"
     altLabel:
@@ -1134,6 +1208,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Chocolate
     - http://www.wikidata.org/entity/Q195
+    - http://aims.fao.org/aos/agrovoc/c_1582
   canning:
     prefLabel: "Canning"
     altLabel:
@@ -1144,6 +1219,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Canning
     - http://www.wikidata.org/entity/Q843389
+    - http://aims.fao.org/aos/agrovoc/c_1260
   jam:
     prefLabel: "Jam"
     altLabel:
@@ -1154,6 +1230,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Fruit_preserves
     - http://www.wikidata.org/entity/Q1269
+    - http://aims.fao.org/aos/agrovoc/c_4037
   pate:
     prefLabel: "Pâté"
     altLabel:
@@ -1184,6 +1261,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Sugar
     - http://www.wikidata.org/entity/Q11002
+    - http://aims.fao.org/aos/agrovoc/c_7498
   honey:
     prefLabel: "Honey"
     altLabel:
@@ -1194,6 +1272,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Honey
     - http://www.wikidata.org/entity/Q10987
+    - http://aims.fao.org/aos/agrovoc/c_3652
   spice:
     prefLabel: "Spice"
     altLabel:
@@ -1226,6 +1305,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Hand_tool
     - http://www.wikidata.org/entity/Q50321273
+    - http://aims.fao.org/aos/agrovoc/c_25785
   tools/power:
     prefLabel: "Power tools"
     broader: tools
@@ -1233,6 +1313,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Power_tool
     - http://www.wikidata.org/entity/Q135080499
+    - http://aims.fao.org/aos/agrovoc/c_25786
   tools/measuring:
     prefLabel: "Measuring tools"
     broader: tools
@@ -1302,6 +1383,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Personal_protective_equipment
     - http://www.wikidata.org/entity/Q7398610
+    - http://aims.fao.org/aos/agrovoc/c_6733
   boat-equipment/navigation:
     prefLabel: "Navigation"
     altLabel:
@@ -1311,6 +1393,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Navigation
     - http://www.wikidata.org/entity/Q102066
+    - http://aims.fao.org/aos/agrovoc/c_15908
   boat-equipment/rigging:
     prefLabel: "Rigging"
     altLabel:
@@ -1320,6 +1403,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Rigging
     - http://www.wikidata.org/entity/Q942890
+    - http://aims.fao.org/aos/agrovoc/c_0c072dac
   boat-equipment/deck:
     prefLabel: "Deck hardware"
     broader: boat-equipment
@@ -1336,6 +1420,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Thomas_&_Friends
     - http://www.wikidata.org/entity/Q66150902
+    - http://aims.fao.org/aos/agrovoc/c_25784
   boat-spare:
     prefLabel: "Boat spare parts"
     broader: boat-equipment
@@ -1371,6 +1456,8 @@ concepts:
     prefLabel: "Sail repair"
     broader: boat-equipment/rigging
 
+    source_uris:
+    - http://dbpedia.org/resource/List_of_The_Grim_Adventures_of_Billy_&_Mandy_episodes
   shackle:
     prefLabel: "Shackle"
     altLabel:
@@ -1422,6 +1509,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Proceedings_of_the_Institution_of_Electrical_Engineers
     - http://www.wikidata.org/entity/Q66150902
+    - http://aims.fao.org/aos/agrovoc/c_25784
   single-board-computer:
     prefLabel: "Single-board computer"
     altLabel:
@@ -1462,6 +1550,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Reservoir
     - http://www.wikidata.org/entity/Q7619904
+    - http://aims.fao.org/aos/agrovoc/c_7427
   bedding:
     prefLabel: "Bedding"
     altLabel:
@@ -1471,6 +1560,7 @@ concepts:
     uri: "http://dbpedia.org/resource/Bedding"
     source_uris:
     - "http://dbpedia.org/resource/Bedding"
+    - http://www.wikidata.org/entity/Q1762457
     excluded_sources:
     - agrovoc
     # AGROVOC returns "litter for animals" (farm bedding) - use DBpedia
@@ -1528,6 +1618,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Adhesive
     - http://www.wikidata.org/entity/Q131790
+    - http://aims.fao.org/aos/agrovoc/c_128
   adhesive-tape:
     prefLabel: "Adhesive tape"
     altLabel:
@@ -1559,10 +1650,14 @@ concepts:
     prefLabel: "Sandpaper sheet"
     broader: sandpaper
 
+    source_uris:
+    - http://dbpedia.org/resource/West_Antarctica
   sandpaper-roll:
     prefLabel: "Sandpaper roll"
     broader: sandpaper
 
+    source_uris:
+    - http://dbpedia.org/resource/Rock_music
   sanding-disc:
     prefLabel: "Sanding disc"
     broader: sandpaper
@@ -1587,6 +1682,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Personal_protective_equipment
     - http://www.wikidata.org/entity/Q7398610
+    - http://aims.fao.org/aos/agrovoc/c_6733
   misc:
     prefLabel: "Miscellaneous"
     altLabel:
@@ -1679,6 +1775,8 @@ concepts:
   # CAMPING / OUTDOOR
   # =============================================================================
 
+    source_uris:
+    - http://dbpedia.org/resource/Service_(motor_vehicle)
   outdoor:
     prefLabel: "Outdoor equipment"
     altLabel:
@@ -1723,6 +1821,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Camping
     - http://www.wikidata.org/entity/Q260906
+    - http://aims.fao.org/aos/agrovoc/c_25225
   sleeping-bag:
     prefLabel: "Sleeping bag"
     altLabel:
@@ -1752,6 +1851,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Workwear
     - http://www.wikidata.org/entity/Q828980
+    - http://aims.fao.org/aos/agrovoc/c_f089f400
   clothing/footwear:
     prefLabel: "Footwear"
     broader: clothing
@@ -1795,6 +1895,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Construction
     - http://www.wikidata.org/entity/Q3875186
+    - http://aims.fao.org/aos/agrovoc/c_35060
   construction/lumber:
     prefLabel: "Lumber"
     altLabel:
@@ -1803,7 +1904,8 @@ concepts:
     uri: "http://dbpedia.org/resource/Lumber"
     source_uris:
     - "http://dbpedia.org/resource/Lumber"
-
+    - http://aims.fao.org/aos/agrovoc/c_6831
+    - http://www.wikidata.org/entity/Q1370714
   construction/electrical:
     prefLabel: "Electrical"
     broader: construction
@@ -1820,6 +1922,8 @@ concepts:
     uri: "http://dbpedia.org/resource/Washer_(hardware)"
     source_uris:
     - "http://dbpedia.org/resource/Washer_(hardware)"
+    - http://dbpedia.org/resource/Washer
+    - http://www.wikidata.org/entity/Q36987046
     excluded_sources:
     - agrovoc
     # AGROVOC returns "cleaning equipment" (washing machine) - use DBpedia
@@ -1913,6 +2017,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Sport
     - http://www.wikidata.org/entity/Q123253374
+    - http://aims.fao.org/aos/agrovoc/c_7328
   sports/cycling:
     prefLabel: "Cycling"
     broader: sports
@@ -1920,6 +2025,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Cycling
     - http://www.wikidata.org/entity/Q53121
+    - http://aims.fao.org/aos/agrovoc/c_2056
   sports/water-sports:
     prefLabel: "Water sports"
     broader: sports
@@ -1931,6 +2037,8 @@ concepts:
     prefLabel: "Ball sports"
     broader: sports
 
+    source_uris:
+    - http://dbpedia.org/resource/Basketball
   games:
     prefLabel: "Games"
     altLabel:
@@ -1983,6 +2091,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/First_aid
     - http://www.wikidata.org/entity/Q133981
+    - http://aims.fao.org/aos/agrovoc/c_15577
   bandage:
     prefLabel: "Bandage"
     altLabel:
@@ -2000,23 +2109,20 @@ concepts:
     uri: "http://dbpedia.org/resource/Medicine"
     source_uris:
     - "http://dbpedia.org/resource/Medicine"
-
-  # =============================================================================
-  # DBpedia category mappings (underscore format)
-  # =============================================================================
-
-  # Fashion/Clothing from DBpedia
-  # Automotive from DBpedia
-  # Food-related DBpedia categories
-  # Bikes from DBpedia
+    - http://aims.fao.org/aos/agrovoc/c_4695
+    - http://www.wikidata.org/entity/Q11190
   bike_clamp:
     prefLabel: "Bike clamp"
     broader: tools/bike
 
+    source_uris:
+    - http://dbpedia.org/resource/List_of_coalition_military_operations_of_the_Iraq_War
   bike_hardware:
     prefLabel: "Bike hardware"
     broader: tools/bike
 
+    source_uris:
+    - http://dbpedia.org/resource/IOS
   bike_repair_kit:
     prefLabel: "Bike repair kit"
     broader: tools/bike
@@ -2088,6 +2194,8 @@ concepts:
     broader: consumables
 
   # Engineering/science (map to tools or electronics)
+    source_uris:
+    - http://dbpedia.org/resource/Punk_rock
   current_shunt:
     prefLabel: "Current shunt"
     broader: electronics/components
@@ -2131,6 +2239,7 @@ concepts:
     uri: "http://dbpedia.org/resource/Global_Positioning_System"
     source_uris:
     - "http://dbpedia.org/resource/Global_Positioning_System"
+    - http://www.wikidata.org/entity/Q18822
     excluded_sources:
     - agrovoc
 
@@ -2171,6 +2280,8 @@ concepts:
     prefLabel: "Smart home sensor"
     broader: electronics
 
+    source_uris:
+    - http://dbpedia.org/resource/List_of_The_Grim_Adventures_of_Billy_&_Mandy_episodes
   smart_sensor:
     prefLabel: "Smart sensor"
     broader: electronics
@@ -2195,6 +2306,8 @@ concepts:
     prefLabel: "Sail tool"
     broader: tools
 
+    source_uris:
+    - http://dbpedia.org/resource/List_of_Walt_Disney_Animation_Studios_short_films
   sanding_accessory:
     prefLabel: "Sanding accessory"
     broader: tools
@@ -2220,6 +2333,7 @@ concepts:
     uri: "http://dbpedia.org/resource/Tool"
     source_uris:
     - "http://dbpedia.org/resource/Tool"
+    - http://www.wikidata.org/entity/Q184827
     excluded_sources:
     - agrovoc
     # AGROVOC returns "equipment" - use DBpedia for general tools
@@ -2307,7 +2421,8 @@ concepts:
     uri: "http://dbpedia.org/resource/Marine_propulsion"
     source_uris:
     - "http://dbpedia.org/resource/Marine_propulsion"
-
+    - http://aims.fao.org/aos/agrovoc/c_c110f058
+    - http://www.wikidata.org/entity/Q11482290
   maritime_book:
     prefLabel: "Maritime book"
     broader: boat-equipment/navigation
@@ -2325,6 +2440,8 @@ concepts:
     prefLabel: "Pump service kit"
     broader: boat-equipment
 
+    source_uris:
+    - http://dbpedia.org/resource/City
   sail:
     prefLabel: "Sail"
     altLabel:
@@ -2369,6 +2486,8 @@ concepts:
     prefLabel: "Screw assortment"
     broader: construction
 
+    source_uris:
+    - http://dbpedia.org/resource/Drummer
   threaded_stud:
     prefLabel: "Threaded stud"
     broader: construction
@@ -2417,6 +2536,8 @@ concepts:
     uri: "http://dbpedia.org/resource/Hermetic_seal"
     source_uris:
     - "http://dbpedia.org/resource/Hermetic_seal"
+    - http://dbpedia.org/resource/Seal
+    - http://www.wikidata.org/entity/Q162919
     excluded_sources:
     - agrovoc
     # AGROVOC returns marine mammals - use DBpedia for hardware seals
@@ -2429,6 +2550,8 @@ concepts:
     uri: "http://dbpedia.org/resource/Tubing_(material)"
     source_uris:
     - "http://dbpedia.org/resource/Tubing_(material)"
+    - http://dbpedia.org/resource/Tubing
+    - http://www.wikidata.org/entity/Q1978323
     excluded_sources:
     - agrovoc
     # AGROVOC returns agricultural pipes
@@ -2443,6 +2566,7 @@ concepts:
     uri: "http://dbpedia.org/resource/Disc"
     source_uris:
     - "http://dbpedia.org/resource/Disc"
+    - http://www.wikidata.org/entity/Q3029768
     excluded_sources:
     - agrovoc
     # AGROVOC returns "cultivators" (disc harrow) - use DBpedia
@@ -2511,6 +2635,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Furniture
     - http://www.wikidata.org/entity/Q14745
+    - http://aims.fao.org/aos/agrovoc/c_3152
   oppbevaring:
     prefLabel: "Storage"
     labels:
@@ -2520,6 +2645,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Reservoir
     - http://www.wikidata.org/entity/Q7619904
+    - http://aims.fao.org/aos/agrovoc/c_7427
   plastboks:
     prefLabel: "Plastic storage box"
     labels:
@@ -2556,6 +2682,8 @@ concepts:
       en: "Baby equipment"
     broader: household
 
+    source_uris:
+    - http://dbpedia.org/resource/Goaltender
   belysning:
     prefLabel: "Lighting"
     labels:
@@ -2566,6 +2694,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Lighting
     - http://www.wikidata.org/entity/Q210064
+    - http://aims.fao.org/aos/agrovoc/c_4326
   hobby:
     prefLabel: "Hobbies & Crafts"
     labels:
@@ -2592,6 +2721,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Animal
     - http://www.wikidata.org/entity/Q2850023
+    - http://aims.fao.org/aos/agrovoc/c_444
   garage:
     prefLabel: "Garage"
     labels:
