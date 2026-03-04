@@ -55,7 +55,10 @@ async def _discover_source_uris_background() -> None:
 
     Results persist only in memory; they are rebuilt from the SKOS cache on next startup.
     """
-    sources_to_try = ("dbpedia", "wikidata")
+    # Include AGROVOC only when the local Oxigraph store is available — the REST
+    # API has too many false positives for a reliable auto-discovery pass.
+    agrovoc_available = skos_service.get_agrovoc_store(SKOS_CACHE_DIR) is not None
+    sources_to_try = ("agrovoc", "dbpedia", "wikidata") if agrovoc_available else ("dbpedia", "wikidata")
 
     for concept_id, data in vocabulary.items():
         static_uris: list[str] = data.get("source_uris", [])

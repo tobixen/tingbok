@@ -194,7 +194,7 @@ def lookup_concept(label: str, lang: str, source: str, cache_dir: Path) -> dict 
     if _is_in_not_found_cache(cache_dir, cache_key):
         return None
 
-    concept, query_failed = _upstream_lookup(label, lang, source)
+    concept, query_failed = _upstream_lookup(label, lang, source, cache_dir)
 
     if query_failed:
         raise UpstreamError(f"{source} request failed transiently for '{label}'")
@@ -431,19 +431,174 @@ def cache_stats(cache_dir: Path) -> dict[str, int | str]:
 
 
 # ---------------------------------------------------------------------------
+# AGROVOC Oxigraph (local) lookup
+# ---------------------------------------------------------------------------
+
+#: Module-level cached Oxigraph store (None = not loaded or unavailable).
+_agrovoc_store: object | None = None
+
+
+def get_agrovoc_store(cache_dir: Path) -> object | None:
+    """Return a loaded pyoxigraph Store for AGROVOC, or None if unavailable.
+
+    Looks for ``agrovoc.nt`` in *cache_dir*.  If found and pyoxigraph is
+    installed, loads the file into a module-level cached store and returns it.
+    Returns ``None`` when the file is absent or pyoxigraph is not installed.
+
+    Args:
+        cache_dir: Directory that may contain ``agrovoc.nt``.
+    """
+    global _agrovoc_store  # noqa: PLW0603
+
+    if _agrovoc_store is not None:
+        return _agrovoc_store
+
+    nt_path = cache_dir / "agrovoc.nt"
+    if not nt_path.exists():
+        return None
+
+    try:
+        import pyoxigraph  # noqa: PLC0415
+
+        store = pyoxigraph.Store()
+        with open(nt_path, "rb") as f:
+            store.load(f, pyoxigraph.RdfFormat.N_TRIPLES)
+        _agrovoc_store = store
+        logger.info("Loaded AGROVOC Oxigraph store from %s (%d triples)", nt_path, len(store))
+        return _agrovoc_store
+    except ImportError:
+        logger.debug("pyoxigraph not installed; AGROVOC Oxigraph lookup unavailable")
+        return None
+    except Exception as exc:
+        logger.warning("Failed to load AGROVOC Oxigraph store from %s: %s", nt_path, exc)
+        return None
+
+
+def _label_variations(label: str) -> list[str]:
+    """Generate singular/plural label variations for AGROVOC SKOS-XL lookup.
+
+    Mirrors the same logic used in inventory-md's ``_lookup_agrovoc_oxigraph``.
+    """
+    base = label.lower()
+    variations = [base]
+
+    if base.endswith("y") and len(base) > 2 and base[-2] not in "aeiou":
+        variations.append(base[:-1] + "ies")  # berry -> berries
+    elif base.endswith(("s", "x", "z", "ch", "sh", "o")):
+        variations.append(base + "es")  # potato -> potatoes
+    else:
+        variations.append(base + "s")  # tool -> tools
+    if base.endswith("o"):
+        variations.append(base + "s")  # photo -> photos
+
+    if base.endswith("ies") and len(base) > 3:
+        variations.append(base[:-3] + "y")  # berries -> berry
+    elif base.endswith("oes") and len(base) > 3:
+        variations.append(base[:-2])  # potatoes -> potato
+    elif base.endswith("es") and len(base) > 2:
+        variations.append(base[:-2])  # brushes -> brush
+    elif base.endswith("s") and len(base) > 1:
+        variations.append(base[:-1])  # tools -> tool
+
+    # Add title-case variants; deduplicate while preserving order
+    with_title = []
+    for v in variations:
+        with_title.append(v)
+        with_title.append(v.title())
+    return list(dict.fromkeys(with_title))
+
+
+def _get_broader_agrovoc_oxigraph(concept_uri: str, lang: str, store: object) -> list[dict]:
+    """Fetch ``skos:broader`` concepts from the local Oxigraph store."""
+    query = f"""
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
+
+    SELECT DISTINCT ?broader ?label WHERE {{
+        <{concept_uri}> skos:broader ?broader .
+        ?broader skosxl:prefLabel/skosxl:literalForm ?label .
+        FILTER(lang(?label) = "{lang}")
+    }}
+    LIMIT 10
+    """
+    try:
+        results = store.query(query)  # type: ignore[union-attr]
+        broader = [{"uri": r["broader"].value, "label": r["label"].value} for r in results]
+
+        # One level up for richer hierarchy context
+        if broader:
+            q2 = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
+
+            SELECT DISTINCT ?broader ?label WHERE {{
+                <{broader[0]["uri"]}> skos:broader ?broader .
+                ?broader skosxl:prefLabel/skosxl:literalForm ?label .
+                FILTER(lang(?label) = "{lang}")
+            }}
+            LIMIT 5
+            """
+            results2 = store.query(q2)  # type: ignore[union-attr]
+            broader.extend({"uri": r["broader"].value, "label": r["label"].value} for r in results2)
+        return broader
+    except Exception as exc:
+        logger.warning("Oxigraph broader query failed for %s: %s", concept_uri, exc)
+        return []
+
+
+def _lookup_agrovoc_oxigraph(label: str, lang: str, store: object) -> tuple[dict | None, bool]:
+    """Look up a concept in AGROVOC via the local Oxigraph store.
+
+    Returns ``(concept_dict, query_failed)``.  When the concept is absent from
+    the local store the result is authoritative: ``(None, False)`` — no REST
+    fallback is needed.
+    """
+    for try_label in _label_variations(label):
+        for predicate in ("prefLabel", "altLabel"):
+            query = f"""
+            PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
+            SELECT DISTINCT ?concept ?prefLabel WHERE {{
+                ?concept skosxl:{predicate}/skosxl:literalForm "{try_label}"@{lang} .
+                ?concept skosxl:prefLabel/skosxl:literalForm ?prefLabel .
+                FILTER(lang(?prefLabel) = "{lang}")
+            }}
+            LIMIT 1
+            """
+            try:
+                results = list(store.query(query))  # type: ignore[union-attr]
+                if results:
+                    concept_uri: str = results[0]["concept"].value
+                    pref_label: str = results[0]["prefLabel"].value
+                    broader = _get_broader_agrovoc_oxigraph(concept_uri, lang, store)
+                    return {
+                        "uri": concept_uri,
+                        "prefLabel": pref_label,
+                        "source": "agrovoc",
+                        "broader": broader,
+                    }, False
+            except Exception as exc:
+                logger.debug("Oxigraph query failed for '%s' (%s): %s", try_label, predicate, exc)
+
+    return None, False  # Not found — authoritative
+
+
+# ---------------------------------------------------------------------------
 # Upstream REST lookups
 # ---------------------------------------------------------------------------
 
 
-def _upstream_lookup(label: str, lang: str, source: str) -> tuple[dict | None, bool]:
-    """Dispatch to the appropriate upstream REST source.
+def _upstream_lookup(label: str, lang: str, source: str, cache_dir: Path) -> tuple[dict | None, bool]:
+    """Dispatch to the appropriate upstream source.
+
+    Tries the local Oxigraph store first for AGROVOC (when available), then
+    falls back to the REST API.
 
     Returns ``(concept_or_None, query_failed)``.  ``query_failed=True``
     indicates a transient error; the result must not be added to the
     not-found cache.
     """
     if source == "agrovoc":
-        return _lookup_agrovoc(label, lang)
+        return _lookup_agrovoc(label, lang, cache_dir)
     if source == "dbpedia":
         return _lookup_dbpedia(label, lang)
     if source == "wikidata":
@@ -452,8 +607,17 @@ def _upstream_lookup(label: str, lang: str, source: str) -> tuple[dict | None, b
     return None, True
 
 
-def _lookup_agrovoc(label: str, lang: str) -> tuple[dict | None, bool]:
-    """Look up a concept in AGROVOC via the Skosmos REST API."""
+def _lookup_agrovoc(label: str, lang: str, cache_dir: Path) -> tuple[dict | None, bool]:
+    """Look up a concept in AGROVOC.
+
+    Prefers the local Oxigraph store (``agrovoc.nt`` in *cache_dir*) for
+    accuracy and speed.  Falls back to the Skosmos REST API when the local
+    store is unavailable.
+    """
+    store = get_agrovoc_store(cache_dir)
+    if store is not None:
+        return _lookup_agrovoc_oxigraph(label, lang, store)
+    # Fall back to REST
     rest_base = _REST_ENDPOINTS["agrovoc"]
     url = f"{rest_base}/search/"
     params = {"query": label, "lang": lang}

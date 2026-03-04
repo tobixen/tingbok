@@ -157,7 +157,8 @@ async def test_discover_skips_concepts_with_known_uris(client):
         1 for data in app_module.vocabulary.values() if data.get("source_uris")
     )
     total_concepts = len(app_module.vocabulary)
-    expected_max_calls = (total_concepts - concepts_with_uris) * 2  # 2 sources: dbpedia, wikidata
+    # 2 sources when no Oxigraph (dbpedia + wikidata), 3 when Oxigraph available
+    expected_max_calls = (total_concepts - concepts_with_uris) * 3
     assert call_count <= expected_max_calls
 
 
@@ -200,3 +201,85 @@ async def test_vocabulary_api_includes_discovered_uris(client):
         assert fake_uri in data["source_uris"]
     finally:
         app_module._discovered_source_uris.pop("electronics", None)
+
+
+@pytest.mark.anyio
+async def test_discover_queries_agrovoc_when_store_available(tmp_path, monkeypatch):
+    """Discovery should include agrovoc when the local Oxigraph store is available."""
+    import tingbok.app as app_module
+    from tingbok.services import skos as skos_service
+
+    # Simulate agrovoc.nt existing in the SKOS cache dir
+    fake_nt = tmp_path / "agrovoc.nt"
+    fake_nt.write_text("")
+    monkeypatch.setattr(app_module, "SKOS_CACHE_DIR", tmp_path)
+
+    app_module._discovered_source_uris.clear()
+    queried_sources: set[str] = set()
+
+    fake_agrovoc_uri = "http://aims.fao.org/aos/agrovoc/c_12345"
+
+    def recording_lookup(label, lang, source, cache_dir):
+        queried_sources.add(source)
+        if source == "agrovoc" and label.lower() == "electronics":
+            return {"uri": fake_agrovoc_uri, "prefLabel": "Electronics", "source": "agrovoc", "broader": []}
+        return None
+
+    with patch.object(skos_service, "lookup_concept", side_effect=recording_lookup):
+        # Patch get_agrovoc_store to return a truthy mock (store "available")
+        with patch.object(skos_service, "get_agrovoc_store", return_value=object()):
+            await app_module._discover_source_uris_background()
+
+    assert "agrovoc" in queried_sources, "AGROVOC should be queried when Oxigraph store is available"
+    assert app_module._discovered_source_uris.get("electronics", {}).get("agrovoc") == fake_agrovoc_uri
+
+
+@pytest.mark.anyio
+async def test_discover_skips_agrovoc_when_store_unavailable(tmp_path, monkeypatch):
+    """Discovery should NOT query agrovoc when agrovoc.nt is not in the cache dir."""
+    import tingbok.app as app_module
+    from tingbok.services import skos as skos_service
+
+    # No agrovoc.nt in tmp_path
+    monkeypatch.setattr(app_module, "SKOS_CACHE_DIR", tmp_path)
+
+    app_module._discovered_source_uris.clear()
+    queried_sources: set[str] = set()
+
+    def recording_lookup(label, lang, source, cache_dir):
+        queried_sources.add(source)
+        return None
+
+    with patch.object(skos_service, "lookup_concept", side_effect=recording_lookup):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            await app_module._discover_source_uris_background()
+
+    assert "agrovoc" not in queried_sources, "AGROVOC should not be queried when Oxigraph store is unavailable"
+
+
+def test_get_agrovoc_store_returns_none_when_file_missing(tmp_path):
+    """get_agrovoc_store should return None when agrovoc.nt does not exist."""
+    from tingbok.services.skos import get_agrovoc_store
+    result = get_agrovoc_store(tmp_path)
+    assert result is None
+
+
+def test_get_agrovoc_store_returns_none_when_pyoxigraph_absent(tmp_path):
+    """get_agrovoc_store should return None when pyoxigraph is not installed."""
+    import sys
+    from tingbok.services import skos as skos_module
+    from tingbok.services.skos import get_agrovoc_store
+
+    fake_nt = tmp_path / "agrovoc.nt"
+    fake_nt.write_text("# empty")
+
+    # Simulate pyoxigraph not being installed
+    with patch.dict(sys.modules, {"pyoxigraph": None}):
+        # Also reset the module-level cached store
+        original = skos_module._agrovoc_store
+        skos_module._agrovoc_store = None
+        try:
+            result = get_agrovoc_store(tmp_path)
+            assert result is None
+        finally:
+            skos_module._agrovoc_store = original

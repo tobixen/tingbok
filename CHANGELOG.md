@@ -23,6 +23,13 @@ By a mistake the v0.7.0-tag, dedicated the inventory-md package, got applied in 
   on startup, tingbok now queries DBpedia and Wikidata for concepts that have no external
   `source_uris` in `vocabulary.yaml`.  Discovered URIs are merged into API responses
   at serving time.  Results are in-memory and rebuilt from the SKOS cache on next restart.
+  AGROVOC is also queried when the local Oxigraph store (`agrovoc.nt`) is present in the
+  SKOS cache directory — skipped otherwise to avoid REST false positives.
+- **AGROVOC Oxigraph lookup** added to `services/skos.py` (`get_agrovoc_store()`,
+  `_lookup_agrovoc_oxigraph()`) — when `agrovoc.nt` is present in the SKOS cache dir,
+  `lookup_concept(..., source="agrovoc")` uses the local store instead of the REST API.
+  Mirrors inventory-md's SKOS-XL SPARQL queries and singular/plural label variations.
+  Requires `tingbok[skos]` (pyoxigraph).  Gracefully degrades to REST when unavailable.
 
 ## [v0.2.0] - 2026-03-04
 
