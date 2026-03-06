@@ -202,6 +202,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Power_electronics
     - http://www.wikidata.org/entity/Q593143
+    - gpt:275
   electronics/circuits:
     prefLabel: "Circuits"
     altLabel:
@@ -435,6 +436,7 @@ concepts:
     - http://www.wikidata.org/entity/Q637776
     - http://aims.fao.org/aos/agrovoc/c_34761
     - off:en:dairies
+    - gpt:428
   food/grains:
     prefLabel: "Grains & cereals"
     altLabel:
@@ -536,6 +538,7 @@ concepts:
     - http://www.wikidata.org/entity/Q1413783
     - http://aims.fao.org/aos/agrovoc/c_8174
     - off:en:vegetables
+    - gpt:430
   food/fruits:
     prefLabel: "Fruits"
     altLabel:
@@ -807,6 +810,7 @@ concepts:
     - http://dbpedia.org/resource/Yogurt
     - http://www.wikidata.org/entity/Q13317
     - off:en:yogurts
+    - gpt:1954
   butter:
     prefLabel: "Butter"
     altLabel:
@@ -1253,6 +1257,7 @@ concepts:
     - http://dbpedia.org/resource/Chips
     - http://www.wikidata.org/entity/Q5101730
     - off:en:crisps
+    - gpt:2392
   nuts:
     prefLabel: "Nuts"
     altLabel:
@@ -1465,6 +1470,7 @@ concepts:
 
     source_uris:
     - http://www.wikidata.org/entity/Q572809
+    - gpt:505668
   bike-tools:
     prefLabel: "Bike tools"
     altLabel:
@@ -1491,6 +1497,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Hammer
     - http://www.wikidata.org/entity/Q25294
+    - gpt:1186
 
   # =============================================================================
   # BOAT EQUIPMENT SUBCATEGORIES
@@ -1884,6 +1891,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Automotive_industry
     - http://www.wikidata.org/entity/Q190117
+    - gpt:5614
   automotive/accessories:
     prefLabel: "Automotive accessories"
     broader: automotive
@@ -2014,6 +2022,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Hat
     - http://www.wikidata.org/entity/Q80151
+    - gpt:173
 
   # =============================================================================
   # CONSTRUCTION / BUILDING
@@ -2065,6 +2074,7 @@ concepts:
     - "http://dbpedia.org/resource/Washer_(hardware)"
     - http://dbpedia.org/resource/Washer
     - http://www.wikidata.org/entity/Q36987046
+    - gpt:2195
     excluded_sources:
     - agrovoc
     # AGROVOC returns "cleaning equipment" (washing machine) - use DBpedia
@@ -2127,7 +2137,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pen
     - http://www.wikidata.org/entity/Q165447
-    - off:en:tripe
+    - gpt:982
   pencil:
     prefLabel: "Pencil"
     altLabel:
@@ -2137,6 +2147,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pencil
     - http://www.wikidata.org/entity/Q14674
+    - gpt:6068
   notebook:
     prefLabel: "Notebook"
     altLabel:
@@ -2166,6 +2177,7 @@ concepts:
     - http://dbpedia.org/resource/Sport
     - http://www.wikidata.org/entity/Q123253374
     - http://aims.fao.org/aos/agrovoc/c_7328
+    - gpt:988
   sports/cycling:
     prefLabel: "Cycling"
     broader: sports
@@ -2636,6 +2648,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Fastener
     - http://www.wikidata.org/entity/Q107380930
+    - gpt:500054
   plumbing:
     prefLabel: "Plumbing"
     broader: construction
