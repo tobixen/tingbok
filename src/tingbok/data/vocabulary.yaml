@@ -47,11 +47,11 @@ concepts:
 
     source_uris: []
     excluded_sources:
-      - agrovoc
-      - dbpedia
-      - wikidata
-      - "off"
-      - gpt
+    - agrovoc
+    - dbpedia
+    - wikidata
+    - "off"
+    - gpt
 
   food:
     prefLabel: "Food"
@@ -102,6 +102,7 @@ concepts:
     source_uris:
     - "http://dbpedia.org/resource/Tool"
     - http://www.wikidata.org/entity/Q37013115
+    - gpt:1167
     excluded_sources:
     - agrovoc
     labels:
@@ -180,6 +181,7 @@ concepts:
     - http://dbpedia.org/resource/Electronics
     - http://www.wikidata.org/entity/Q11650
     - http://aims.fao.org/aos/agrovoc/c_2522
+    - gpt:222
   electronics/connectors:
     prefLabel: "Connectors"
     altLabel:
@@ -252,6 +254,7 @@ concepts:
     - http://dbpedia.org/resource/Cable
     - http://www.wikidata.org/entity/Q37492867
     - http://aims.fao.org/aos/agrovoc/c_a8bcf3c5
+    - gpt:259
   electrical-connector:
     prefLabel: "Electrical connector"
     altLabel:
@@ -359,6 +362,7 @@ concepts:
     - http://dbpedia.org/resource/Clothing
     - http://www.wikidata.org/entity/Q11460
     - http://aims.fao.org/aos/agrovoc/c_a71a1006
+    - gpt:1604
   books:
     prefLabel: "Books"
     altLabel:
@@ -369,6 +373,8 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Children's_literature
     - http://www.wikidata.org/entity/Q4943275
+    - gpt:784
+    - off:en:books
   documents:
     prefLabel: "Documents"
     altLabel:
@@ -411,6 +417,8 @@ concepts:
     - http://dbpedia.org/resource/Drink
     - http://www.wikidata.org/entity/Q50816708
     - http://aims.fao.org/aos/agrovoc/c_896
+    - gpt:413
+    - off:en:beverages
   food/dairy:
     prefLabel: "Dairy"
     altLabel:
@@ -427,6 +435,7 @@ concepts:
     - http://dbpedia.org/resource/Dairy
     - http://www.wikidata.org/entity/Q637776
     - http://aims.fao.org/aos/agrovoc/c_34761
+    - off:en:dairies
   food/grains:
     prefLabel: "Grains & cereals"
     altLabel:
@@ -461,6 +470,8 @@ concepts:
     - http://dbpedia.org/resource/Meat
     - http://www.wikidata.org/entity/Q10990
     - http://aims.fao.org/aos/agrovoc/c_4669
+    - gpt:4628
+    - off:en:meats
   food/meat/pork:
     prefLabel: "Pork"
     broader: food/meat
@@ -469,6 +480,7 @@ concepts:
     - http://dbpedia.org/resource/Pork
     - http://www.wikidata.org/entity/Q191768
     - http://aims.fao.org/aos/agrovoc/c_6120
+    - off:en:pork
   food/meat/chicken:
     prefLabel: "Chicken"
     altLabel:
@@ -478,6 +490,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Chicken
     - http://www.wikidata.org/entity/Q780
+    - off:en:chickens
   food/seafood:
     prefLabel: "Seafood"
     altLabel:
@@ -491,6 +504,8 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Seafood
     - http://www.wikidata.org/entity/Q192935
+    - gpt:4629
+    - off:en:seafood
   food/seafood/canned-fish:
     prefLabel: "Canned fish"
     altLabel:
@@ -501,6 +516,7 @@ concepts:
     - http://dbpedia.org/resource/Canned_fish
     - http://www.wikidata.org/entity/Q5032629
     - http://aims.fao.org/aos/agrovoc/c_16479
+    - off:en:canned-fishes
   food/vegetables:
     prefLabel: "Vegetables"
     altLabel:
@@ -520,6 +536,7 @@ concepts:
     - http://dbpedia.org/resource/Vegetable
     - http://www.wikidata.org/entity/Q1413783
     - http://aims.fao.org/aos/agrovoc/c_8174
+    - off:en:vegetables
   food/fruits:
     prefLabel: "Fruits"
     altLabel:
@@ -535,6 +552,7 @@ concepts:
     - http://dbpedia.org/resource/Fruit
     - http://www.wikidata.org/entity/Q3089329
     - http://aims.fao.org/aos/agrovoc/c_3131
+    - off:en:fruits
   food/legumes:
     prefLabel: "Legumes"
     altLabel:
@@ -551,6 +569,7 @@ concepts:
     - http://dbpedia.org/resource/Legume
     - http://www.wikidata.org/entity/Q145909
     - http://aims.fao.org/aos/agrovoc/c_4255
+    - off:en:legumes
   food/condiments:
     prefLabel: "Condiments & sauces"
     altLabel:
@@ -570,6 +589,7 @@ concepts:
 
     source_uris:
     - http://dbpedia.org/resource/Condiment
+    - gpt:427
   food/snacks:
     prefLabel: "Snacks"
     altLabel:
@@ -586,6 +606,7 @@ concepts:
     - http://dbpedia.org/resource/Snack
     - http://www.wikidata.org/entity/Q60749309
     - http://aims.fao.org/aos/agrovoc/c_34338
+    - off:en:snacks
   food/preserved:
     prefLabel: "Preserved foods"
     altLabel:
@@ -611,6 +632,7 @@ concepts:
     - http://dbpedia.org/resource/Pickles
     - http://www.wikidata.org/entity/Q29565778
     - http://aims.fao.org/aos/agrovoc/c_5864
+    - off:en:pickles
   food/baking:
     prefLabel: "Baking"
     altLabel:
@@ -652,6 +674,8 @@ concepts:
     - http://dbpedia.org/resource/Pepper
     - http://www.wikidata.org/entity/Q22907699
     - http://aims.fao.org/aos/agrovoc/c_25495
+    - gpt:6199
+    - off:en:peppers
   food/spices/curry:
     prefLabel: "Curry"
     altLabel:
@@ -661,6 +685,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Curry
     - http://www.wikidata.org/entity/Q164606
+    - off:en:curry-powder
   food/spices/thyme:
     prefLabel: "Thyme"
     broader: food/spices
@@ -675,6 +700,7 @@ concepts:
     - http://dbpedia.org/resource/Thyme
     - http://www.wikidata.org/entity/Q3215980
     - http://aims.fao.org/aos/agrovoc/c_14877
+    - off:en:thyme
   beer:
     prefLabel: "Beer"
     altLabel:
@@ -685,6 +711,8 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Beer
     - http://www.wikidata.org/entity/Q44
+    - gpt:414
+    - off:en:beers
   wine:
     prefLabel: "Wine"
     altLabel:
@@ -694,6 +722,8 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Wine
     - http://www.wikidata.org/entity/Q282
+    - gpt:421
+    - off:en:wines
   alcohol:
     prefLabel: "Alcoholic beverages"
     altLabel:
@@ -704,6 +734,8 @@ concepts:
     - http://dbpedia.org/resource/Alcoholic_beverage
     - http://www.wikidata.org/entity/Q3775653
     - http://aims.fao.org/aos/agrovoc/c_248
+    - gpt:499676
+    - off:en:alcoholic-beverages
   coffee:
     prefLabel: "Coffee"
     altLabel:
@@ -715,6 +747,8 @@ concepts:
     - http://dbpedia.org/resource/Coffee
     - http://www.wikidata.org/entity/Q8486
     - http://aims.fao.org/aos/agrovoc/c_1731
+    - gpt:1868
+    - off:en:coffees
   tea:
     prefLabel: "Tea"
     altLabel:
@@ -725,6 +759,7 @@ concepts:
     - http://dbpedia.org/resource/Tea
     - http://www.wikidata.org/entity/Q15885810
     - http://aims.fao.org/aos/agrovoc/c_7634
+    - off:en:teas
   juice:
     prefLabel: "Juice"
     altLabel:
@@ -735,6 +770,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Juice
     - http://www.wikidata.org/entity/Q8492
+    - gpt:2887
   milk:
     prefLabel: "Milk"
     altLabel:
@@ -745,6 +781,8 @@ concepts:
     - http://dbpedia.org/resource/Milk
     - http://www.wikidata.org/entity/Q8495
     - http://aims.fao.org/aos/agrovoc/c_4826
+    - gpt:418
+    - off:en:milks
   cheese:
     prefLabel: "Cheese"
     altLabel:
@@ -755,6 +793,8 @@ concepts:
     - http://dbpedia.org/resource/Cheese
     - http://www.wikidata.org/entity/Q10943
     - http://aims.fao.org/aos/agrovoc/c_1507
+    - gpt:429
+    - off:en:cheeses
   yogurt:
     prefLabel: "Yogurt"
     altLabel:
@@ -765,6 +805,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Yogurt
     - http://www.wikidata.org/entity/Q13317
+    - off:en:yogurts
   butter:
     prefLabel: "Butter"
     altLabel:
@@ -775,6 +816,7 @@ concepts:
     - http://dbpedia.org/resource/Butter
     - http://www.wikidata.org/entity/Q34172
     - http://aims.fao.org/aos/agrovoc/c_1162
+    - off:en:butters
   cream:
     prefLabel: "Cream"
     altLabel:
@@ -787,6 +829,8 @@ concepts:
     - http://dbpedia.org/resource/Cream
     - http://www.wikidata.org/entity/Q13228
     - http://aims.fao.org/aos/agrovoc/c_1951
+    - gpt:5786
+    - off:en:creams
   pasta:
     prefLabel: "Pasta"
     altLabel:
@@ -798,6 +842,7 @@ concepts:
     - http://dbpedia.org/resource/Pasta
     - http://www.wikidata.org/entity/Q3897473
     - http://aims.fao.org/aos/agrovoc/c_5621
+    - off:en:pastas
   rice:
     prefLabel: "Rice"
     altLabel:
@@ -808,6 +853,8 @@ concepts:
     - http://dbpedia.org/resource/Rice
     - http://www.wikidata.org/entity/Q5090
     - http://aims.fao.org/aos/agrovoc/c_6599
+    - gpt:4682
+    - off:en:rices
   bread:
     prefLabel: "Bread"
     altLabel:
@@ -818,6 +865,7 @@ concepts:
     - http://dbpedia.org/resource/Bread
     - http://www.wikidata.org/entity/Q7802
     - http://aims.fao.org/aos/agrovoc/c_1071
+    - off:en:breads
   noodles:
     prefLabel: "Noodles"
     broader: food/grains
@@ -826,6 +874,7 @@ concepts:
     - http://dbpedia.org/resource/Noodle
     - http://www.wikidata.org/entity/Q113012299
     - http://aims.fao.org/aos/agrovoc/c_12848
+    - off:en:noodles
   flour:
     prefLabel: "Flour"
     altLabel:
@@ -835,6 +884,8 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Flour
     - http://www.wikidata.org/entity/Q36465
+    - gpt:2775
+    - off:en:flours
   buckwheat:
     prefLabel: "Buckwheat"
     altLabel:
@@ -846,6 +897,8 @@ concepts:
     - http://dbpedia.org/resource/Buckwheat
     - http://www.wikidata.org/entity/Q37328861
     - http://aims.fao.org/aos/agrovoc/c_9471
+    - gpt:4684
+    - off:en:buckwheat
   meat:
     prefLabel: "Meat"
     altLabel:
@@ -856,6 +909,8 @@ concepts:
     - http://dbpedia.org/resource/Meat
     - http://www.wikidata.org/entity/Q10990
     - http://aims.fao.org/aos/agrovoc/c_4669
+    - gpt:4628
+    - off:en:meats
   ham:
     prefLabel: "Ham"
     altLabel:
@@ -865,6 +920,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Ham
     - http://www.wikidata.org/entity/Q170486
+    - off:en:hams
   sausage:
     prefLabel: "Sausage"
     altLabel:
@@ -876,6 +932,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Sausage
     - http://www.wikidata.org/entity/Q131419
+    - off:en:sausages
   fish:
     prefLabel: "Fish"
     altLabel:
@@ -886,6 +943,7 @@ concepts:
     - http://dbpedia.org/resource/Fish
     - http://www.wikidata.org/entity/Q152
     - http://aims.fao.org/aos/agrovoc/c_15903
+    - off:en:fishes
   tuna:
     prefLabel: "Tuna"
     altLabel:
@@ -896,6 +954,7 @@ concepts:
     - http://dbpedia.org/resource/Tuna
     - http://www.wikidata.org/entity/Q1245536
     - http://aims.fao.org/aos/agrovoc/c_8003
+    - off:en:tunas
   sardines:
     prefLabel: "Sardines"
     altLabel:
@@ -907,6 +966,7 @@ concepts:
     - http://dbpedia.org/resource/Sardine
     - http://www.wikidata.org/entity/Q16746397
     - http://aims.fao.org/aos/agrovoc/c_6813
+    - off:en:sardines
   potatoes:
     prefLabel: "Potatoes"
     altLabel:
@@ -918,6 +978,8 @@ concepts:
     - http://dbpedia.org/resource/Potato
     - http://www.wikidata.org/entity/Q135021431
     - http://aims.fao.org/aos/agrovoc/c_13551
+    - gpt:6586
+    - off:en:potatoes
   onions:
     prefLabel: "Onions"
     altLabel:
@@ -929,6 +991,8 @@ concepts:
     - http://dbpedia.org/resource/Onion
     - http://www.wikidata.org/entity/Q7093938
     - http://aims.fao.org/aos/agrovoc/c_12934
+    - gpt:6655
+    - off:en:onions
   garlic:
     prefLabel: "Garlic"
     altLabel:
@@ -939,6 +1003,8 @@ concepts:
     - http://dbpedia.org/resource/Garlic
     - http://www.wikidata.org/entity/Q21546392
     - http://aims.fao.org/aos/agrovoc/c_11091
+    - gpt:6620
+    - off:en:garlic
   tomatoes:
     prefLabel: "Tomatoes"
     altLabel:
@@ -950,6 +1016,8 @@ concepts:
     - http://dbpedia.org/resource/Tomato
     - http://www.wikidata.org/entity/Q11898003
     - http://aims.fao.org/aos/agrovoc/c_7805
+    - gpt:6703
+    - off:en:tomatoes
   mushrooms:
     prefLabel: "Mushrooms"
     altLabel:
@@ -960,6 +1028,8 @@ concepts:
     - "http://dbpedia.org/resource/Mushroom"
     - http://aims.fao.org/aos/agrovoc/c_2487
     - http://www.wikidata.org/entity/Q22442668
+    - gpt:6653
+    - off:en:mushrooms
   preserved-vegetables:
     prefLabel: "Preserved vegetables"
     broader: food/preserved
@@ -978,6 +1048,8 @@ concepts:
     - http://dbpedia.org/resource/Banana
     - http://www.wikidata.org/entity/Q4853898
     - http://aims.fao.org/aos/agrovoc/c_806
+    - gpt:6574
+    - off:en:bananas
   olive:
     prefLabel: "Olives"
     altLabel:
@@ -990,6 +1062,7 @@ concepts:
     - http://dbpedia.org/resource/Olive
     - http://www.wikidata.org/entity/Q56400385
     - http://aims.fao.org/aos/agrovoc/c_12926
+    - off:en:olives
   beans:
     prefLabel: "Beans"
     altLabel:
@@ -1001,6 +1074,7 @@ concepts:
     - http://dbpedia.org/resource/Bean
     - http://www.wikidata.org/entity/Q3637169
     - http://aims.fao.org/aos/agrovoc/c_331566
+    - gpt:6577
   lentils:
     prefLabel: "Lentils"
     altLabel:
@@ -1012,6 +1086,7 @@ concepts:
     - http://dbpedia.org/resource/Lentil
     - http://www.wikidata.org/entity/Q16590111
     - http://aims.fao.org/aos/agrovoc/c_12140
+    - off:en:lentils
   chickpeas:
     prefLabel: "Chickpeas"
     altLabel:
@@ -1023,6 +1098,7 @@ concepts:
     - http://dbpedia.org/resource/Chickpea
     - http://www.wikidata.org/entity/Q81375
     - http://aims.fao.org/aos/agrovoc/c_9785
+    - off:en:chickpeas
   soybeans:
     prefLabel: "Soybeans"
     altLabel:
@@ -1055,6 +1131,8 @@ concepts:
     - http://dbpedia.org/resource/Vinegar
     - http://www.wikidata.org/entity/Q41354
     - http://aims.fao.org/aos/agrovoc/c_8253
+    - gpt:2140
+    - off:en:vinegars
   mayonnaise:
     prefLabel: "Mayonnaise"
     altLabel:
@@ -1066,6 +1144,8 @@ concepts:
     - http://dbpedia.org/resource/Mayonnaise
     - http://www.wikidata.org/entity/Q167893
     - http://aims.fao.org/aos/agrovoc/c_12442
+    - gpt:1568
+    - off:en:mayonnaises
   ketchup:
     prefLabel: "Ketchup"
     altLabel:
@@ -1076,6 +1156,8 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Ketchup
     - http://www.wikidata.org/entity/Q178143
+    - gpt:2018
+    - off:en:ketchup
   mustard:
     prefLabel: "Mustard"
     altLabel:
@@ -1086,6 +1168,8 @@ concepts:
     - http://dbpedia.org/resource/Mustard
     - http://www.wikidata.org/entity/Q131748
     - http://aims.fao.org/aos/agrovoc/c_25488
+    - gpt:1387
+    - off:en:mustards
   pesto:
     prefLabel: "Pesto"
     broader: food/condiments
@@ -1093,6 +1177,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pesto
     - http://www.wikidata.org/entity/Q9896
+    - off:en:pestos
   bolognese:
     prefLabel: "Bolognese sauce"
     broader: food/condiments
@@ -1100,6 +1185,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Bolognese_sauce
     - http://www.wikidata.org/entity/Q1162965
+    - off:en:bolognese-sauces
   salt:
     prefLabel: "Salt"
     altLabel:
@@ -1109,6 +1195,8 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Salt
     - http://www.wikidata.org/entity/Q12370
+    - gpt:4611
+    - off:en:salts
   soy-sauce:
     prefLabel: "Soy sauce"
     altLabel:
@@ -1119,6 +1207,8 @@ concepts:
     - http://dbpedia.org/resource/Soy_sauce
     - http://www.wikidata.org/entity/Q229385
     - http://aims.fao.org/aos/agrovoc/c_24246
+    - gpt:4616
+    - off:en:soy-sauces
   spread:
     prefLabel: "Spread"
     altLabel:
@@ -1129,6 +1219,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Spread
     - http://www.wikidata.org/entity/Q113128287
+    - off:en:spreads
   snacks:
     prefLabel: "Snacks"
     altLabel:
@@ -1138,6 +1229,7 @@ concepts:
     source_uris:
     - "http://dbpedia.org/resource/Snack"
     - http://www.wikidata.org/entity/Q60749309
+    - off:en:snacks
     excluded_sources:
     - agrovoc
 
@@ -1151,6 +1243,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Chips
     - http://www.wikidata.org/entity/Q5101730
+    - off:en:crisps
   nuts:
     prefLabel: "Nuts"
     altLabel:
@@ -1161,6 +1254,7 @@ concepts:
     - http://dbpedia.org/resource/Nut
     - http://www.wikidata.org/entity/Q130392098
     - http://aims.fao.org/aos/agrovoc/c_12873
+    - off:en:nuts
   cashews:
     prefLabel: "Cashews"
     altLabel:
@@ -1183,6 +1277,7 @@ concepts:
     - "http://dbpedia.org/resource/Peanut"
     - http://dbpedia.org/resource/Peanuts
     - http://www.wikidata.org/entity/Q7115636
+    - off:en:peanuts
     excluded_sources:
     - agrovoc
     # AGROVOC uses "groundnuts" which is less common
@@ -1198,6 +1293,8 @@ concepts:
     - http://dbpedia.org/resource/Biscuit
     - http://www.wikidata.org/entity/Q19801756
     - http://aims.fao.org/aos/agrovoc/c_16475
+    - gpt:2229
+    - off:en:biscuits
   chocolate:
     prefLabel: "Chocolate"
     altLabel:
@@ -1209,6 +1306,7 @@ concepts:
     - http://dbpedia.org/resource/Chocolate
     - http://www.wikidata.org/entity/Q195
     - http://aims.fao.org/aos/agrovoc/c_1582
+    - off:en:chocolates
   canning:
     prefLabel: "Canning"
     altLabel:
@@ -1231,6 +1329,7 @@ concepts:
     - http://dbpedia.org/resource/Fruit_preserves
     - http://www.wikidata.org/entity/Q1269
     - http://aims.fao.org/aos/agrovoc/c_4037
+    - off:en:jams
   pate:
     prefLabel: "Pâté"
     altLabel:
@@ -1241,6 +1340,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pâté
     - http://www.wikidata.org/entity/Q816704
+    - off:en:pate
   caper:
     prefLabel: "Capers"
     altLabel:
@@ -1252,6 +1352,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Caper
     - http://www.wikidata.org/entity/Q16275162
+    - off:en:capers
   sugar:
     prefLabel: "Sugar"
     altLabel:
@@ -1262,6 +1363,7 @@ concepts:
     - http://dbpedia.org/resource/Sugar
     - http://www.wikidata.org/entity/Q11002
     - http://aims.fao.org/aos/agrovoc/c_7498
+    - off:en:sugars
   honey:
     prefLabel: "Honey"
     altLabel:
@@ -1273,6 +1375,8 @@ concepts:
     - http://dbpedia.org/resource/Honey
     - http://www.wikidata.org/entity/Q10987
     - http://aims.fao.org/aos/agrovoc/c_3652
+    - gpt:4947
+    - off:en:honeys
   spice:
     prefLabel: "Spice"
     altLabel:
@@ -1283,6 +1387,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Spice
     - http://www.wikidata.org/entity/Q42527
+    - off:en:spices
   bouillon:
     prefLabel: "Bouillon"
     altLabel:
@@ -1298,6 +1403,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Godfrey_of_Bouillon
     - http://www.wikidata.org/entity/Q895022
+    - off:en:broths
   tools/hand:
     prefLabel: "Hand tools"
     broader: tools
@@ -1361,6 +1467,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Bicycle_tools
     - http://www.wikidata.org/entity/Q572809
+    - gpt:505668
   hammer:
     prefLabel: "Hammer"
     altLabel:
@@ -1533,6 +1640,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Personal_care
     - http://www.wikidata.org/entity/Q3246832
+    - gpt:2915
   household/cleaning:
     prefLabel: "Cleaning supplies"
     altLabel:
@@ -1561,6 +1669,7 @@ concepts:
     source_uris:
     - "http://dbpedia.org/resource/Bedding"
     - http://www.wikidata.org/entity/Q1762457
+    - gpt:569
     excluded_sources:
     - agrovoc
     # AGROVOC returns "litter for animals" (farm bedding) - use DBpedia
@@ -1609,6 +1718,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Hardware
     - http://www.wikidata.org/entity/Q5656377
+    - gpt:632
   adhesive:
     prefLabel: "Adhesive"
     altLabel:
@@ -1867,6 +1977,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Che_Guevara_in_fashion
     - http://www.wikidata.org/entity/Q123152059
+    - gpt:167
   hat:
     prefLabel: "Hat"
     altLabel:
@@ -1896,6 +2007,7 @@ concepts:
     - http://dbpedia.org/resource/Construction
     - http://www.wikidata.org/entity/Q3875186
     - http://aims.fao.org/aos/agrovoc/c_35060
+    - gpt:114
   construction/lumber:
     prefLabel: "Lumber"
     altLabel:
@@ -1954,6 +2066,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Office_supplies
     - http://www.wikidata.org/entity/Q15714692
+    - gpt:922
   office/writing:
     prefLabel: "Writing supplies"
     broader: office
@@ -1965,6 +2078,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/John_McNamara_(writer)
     - http://www.wikidata.org/entity/Q70940300
+    - gpt:956
   office/storage:
     prefLabel: "Office storage"
     broader: office
@@ -1981,6 +2095,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Pen
     - http://www.wikidata.org/entity/Q165447
+    - off:en:tripe
   pencil:
     prefLabel: "Pencil"
     altLabel:
@@ -2026,6 +2141,7 @@ concepts:
     - http://dbpedia.org/resource/Cycling
     - http://www.wikidata.org/entity/Q53121
     - http://aims.fao.org/aos/agrovoc/c_2056
+    - gpt:1025
   sports/water-sports:
     prefLabel: "Water sports"
     broader: sports
@@ -2047,11 +2163,8 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Action_game
     - http://www.wikidata.org/entity/Q1493102
-
-  # =============================================================================
-  # MEDICAL / HEALTH
-  # =============================================================================
-
+    - gpt:3793
+    - off:en:game
   medical:
     prefLabel: "Health & Safety"
     altLabel:
@@ -2092,6 +2205,7 @@ concepts:
     - http://dbpedia.org/resource/First_aid
     - http://www.wikidata.org/entity/Q133981
     - http://aims.fao.org/aos/agrovoc/c_15577
+    - gpt:508
   bandage:
     prefLabel: "Bandage"
     altLabel:
@@ -2360,6 +2474,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Toilet_paper
     - http://www.wikidata.org/entity/Q5840
+    - gpt:629
   toilet_service_kit:
     prefLabel: "Toilet service kit"
     broader: household
@@ -2466,6 +2581,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Winch
     - http://www.wikidata.org/entity/Q14523404
+    - gpt:503772
   fasteners:
     prefLabel: "Fasteners"
     altLabel:
@@ -2482,6 +2598,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Plumbing
     - http://www.wikidata.org/entity/Q182612
+    - gpt:133
   screw_assortment:
     prefLabel: "Screw assortment"
     broader: construction
@@ -2636,6 +2753,7 @@ concepts:
     - http://dbpedia.org/resource/Furniture
     - http://www.wikidata.org/entity/Q14745
     - http://aims.fao.org/aos/agrovoc/c_3152
+    - gpt:436
   oppbevaring:
     prefLabel: "Storage"
     labels:
@@ -2695,6 +2813,7 @@ concepts:
     - http://dbpedia.org/resource/Lighting
     - http://www.wikidata.org/entity/Q210064
     - http://aims.fao.org/aos/agrovoc/c_4326
+    - gpt:594
   hobby:
     prefLabel: "Hobbies & Crafts"
     labels:
@@ -2712,6 +2831,7 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Shoe
     - http://www.wikidata.org/entity/Q631117
+    - gpt:187
   dyr:
     prefLabel: "Animals"
     labels:
