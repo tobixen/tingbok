@@ -17,6 +17,7 @@ from tingbok.services.skos import (
     build_hierarchy_paths,
     cache_stats,
     get_description,
+    get_labels,
     get_labels_batch,
     lookup_concept,
     uri_to_source,
@@ -644,8 +645,8 @@ def test_get_description_returns_none_when_not_cached(tmp_path: Path) -> None:
     assert result is None
 
 
-def test_get_description_reads_from_labels_cache(tmp_path: Path) -> None:
-    """get_description reads the cached description written by get_labels."""
+def test_get_description_reads_from_description_cache(tmp_path: Path) -> None:
+    """get_description reads from its own description: cache key (not the labels cache)."""
     import hashlib
     import json
     import time
@@ -653,7 +654,7 @@ def test_get_description_reads_from_labels_cache(tmp_path: Path) -> None:
     uri = "http://dbpedia.org/resource/Food"
     source = "dbpedia"
     uri_hash = hashlib.md5(uri.encode()).hexdigest()[:16]  # noqa: S324
-    cache_key = f"labels:{source}:{uri_hash}"
+    cache_key = f"description:{source}:{uri_hash}"
     cache_path = _get_cache_path(tmp_path, cache_key)
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     data = {
@@ -722,6 +723,141 @@ def test_get_description_unsupported_source_returns_none(tmp_path: Path) -> None
     """get_description returns None for sources without description support."""
     result = get_description("http://aims.fao.org/aos/agrovoc/c_3032", "agrovoc", "en", tmp_path)
     assert result is None
+
+
+def test_get_description_independent_of_labels_cache(tmp_path: Path) -> None:
+    """get_description must not be blocked by a labels cache entry without description."""
+    import hashlib
+    import json
+    import time
+
+    uri = "http://dbpedia.org/resource/Food"
+    source = "dbpedia"
+    uri_hash = hashlib.md5(uri.encode()).hexdigest()[:16]  # noqa: S324
+
+    # Simulate labels having been cached (without description key)
+    labels_cache_key = f"labels:{source}:{uri_hash}"
+    labels_cache_path = _get_cache_path(tmp_path, labels_cache_key)
+    labels_cache_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(labels_cache_path, "w", encoding="utf-8") as f:
+        json.dump({"uri": uri, "source": source, "labels": {"en": "Food"}, "_cached_at": time.time()}, f)
+
+    # get_description should still fetch from API (different cache key)
+    fake_response = {
+        uri: {
+            "http://www.w3.org/2000/01/rdf-schema#comment": [
+                {"lang": "en", "value": "Food is nutrition.", "type": "literal"},
+            ],
+        }
+    }
+    mock_resp = type(
+        "R", (), {"raise_for_status": lambda self: None, "json": lambda self: fake_response, "status_code": 200}
+    )()
+
+    with patch("niquests.Session") as mock_session_cls:
+        mock_session_cls.return_value.__enter__ = lambda s: mock_session_cls.return_value
+        mock_session_cls.return_value.__exit__ = lambda s, *a: None
+        mock_session_cls.return_value.get.return_value = mock_resp
+        result = get_description(uri, source, "en", tmp_path)
+
+    assert result == "Food is nutrition."
+
+
+# ---------------------------------------------------------------------------
+# Tests for get_labels() caching on HTTP errors
+# ---------------------------------------------------------------------------
+
+
+def test_get_labels_caches_empty_result_on_http_error(tmp_path: Path) -> None:
+    """get_labels should cache empty result on HTTP error (e.g. 404) to avoid re-querying."""
+    import niquests
+
+    uri = "http://dbpedia.org/resource/Nonexistent"
+    source = "dbpedia"
+
+    call_count = [0]
+
+    def raise_http_error(self):
+        call_count[0] += 1
+        raise niquests.exceptions.HTTPError("404 Not Found")
+
+    mock_resp = type("R", (), {"raise_for_status": raise_http_error, "status_code": 404})()
+
+    with patch("niquests.Session") as mock_session_cls:
+        mock_session_cls.return_value.__enter__ = lambda s: mock_session_cls.return_value
+        mock_session_cls.return_value.__exit__ = lambda s, *a: None
+        mock_session_cls.return_value.get.return_value = mock_resp
+
+        result1 = get_labels(uri, ["en", "nb"], source, tmp_path)
+        result2 = get_labels(uri, ["en", "nb"], source, tmp_path)
+
+    assert result1 == {}
+    assert result2 == {}
+    # API should only be called once — second call served from cache
+    assert call_count[0] == 1
+
+
+def test_get_labels_does_not_cache_on_transient_error(tmp_path: Path) -> None:
+    """get_labels should NOT cache on transient errors (timeout, connection failure)."""
+    import niquests
+
+    uri = "http://dbpedia.org/resource/Food"
+    source = "dbpedia"
+
+    call_count = [0]
+
+    def raise_timeout(self):
+        call_count[0] += 1
+        raise niquests.exceptions.ConnectionError("Connection refused")
+
+    mock_resp = type("R", (), {"raise_for_status": raise_timeout})()
+
+    with patch("niquests.Session") as mock_session_cls:
+        mock_session_cls.return_value.__enter__ = lambda s: mock_session_cls.return_value
+        mock_session_cls.return_value.__exit__ = lambda s, *a: None
+        mock_session_cls.return_value.get.return_value = mock_resp
+
+        result1 = get_labels(uri, ["en"], source, tmp_path)
+        result2 = get_labels(uri, ["en"], source, tmp_path)
+
+    assert result1 == {}
+    assert result2 == {}
+    # API called both times — transient error should not be cached
+    assert call_count[0] == 2
+
+
+def test_get_labels_caches_empty_result_when_no_labels_found(tmp_path: Path) -> None:
+    """get_labels should cache even when the API returns 200 but no matching labels."""
+    uri = "http://dbpedia.org/resource/Food"
+    source = "dbpedia"
+
+    call_count = [0]
+
+    def counting_get(url, **kwargs):
+        call_count[0] += 1
+        # Return response with empty data for this URI
+        return type(
+            "R",
+            (),
+            {
+                "raise_for_status": lambda self: None,
+                "json": lambda self: {uri: {}},  # URI present but no labels
+                "status_code": 200,
+            },
+        )()
+
+    with patch("niquests.Session") as mock_session_cls:
+        mock_session_cls.return_value.__enter__ = lambda s: mock_session_cls.return_value
+        mock_session_cls.return_value.__exit__ = lambda s, *a: None
+        mock_session_cls.return_value.get.side_effect = counting_get
+
+        result1 = get_labels(uri, ["en"], source, tmp_path)
+        result2 = get_labels(uri, ["en"], source, tmp_path)
+
+    assert result1 == {}
+    assert result2 == {}
+    # API should only be called once
+    assert call_count[0] == 1
 
 
 @pytest.mark.anyio

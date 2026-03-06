@@ -231,9 +231,11 @@ def get_labels(uri: str, languages: list[str], source: str, cache_dir: Path) -> 
         return {lang: cached_labels[lang] for lang in languages if lang in cached_labels}
 
     all_labels = _upstream_get_labels(uri, source, languages)
-    if all_labels:
-        _save_to_cache(cache_path, {"uri": uri, "source": source, "labels": all_labels})
-
+    if all_labels is None:
+        # Transient error — do not cache; caller gets empty result this time
+        return {}
+    # Cache even an empty dict so we don't re-query on every run
+    _save_to_cache(cache_path, {"uri": uri, "source": source, "labels": all_labels})
     return {lang: all_labels[lang] for lang in languages if lang in all_labels}
 
 
@@ -428,17 +430,18 @@ def get_description(uri: str, source: str, lang: str, cache_dir: Path) -> str | 
         return None
 
     uri_hash = hashlib.md5(uri.encode()).hexdigest()[:16]  # noqa: S324 — non-crypto use
-    cache_key = f"labels:{source}:{uri_hash}"
+    # Use a separate "description:" prefix so this cache is independent of the labels cache.
+    # If we shared the labels cache key, a previously cached labels entry (without a
+    # "description" key) would block description fetching forever.
+    cache_key = f"description:{source}:{uri_hash}"
     cache_path = _get_cache_path(cache_dir, cache_key)
 
     cached = _load_from_cache(cache_path)
     if cached is not None:
         return cached.get("description")
 
-    # Cache miss — fetch labels (which also captures description) and store
     desc = _upstream_get_description(uri, source, lang)
-    # Save a minimal cache entry so subsequent calls are fast
-    _save_to_cache(cache_path, {"uri": uri, "source": source, "labels": {}, "description": desc})
+    _save_to_cache(cache_path, {"uri": uri, "source": source, "description": desc})
     return desc
 
 
@@ -1041,8 +1044,14 @@ def _get_broader_wikidata(qid: str, lang: str, headers: dict | None = None) -> l
     return broader
 
 
-def _upstream_get_labels(uri: str, source: str, languages: list[str]) -> dict[str, str]:
-    """Fetch multilingual labels for a URI from the appropriate upstream source."""
+def _upstream_get_labels(uri: str, source: str, languages: list[str]) -> dict[str, str] | None:
+    """Fetch multilingual labels for a URI from the appropriate upstream source.
+
+    Returns:
+        Dict of ``{lang: label}`` on success (may be empty if no labels exist).
+        ``None`` when the request failed transiently (timeout, connection error)
+        and the result must not be cached.
+    """
     if source == "agrovoc":
         return _get_agrovoc_labels(uri, languages)
     if source == "dbpedia":
@@ -1052,8 +1061,12 @@ def _upstream_get_labels(uri: str, source: str, languages: list[str]) -> dict[st
     return {}
 
 
-def _get_agrovoc_labels(uri: str, languages: list[str]) -> dict[str, str]:
-    """Fetch multilingual labels for an AGROVOC URI via REST."""
+def _get_agrovoc_labels(uri: str, languages: list[str]) -> dict[str, str] | None:
+    """Fetch multilingual labels for an AGROVOC URI via REST.
+
+    Returns ``None`` on transient (non-HTTP) errors; ``{}`` when the server
+    responded but found no labels (e.g. 404).
+    """
     rest_base = _REST_ENDPOINTS["agrovoc"]
     url = f"{rest_base}/data/"
     params = {"uri": uri}
@@ -1061,9 +1074,12 @@ def _get_agrovoc_labels(uri: str, languages: list[str]) -> dict[str, str]:
         with niquests.Session() as session:
             response = session.get(url, params=params, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
+    except niquests.exceptions.HTTPError as e:
+        logger.debug("AGROVOC HTTP error for %s: %s", uri, e)
+        return {}  # Definitive server response — cache as empty
     except niquests.exceptions.RequestException as e:
         logger.warning("AGROVOC data fetch failed for %s: %s", uri, e)
-        return {}
+        return None  # Transient — do not cache
     data = _parse_json(response, uri)
     if data is None:
         return {}
@@ -1081,16 +1097,23 @@ def _get_agrovoc_labels(uri: str, languages: list[str]) -> dict[str, str]:
     return labels
 
 
-def _get_dbpedia_labels(uri: str, languages: list[str]) -> dict[str, str]:
-    """Fetch multilingual labels for a DBpedia URI via the Data REST API."""
+def _get_dbpedia_labels(uri: str, languages: list[str]) -> dict[str, str] | None:
+    """Fetch multilingual labels for a DBpedia URI via the Data REST API.
+
+    Returns ``None`` on transient (non-HTTP) errors; ``{}`` when the server
+    responded but found no labels (e.g. 404).
+    """
     data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
     try:
         with niquests.Session() as session:
             response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
+    except niquests.exceptions.HTTPError as e:
+        logger.debug("DBpedia HTTP error for %s: %s", uri, e)
+        return {}  # Definitive server response — cache as empty
     except niquests.exceptions.RequestException as e:
         logger.warning("DBpedia data fetch failed for %s: %s", uri, e)
-        return {}
+        return None  # Transient — do not cache
     data = _parse_json(response, uri)
     if data is None:
         return {}
@@ -1105,8 +1128,12 @@ def _get_dbpedia_labels(uri: str, languages: list[str]) -> dict[str, str]:
     return labels
 
 
-def _get_wikidata_labels(uri: str, languages: list[str]) -> dict[str, str]:
-    """Fetch multilingual labels for a Wikidata item via the Wikibase REST API."""
+def _get_wikidata_labels(uri: str, languages: list[str]) -> dict[str, str] | None:
+    """Fetch multilingual labels for a Wikidata item via the Wikibase REST API.
+
+    Returns ``None`` on transient (non-HTTP) errors; ``{}`` when the server
+    responded but found no labels.
+    """
     qid = uri.rstrip("/").split("/")[-1]
     if not qid.startswith("Q"):
         return {}
@@ -1115,9 +1142,12 @@ def _get_wikidata_labels(uri: str, languages: list[str]) -> dict[str, str]:
         with niquests.Session() as session:
             response = session.get(url, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
+    except niquests.exceptions.HTTPError as e:
+        logger.debug("Wikidata HTTP error for %s: %s", uri, e)
+        return {}  # Definitive server response — cache as empty
     except niquests.exceptions.RequestException as e:
         logger.warning("Wikidata labels fetch failed for %s: %s", uri, e)
-        return {}
+        return None  # Transient — do not cache
     data = _parse_json(response, uri)
     if data is None:
         return {}
