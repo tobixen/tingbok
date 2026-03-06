@@ -62,7 +62,6 @@ concepts:
     source_uris:
     - "http://dbpedia.org/resource/Food"
     - http://aims.fao.org/aos/agrovoc/c_3032
-    - http://dbpedia.org/resource/Beetle
     - http://www.wikidata.org/entity/Q2095
     labels:
       nb: "Mat"
@@ -1793,10 +1792,9 @@ concepts:
       uk: "Різне"
       bg: "Разни"
 
-  # Bike-related
-    source_uris:
-    - http://dbpedia.org/resource/Miscellaneous_SC_Serowe
-    - http://www.wikidata.org/entity/Q2302426
+    excluded_sources:
+    - dbpedia
+    - wikidata
   bike-part:
     prefLabel: "Bike part"
     altLabel:
@@ -1886,8 +1884,9 @@ concepts:
     - outdoor/cooking
 
     source_uris:
-    - http://dbpedia.org/resource/Equipment
     - http://www.wikidata.org/entity/Q116951676
+    excluded_sources:
+    - dbpedia
   outdoor/hiking:
     prefLabel: "Hiking equipment"
     broader: outdoor
@@ -2170,9 +2169,9 @@ concepts:
     - safety-equipment
 
   # Medical mappings
-    source_uris:
-    - http://dbpedia.org/resource/Occupational_safety_and_health
-    - http://www.wikidata.org/entity/Q26839384
+    excluded_sources:
+    - dbpedia
+    - wikidata
   first-aid:
     prefLabel: "First aid"
     altLabel:
@@ -2773,8 +2772,8 @@ concepts:
       en: "Baby equipment"
     broader: household
 
-    source_uris:
-    - http://dbpedia.org/resource/Goaltender
+    excluded_sources:
+    - dbpedia
   belysning:
     prefLabel: "Lighting"
     broader: household
