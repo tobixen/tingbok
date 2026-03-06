@@ -8,6 +8,27 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ## [Unreleased]
 
+### Added
+- **`get_alt_labels(uri, languages, source, cache_dir)`** in `services/skos.py` — fetches
+  alternative labels (synonyms) for DBpedia (via `skos:altLabel`), Wikidata (aliases
+  endpoint), and AGROVOC (graph `altLabel`); results are cached separately from
+  preferred-label translations.
+- **`get_alt_labels(uri, languages)`** in `services/off.py` — returns synonym lists from
+  the in-memory OFF taxonomy (using `node.synonyms`).
+- **`_fetched_alt_labels`** module dict in `app.py` — populated by
+  `_fetch_labels_background()` alongside `_fetched_labels`; maps concept_id to
+  `{lang: [altLabel, ...]}`.
+- **`_build_alt_labels()`** in `app.py` — merges static `altLabel` entries from
+  `vocabulary.yaml` with source-fetched synonyms; deduplicates and excludes the
+  `prefLabel` value.
+
+### Changed
+- **`VocabularyConcept.uri`** is now always the canonical tingbok URL
+  (`https://tingbok.plann.no/api/vocabulary/{id}`).  External source URIs continue to
+  appear in `source_uris`.
+- **`GET /api/vocabulary` and `GET /api/vocabulary/{id}`** now return merged `altLabel`
+  including synonyms fetched from DBpedia, Wikidata, AGROVOC, and OFF sources.
+
 ## [v0.9.0] - 2026-03-06
 
 ### Added
