@@ -65,17 +65,8 @@ concepts:
     - http://dbpedia.org/resource/Beetle
     - http://www.wikidata.org/entity/Q2095
     labels:
-      en: "Food"
       nb: "Mat"
-      de: "Lebensmittel"
-      fr: "Nourriture"
-      es: "Alimento"
-      it: "Alimento"
       nl: "Voedsel"
-      sv: "Mat"
-      pl: "Żywność"
-      ru: "Пища"
-      uk: "Їжа"
       fi: "Ruoka"
       bg: "Храна"
     narrower:
@@ -109,9 +100,7 @@ concepts:
       en: "Tools"
       nb: "Verktøy"
       de: "Werkzeuge"
-      sv: "Verktyg"
       da: "Værktøj"
-      nl: "Gereedschap"
       fi: "Työkalut"
       fr: "Outils"
       es: "Herramientas"
@@ -342,20 +331,10 @@ concepts:
       en: ["apparel", "clothes", "garments"]
       nb: ["klær", "tekstil"]
     labels:
-      en: "Clothing"
-      nb: "Klær"
       nn: "Klede"
-      de: "Kleidung"
-      sv: "Kläder"
       da: "Tøj"
-      nl: "Kleding"
       fi: "Vaatteet"
       fr: "Vêtements"
-      es: "Ropa"
-      it: "Abbigliamento"
-      pl: "Odzież"
-      ru: "Одежда"
-      uk: "Одяг"
       bg: "Облекло"
 
     source_uris:
@@ -2050,7 +2029,6 @@ concepts:
       en: ["stationery", "office equipment"]
       nb: ["kontor", "kontorrekvisita"]
     labels:
-      en: "Office supplies"
       nb: "Kontorrekvisita"
       de: "Bürobedarf"
       sv: "Kontorsmaterial"
@@ -2718,8 +2696,6 @@ concepts:
     - http://www.wikidata.org/entity/Q190771
   hage:
     prefLabel: "Garden"
-    labels:
-      nb: "Hage"
     broader: outdoor
 
     source_uris:
@@ -2727,8 +2703,6 @@ concepts:
     - http://www.wikidata.org/entity/Q1107656
   kjøkken:
     prefLabel: "Kitchen"
-    labels:
-      nb: "Kjøkken"
     broader: household
 
     source_uris:
@@ -2777,7 +2751,6 @@ concepts:
     prefLabel: "Banana box"
     labels:
       nb: "Bananeske"
-      en: "Banana box"
     broader: oppbevaring
 
     source_uris:
@@ -2804,9 +2777,6 @@ concepts:
     - http://dbpedia.org/resource/Goaltender
   belysning:
     prefLabel: "Lighting"
-    labels:
-      nb: "Belysning"
-      en: "Lighting"
     broader: household
 
     source_uris:
