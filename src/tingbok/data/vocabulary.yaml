@@ -1657,9 +1657,10 @@ concepts:
     broader: household
 
     source_uris:
-    - http://dbpedia.org/resource/Reservoir
-    - http://www.wikidata.org/entity/Q7619904
+    - http://www.wikidata.org/entity/Q9158768
     - http://aims.fao.org/aos/agrovoc/c_7427
+    excluded_sources:
+    - dbpedia
 
   # Simple household mappings
   bedding:
@@ -1718,9 +1719,9 @@ concepts:
     - construction
     - consumables
 
-    source_uris:
-    - http://dbpedia.org/resource/Hardware
-    - http://www.wikidata.org/entity/Q5656377
+    excluded_sources:
+    - dbpedia
+    - wikidata
     - gpt:632
   adhesive:
     prefLabel: "Adhesive"
@@ -2782,9 +2783,10 @@ concepts:
     broader: household
 
     source_uris:
-    - http://dbpedia.org/resource/Reservoir
-    - http://www.wikidata.org/entity/Q7619904
+    - http://www.wikidata.org/entity/Q9158768
     - http://aims.fao.org/aos/agrovoc/c_7427
+    excluded_sources:
+    - dbpedia
   plastboks:
     prefLabel: "Plastic storage box"
     labels:
@@ -2837,8 +2839,8 @@ concepts:
       nb: "Hobby"
     broader: recreation
 
-    source_uris:
-    - http://dbpedia.org/resource/Bungalow
+    excluded_sources:
+    - dbpedia
   sko:
     prefLabel: "Shoes"
     labels:
@@ -2847,7 +2849,7 @@ concepts:
 
     source_uris:
     - http://dbpedia.org/resource/Shoe
-    - http://www.wikidata.org/entity/Q631117
+    - http://www.wikidata.org/entity/Q22676
     - gpt:187
   dyr:
     prefLabel: "Animals"
