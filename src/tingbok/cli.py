@@ -272,6 +272,7 @@ def _prune_vocabulary(
         if data is None:
             continue
         static_labels: dict = data.get("labels") or {}
+        alt_labels: dict = data.get("altLabel") or {}
         if not static_labels:
             continue
 
@@ -315,6 +316,13 @@ def _prune_vocabulary(
                     val_a = per_source[src_a][conflict_lang]
                     val_b = per_source[src_b].get(conflict_lang)
                     if val_b and not _labels_near_match(val_a, val_b):
+                        # Suppress if either value is a known altLabel
+                        known = alt_labels.get(conflict_lang, [])
+                        if any(
+                            _normalize_for_match(al) in (_normalize_for_match(val_a), _normalize_for_match(val_b))
+                            for al in known
+                        ):
+                            continue
                         deviations.append(
                             f"  CONFLICT {concept_id}[{conflict_lang}]: {src_a}='{val_a}' vs {src_b}='{val_b}'"
                         )
@@ -343,6 +351,10 @@ def _prune_vocabulary(
                     f" (near-match, likely plural/singular) → will remove"
                 )
             else:
+                # Suppress if the source label is a known altLabel for this language
+                known = alt_labels.get(label_lang, [])
+                if any(_normalize_for_match(al) == _normalize_for_match(src_value) for al in known):
+                    continue
                 deviations.append(
                     f"  {concept_id}[{label_lang}]: vocab='{vocab_value}' vs {providing_source}='{src_value}'"
                 )

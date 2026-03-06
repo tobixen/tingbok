@@ -58,6 +58,11 @@ concepts:
     altLabel:
       en: ["groceries", "provisions", "foodstuffs"]
       nb: ["mat", "matvarer"]
+      nl: ["Levensmiddel"]
+      fr: ["produit alimentaire"]
+      it: ["Alimenti"]
+      ru: ["продукты питания"]
+      uk: ["харчові продукти"]
     uri: "http://dbpedia.org/resource/Food"
     source_uris:
     - "http://dbpedia.org/resource/Food"
@@ -134,8 +139,8 @@ concepts:
     - sports
     - transport
 
-    source_uris:
-    - http://dbpedia.org/resource/British_Columbia
+    excluded_sources:
+    - dbpedia
   transport:
     prefLabel: "Transport"
     labels:
@@ -333,6 +338,7 @@ concepts:
     altLabel:
       en: ["apparel", "clothes", "garments"]
       nb: ["klær", "tekstil"]
+      es: ["Prenda para vestir"]
     labels:
       nn: "Klede"
       da: "Tøj"
@@ -1700,8 +1706,9 @@ concepts:
       da: "Forbrugsvarer"
 
     source_uris:
-    - http://dbpedia.org/resource/Consumables
     - http://www.wikidata.org/entity/Q135072296
+    excluded_sources:
+    - dbpedia
   hardware:
     prefLabel: "Hardware"
     altLabel:
@@ -2060,6 +2067,9 @@ concepts:
     altLabel:
       en: ["stationery", "office equipment"]
       nb: ["kontor", "kontorrekvisita"]
+      de: ["Büromaterial"]
+      sv: ["Kontorsvaror"]
+      nl: ["Kantoorartikel"]
     labels:
       nb: "Kontorrekvisita"
       de: "Bürobedarf"

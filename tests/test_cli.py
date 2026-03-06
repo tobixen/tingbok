@@ -446,6 +446,66 @@ concepts:
     assert "Werkzeug" not in output or "variant" in output.lower() or output.count("Werkzeug") < 3
 
 
+def test_prune_vocabulary_suppresses_deviation_when_source_matches_altlabel(tmp_path):
+    """If a source label matches an altLabel, it should not be reported as a deviation."""
+    vocab = """\
+concepts:
+  food:
+    prefLabel: "Food"
+    source_uris:
+      - "http://dbpedia.org/resource/Food"
+    labels:
+      nl: "Voedsel"
+    altLabel:
+      nl: ["Levensmiddel", "voeding"]
+"""
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        return {"nl": "Levensmiddel"}  # matches altLabel, not the main label
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(tmp_path, vocab_content=vocab)
+
+    assert rc == 0
+    # Should NOT report as a deviation since "Levensmiddel" is an altLabel
+    assert "Levensmiddel" not in output or "deviation" not in output.lower()
+    assert "vocab=" not in output  # no deviation line
+
+
+def test_prune_vocabulary_suppresses_conflict_when_one_source_matches_altlabel(tmp_path):
+    """CONFLICT between sources should be suppressed if one value is an altLabel."""
+    vocab = """\
+concepts:
+  food:
+    prefLabel: "Food"
+    source_uris:
+      - "http://dbpedia.org/resource/Food"
+      - "http://aims.fao.org/aos/agrovoc/c_3032"
+    labels:
+      fr: "Nourriture"
+    altLabel:
+      fr: ["produit alimentaire"]
+"""
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        if source == "dbpedia":
+            return {"fr": "Nourriture"}
+        if source == "agrovoc":
+            return {"fr": "produit alimentaire"}
+        return {}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(tmp_path, vocab_content=vocab)
+
+    assert rc == 0
+    # "produit alimentaire" is an altLabel → conflict should be suppressed
+    assert "CONFLICT" not in output
+
+
 def test_prune_vocabulary_case_insensitive_match(tmp_path):
     """Matching should be case-insensitive (source 'food' matches vocab 'Food')."""
     from tingbok.services import skos as skos_service
