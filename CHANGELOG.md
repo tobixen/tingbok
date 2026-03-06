@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
-## [Unreleased]
+## [v0.10.0] - 2026-03-06
 
 ### Added
 - **`get_alt_labels(uri, languages, source, cache_dir)`** in `services/skos.py` — fetches
