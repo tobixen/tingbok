@@ -91,8 +91,8 @@ concepts:
   tools:
     prefLabel: "Tools"
     altLabel:
-      en: ["equipment", "implements"]
-      nb: ["verktøy", "utstyr"]
+      en: ["implements"]
+      nb: ["verktøy"]
       de: ["Werkzeug"]
       fr: ["Outil"]
       es: ["Herramienta"]
