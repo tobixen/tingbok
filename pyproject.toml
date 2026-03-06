@@ -26,6 +26,7 @@ dependencies = [
     "pyyaml>=6.0",
     "niquests>=3.0",
     "ruamel.yaml>=0.18",
+    "rapidfuzz>=3.0",
 ]
 
 [project.scripts]

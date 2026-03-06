@@ -252,10 +252,13 @@ def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:
 def _build_labels(concept_id: str, data: dict[str, Any]) -> dict[str, str]:
     """Build the merged labels for a concept.
 
-    Source-fetched labels (from external URIs) provide the base; static labels
-    in vocabulary.yaml override them on a per-language basis.
+    Source-fetched labels provide the base.  ``prefLabel`` is treated as the
+    canonical English label and overrides any source-fetched ``en`` value.
+    Explicit ``labels:`` entries in vocabulary.yaml override everything.
     """
     merged = dict(_fetched_labels.get(concept_id, {}))
+    if "prefLabel" in data:
+        merged["en"] = data["prefLabel"]
     merged.update(data.get("labels", {}))
     return merged
 

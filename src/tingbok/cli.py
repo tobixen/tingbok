@@ -178,14 +178,42 @@ def _normalize_for_match(label: str) -> str:
     return " ".join(label.lower().split())
 
 
-def _labels_match(vocab_label: str, source_label: str) -> bool:
-    """Return True if two labels are considered the same.
+#: Similarity ratio threshold (0–100) above which two labels are considered
+#: near-matches (e.g. plural/singular variants) and are removed without a
+#: deviation warning.  Uses rapidfuzz when available.
+_NEAR_MATCH_THRESHOLD = 85
 
-    Ignores case differences and leading/trailing whitespace.  Singular/plural
-    differences are not considered here — the caller reports both labels so the
-    user can decide.
+
+def _labels_similarity(label1: str, label2: str) -> float:
+    """Return a 0–100 similarity score between two normalised labels.
+
+    Uses rapidfuzz.fuzz.ratio when available; falls back to 100 for exact
+    matches and 0 otherwise.
     """
+    n1 = _normalize_for_match(label1)
+    n2 = _normalize_for_match(label2)
+    if n1 == n2:
+        return 100.0
+    try:
+        from rapidfuzz import fuzz  # noqa: PLC0415
+
+        return fuzz.ratio(n1, n2)
+    except ImportError:
+        return 0.0
+
+
+def _labels_match(vocab_label: str, source_label: str) -> bool:
+    """Return True if two labels are an exact (normalised) match."""
     return _normalize_for_match(vocab_label) == _normalize_for_match(source_label)
+
+
+def _labels_near_match(vocab_label: str, source_label: str) -> bool:
+    """Return True if labels are similar enough to be treated as equivalent.
+
+    Catches common plural/singular differences across languages without
+    requiring language-specific stemming.
+    """
+    return _labels_similarity(vocab_label, source_label) >= _NEAR_MATCH_THRESHOLD
 
 
 def _prune_vocabulary(
@@ -251,8 +279,8 @@ def _prune_vocabulary(
         if not source_uris:
             continue
 
-        # Fetch translations from all source URIs
-        source_labels: dict[str, str] = {}
+        # Fetch translations from all source URIs, tracking per-source labels
+        per_source: dict[str, dict[str, str]] = {}  # {source_name: {lang: label}}
         for uri in source_uris:
             if not uri or uri.startswith("https://tingbok.plann.no/"):
                 continue
@@ -268,26 +296,56 @@ def _prune_vocabulary(
 
             try:
                 fetched = skos_service.get_labels(uri, languages, source, skos_dir)
-                for fetch_lang, fetch_label in fetched.items():
-                    if fetch_lang not in source_labels:
-                        source_labels[fetch_lang] = fetch_label
+                if fetched:
+                    existing = per_source.setdefault(source, {})
+                    for fetch_lang, fetch_label in fetched.items():
+                        if fetch_lang not in existing:
+                            existing[fetch_lang] = fetch_label
             except Exception as exc:  # noqa: BLE001
                 print(f"  Warning: label fetch failed for '{concept_id}' ({uri}): {exc}", file=sys.stderr)
 
-        if not source_labels:
+        if not per_source:
             continue
 
-        # Compare each vocabulary label against source labels
+        # Detect inter-source conflicts: different sources disagree on the same language
+        all_source_names = list(per_source.keys())
+        for i, src_a in enumerate(all_source_names):
+            for src_b in all_source_names[i + 1 :]:
+                for conflict_lang in per_source[src_a]:
+                    val_a = per_source[src_a][conflict_lang]
+                    val_b = per_source[src_b].get(conflict_lang)
+                    if val_b and not _labels_near_match(val_a, val_b):
+                        deviations.append(
+                            f"  CONFLICT {concept_id}[{conflict_lang}]: {src_a}='{val_a}' vs {src_b}='{val_b}'"
+                        )
+
+        # Merged source labels (first source wins per language), tracking provider
+        source_labels: dict[str, tuple[str, str]] = {}  # {lang: (source_name, label)}
+        for src_name, labels in per_source.items():
+            for fetch_lang, fetch_label in labels.items():
+                if fetch_lang not in source_labels:
+                    source_labels[fetch_lang] = (src_name, fetch_label)
+
+        # Compare each vocabulary label against merged source labels
         for label_lang, vocab_value in list(static_labels.items()):
-            src_value = source_labels.get(label_lang)
-            if src_value is None:
+            if label_lang not in source_labels:
                 continue  # Source doesn't have this language — keep it
+
+            providing_source, src_value = source_labels[label_lang]
 
             if _labels_match(vocab_value, src_value):
                 removals.setdefault(concept_id, {}).setdefault(label_lang, set()).add(vocab_value)
-                print(f"  {concept_id}[{label_lang}]: '{vocab_value}' matches source → will remove")
+                print(f"  {concept_id}[{label_lang}]: '{vocab_value}' matches {providing_source} → will remove")
+            elif _labels_near_match(vocab_value, src_value):
+                removals.setdefault(concept_id, {}).setdefault(label_lang, set()).add(vocab_value)
+                print(
+                    f"  {concept_id}[{label_lang}]: '{vocab_value}' ≈ {providing_source} '{src_value}'"
+                    f" (near-match, likely plural/singular) → will remove"
+                )
             else:
-                deviations.append(f"  {concept_id}[{label_lang}]: vocab='{vocab_value}' vs source='{src_value}'")
+                deviations.append(
+                    f"  {concept_id}[{label_lang}]: vocab='{vocab_value}' vs {providing_source}='{src_value}'"
+                )
 
     if deviations:
         print("\nDeviations (kept, need manual review):")

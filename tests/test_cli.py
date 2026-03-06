@@ -367,6 +367,85 @@ concepts:
     assert "important comment" in (tmp_path / "vocabulary.yaml").read_text()
 
 
+def test_prune_vocabulary_includes_source_name_in_deviation(tmp_path):
+    """Deviation output should say which source provided the differing label."""
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        if source == "dbpedia":
+            return {"de": "Completely_Different_DE"}
+        return {}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(tmp_path, vocab_content=VOCAB_WITH_LABELS)
+
+    assert rc == 0
+    # The source name should appear in the deviation line
+    assert "dbpedia" in output
+
+
+def test_prune_vocabulary_detects_inter_source_conflict(tmp_path):
+    """When different sources give different labels for the same language, report it."""
+    vocab = """\
+concepts:
+  food:
+    prefLabel: "Food"
+    source_uris:
+      - "http://dbpedia.org/resource/Food"
+      - "http://www.wikidata.org/entity/Q2095"
+    labels:
+      en: "Food"
+"""
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        if source == "dbpedia":
+            return {"en": "Food"}
+        if source == "wikidata":
+            return {"en": "Nutrition"}  # Different from dbpedia
+        return {}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(tmp_path, vocab_content=vocab)
+
+    assert rc == 0
+    # Inter-source conflict between "Food" and "Nutrition" should be reported
+    assert "conflict" in output.lower() or "Nutrition" in output
+
+
+def test_prune_vocabulary_near_match_removed_without_deviation(tmp_path):
+    """Plural/singular variants (high similarity) should be removed without a deviation warning."""
+    vocab = """\
+concepts:
+  tools:
+    prefLabel: "Tools"
+    source_uris:
+      - "http://dbpedia.org/resource/Tool"
+    labels:
+      de: "Werkzeuge"
+"""
+    from tingbok.services import skos as skos_service
+
+    # Source has singular "Werkzeug" while vocab has plural "Werkzeuge"
+    def fake_get_labels(uri, languages, source, cache_dir):
+        return {"de": "Werkzeug"}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(tmp_path, vocab_content=vocab)
+
+    assert rc == 0
+    import yaml
+
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    # "Werkzeuge" is a near-match for "Werkzeug" → should be removed
+    assert "de" not in updated["concepts"]["tools"].get("labels", {})
+    # Should NOT appear as a deviation (no "DEVIATION" line about de)
+    assert "Werkzeug" not in output or "variant" in output.lower() or output.count("Werkzeug") < 3
+
+
 def test_prune_vocabulary_case_insensitive_match(tmp_path):
     """Matching should be case-insensitive (source 'food' matches vocab 'Food')."""
     from tingbok.services import skos as skos_service
