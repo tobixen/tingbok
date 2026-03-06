@@ -41,10 +41,6 @@ concepts:
     - misc
     - category_by_source
 
-  # =============================================================================
-  # TOP-LEVEL CATEGORIES
-  # =============================================================================
-
     source_uris: []
     excluded_sources:
     - agrovoc
@@ -52,6 +48,10 @@ concepts:
     - wikidata
     - "off"
     - gpt
+
+  # =============================================================================
+  # TOP-LEVEL CATEGORIES
+  # =============================================================================
 
   food:
     prefLabel: "Food"
@@ -161,15 +161,16 @@ concepts:
     - electronics/circuits
     - electronics/components
 
-  # =============================================================================
-  # ELECTRONICS SUBCATEGORIES
-  # =============================================================================
-
     source_uris:
     - http://dbpedia.org/resource/Electronics
     - http://www.wikidata.org/entity/Q11650
     - http://aims.fao.org/aos/agrovoc/c_2522
     - gpt:222
+
+  # =============================================================================
+  # ELECTRONICS SUBCATEGORIES
+  # =============================================================================
+
   electronics/connectors:
     prefLabel: "Connectors"
     altLabel:
@@ -203,10 +204,11 @@ concepts:
       en: ["parts", "modules"]
     broader: electronics
 
-  # Electronics cable mappings
     source_uris:
     - http://dbpedia.org/resource/Electronic_component
     - http://www.wikidata.org/entity/Q5570655
+
+  # Electronics cable mappings
   ac-cable:
     prefLabel: "AC cable"
     altLabel:
@@ -237,12 +239,13 @@ concepts:
     prefLabel: "Cables"
     broader: electronics
 
-  # Electronics connector mappings
     source_uris:
     - http://dbpedia.org/resource/Cable
     - http://www.wikidata.org/entity/Q37492867
     - http://aims.fao.org/aos/agrovoc/c_a8bcf3c5
     - gpt:259
+
+  # Electronics connector mappings
   electrical-connector:
     prefLabel: "Electrical connector"
     altLabel:
@@ -276,10 +279,11 @@ concepts:
       en: ["mains_power_connectors"]
     broader: electronics/connectors
 
-  # Electronics power mappings
-  # Electronics component mappings
     source_uris:
     - http://dbpedia.org/resource/AC_power_plugs_and_sockets
+
+  # Electronics power mappings
+  # Electronics component mappings
   adc-module:
     prefLabel: "ADC module"
     altLabel:
@@ -372,13 +376,14 @@ concepts:
       nb: ["registreringsskilt", "nummerskilt"]
     broader: documents
 
+    source_uris:
+    - http://dbpedia.org/resource/Vehicle_registration_plate
+    - http://www.wikidata.org/entity/Q22706
+
   # =============================================================================
   # FOOD SUBCATEGORIES
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Vehicle_registration_plate
-    - http://www.wikidata.org/entity/Q22706
   food/beverages:
     prefLabel: "Beverages"
     altLabel:
@@ -668,17 +673,18 @@ concepts:
     prefLabel: "Thyme"
     broader: food/spices
 
+    source_uris:
+    - http://dbpedia.org/resource/Thyme
+    - http://www.wikidata.org/entity/Q3215980
+    - http://aims.fao.org/aos/agrovoc/c_14877
+    - off:en:thyme
+
   # =============================================================================
   # SIMPLE LABEL MAPPINGS (orphan → parent)
   # These map simple labels used in inventory to their proper parent category
   # =============================================================================
 
   # Beverages
-    source_uris:
-    - http://dbpedia.org/resource/Thyme
-    - http://www.wikidata.org/entity/Q3215980
-    - http://aims.fao.org/aos/agrovoc/c_14877
-    - off:en:thyme
   beer:
     prefLabel: "Beer"
     altLabel:
@@ -744,11 +750,12 @@ concepts:
       bg: ["сок"]
     broader: food/beverages
 
-  # Dairy
     source_uris:
     - http://dbpedia.org/resource/Juice
     - http://www.wikidata.org/entity/Q8492
     - gpt:2887
+
+  # Dairy
   milk:
     prefLabel: "Milk"
     altLabel:
@@ -802,13 +809,14 @@ concepts:
       bg: ["сметана"]
     broader: food/dairy
 
-  # Grains
     source_uris:
     - http://dbpedia.org/resource/Cream
     - http://www.wikidata.org/entity/Q13228
     - http://aims.fao.org/aos/agrovoc/c_1951
     - gpt:5786
     - off:en:creams
+
+  # Grains
   pasta:
     prefLabel: "Pasta"
     altLabel:
@@ -870,13 +878,14 @@ concepts:
       bg: ["гречка"]
     broader: food/grains
 
-  # Meat
     source_uris:
     - http://dbpedia.org/resource/Buckwheat
     - http://www.wikidata.org/entity/Q37328861
     - http://aims.fao.org/aos/agrovoc/c_9471
     - gpt:4684
     - off:en:buckwheat
+
+  # Meat
   meat:
     prefLabel: "Meat"
     altLabel:
@@ -906,11 +915,12 @@ concepts:
       bg: ["колбас"]
     broader: food/meat
 
-  # Seafood
     source_uris:
     - http://dbpedia.org/resource/Sausage
     - http://www.wikidata.org/entity/Q131419
     - off:en:sausages
+
+  # Seafood
   fish:
     prefLabel: "Fish"
     altLabel:
@@ -939,12 +949,13 @@ concepts:
       bg: ["сардини"]
     broader: food/seafood/canned-fish
 
-  # Vegetables
     source_uris:
     - http://dbpedia.org/resource/Sardine
     - http://www.wikidata.org/entity/Q16746397
     - http://aims.fao.org/aos/agrovoc/c_6813
     - off:en:sardines
+
+  # Vegetables
   potatoes:
     prefLabel: "Potatoes"
     altLabel:
@@ -1012,9 +1023,10 @@ concepts:
     prefLabel: "Preserved vegetables"
     broader: food/preserved
 
-  # Fruits
     source_uris:
     - http://dbpedia.org/resource/Tianjin_preserved_vegetable
+
+  # Fruits
   bananas:
     prefLabel: "Bananas"
     altLabel:
@@ -1035,12 +1047,13 @@ concepts:
       bg: ["маслини"]
     broader: food/fruits
 
-  # Legumes
     source_uris:
     - http://dbpedia.org/resource/Olive
     - http://www.wikidata.org/entity/Q56400385
     - http://aims.fao.org/aos/agrovoc/c_12926
     - off:en:olives
+
+  # Legumes
   beans:
     prefLabel: "Beans"
     altLabel:
@@ -1085,11 +1098,12 @@ concepts:
       bg: ["соя"]
     broader: food/legumes
 
-  # Condiments
     source_uris:
     - http://dbpedia.org/resource/Soybean
     - http://www.wikidata.org/entity/Q11006
     - http://aims.fao.org/aos/agrovoc/c_14477
+
+  # Condiments
   oil:
     prefLabel: "Oil"
     altLabel:
@@ -1193,11 +1207,12 @@ concepts:
       en: ["spreads"]
     broader: food/condiments
 
-  # Snacks
     source_uris:
     - http://dbpedia.org/resource/Spread
     - http://www.wikidata.org/entity/Q113128287
     - off:en:spreads
+
+  # Snacks
   snacks:
     prefLabel: "Snacks"
     altLabel:
@@ -1279,12 +1294,13 @@ concepts:
       bg: ["шоколад"]
     broader: food/snacks
 
-  # Preserved
     source_uris:
     - http://dbpedia.org/resource/Chocolate
     - http://www.wikidata.org/entity/Q195
     - http://aims.fao.org/aos/agrovoc/c_1582
     - off:en:chocolates
+
+  # Preserved
   canning:
     prefLabel: "Canning"
     altLabel:
@@ -1326,11 +1342,12 @@ concepts:
       bg: ["каперси"]
     broader: food/preserved
 
-  # Baking
     source_uris:
     - http://dbpedia.org/resource/Caper
     - http://www.wikidata.org/entity/Q16275162
     - off:en:capers
+
+  # Baking
   sugar:
     prefLabel: "Sugar"
     altLabel:
@@ -1348,13 +1365,14 @@ concepts:
       bg: ["мед"]
     broader: food/baking
 
-  # Spices
     source_uris:
     - http://dbpedia.org/resource/Honey
     - http://www.wikidata.org/entity/Q10987
     - http://aims.fao.org/aos/agrovoc/c_3652
     - gpt:4947
     - off:en:honeys
+
+  # Spices
   spice:
     prefLabel: "Spice"
     altLabel:
@@ -1373,15 +1391,16 @@ concepts:
       bg: ["бульон"]
     broader: food/spices
 
+    source_uris:
+    - http://dbpedia.org/resource/Godfrey_of_Bouillon
+    - http://www.wikidata.org/entity/Q895022
+    - off:en:broths
+
   # Meals/dishes (still food)
   # =============================================================================
   # TOOLS SUBCATEGORIES
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Godfrey_of_Bouillon
-    - http://www.wikidata.org/entity/Q895022
-    - off:en:broths
   tools/hand:
     prefLabel: "Hand tools"
     broader: tools
@@ -1417,10 +1436,11 @@ concepts:
       en: ["bicycle tools", "cycling tools"]
     broader: tools
 
-  # Tool mappings
     source_uris:
     - http://dbpedia.org/resource/Shed
     - http://www.wikidata.org/entity/Q572809
+
+  # Tool mappings
   bike-tool:
     prefLabel: "Bike tool"
     altLabel:
@@ -1452,13 +1472,14 @@ concepts:
       en: ["hammers"]
     broader: tools/hand
 
+    source_uris:
+    - http://dbpedia.org/resource/Hammer
+    - http://www.wikidata.org/entity/Q25294
+
   # =============================================================================
   # BOAT EQUIPMENT SUBCATEGORIES
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Hammer
-    - http://www.wikidata.org/entity/Q25294
   boat-equipment/safety:
     prefLabel: "Safety equipment"
     altLabel:
@@ -1501,11 +1522,12 @@ concepts:
       en: ["motor parts"]
     broader: boat-equipment
 
-  # Simple boat mappings
     source_uris:
     - http://dbpedia.org/resource/Thomas_&_Friends
     - http://www.wikidata.org/entity/Q66150902
     - http://aims.fao.org/aos/agrovoc/c_25784
+
+  # Simple boat mappings
   boat-spare:
     prefLabel: "Boat spare parts"
     broader: boat-equipment
@@ -1587,27 +1609,29 @@ concepts:
     prefLabel: "Engine part"
     broader: boat-equipment/engine
 
-  # =============================================================================
-  # ELECTRONICS SUBCATEGORIES
-  # =============================================================================
-
     source_uris:
     - http://dbpedia.org/resource/Proceedings_of_the_Institution_of_Electrical_Engineers
     - http://www.wikidata.org/entity/Q66150902
     - http://aims.fao.org/aos/agrovoc/c_25784
+
+  # =============================================================================
+  # ELECTRONICS SUBCATEGORIES
+  # =============================================================================
+
   single-board-computer:
     prefLabel: "Single-board computer"
     altLabel:
       en: ["SBC", "raspberry pi"]
     broader: electronics
 
+    source_uris:
+    - http://dbpedia.org/resource/Single-board_computer
+    - http://www.wikidata.org/entity/Q944780
+
   # =============================================================================
   # HOUSEHOLD SUBCATEGORIES
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Single-board_computer
-    - http://www.wikidata.org/entity/Q944780
   personal-care:
     prefLabel: "Personal care"
     altLabel:
@@ -1632,11 +1656,12 @@ concepts:
     prefLabel: "Storage"
     broader: household
 
-  # Simple household mappings
     source_uris:
     - http://dbpedia.org/resource/Reservoir
     - http://www.wikidata.org/entity/Q7619904
     - http://aims.fao.org/aos/agrovoc/c_7427
+
+  # Simple household mappings
   bedding:
     prefLabel: "Bedding"
     altLabel:
@@ -1817,12 +1842,13 @@ concepts:
       en: ["inner tube"]
     broader: consumables
 
+    source_uris:
+    - http://www.wikidata.org/entity/Q9249417
+
   # =============================================================================
   # AUTOMOTIVE / VEHICLES
   # =============================================================================
 
-    source_uris:
-    - http://www.wikidata.org/entity/Q9249417
   automotive:
     prefLabel: "Automotive"
     altLabel:
@@ -1857,13 +1883,14 @@ concepts:
     prefLabel: "Automotive maintenance"
     broader: automotive
 
+    source_uris:
+    - http://dbpedia.org/resource/Service_(motor_vehicle)
+
   # Automotive mappings
   # =============================================================================
   # CAMPING / OUTDOOR
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Service_(motor_vehicle)
   outdoor:
     prefLabel: "Outdoor equipment"
     altLabel:
@@ -1898,10 +1925,11 @@ concepts:
     prefLabel: "Outdoor cooking"
     broader: outdoor
 
-  # Outdoor mappings
     source_uris:
     - http://dbpedia.org/resource/Outdoor_cooking
     - http://www.wikidata.org/entity/Q2920305
+
+  # Outdoor mappings
   camping:
     prefLabel: "Camping"
     broader: outdoor
@@ -1925,13 +1953,14 @@ concepts:
       en: ["rucksack", "daypack"]
     broader: outdoor/hiking
 
+    source_uris:
+    - http://dbpedia.org/resource/Backpack
+    - http://www.wikidata.org/entity/Q654772
+
   # =============================================================================
   # CLOTHING SUBCATEGORIES
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Backpack
-    - http://www.wikidata.org/entity/Q654772
   clothing/workwear:
     prefLabel: "Workwear"
     broader: clothing
@@ -1951,24 +1980,26 @@ concepts:
     prefLabel: "Clothing accessories"
     broader: clothing
 
-  # Clothing/fashion mappings
     source_uris:
     - http://dbpedia.org/resource/Che_Guevara_in_fashion
     - http://www.wikidata.org/entity/Q123152059
     - gpt:167
+
+  # Clothing/fashion mappings
   hat:
     prefLabel: "Hat"
     altLabel:
       en: ["hats", "cap"]
     broader: clothing/accessories
 
+    source_uris:
+    - http://dbpedia.org/resource/Hat
+    - http://www.wikidata.org/entity/Q80151
+
   # =============================================================================
   # CONSTRUCTION / BUILDING
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Hat
-    - http://www.wikidata.org/entity/Q80151
   construction:
     prefLabel: "Construction"
     altLabel:
@@ -2000,10 +2031,11 @@ concepts:
     prefLabel: "Electrical"
     broader: construction
 
-  # Construction mappings
     source_uris:
     - http://dbpedia.org/resource/Electricity
     - http://www.wikidata.org/entity/Q244404
+
+  # Construction mappings
   washer:
     prefLabel: "Washer"
     altLabel:
@@ -2060,9 +2092,10 @@ concepts:
     prefLabel: "Office storage"
     broader: office
 
-  # Office mappings
     source_uris:
     - http://dbpedia.org/resource/Computer_data_storage
+
+  # Office mappings
   pen:
     prefLabel: "Pen"
     altLabel:
@@ -2088,13 +2121,14 @@ concepts:
       en: ["notepad"]
     broader: office/paper
 
+    source_uris:
+    - http://dbpedia.org/resource/Notebook
+    - http://www.wikidata.org/entity/Q43013
+
   # =============================================================================
   # SPORTS / GAMES
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Notebook
-    - http://www.wikidata.org/entity/Q43013
   sports:
     prefLabel: "Sports"
     altLabel:
@@ -2168,10 +2202,11 @@ concepts:
     - medicine
     - safety-equipment
 
-  # Medical mappings
     excluded_sources:
     - dbpedia
     - wikidata
+
+  # Medical mappings
   first-aid:
     prefLabel: "First aid"
     altLabel:
@@ -2218,6 +2253,9 @@ concepts:
     prefLabel: "Bike repair kit"
     broader: tools/bike
 
+    source_uris:
+    - http://dbpedia.org/resource/Carlisle_United_F.C.
+
   # Camping/outdoor from DBpedia
   # Electronics from DBpedia
   # Household/cleaning from DBpedia
@@ -2226,8 +2264,6 @@ concepts:
   # Construction/hardware from DBpedia
   # Safety/detection
   # Boat equipment from DBpedia
-    source_uris:
-    - http://dbpedia.org/resource/Carlisle_United_F.C.
   boat_hatch:
     prefLabel: "Boat hatch"
     broader: boat-equipment/deck
@@ -2244,10 +2280,11 @@ concepts:
     prefLabel: "Cockpit lamp"
     broader: boat-equipment
 
-  # Tools
-  # Misc items that need parents
     source_uris:
     - http://dbpedia.org/resource/Italy
+
+  # Tools
+  # Misc items that need parents
   corner_bracket:
     prefLabel: "Corner bracket"
     broader: construction
@@ -2284,18 +2321,20 @@ concepts:
     prefLabel: "Anti-corrosion spray"
     broader: consumables
 
-  # Engineering/science (map to tools or electronics)
     source_uris:
     - http://dbpedia.org/resource/Punk_rock
+
+  # Engineering/science (map to tools or electronics)
   current_shunt:
     prefLabel: "Current shunt"
     broader: electronics/components
 
+    source_uris:
+    - http://dbpedia.org/resource/United_Kingdom
+
   # Fire safety
   # Inventions categories (map to misc)
   # Filter-related
-    source_uris:
-    - http://dbpedia.org/resource/United_Kingdom
   diesel_filter:
     prefLabel: "Diesel filter"
     broader: automotive/maintenance
@@ -2306,9 +2345,10 @@ concepts:
     prefLabel: "Dehumidifier consumable"
     broader: household
 
-  # Activities
     source_uris:
     - http://dbpedia.org/resource/Logistics
+
+  # Activities
   cigarette_lighter_plug:
     prefLabel: "Cigarette lighter plug"
     broader: automotive
@@ -2384,9 +2424,10 @@ concepts:
     prefLabel: "Zigbee coordinator"
     broader: electronics
 
-  # More DBpedia mappings - Tools
     source_uris:
     - http://dbpedia.org/resource/Central_European_Time
+
+  # More DBpedia mappings - Tools
   drill_bit_set:
     prefLabel: "Drill bit set"
     broader: tools
@@ -2440,10 +2481,11 @@ concepts:
     prefLabel: "Work light"
     broader: tools
 
-  # More DBpedia mappings - Household
     source_uris:
     - http://dbpedia.org/resource/General_Electric
     - http://www.wikidata.org/entity/Q116971324
+
+  # More DBpedia mappings - Household
   toilet_paper:
     prefLabel: "Toilet paper"
     broader: household
@@ -2462,12 +2504,13 @@ concepts:
     prefLabel: "Water filter cartridge"
     broader: household
 
-  # More DBpedia mappings - Clothing
-  # More DBpedia mappings - Food
-  # More DBpedia mappings - Boat equipment
     source_uris:
     - http://dbpedia.org/resource/Hydropower
     - http://www.wikidata.org/entity/Q116970911
+
+  # More DBpedia mappings - Clothing
+  # More DBpedia mappings - Food
+  # More DBpedia mappings - Boat equipment
   engine_maintenance:
     prefLabel: "Engine maintenance"
     broader: boat-equipment/engine
@@ -2554,11 +2597,12 @@ concepts:
     prefLabel: "Winches"
     broader: boat-equipment
 
-  # More DBpedia mappings - Construction
     source_uris:
     - http://dbpedia.org/resource/Winch
     - http://www.wikidata.org/entity/Q14523404
     - gpt:503772
+
+  # More DBpedia mappings - Construction
   fasteners:
     prefLabel: "Fasteners"
     altLabel:
@@ -2586,10 +2630,11 @@ concepts:
     prefLabel: "Threaded stud"
     broader: construction
 
-  # More DBpedia mappings - Outdoor
     source_uris:
     - http://dbpedia.org/resource/Threaded_rod
     - http://www.wikidata.org/entity/Q123421734
+
+  # More DBpedia mappings - Outdoor
   sup_repair:
     prefLabel: "SUP repair"
     broader: outdoor
@@ -2600,9 +2645,10 @@ concepts:
     prefLabel: "Tent spare"
     broader: outdoor
 
-  # More DBpedia mappings - Consumables
     source_uris:
     - http://dbpedia.org/resource/Glossary_of_motorsport_terms
+
+  # More DBpedia mappings - Consumables
   patch_kit:
     prefLabel: "Patch kit"
     broader: consumables
@@ -2669,21 +2715,23 @@ concepts:
     prefLabel: "Pedal"
     broader: tools/bike
 
-  # Misc categories
     source_uris:
     - http://dbpedia.org/resource/Pedal
     - http://www.wikidata.org/entity/Q134625947
+
+  # Misc categories
   antenna-adapter:
     prefLabel: "Antenna adapter"
     broader: electronics
+
+    source_uris:
+    - http://dbpedia.org/resource/Insect
 
   # =============================================================================
   # NORWEGIAN CATEGORY MAPPINGS
   # Maps Norwegian category labels to English parent categories
   # =============================================================================
 
-    source_uris:
-    - http://dbpedia.org/resource/Insect
   bad:
     prefLabel: "Bathroom"
     labels:
