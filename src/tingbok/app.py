@@ -45,6 +45,10 @@ _fetched_labels: dict[str, dict[str, str]] = {}
 #: Maps concept_id -> description string.  Populated by _fetch_labels_background().
 _fetched_descriptions: dict[str, str] = {}
 
+#: Alternative labels (synonyms) fetched from external sources for each concept.
+#: Maps concept_id -> {lang: [altLabel, ...]}.  Populated by _fetch_labels_background().
+_fetched_alt_labels: dict[str, dict[str, list[str]]] = {}
+
 #: Languages to fetch from external sources in the background.
 _DEFAULT_FETCH_LANGUAGES: list[str] = [
     "en",
@@ -153,6 +157,7 @@ async def _fetch_labels_background() -> None:
                 all_uris.append(uri)
 
         merged: dict[str, str] = {}
+        merged_alts: dict[str, list[str]] = {}
         best_description: str | None = None
 
         for uri in all_uris:
@@ -167,27 +172,40 @@ async def _fetch_labels_background() -> None:
                     fetched = await asyncio.to_thread(
                         skos_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, source, SKOS_CACHE_DIR
                     )
+                    fetched_alts = await asyncio.to_thread(
+                        skos_service.get_alt_labels, uri, _DEFAULT_FETCH_LANGUAGES, source, SKOS_CACHE_DIR
+                    )
                     desc = await asyncio.to_thread(skos_service.get_description, uri, source, "en", SKOS_CACHE_DIR)
                     if desc and (best_description is None or len(desc) > len(best_description)):
                         best_description = desc
                 elif source == "off":
                     fetched = await asyncio.to_thread(off_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES)
+                    fetched_alts = await asyncio.to_thread(off_service.get_alt_labels, uri, _DEFAULT_FETCH_LANGUAGES)
                 elif source == "gpt":
                     fetched = await asyncio.to_thread(
                         gpt_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, _CACHE_BASE
                     )
+                    fetched_alts = {}
                 else:
                     continue
 
-                # First source wins for each language
+                # First source wins for each language (preferred labels)
                 for lang, label in fetched.items():
                     if lang not in merged:
                         merged[lang] = label
+                # Merge alt labels (accumulate across sources, deduplicate later)
+                for lang, alts in fetched_alts.items():
+                    existing = merged_alts.setdefault(lang, [])
+                    for alt in alts:
+                        if alt not in existing:
+                            existing.append(alt)
             except Exception as exc:  # noqa: BLE001
                 logger.debug("Label fetch failed for '%s' (%s): %s", concept_id, uri, exc)
 
         if merged:
             _fetched_labels[concept_id] = merged
+        if merged_alts:
+            _fetched_alt_labels[concept_id] = merged_alts
         if best_description:
             _fetched_descriptions[concept_id] = best_description
 
@@ -288,6 +306,31 @@ def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:
     return source_uris
 
 
+def _build_alt_labels(concept_id: str, data: dict[str, Any]) -> dict[str, list[str]]:
+    """Build merged altLabels for a concept.
+
+    Source-fetched synonyms are added to the static altLabel entries from
+    vocabulary.yaml.  Duplicates (case-sensitive) and values that duplicate the
+    prefLabel for that language are removed.
+    """
+    pref_label: str = data.get("prefLabel", concept_id)
+    static: dict[str, list[str]] = data.get("altLabel") or {}
+    fetched: dict[str, list[str]] = _fetched_alt_labels.get(concept_id) or {}
+
+    merged: dict[str, list[str]] = {}
+    all_langs = set(static) | set(fetched)
+    for lang in all_langs:
+        seen: set[str] = set()
+        result: list[str] = []
+        for alt in list(static.get(lang, [])) + list(fetched.get(lang, [])):
+            if alt not in seen and alt != pref_label:
+                seen.add(alt)
+                result.append(alt)
+        if result:
+            merged[lang] = result
+    return merged
+
+
 def _build_labels(concept_id: str, data: dict[str, Any]) -> dict[str, str]:
     """Build the merged labels for a concept.
 
@@ -322,10 +365,10 @@ async def get_vocabulary() -> dict[str, VocabularyConcept]:
         result[concept_id] = VocabularyConcept(
             id=concept_id,
             prefLabel=data.get("prefLabel", concept_id),
-            altLabel=data.get("altLabel", {}),
+            altLabel=_build_alt_labels(concept_id, data),
             broader=broader,
             narrower=data.get("narrower", []),
-            uri=data.get("uri"),
+            uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{concept_id}",
             source_uris=_build_source_uris(concept_id, data),
             excluded_sources=data.get("excluded_sources", []),
             labels=_build_labels(concept_id, data),
@@ -349,10 +392,10 @@ async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
     return VocabularyConcept(
         id=concept_id,
         prefLabel=data.get("prefLabel", concept_id),
-        altLabel=data.get("altLabel", {}),
+        altLabel=_build_alt_labels(concept_id, data),
         broader=broader,
         narrower=data.get("narrower", []),
-        uri=data.get("uri"),
+        uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{concept_id}",
         source_uris=_build_source_uris(concept_id, data),
         excluded_sources=data.get("excluded_sources", []),
         labels=_build_labels(concept_id, data),

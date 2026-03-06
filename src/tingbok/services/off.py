@@ -155,6 +155,39 @@ def get_labels(uri: str, languages: list[str]) -> dict[str, str]:
     return labels
 
 
+def get_alt_labels(uri: str, languages: list[str]) -> dict[str, list[str]]:
+    """Get synonym labels for an OFF node URI in the requested languages.
+
+    Args:
+        uri:       OFF node URI (e.g. ``"off:en:potatoes"``).
+        languages: List of BCP-47 language codes.
+
+    Returns:
+        Dict mapping language code to list of synonym strings.
+    """
+    if not uri.startswith("off:"):
+        return {}
+    node_id = uri[4:]
+
+    taxonomy = _get_taxonomy()
+    if taxonomy is None:
+        return {}
+
+    try:
+        node = taxonomy[node_id]
+    except (KeyError, TypeError):
+        return {}
+
+    alts: dict[str, list[str]] = {}
+    for lang in languages:
+        syns: list[str] = list(node.synonyms.get(lang, []))
+        if not syns and "-" in lang:
+            syns = list(node.synonyms.get(lang.split("-")[0], []))
+        if syns:
+            alts[lang] = syns
+    return alts
+
+
 def lookup_concept(label: str, lang: str = "en", cache_dir: Path | None = None) -> dict[str, Any] | None:
     """Look up a food concept by label in the OFF taxonomy.
 

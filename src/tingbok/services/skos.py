@@ -239,6 +239,40 @@ def get_labels(uri: str, languages: list[str], source: str, cache_dir: Path) -> 
     return {lang: all_labels[lang] for lang in languages if lang in all_labels}
 
 
+def get_alt_labels(uri: str, languages: list[str], source: str, cache_dir: Path) -> dict[str, list[str]]:
+    """Fetch alternative labels (synonyms) for a concept URI.
+
+    Serves from cache when available; falls back to upstream REST APIs.
+
+    Args:
+        uri:       Full SKOS concept URI.
+        languages: List of BCP-47 language codes to return.
+        source:    Taxonomy source: ``"agrovoc"``, ``"dbpedia"``, or ``"wikidata"``.
+        cache_dir: Path to the SKOS cache directory.
+
+    Returns:
+        Dict mapping language code to list of alternative labels.
+    """
+    if not uri or not languages:
+        return {}
+
+    uri_hash = hashlib.md5(uri.encode()).hexdigest()[:16]  # noqa: S324 — non-crypto use
+    cache_key = f"alt_labels:{source}:{uri_hash}"
+    cache_path = _get_cache_path(cache_dir, cache_key)
+
+    cached = _load_from_cache(cache_path)
+    if cached is not None:
+        cached_alts: dict[str, list[str]] = cached.get("alt_labels", {})
+        return {lang: cached_alts[lang] for lang in languages if lang in cached_alts}
+
+    all_alts = _upstream_get_alt_labels(uri, source, languages)
+    if all_alts is None:
+        # Transient error — do not cache
+        return {}
+    _save_to_cache(cache_path, {"uri": uri, "source": source, "alt_labels": all_alts})
+    return {lang: all_alts[lang] for lang in languages if lang in all_alts}
+
+
 def get_labels_batch(uris: list[str], languages: list[str], source: str, cache_dir: Path) -> dict[str, dict[str, str]]:
     """Fetch labels for multiple URIs in the requested languages.
 
@@ -1044,6 +1078,22 @@ def _get_broader_wikidata(qid: str, lang: str, headers: dict | None = None) -> l
     return broader
 
 
+def _upstream_get_alt_labels(uri: str, source: str, languages: list[str]) -> dict[str, list[str]] | None:
+    """Fetch alternative labels for a URI from the appropriate upstream source.
+
+    Returns:
+        Dict of ``{lang: [altLabel, ...]}`` on success (may be empty).
+        ``None`` when the request failed transiently.
+    """
+    if source == "agrovoc":
+        return _get_agrovoc_alt_labels(uri, languages)
+    if source == "dbpedia":
+        return _get_dbpedia_alt_labels(uri, languages)
+    if source == "wikidata":
+        return _get_wikidata_alt_labels(uri, languages)
+    return {}
+
+
 def _upstream_get_labels(uri: str, source: str, languages: list[str]) -> dict[str, str] | None:
     """Fetch multilingual labels for a URI from the appropriate upstream source.
 
@@ -1152,3 +1202,79 @@ def _get_wikidata_labels(uri: str, languages: list[str]) -> dict[str, str] | Non
     if data is None:
         return {}
     return {lang: data[lang] for lang in languages if lang in data}
+
+
+def _get_dbpedia_alt_labels(uri: str, languages: list[str]) -> dict[str, list[str]] | None:
+    """Fetch SKOS altLabels for a DBpedia URI via the Data REST API."""
+    data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
+    try:
+        with niquests.Session() as session:
+            response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
+            response.raise_for_status()
+    except niquests.exceptions.HTTPError:
+        return {}
+    except niquests.exceptions.RequestException as e:
+        logger.warning("DBpedia alt labels fetch failed for %s: %s", uri, e)
+        return None
+    data = _parse_json(response, uri)
+    if data is None:
+        return {}
+    alts: dict[str, list[str]] = {}
+    resource_data = data.get(uri, {})
+    for entry in resource_data.get("http://www.w3.org/2004/02/skos/core#altLabel", []):
+        lang = entry.get("lang", "")
+        value = entry.get("value", "")
+        if lang in languages and value:
+            alts.setdefault(lang, []).append(value)
+    return alts
+
+
+def _get_wikidata_alt_labels(uri: str, languages: list[str]) -> dict[str, list[str]] | None:
+    """Fetch aliases for a Wikidata item via the Wikibase REST API."""
+    qid = uri.rstrip("/").split("/")[-1]
+    if not qid.startswith("Q"):
+        return {}
+    url = f"https://www.wikidata.org/w/rest.php/wikibase/v0/entities/items/{qid}/aliases"
+    try:
+        with niquests.Session() as session:
+            response = session.get(url, timeout=DEFAULT_TIMEOUT)
+            response.raise_for_status()
+    except niquests.exceptions.HTTPError:
+        return {}
+    except niquests.exceptions.RequestException as e:
+        logger.warning("Wikidata aliases fetch failed for %s: %s", uri, e)
+        return None
+    data = _parse_json(response, uri)
+    if data is None:
+        return {}
+    return {lang: data[lang] for lang in languages if lang in data and isinstance(data[lang], list)}
+
+
+def _get_agrovoc_alt_labels(uri: str, languages: list[str]) -> dict[str, list[str]] | None:
+    """Fetch SKOS altLabels for an AGROVOC URI via the REST data endpoint."""
+    rest_base = _REST_ENDPOINTS["agrovoc"]
+    url = f"{rest_base}/data/"
+    params = {"uri": uri}
+    try:
+        with niquests.Session() as session:
+            response = session.get(url, params=params, timeout=DEFAULT_TIMEOUT)
+            response.raise_for_status()
+    except niquests.exceptions.HTTPError:
+        return {}
+    except niquests.exceptions.RequestException as e:
+        logger.warning("AGROVOC alt labels fetch failed for %s: %s", uri, e)
+        return None
+    data = _parse_json(response, uri)
+    if data is None:
+        return {}
+    alts: dict[str, list[str]] = {}
+    for item in data.get("graph", []):
+        if item.get("uri") != uri:
+            continue
+        for al in item.get("altLabel", []):
+            if isinstance(al, dict):
+                lang = al.get("lang", "")
+                value = al.get("value", "")
+                if lang in languages and value:
+                    alts.setdefault(lang, []).append(value)
+    return alts

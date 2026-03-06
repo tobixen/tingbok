@@ -325,7 +325,8 @@ async def test_fetch_labels_background_populates_fetched_labels():
 
     with patch("tingbok.app.skos_service.get_labels", return_value=fake_labels):
         with patch("tingbok.app.skos_service.get_description", return_value=None):
-            await app_module._fetch_labels_background()
+            with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                await app_module._fetch_labels_background()
 
     # "food" concept has source_uris with dbpedia/agrovoc/wikidata URIs
     assert "food" in app_module._fetched_labels
@@ -354,7 +355,8 @@ async def test_fetch_labels_background_picks_longest_description():
 
     with patch("tingbok.app.skos_service.get_labels", return_value={}):
         with patch("tingbok.app.skos_service.get_description", side_effect=fake_get_description):
-            await app_module._fetch_labels_background()
+            with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                await app_module._fetch_labels_background()
 
     # For concepts with both dbpedia and wikidata URIs, longest description wins
     for _concept_id, desc in app_module._fetched_descriptions.items():
@@ -397,6 +399,86 @@ async def test_vocabulary_api_static_labels_override_source_labels(client):
         # Source label for nb should appear (if food doesn't have a static nb label)
     finally:
         app_module._fetched_labels.pop("food", None)
+
+
+@pytest.mark.anyio
+async def test_vocabulary_concept_uri_is_canonical_tingbok_url(client):
+    """Every concept's uri field should be the canonical tingbok URL, not an external URI."""
+    response = await client.get("/api/vocabulary/food")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["uri"] == "https://tingbok.plann.no/api/vocabulary/food"
+
+
+@pytest.mark.anyio
+async def test_full_vocabulary_uris_are_canonical(client):
+    """All concepts in the full vocabulary should have canonical tingbok URIs."""
+    response = await client.get("/api/vocabulary")
+    assert response.status_code == 200
+    for concept_id, concept in response.json().items():
+        expected = f"https://tingbok.plann.no/api/vocabulary/{concept_id}"
+        assert concept["uri"] == expected, f"Concept '{concept_id}' has wrong uri: {concept['uri']}"
+
+
+@pytest.mark.anyio
+async def test_vocabulary_api_merges_source_alt_labels(client):
+    """Vocabulary API should include source-fetched altLabels merged with vocabulary.yaml altLabels."""
+    import tingbok.app as app_module
+
+    app_module._fetched_alt_labels["food"] = {"en": ["victuals", "comestibles"], "nb": ["næringsmidler"]}
+
+    try:
+        response = await client.get("/api/vocabulary/food")
+        assert response.status_code == 200
+        data = response.json()
+        assert "altLabel" in data
+        en_alts = data["altLabel"].get("en", [])
+        assert "victuals" in en_alts
+        assert "comestibles" in en_alts
+        nb_alts = data["altLabel"].get("nb", [])
+        assert "næringsmidler" in nb_alts
+    finally:
+        app_module._fetched_alt_labels.pop("food", None)
+
+
+@pytest.mark.anyio
+async def test_vocabulary_api_static_alt_labels_not_duplicated(client):
+    """Source-fetched altLabels that duplicate vocabulary.yaml altLabels should not appear twice."""
+    import tingbok.app as app_module
+
+    # food already has "groceries" as en altLabel in vocabulary.yaml
+    app_module._fetched_alt_labels["food"] = {"en": ["groceries", "source-only-alt"]}
+
+    try:
+        response = await client.get("/api/vocabulary/food")
+        assert response.status_code == 200
+        data = response.json()
+        en_alts = data["altLabel"].get("en", [])
+        assert en_alts.count("groceries") == 1, "Duplicate altLabel should appear only once"
+        assert "source-only-alt" in en_alts
+    finally:
+        app_module._fetched_alt_labels.pop("food", None)
+
+
+@pytest.mark.anyio
+async def test_fetch_alt_labels_background_populates_fetched_alt_labels():
+    """Background fetch should populate _fetched_alt_labels from source URIs."""
+    import tingbok.app as app_module
+
+    app_module._fetched_alt_labels.clear()
+    app_module._fetched_labels.clear()
+    app_module._fetched_descriptions.clear()
+    app_module._discovered_source_uris.clear()
+
+    fake_alt_labels = {"en": ["foodstuff", "chow"], "nb": ["næringsmidler"]}
+
+    with patch("tingbok.app.skos_service.get_labels", return_value={}):
+        with patch("tingbok.app.skos_service.get_description", return_value=None):
+            with patch("tingbok.app.skos_service.get_alt_labels", return_value=fake_alt_labels):
+                await app_module._fetch_labels_background()
+
+    assert "food" in app_module._fetched_alt_labels
+    assert "foodstuff" in app_module._fetched_alt_labels["food"].get("en", [])
 
 
 @pytest.mark.anyio
