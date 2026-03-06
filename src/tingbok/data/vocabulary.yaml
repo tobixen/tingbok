@@ -93,6 +93,13 @@ concepts:
     altLabel:
       en: ["equipment", "implements"]
       nb: ["verktøy", "utstyr"]
+      de: ["Werkzeug"]
+      fr: ["Outil"]
+      es: ["Herramienta"]
+      it: ["Attrezzo"]
+      pl: ["Narzędzie"]
+      ru: ["Инструмент"]
+      uk: ["Інструмент"]
     uri: "http://dbpedia.org/resource/Tool"
     source_uris:
     - "http://dbpedia.org/resource/Tool"
@@ -338,6 +345,7 @@ concepts:
     altLabel:
       en: ["apparel", "clothes", "garments"]
       nb: ["klær", "tekstil"]
+      fr: ["Vêtement"]
       es: ["Prenda para vestir"]
     labels:
       nn: "Klede"
