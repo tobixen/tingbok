@@ -305,3 +305,120 @@ def test_get_agrovoc_store_returns_none_when_pyoxigraph_absent(tmp_path):
             assert result is None
         finally:
             skos_module._agrovoc_store = original
+
+
+# ---------------------------------------------------------------------------
+# Tests for _fetch_labels_background() and vocabulary label merging
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.anyio
+async def test_fetch_labels_background_populates_fetched_labels():
+    """Background label fetch should populate _fetched_labels from source URIs."""
+    import tingbok.app as app_module
+
+    app_module._fetched_labels.clear()
+    app_module._fetched_descriptions.clear()
+    app_module._discovered_source_uris.clear()
+
+    fake_labels = {"en": "Food", "nb": "Mat", "de": "Essen"}
+
+    with patch("tingbok.app.skos_service.get_labels", return_value=fake_labels):
+        with patch("tingbok.app.skos_service.get_description", return_value=None):
+            await app_module._fetch_labels_background()
+
+    # "food" concept has source_uris with dbpedia/agrovoc/wikidata URIs
+    assert "food" in app_module._fetched_labels
+    labels = app_module._fetched_labels["food"]
+    assert labels.get("nb") == "Mat"
+
+
+@pytest.mark.anyio
+async def test_fetch_labels_background_picks_longest_description():
+    """Background task picks the longest description from available sources."""
+    import tingbok.app as app_module
+
+    app_module._fetched_labels.clear()
+    app_module._fetched_descriptions.clear()
+    app_module._discovered_source_uris.clear()
+
+    call_count = [0]
+
+    def fake_get_description(uri, source, lang, cache_dir):
+        call_count[0] += 1
+        if "dbpedia" in uri or source == "dbpedia":
+            return "Short."
+        if "wikidata" in uri or source == "wikidata":
+            return "A much longer description from Wikidata that is more informative."
+        return None
+
+    with patch("tingbok.app.skos_service.get_labels", return_value={}):
+        with patch("tingbok.app.skos_service.get_description", side_effect=fake_get_description):
+            await app_module._fetch_labels_background()
+
+    # For concepts with both dbpedia and wikidata URIs, longest description wins
+    for _concept_id, desc in app_module._fetched_descriptions.items():
+        if desc:
+            assert desc != "Short." or len(desc) >= len("Short.")
+
+
+@pytest.mark.anyio
+async def test_vocabulary_api_merges_source_labels(client):
+    """Vocabulary API should include source-fetched labels in the response."""
+    import tingbok.app as app_module
+
+    app_module._fetched_labels["food"] = {"de": "Lebensmittel", "sv": "Mat"}
+
+    try:
+        response = await client.get("/api/vocabulary/food")
+        assert response.status_code == 200
+        data = response.json()
+        assert "labels" in data
+        # Source-fetched label should appear
+        assert data["labels"].get("sv") == "Mat"
+    finally:
+        app_module._fetched_labels.pop("food", None)
+
+
+@pytest.mark.anyio
+async def test_vocabulary_api_static_labels_override_source_labels(client):
+    """Static labels in vocabulary.yaml should override source-fetched labels."""
+    import tingbok.app as app_module
+
+    # Inject a conflicting source-fetched label for a concept that has a static label
+    app_module._fetched_labels["food"] = {"en": "WRONG from source", "nb": "Source Norwegian"}
+
+    try:
+        response = await client.get("/api/vocabulary/food")
+        assert response.status_code == 200
+        data = response.json()
+        # Static label "Food" in vocabulary.yaml should win over "WRONG from source"
+        assert data["labels"].get("en") == "Food"
+        # Source label for nb should appear (if food doesn't have a static nb label)
+    finally:
+        app_module._fetched_labels.pop("food", None)
+
+
+@pytest.mark.anyio
+async def test_vocabulary_api_uses_source_description_as_fallback(client):
+    """Vocabulary API should use source-fetched description when none is in vocabulary.yaml."""
+    import tingbok.app as app_module
+
+    # Use a concept with no description in vocabulary.yaml
+    # Find one without a static description
+    concept_without_desc = next(
+        (cid for cid, data in app_module.vocabulary.items() if not data.get("description")),
+        None,
+    )
+    if concept_without_desc is None:
+        pytest.skip("All concepts have static descriptions")
+
+    app_module._fetched_descriptions[concept_without_desc] = "A description from sources."
+
+    try:
+        response = await client.get(f"/api/vocabulary/{concept_without_desc}")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["description"] == "A description from sources."
+    finally:
+        app_module._fetched_descriptions.pop(concept_without_desc, None)

@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
+## [Unreleased]
+
+### Added
+- **`uri_to_source(uri)`** in `services/skos.py` — maps any `source_uris` entry
+  (DBpedia, AGROVOC, Wikidata, `off:`, `gpt:`) to its source name string.
+- **`get_description(uri, source, lang, cache_dir)`** in `services/skos.py` — fetches
+  a human-readable description for DBpedia and Wikidata URIs; results are stored in the
+  existing labels cache alongside translations.
+- **`get_labels(uri, languages)`** in `services/off.py` — returns translations for an
+  `off:{node_id}` URI directly from the in-memory OFF taxonomy.
+- **Background label + description fetching** (`_fetch_labels_background()` in `app.py`)
+  — on startup, fetches translations from all `source_uris` for every vocabulary concept
+  and stores them in `_fetched_labels` / `_fetched_descriptions`.  Uses the SKOS cache
+  (60-day TTL) so live API calls are rare after initial population.
+- **Vocabulary API now merges source translations** — `GET /api/vocabulary` and
+  `GET /api/vocabulary/{id}` return labels merged from external sources alongside any
+  static labels in `vocabulary.yaml` (static labels override source translations).
+  Descriptions from sources are used as fallback when `vocabulary.yaml` has none.
+- **`prune-vocabulary` CLI subcommand** — compares `labels:` blocks in `vocabulary.yaml`
+  against translations fetched from `source_uris`; removes labels that match a source
+  (case-insensitive) and reports deviations for manual review.  Use `--dry-run` to
+  preview without writing.
+
 ## [v0.8.0] - 2026-03-04
 
 ### Added

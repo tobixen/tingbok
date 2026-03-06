@@ -16,8 +16,10 @@ from tingbok.services.skos import (
     _save_to_cache,
     build_hierarchy_paths,
     cache_stats,
+    get_description,
     get_labels_batch,
     lookup_concept,
+    uri_to_source,
 )
 
 # ---------------------------------------------------------------------------
@@ -603,6 +605,123 @@ async def test_skos_labels_batch_empty(client, skos_cache_dir: Path) -> None:
 # ---------------------------------------------------------------------------
 # HTTP endpoint tests — cache stats
 # ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# Tests for uri_to_source()
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("uri", "expected"),
+    [
+        ("http://aims.fao.org/aos/agrovoc/c_3032", "agrovoc"),
+        ("https://aims.fao.org/aos/agrovoc/c_3032", "agrovoc"),
+        ("http://dbpedia.org/resource/Food", "dbpedia"),
+        ("https://dbpedia.org/resource/Food", "dbpedia"),
+        ("http://www.wikidata.org/entity/Q2095", "wikidata"),
+        ("https://www.wikidata.org/entity/Q2095", "wikidata"),
+        ("off:en:potatoes", "off"),
+        ("gpt:632", "gpt"),
+        ("https://tingbok.plann.no/api/vocabulary/food", None),
+        ("https://example.com/unknown", None),
+        ("", None),
+    ],
+)
+def test_uri_to_source(uri: str, expected: str | None) -> None:
+    """uri_to_source should map URIs to their source names."""
+    assert uri_to_source(uri) == expected
+
+
+# ---------------------------------------------------------------------------
+# Tests for get_description()
+# ---------------------------------------------------------------------------
+
+
+def test_get_description_returns_none_when_not_cached(tmp_path: Path) -> None:
+    """get_description returns None when no cache file exists."""
+    result = get_description("http://dbpedia.org/resource/Food", "dbpedia", "en", tmp_path)
+    assert result is None
+
+
+def test_get_description_reads_from_labels_cache(tmp_path: Path) -> None:
+    """get_description reads the cached description written by get_labels."""
+    import hashlib
+    import json
+    import time
+
+    uri = "http://dbpedia.org/resource/Food"
+    source = "dbpedia"
+    uri_hash = hashlib.md5(uri.encode()).hexdigest()[:16]  # noqa: S324
+    cache_key = f"labels:{source}:{uri_hash}"
+    cache_path = _get_cache_path(tmp_path, cache_key)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    data = {
+        "uri": uri,
+        "source": source,
+        "labels": {"en": "Food"},
+        "description": "Food is...",
+        "_cached_at": time.time(),
+    }
+    with open(cache_path, "w", encoding="utf-8") as f:
+        json.dump(data, f)
+
+    result = get_description(uri, source, "en", tmp_path)
+    assert result == "Food is..."
+
+
+def test_get_description_dbpedia_fetches_from_api(tmp_path: Path) -> None:
+    """get_description fetches from DBpedia data API and caches the description."""
+    uri = "http://dbpedia.org/resource/Food"
+    fake_response = {
+        uri: {
+            "http://www.w3.org/2000/01/rdf-schema#label": [{"lang": "en", "value": "Food", "type": "literal"}],
+            "http://www.w3.org/2000/01/rdf-schema#comment": [
+                {"lang": "en", "value": "Food is any substance consumed to provide nutrition.", "type": "literal"},
+                {"lang": "de", "value": "Essen ist...", "type": "literal"},
+            ],
+        }
+    }
+
+    mock_resp = type(
+        "R", (), {"raise_for_status": lambda self: None, "json": lambda self: fake_response, "status_code": 200}
+    )()
+
+    with patch("niquests.Session") as mock_session_cls:
+        mock_session_cls.return_value.__enter__ = lambda s: mock_session_cls.return_value
+        mock_session_cls.return_value.__exit__ = lambda s, *a: None
+        mock_session_cls.return_value.get.return_value = mock_resp
+        result = get_description(uri, "dbpedia", "en", tmp_path)
+
+    assert result == "Food is any substance consumed to provide nutrition."
+
+    # Should also be cached now
+    result2 = get_description(uri, "dbpedia", "en", tmp_path)
+    assert result2 == "Food is any substance consumed to provide nutrition."
+
+
+def test_get_description_wikidata_fetches_from_api(tmp_path: Path) -> None:
+    """get_description fetches from Wikidata descriptions API and caches."""
+    uri = "http://www.wikidata.org/entity/Q2095"
+    fake_response = {"en": "any nutritional substance consumed to provide energy", "nb": "mat"}
+
+    mock_resp = type(
+        "R", (), {"raise_for_status": lambda self: None, "json": lambda self: fake_response, "status_code": 200}
+    )()
+
+    with patch("niquests.Session") as mock_session_cls:
+        mock_session_cls.return_value.__enter__ = lambda s: mock_session_cls.return_value
+        mock_session_cls.return_value.__exit__ = lambda s, *a: None
+        mock_session_cls.return_value.get.return_value = mock_resp
+        result = get_description(uri, "wikidata", "en", tmp_path)
+
+    assert result == "any nutritional substance consumed to provide energy"
+
+
+def test_get_description_unsupported_source_returns_none(tmp_path: Path) -> None:
+    """get_description returns None for sources without description support."""
+    result = get_description("http://aims.fao.org/aos/agrovoc/c_3032", "agrovoc", "en", tmp_path)
+    assert result is None
 
 
 @pytest.mark.anyio

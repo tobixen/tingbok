@@ -165,6 +165,163 @@ def _populate_uris(
 
 
 # ---------------------------------------------------------------------------
+# prune-vocabulary
+# ---------------------------------------------------------------------------
+
+
+def _normalize_for_match(label: str) -> str:
+    """Normalise a label string for loose matching.
+
+    Lowercases, strips leading/trailing whitespace, and reduces internal
+    whitespace to a single space.
+    """
+    return " ".join(label.lower().split())
+
+
+def _labels_match(vocab_label: str, source_label: str) -> bool:
+    """Return True if two labels are considered the same.
+
+    Ignores case differences and leading/trailing whitespace.  Singular/plural
+    differences are not considered here — the caller reports both labels so the
+    user can decide.
+    """
+    return _normalize_for_match(vocab_label) == _normalize_for_match(source_label)
+
+
+def _prune_vocabulary(
+    vocab_path: Path,
+    cache_dir: Path,
+    *,
+    dry_run: bool = False,
+    lang: str = "en",
+) -> int:
+    """Core logic for the ``prune-vocabulary`` subcommand.
+
+    For each concept in ``vocabulary.yaml`` that has ``source_uris``, fetch
+    translations from those sources and compare against the ``labels:`` block
+    in the vocabulary file.  Labels that match a source translation are removed
+    (they are redundant — the translation will come from the source at runtime).
+    Labels that deviate from source translations are reported so the user can
+    review them manually.
+
+    Returns an exit code (0 = success).
+    """
+    try:
+        from ruamel.yaml import YAML  # noqa: PLC0415
+    except ImportError:
+        print(
+            "ruamel.yaml is required for prune-vocabulary.  Install it with: pip install ruamel.yaml", file=sys.stderr
+        )
+        return 1
+
+    if not vocab_path.exists():
+        print(f"Error: vocabulary file not found: {vocab_path}", file=sys.stderr)
+        return 1
+
+    from tingbok.services import skos as skos_service  # noqa: PLC0415
+
+    yaml = YAML()
+    yaml.preserve_quotes = True
+    with open(vocab_path) as f:
+        doc = yaml.load(f)
+
+    concepts: dict = doc.get("concepts", {})
+    skos_dir = cache_dir / "skos"
+
+    # Languages to check (all languages used in vocabulary.yaml labels blocks)
+    all_langs: set[str] = set()
+    for data in concepts.values():
+        if data and data.get("labels"):
+            all_langs.update(data["labels"].keys())
+    languages = list(all_langs) if all_langs else [lang]
+
+    removals: dict[str, dict[str, set[str]]] = {}  # concept_id -> lang -> set of values to remove
+    deviations: list[str] = []
+
+    print(f"Checking {len(concepts)} concepts against sources...")
+
+    for concept_id, data in concepts.items():
+        if data is None:
+            continue
+        static_labels: dict = data.get("labels") or {}
+        if not static_labels:
+            continue
+
+        source_uris: list[str] = list(data.get("source_uris") or [])
+        if not source_uris:
+            continue
+
+        # Fetch translations from all source URIs
+        source_labels: dict[str, str] = {}
+        for uri in source_uris:
+            if not uri or uri.startswith("https://tingbok.plann.no/"):
+                continue
+            # Determine source from URI prefix
+            if uri.startswith(("http://aims.fao.org/", "https://aims.fao.org/")):
+                source = "agrovoc"
+            elif uri.startswith(("http://dbpedia.org/", "https://dbpedia.org/")):
+                source = "dbpedia"
+            elif uri.startswith(("http://www.wikidata.org/", "https://www.wikidata.org/")):
+                source = "wikidata"
+            else:
+                continue  # off/gpt don't support get_labels via SKOS service
+
+            try:
+                fetched = skos_service.get_labels(uri, languages, source, skos_dir)
+                for fetch_lang, fetch_label in fetched.items():
+                    if fetch_lang not in source_labels:
+                        source_labels[fetch_lang] = fetch_label
+            except Exception as exc:  # noqa: BLE001
+                print(f"  Warning: label fetch failed for '{concept_id}' ({uri}): {exc}", file=sys.stderr)
+
+        if not source_labels:
+            continue
+
+        # Compare each vocabulary label against source labels
+        for label_lang, vocab_value in list(static_labels.items()):
+            src_value = source_labels.get(label_lang)
+            if src_value is None:
+                continue  # Source doesn't have this language — keep it
+
+            if _labels_match(vocab_value, src_value):
+                removals.setdefault(concept_id, {}).setdefault(label_lang, set()).add(vocab_value)
+                print(f"  {concept_id}[{label_lang}]: '{vocab_value}' matches source → will remove")
+            else:
+                deviations.append(f"  {concept_id}[{label_lang}]: vocab='{vocab_value}' vs source='{src_value}'")
+
+    if deviations:
+        print("\nDeviations (kept, need manual review):")
+        for line in deviations:
+            print(line)
+
+    if not removals:
+        print("\nNo redundant labels found.")
+        return 0
+
+    total = sum(len(langs) for langs in removals.values())
+    print(f"\n{'(dry-run) ' if dry_run else ''}Would remove {total} redundant label(s).")
+
+    if dry_run:
+        return 0
+
+    # Apply removals
+    for concept_id, lang_map in removals.items():
+        data = concepts[concept_id]
+        labels_block: dict = data.get("labels") or {}
+        for remove_lang in lang_map:
+            if remove_lang in labels_block:
+                del labels_block[remove_lang]
+        if not labels_block:
+            del data["labels"]
+
+    with open(vocab_path, "w") as f:
+        yaml.dump(doc, f)
+
+    print(f"Updated {vocab_path}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # download-taxonomy
 # ---------------------------------------------------------------------------
 
@@ -292,6 +449,27 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--dry-run", action="store_true", help="Print proposed changes without modifying the file")
     p.add_argument("--lang", default="en", metavar="LANG", help="Language for concept lookup (default: en)")
 
+    # prune-vocabulary
+    pv = sub.add_parser(
+        "prune-vocabulary",
+        help="Remove redundant translations from vocabulary.yaml that already exist in sources",
+        description=(
+            "For each concept in vocabulary.yaml, fetch translations from its source_uris "
+            "and compare against the labels: block.  Labels that match a source translation "
+            "are removed (they will be served from the source at runtime).  Deviating labels "
+            "are reported for manual review."
+        ),
+    )
+    pv.add_argument("vocabulary", metavar="VOCABULARY_YAML", help="Path to vocabulary.yaml")
+    pv.add_argument(
+        "--cache-dir",
+        metavar="DIR",
+        default=None,
+        help="Cache root directory (default: ~/.cache/tingbok).  SKOS caches are read from DIR/skos/.",
+    )
+    pv.add_argument("--dry-run", action="store_true", help="Print proposed changes without modifying the file")
+    pv.add_argument("--lang", default="en", metavar="LANG", help="Fallback language for concept lookup (default: en)")
+
     # download-taxonomy
     from tingbok.services.gpt import GPT_LOCALES  # noqa: PLC0415
 
@@ -347,6 +525,22 @@ def main() -> None:
             else Path(environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache" / "tingbok")))
         )
         rc = _populate_uris(
+            Path(args.vocabulary),
+            cache_dir,
+            dry_run=args.dry_run,
+            lang=args.lang,
+        )
+        sys.exit(rc)
+
+    if args.command == "prune-vocabulary":
+        from os import environ  # noqa: PLC0415
+
+        cache_dir = (
+            Path(args.cache_dir)
+            if args.cache_dir
+            else Path(environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache" / "tingbok")))
+        )
+        rc = _prune_vocabulary(
             Path(args.vocabulary),
             cache_dir,
             dry_run=args.dry_run,

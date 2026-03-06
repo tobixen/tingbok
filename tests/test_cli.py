@@ -225,6 +225,164 @@ def test_populate_uris_queries_gpt_when_files_present(tmp_path):
     assert "gpt:632" in updated["concepts"]["electronics"].get("source_uris", [])
 
 
+def _run_prune(
+    tmp_path: Path,
+    extra_args: list[str] | None = None,
+    vocab_content: str = "",
+) -> tuple[int, str]:
+    """Run the prune-vocabulary command against a temp vocabulary file."""
+    import sys
+    from io import StringIO
+    from unittest.mock import patch as _patch
+
+    import tingbok.cli as cli_module
+
+    vocab_file = tmp_path / "vocabulary.yaml"
+    vocab_file.write_text(vocab_content)
+    cache_dir = tmp_path
+
+    argv = ["tingbok", "prune-vocabulary", str(vocab_file), "--cache-dir", str(cache_dir)]
+    if extra_args:
+        argv.extend(extra_args)
+
+    captured = StringIO()
+    with _patch.object(sys, "argv", argv):
+        with _patch("sys.stdout", captured):
+            try:
+                cli_module.main()
+                rc = 0
+            except SystemExit as exc:
+                rc = exc.code if isinstance(exc.code, int) else 0
+    return rc, captured.getvalue()
+
+
+VOCAB_WITH_LABELS = """\
+concepts:
+  food:
+    prefLabel: "Food"
+    source_uris:
+      - "http://dbpedia.org/resource/Food"
+    labels:
+      en: "Food"
+      nb: "Mat"
+      de: "Speise"
+
+  electronics:
+    prefLabel: "Electronics"
+    source_uris:
+      - "http://dbpedia.org/resource/Electronics"
+    labels:
+      en: "Electronics"
+"""
+
+VOCAB_WITH_ALTLABELS = """\
+concepts:
+  food:
+    prefLabel: "Food"
+    altLabel:
+      en: ["groceries", "provisions"]
+      nb: ["matbiter"]
+    source_uris:
+      - "http://dbpedia.org/resource/Food"
+"""
+
+
+def test_prune_vocabulary_removes_matching_labels(tmp_path):
+    """Labels matching source translations should be removed from vocabulary.yaml."""
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        if "Food" in uri or source == "dbpedia":
+            return {"en": "Food", "nb": "Mat", "de": "Lebensmittel"}
+        return {}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(tmp_path, vocab_content=VOCAB_WITH_LABELS)
+
+    assert rc == 0
+    import yaml
+
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    food_labels = updated["concepts"]["food"].get("labels", {})
+    # "en: Food" and "nb: Mat" match source → removed
+    assert "en" not in food_labels
+    assert "nb" not in food_labels
+    # "de: Speise" deviates from source "Lebensmittel" → kept
+    assert "de" in food_labels
+
+
+def test_prune_vocabulary_reports_deviations(tmp_path):
+    """Labels deviating from source should be reported, not silently removed."""
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        return {"en": "Food", "nb": "Mat", "de": "Lebensmittel"}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(tmp_path, vocab_content=VOCAB_WITH_LABELS)
+
+    assert rc == 0
+    # Deviation between "Speise" and "Lebensmittel" should appear in output
+    assert "Speise" in output or "Lebensmittel" in output or "de" in output
+
+
+def test_prune_vocabulary_dry_run_does_not_write(tmp_path):
+    """--dry-run should not modify the vocabulary file."""
+    original_text = VOCAB_WITH_LABELS
+    (tmp_path / "vocabulary.yaml").write_text(original_text)
+
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        return {"en": "Food", "nb": "Mat"}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, _ = _run_prune(tmp_path, extra_args=["--dry-run"], vocab_content=VOCAB_WITH_LABELS)
+
+    assert rc == 0
+    assert (tmp_path / "vocabulary.yaml").read_text() == original_text
+
+
+def test_prune_vocabulary_preserves_yaml_comments(tmp_path):
+    """ruamel.yaml round-trip should preserve comments."""
+    vocab_with_comment = """\
+concepts:
+  # This is an important comment
+  food:
+    prefLabel: "Food"
+    source_uris:
+      - "http://dbpedia.org/resource/Food"
+    labels:
+      en: "Food"
+"""
+    from tingbok.services import skos as skos_service
+
+    with patch.object(skos_service, "get_labels", return_value={"en": "Food"}):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            _run_prune(tmp_path, vocab_content=vocab_with_comment)
+
+    assert "important comment" in (tmp_path / "vocabulary.yaml").read_text()
+
+
+def test_prune_vocabulary_case_insensitive_match(tmp_path):
+    """Matching should be case-insensitive (source 'food' matches vocab 'Food')."""
+    from tingbok.services import skos as skos_service
+
+    with patch.object(skos_service, "get_labels", return_value={"en": "food"}):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, _ = _run_prune(tmp_path, vocab_content=VOCAB_WITH_LABELS)
+
+    assert rc == 0
+    import yaml
+
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    # "Food" matches "food" case-insensitively → should be removed
+    assert "en" not in updated["concepts"]["food"].get("labels", {})
+
+
 def test_populate_uris_skips_gpt_when_excluded(tmp_path):
     """Should not add GPT URIs when 'gpt' is in excluded_sources."""
     SAMPLE_GPT = "# Google_Product_Taxonomy_Version: 2021-09-21\n632 - Electronics\n"

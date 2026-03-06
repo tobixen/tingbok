@@ -180,3 +180,57 @@ def test_off_lookup_served_from_cache(tmp_path: Path) -> None:
     mock_get.assert_not_called()
     assert result is not None
     assert result["uri"] == "off:en:potatoes"
+
+
+# ---------------------------------------------------------------------------
+# Tests for get_labels()
+# ---------------------------------------------------------------------------
+
+
+def test_off_get_labels_returns_names() -> None:
+    """get_labels returns node names in requested languages."""
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=_SAMPLE_TAXONOMY):
+        result = off_service.get_labels("off:en:potatoes", ["en", "nb"])
+
+    assert result == {"en": "Potatoes", "nb": "Poteter"}
+
+
+def test_off_get_labels_partial_languages() -> None:
+    """get_labels returns only the languages that exist in the node names."""
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=_SAMPLE_TAXONOMY):
+        result = off_service.get_labels("off:en:potatoes", ["en", "zh", "ar"])
+
+    assert result == {"en": "Potatoes"}
+    assert "zh" not in result
+
+
+def test_off_get_labels_unknown_node() -> None:
+    """get_labels returns empty dict for unknown node IDs."""
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=_SAMPLE_TAXONOMY):
+        result = off_service.get_labels("off:en:nonexistent", ["en"])
+
+    assert result == {}
+
+
+def test_off_get_labels_non_off_uri() -> None:
+    """get_labels returns empty dict for URIs that are not off: scheme."""
+    from tingbok.services import off as off_service
+
+    result = off_service.get_labels("http://dbpedia.org/resource/Potato", ["en"])
+    assert result == {}
+
+
+def test_off_get_labels_taxonomy_unavailable() -> None:
+    """get_labels returns empty dict when taxonomy cannot be loaded."""
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=None):
+        result = off_service.get_labels("off:en:potatoes", ["en"])
+
+    assert result == {}

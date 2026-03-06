@@ -121,6 +121,40 @@ def _generate_variations(label: str) -> list[str]:
     return variations
 
 
+def get_labels(uri: str, languages: list[str]) -> dict[str, str]:
+    """Get labels for an OFF node URI in the requested languages.
+
+    Args:
+        uri:       OFF node URI (e.g. ``"off:en:potatoes"``).
+        languages: List of BCP-47 language codes.
+
+    Returns:
+        Dict mapping language code to label string.  Empty if the taxonomy is
+        unavailable or the node is not found.
+    """
+    if not uri.startswith("off:"):
+        return {}
+    node_id = uri[4:]
+
+    taxonomy = _get_taxonomy()
+    if taxonomy is None:
+        return {}
+
+    try:
+        node = taxonomy[node_id]
+    except (KeyError, TypeError):
+        return {}
+
+    labels: dict[str, str] = {}
+    for lang in languages:
+        name: str | None = node.names.get(lang)
+        if not name and "-" in lang:
+            name = node.names.get(lang.split("-")[0])
+        if name:
+            labels[lang] = name
+    return labels
+
+
 def lookup_concept(label: str, lang: str = "en", cache_dir: Path | None = None) -> dict[str, Any] | None:
     """Look up a food concept by label in the OFF taxonomy.
 

@@ -381,6 +381,119 @@ def build_hierarchy_paths(
     return all_paths, True, all_uri_maps
 
 
+def uri_to_source(uri: str) -> str | None:
+    """Map a concept URI to its source name.
+
+    Args:
+        uri: Any URI stored in ``source_uris`` (e.g. ``"http://dbpedia.org/resource/Food"``
+             or ``"off:en:potatoes"`` or ``"gpt:632"``).
+
+    Returns:
+        Source name string (``"agrovoc"``, ``"dbpedia"``, ``"wikidata"``, ``"off"``,
+        ``"gpt"``) or ``None`` if the URI does not match a known source.
+    """
+    if uri.startswith(("http://aims.fao.org/", "https://aims.fao.org/")):
+        return "agrovoc"
+    if uri.startswith(("http://dbpedia.org/", "https://dbpedia.org/")):
+        return "dbpedia"
+    if uri.startswith(("http://www.wikidata.org/", "https://www.wikidata.org/")):
+        return "wikidata"
+    if uri.startswith("off:"):
+        return "off"
+    if uri.startswith("gpt:"):
+        return "gpt"
+    return None
+
+
+def get_description(uri: str, source: str, lang: str, cache_dir: Path) -> str | None:
+    """Fetch a human-readable description for a concept URI.
+
+    Checks the labels cache first (descriptions are stored alongside labels when
+    ``get_labels`` fetches from an upstream source that returns descriptions).
+    Falls back to a live upstream call for DBpedia and Wikidata if not cached.
+
+    Only DBpedia and Wikidata provide reliable descriptions; AGROVOC, OFF, and
+    GPT are not supported and return ``None``.
+
+    Args:
+        uri:       Full concept URI.
+        source:    Taxonomy source (``"dbpedia"`` or ``"wikidata"``).
+        lang:      Preferred language code for the description (e.g. ``"en"``).
+        cache_dir: Path to the SKOS cache directory.
+
+    Returns:
+        Description string, or ``None`` if unavailable.
+    """
+    if source not in ("dbpedia", "wikidata"):
+        return None
+
+    uri_hash = hashlib.md5(uri.encode()).hexdigest()[:16]  # noqa: S324 — non-crypto use
+    cache_key = f"labels:{source}:{uri_hash}"
+    cache_path = _get_cache_path(cache_dir, cache_key)
+
+    cached = _load_from_cache(cache_path)
+    if cached is not None:
+        return cached.get("description")
+
+    # Cache miss — fetch labels (which also captures description) and store
+    desc = _upstream_get_description(uri, source, lang)
+    # Save a minimal cache entry so subsequent calls are fast
+    _save_to_cache(cache_path, {"uri": uri, "source": source, "labels": {}, "description": desc})
+    return desc
+
+
+def _upstream_get_description(uri: str, source: str, lang: str) -> str | None:
+    """Fetch a description from the appropriate upstream source."""
+    if source == "dbpedia":
+        return _get_dbpedia_description(uri, lang)
+    if source == "wikidata":
+        return _get_wikidata_description(uri, lang)
+    return None
+
+
+def _get_dbpedia_description(uri: str, lang: str) -> str | None:
+    """Fetch rdfs:comment for a DBpedia resource via the data API."""
+    data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
+    try:
+        with niquests.Session() as session:
+            response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
+            response.raise_for_status()
+    except niquests.exceptions.RequestException as e:
+        logger.debug("DBpedia description fetch failed for %s: %s", uri, e)
+        return None
+    data = _parse_json(response, uri)
+    if data is None:
+        return None
+
+    resource_data = data.get(uri, {})
+    for entry in resource_data.get("http://www.w3.org/2000/01/rdf-schema#comment", []):
+        if entry.get("lang") == lang:
+            value = entry.get("value", "")
+            if value:
+                return value
+    return None
+
+
+def _get_wikidata_description(uri: str, lang: str) -> str | None:
+    """Fetch the description for a Wikidata item via the Wikibase REST API."""
+    qid = uri.rstrip("/").split("/")[-1]
+    if not qid.startswith("Q"):
+        return None
+    url = f"https://www.wikidata.org/w/rest.php/wikibase/v0/entities/items/{qid}/descriptions"
+    headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+    try:
+        with niquests.Session() as session:
+            response = session.get(url, headers=headers, timeout=DEFAULT_TIMEOUT)
+            response.raise_for_status()
+    except niquests.exceptions.RequestException as e:
+        logger.debug("Wikidata description fetch failed for %s: %s", uri, e)
+        return None
+    data = _parse_json(response, uri)
+    if data is None:
+        return None
+    return data.get(lang) or None
+
+
 def cache_stats(cache_dir: Path) -> dict[str, int | str]:
     """Return statistics about the SKOS cache.
 

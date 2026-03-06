@@ -35,6 +35,33 @@ vocabulary: dict[str, Any] = {}
 #: Maps concept_id -> {source_name: uri}.  Populated by _discover_source_uris_background().
 _discovered_source_uris: dict[str, dict[str, str]] = {}
 
+#: Labels fetched from external sources for each concept.
+#: Maps concept_id -> {lang: label}.  Populated by _fetch_labels_background().
+_fetched_labels: dict[str, dict[str, str]] = {}
+
+#: Descriptions fetched from external sources for each concept.
+#: Maps concept_id -> description string.  Populated by _fetch_labels_background().
+_fetched_descriptions: dict[str, str] = {}
+
+#: Languages to fetch from external sources in the background.
+_DEFAULT_FETCH_LANGUAGES: list[str] = [
+    "en",
+    "nb",
+    "nn",
+    "da",
+    "sv",
+    "de",
+    "fr",
+    "es",
+    "it",
+    "nl",
+    "pl",
+    "ru",
+    "uk",
+    "fi",
+    "bg",
+]
+
 
 def _load_vocabulary() -> dict[str, Any]:
     """Load the package vocabulary from YAML."""
@@ -106,20 +133,79 @@ async def _discover_source_uris_background() -> None:
             _discovered_source_uris[concept_id] = discovered
 
 
+async def _fetch_labels_background() -> None:
+    """Fetch labels and descriptions from source_uris for all vocabulary concepts.
+
+    For each concept, queries all known external source URIs and merges the
+    returned translations into ``_fetched_labels``.  Descriptions are fetched
+    for DBpedia and Wikidata sources; the longest available description is
+    stored in ``_fetched_descriptions``.
+
+    Results are rebuilt from the SKOS cache on every startup (expensive API
+    calls only happen on cache misses, which are then cached for 60 days).
+    """
+    for concept_id, data in vocabulary.items():
+        all_uris: list[str] = list(data.get("source_uris") or [])
+        for uri in _discovered_source_uris.get(concept_id, {}).values():
+            if uri not in all_uris:
+                all_uris.append(uri)
+
+        merged: dict[str, str] = {}
+        best_description: str | None = None
+
+        for uri in all_uris:
+            if uri.startswith(TINGBOK_BASE_URL):
+                continue
+            source = skos_service.uri_to_source(uri)
+            if source is None:
+                continue
+
+            try:
+                if source in ("agrovoc", "dbpedia", "wikidata"):
+                    fetched = await asyncio.to_thread(
+                        skos_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, source, SKOS_CACHE_DIR
+                    )
+                    desc = await asyncio.to_thread(skos_service.get_description, uri, source, "en", SKOS_CACHE_DIR)
+                    if desc and (best_description is None or len(desc) > len(best_description)):
+                        best_description = desc
+                elif source == "off":
+                    fetched = await asyncio.to_thread(off_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES)
+                elif source == "gpt":
+                    fetched = await asyncio.to_thread(
+                        gpt_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, _CACHE_BASE
+                    )
+                else:
+                    continue
+
+                # First source wins for each language
+                for lang, label in fetched.items():
+                    if lang not in merged:
+                        merged[lang] = label
+            except Exception as exc:  # noqa: BLE001
+                logger.debug("Label fetch failed for '%s' (%s): %s", concept_id, uri, exc)
+
+        if merged:
+            _fetched_labels[concept_id] = merged
+        if best_description:
+            _fetched_descriptions[concept_id] = best_description
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001
-    """Load vocabulary on startup, then kick off background URI discovery."""
+    """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
     global vocabulary  # noqa: PLW0603
     vocabulary = _load_vocabulary()
     discovery_task = asyncio.create_task(_discover_source_uris_background())
+    labels_task = asyncio.create_task(_fetch_labels_background())
     try:
         yield
     finally:
-        discovery_task.cancel()
-        try:
-            await discovery_task
-        except asyncio.CancelledError:
-            pass
+        for task in (discovery_task, labels_task):
+            task.cancel()
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
 
 
 app = FastAPI(
@@ -163,6 +249,26 @@ def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:
     return source_uris
 
 
+def _build_labels(concept_id: str, data: dict[str, Any]) -> dict[str, str]:
+    """Build the merged labels for a concept.
+
+    Source-fetched labels (from external URIs) provide the base; static labels
+    in vocabulary.yaml override them on a per-language basis.
+    """
+    merged = dict(_fetched_labels.get(concept_id, {}))
+    merged.update(data.get("labels", {}))
+    return merged
+
+
+def _build_description(concept_id: str, data: dict[str, Any]) -> str | None:
+    """Return the description for a concept.
+
+    Prefers the static description from vocabulary.yaml; falls back to the
+    longest description fetched from external sources.
+    """
+    return data.get("description") or _fetched_descriptions.get(concept_id)
+
+
 @app.get("/api/vocabulary")
 async def get_vocabulary() -> dict[str, VocabularyConcept]:
     """Return the full package vocabulary."""
@@ -180,8 +286,8 @@ async def get_vocabulary() -> dict[str, VocabularyConcept]:
             uri=data.get("uri"),
             source_uris=_build_source_uris(concept_id, data),
             excluded_sources=data.get("excluded_sources", []),
-            labels=data.get("labels", {}),
-            description=data.get("description"),
+            labels=_build_labels(concept_id, data),
+            description=_build_description(concept_id, data),
             wikipediaUrl=data.get("wikipediaUrl"),
         )
     return result
@@ -207,7 +313,7 @@ async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
         uri=data.get("uri"),
         source_uris=_build_source_uris(concept_id, data),
         excluded_sources=data.get("excluded_sources", []),
-        labels=data.get("labels", {}),
-        description=data.get("description"),
+        labels=_build_labels(concept_id, data),
+        description=_build_description(concept_id, data),
         wikipediaUrl=data.get("wikipediaUrl"),
     )
