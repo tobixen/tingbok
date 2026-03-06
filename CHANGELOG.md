@@ -27,7 +27,8 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   (`https://tingbok.plann.no/api/vocabulary/{id}`).  External source URIs continue to
   appear in `source_uris`.
 - **`GET /api/vocabulary` and `GET /api/vocabulary/{id}`** now return merged `altLabel`
-  including synonyms fetched from DBpedia, Wikidata, AGROVOC, and OFF sources.
+  including synonyms fetched from DBpedia (`skos:altLabel`), Wikidata (aliases endpoint),
+  AGROVOC (graph `altLabel`), and OFF (taxonomy synonyms).
 
 ## [v0.9.0] - 2026-03-06
 
