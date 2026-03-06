@@ -8,9 +8,14 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ## [Unreleased]
 
+## [v0.9.0] - 2026-03-06
+
 ### Added
-- **`uri_to_source(uri)`** in `services/skos.py` — maps any `source_uris` entry
-  (DBpedia, AGROVOC, Wikidata, `off:`, `gpt:`) to its source name string.
+- **MCP (Model Context Protocol) support** — `fastapi-mcp` is now a main dependency;
+  an MCP server is mounted at `/mcp`, automatically exposing vocabulary, SKOS lookup,
+  and EAN endpoints as MCP tools.  The health and cache-stats endpoints are excluded.
+- **Root endpoint `GET /`** — returns HTML (with links to GitHub and `/docs`) or JSON
+  service info (version, description, links) depending on the `Accept` header.
 - **`get_description(uri, source, lang, cache_dir)`** in `services/skos.py` — fetches
   a human-readable description for DBpedia and Wikidata URIs; results are stored in the
   existing labels cache alongside translations.
@@ -23,11 +28,40 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 - **Vocabulary API now merges source translations** — `GET /api/vocabulary` and
   `GET /api/vocabulary/{id}` return labels merged from external sources alongside any
   static labels in `vocabulary.yaml` (static labels override source translations).
+  `prefLabel` is always used as the canonical English label.
   Descriptions from sources are used as fallback when `vocabulary.yaml` has none.
-- **`prune-vocabulary` CLI subcommand** — compares `labels:` blocks in `vocabulary.yaml`
-  against translations fetched from `source_uris`; removes labels that match a source
-  (case-insensitive) and reports deviations for manual review.  Use `--dry-run` to
-  preview without writing.
+- **`prune-vocabulary` CLI subcommand improvements**:
+  - Source name is now included in deviation output (e.g. `dbpedia says "Footwear"`)
+    so it is clear which source disagrees with the vocabulary.
+  - Inter-source conflict detection: deviations where two sources disagree with each other
+    (but not with the vocabulary) are reported separately.
+  - Near-match suppression (rapidfuzz, threshold 85): plural/singular and minor spelling
+    variants are silently accepted rather than reported as deviations.
+  - `altLabel` suppression: if the source label matches an `altLabel` entry for that
+    language, the deviation is suppressed (valid synonym, not an error).
+
+### Changed
+- **`rapidfuzz`** added as a main dependency (used by `prune-vocabulary` for near-match
+  suppression).
+- **`fastapi-mcp`** added as a main dependency.
+
+### Fixed
+- **`_build_labels()` in `app.py`** — `prefLabel` is now always used as the canonical
+  `en` label, overriding any conflicting value fetched from external sources.
+- **URI auto-discovery** — concepts that already have some `source_uris` entries but are
+  still missing a URI for a particular source are no longer skipped; discovery now runs
+  for each source independently.
+
+### Data
+- **`vocabulary.yaml` URI cleanup** — removed ~10 wrong source URIs (e.g. `dbpedia:Beetle`
+  on food, `dbpedia:Goaltender` on babyutstyr, `dbpedia:British_Columbia` on recreation,
+  `dbpedia:Bungalow` on hobby, `dbpedia:Equipment` on outdoor, etc.) and corrected
+  `off:en:tripe` on pen (animal offal, not a writing instrument).
+- **`vocabulary.yaml` GPT URIs** — added ~18 `gpt:` URIs across food, household,
+  hardware, medical, outdoor, office, and other categories.
+- **`vocabulary.yaml` altLabels** — added plural/singular and cross-language synonym
+  entries for food, tools, clothing, and office categories (nb/de/fr/es/it/nl/pl/ru/uk)
+  to suppress spurious `prune-vocabulary` deviations.
 
 ## [v0.8.0] - 2026-03-04
 
