@@ -2,8 +2,8 @@
 
 Product and category lookup service for domestic inventory systems - this service provides a centralized (pull requests to make it federated will be accepted) API for:
 
-- **Global tingbok category vocabulary** — a curated ~258-concept taxonomy for household inventory categorization
-- **SKOS category lookups** — hierarchy paths from AGROVOC, DBpedia, Wikidata
+- **Global tingbok category vocabulary** — a curated ~264-concept taxonomy for household inventory categorization
+- **SKOS category lookups** — hierarchy paths from AGROVOC, DBpedia, Wikidata, Open Food Facts and Google Product Taxonomy
 - **EAN/barcode product lookups** — product data from Open Food Facts, Open Library, shopping receipts and various other lookup services
 
 In the future, I may also consider adding other "information dimensions", including weather a product is "broken", "worn" or "brand new", weather a product is meant for ladies, gents or children, etc.
@@ -62,36 +62,42 @@ To me, a Norwegian born 40 years after the last tingbok entry was written, "Ting
 
 ## Quick start
 
-You are supposed to use tingbok.plann.no - you are not supposed to set up your own server.  As for now.  I'd happily accept pull requests if you want to contribute on making this a *federated service*.
+The public instance is at **https://tingbok.plann.no** — you are not supposed to set up your own server unless you want to contribute or run a private instance.  Pull requests to make this a *federated service* are welcome.
 
-TODO: fix a Makefile
-TODO: fix "claude skills" to always fix a Makefile and never suggest "pip install" in any documentation
-
-Disclaimer: All documentation below is AI-generated.
+To run locally:
 
 ```bash
-pip install tingbok
-uvicorn tingbok.app:app --host 127.0.0.1 --port 5100
+git clone https://github.com/tobixen/tingbok
+cd tingbok
+uv sync --extra off --extra skos
+uv run uvicorn tingbok.app:app --host 127.0.0.1 --port 5100
 ```
 
 ## API endpoints
 
 | Method | Path | Description |
 |--------|------|-------------|
+| `GET` | `/` | Service info (HTML or JSON) |
 | `GET` | `/health` | Liveness check |
-| `GET` | `/api/skos/lookup` | Single concept lookup |
-| `GET` | `/api/skos/hierarchy` | Full hierarchy paths |
+| `GET` | `/api/skos/lookup` | Single SKOS concept lookup by label |
+| `GET` | `/api/skos/hierarchy` | Full hierarchy path for a URI |
 | `GET` | `/api/skos/labels` | Translations for a URI |
+| `POST` | `/api/skos/labels/batch` | Translations for multiple URIs |
+| `GET` | `/api/skos/cache` | Cache statistics |
 | `GET` | `/api/ean/{ean}` | EAN/barcode product lookup |
-| `GET` | `/api/vocabulary` | Full package vocabulary |
-| `GET` | `/api/vocabulary/{concept_id}` | Single concept |
+| `GET` | `/api/vocabulary` | Full tingbok vocabulary (all concepts) |
+| `GET` | `/api/vocabulary/{concept_id}` | Single vocabulary concept |
+
+Interactive API docs: https://tingbok.plann.no/docs
 
 ## Development
 
 ```bash
-pip install -e ".[dev]"
-pytest tests/ -v
-ruff check src/
+git clone https://github.com/tobixen/tingbok
+cd tingbok
+uv sync --extra off --extra skos --extra dev
+uv run pytest tests/ -v
+uv run ruff check src/
 ```
 
 ## License

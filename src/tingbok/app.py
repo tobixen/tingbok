@@ -8,8 +8,9 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse, JSONResponse
 
 from tingbok import __version__
 from tingbok.models import HealthResponse, VocabularyConcept
@@ -224,6 +225,35 @@ app.add_middleware(
 
 app.include_router(skos.router, prefix="/api/skos", tags=["skos"])
 app.include_router(ean.router, prefix="/api/ean", tags=["ean"])
+
+
+@app.get("/", include_in_schema=False)
+async def root(request: Request):
+    """Root endpoint — returns HTML or JSON depending on Accept header."""
+    accept = request.headers.get("accept", "")
+    info = {
+        "service": "tingbok",
+        "version": __version__,
+        "description": "Product and category lookup service for domestic inventory systems",
+        "github": "https://github.com/tobixen/tingbok",
+        "api_docs": f"{TINGBOK_BASE_URL}/docs",
+    }
+    if "text/html" in accept:
+        html = f"""<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>tingbok</title></head>
+<body>
+<h1>tingbok {__version__}</h1>
+<p>Product and category lookup service for domestic inventory systems.</p>
+<ul>
+  <li><a href="https://github.com/tobixen/tingbok">GitHub repository</a></li>
+  <li><a href="/docs">API documentation</a></li>
+  <li><a href="/health">Health check</a></li>
+</ul>
+</body>
+</html>"""
+        return HTMLResponse(content=html)
+    return JSONResponse(content=info)
 
 
 @app.get("/health", response_model=HealthResponse)
