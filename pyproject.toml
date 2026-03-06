@@ -27,6 +27,7 @@ dependencies = [
     "niquests>=3.0",
     "ruamel.yaml>=0.18",
     "rapidfuzz>=3.0",
+    "fastapi-mcp>=0.3",
 ]
 
 [project.scripts]
@@ -62,4 +63,8 @@ known-first-party = ["tingbok"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-filterwarnings = ["error"]
+filterwarnings = [
+    "error",
+    # fastapi-mcp uses a deprecated Pydantic API; suppress until upstream fixes it
+    "ignore::pydantic.warnings.PydanticDeprecatedSince211",
+]

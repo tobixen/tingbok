@@ -11,6 +11,7 @@ import yaml
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi_mcp import FastApiMCP
 
 from tingbok import __version__
 from tingbok.models import HealthResponse, VocabularyConcept
@@ -225,6 +226,14 @@ app.add_middleware(
 
 app.include_router(skos.router, prefix="/api/skos", tags=["skos"])
 app.include_router(ean.router, prefix="/api/ean", tags=["ean"])
+
+_mcp = FastApiMCP(
+    app,
+    name="tingbok",
+    description="Product and category lookup service for domestic inventory systems",
+    exclude_operations=["health_health_get", "cache_stats_api_skos_cache_get"],
+)
+_mcp.mount_http()
 
 
 @app.get("/", include_in_schema=False)
