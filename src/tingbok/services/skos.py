@@ -1303,7 +1303,8 @@ def _get_agrovoc_labels(uri: str, languages: list[str]) -> dict[str, str] | None
     """
     if _agrovoc_store is not None:
         return _get_agrovoc_labels_oxigraph(uri, languages, _agrovoc_store)
-    logger.debug("Querying AGROVOC REST API for labels: %s", uri)
+    reason = "still loading" if _agrovoc_loading else "store unavailable"
+    logger.info("Querying AGROVOC REST API for labels (%s): %s", reason, uri)
     rest_base = _REST_ENDPOINTS["agrovoc"]
     url = f"{rest_base}/data/"
     params = {"uri": uri}
@@ -1444,7 +1445,8 @@ def _get_agrovoc_alt_labels(uri: str, languages: list[str]) -> dict[str, list[st
     """
     if _agrovoc_store is not None:
         return _get_agrovoc_alt_labels_oxigraph(uri, languages, _agrovoc_store)
-    logger.debug("Querying AGROVOC REST API for alt labels: %s", uri)
+    reason = "still loading" if _agrovoc_loading else "store unavailable"
+    logger.info("Querying AGROVOC REST API for alt labels (%s): %s", reason, uri)
     rest_base = _REST_ENDPOINTS["agrovoc"]
     url = f"{rest_base}/data/"
     params = {"uri": uri}
