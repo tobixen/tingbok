@@ -9,6 +9,7 @@ import hashlib
 import json
 import logging
 import re
+import threading
 import time
 from pathlib import Path
 
@@ -673,27 +674,14 @@ def cache_stats(cache_dir: Path) -> dict[str, int | str]:
 
 #: Module-level cached Oxigraph store (None = not loaded or unavailable).
 _agrovoc_store: object | None = None
+#: True while a background thread is loading the store.
+_agrovoc_loading: bool = False
 
 
-def get_agrovoc_store(cache_dir: Path) -> object | None:
-    """Return a loaded pyoxigraph Store for AGROVOC, or None if unavailable.
-
-    Looks for ``agrovoc.nt`` in *cache_dir*.  If found and pyoxigraph is
-    installed, loads the file into a module-level cached store and returns it.
-    Returns ``None`` when the file is absent or pyoxigraph is not installed.
-
-    Args:
-        cache_dir: Directory that may contain ``agrovoc.nt``.
-    """
-    global _agrovoc_store  # noqa: PLW0603
-
-    if _agrovoc_store is not None:
-        return _agrovoc_store
-
+def _do_load_agrovoc(cache_dir: Path) -> None:
+    """Load the AGROVOC Oxigraph store from disk.  Runs in a background thread."""
+    global _agrovoc_store, _agrovoc_loading  # noqa: PLW0603
     nt_path = cache_dir / "agrovoc.nt"
-    if not nt_path.exists():
-        return None
-
     try:
         import pyoxigraph  # noqa: PLC0415
 
@@ -702,13 +690,46 @@ def get_agrovoc_store(cache_dir: Path) -> object | None:
             store.load(f, pyoxigraph.RdfFormat.N_TRIPLES)
         _agrovoc_store = store
         logger.info("Loaded AGROVOC Oxigraph store from %s (%d triples)", nt_path, len(store))
-        return _agrovoc_store
     except ImportError:
         logger.debug("pyoxigraph not installed; AGROVOC Oxigraph lookup unavailable")
-        return None
     except Exception as exc:
         logger.warning("Failed to load AGROVOC Oxigraph store from %s: %s", nt_path, exc)
-        return None
+    finally:
+        _agrovoc_loading = False
+
+
+def load_agrovoc_background(cache_dir: Path) -> None:
+    """Start loading the AGROVOC Oxigraph store in a background daemon thread.
+
+    Returns immediately.  The store becomes available via :func:`get_agrovoc_store`
+    once loading completes.  Subsequent calls while loading is in progress or
+    after the store is already loaded are no-ops.
+
+    Args:
+        cache_dir: Directory that may contain ``agrovoc.nt``.
+    """
+    global _agrovoc_loading  # noqa: PLW0603
+    if _agrovoc_store is not None or _agrovoc_loading:
+        return
+    nt_path = cache_dir / "agrovoc.nt"
+    if not nt_path.exists():
+        return
+    _agrovoc_loading = True
+    logger.info("Starting background load of AGROVOC Oxigraph store from %s", nt_path)
+    thread = threading.Thread(target=_do_load_agrovoc, args=(cache_dir,), daemon=True)
+    thread.start()
+
+
+def get_agrovoc_store(cache_dir: Path) -> object | None:  # noqa: ARG001
+    """Return the loaded pyoxigraph Store for AGROVOC, or ``None`` if unavailable.
+
+    Non-blocking: returns ``None`` while a background load is in progress.
+    Callers should fall back to the REST API when this returns ``None``.
+
+    Use :func:`load_agrovoc_background` at application startup to trigger
+    background loading so the store becomes available without blocking requests.
+    """
+    return _agrovoc_store
 
 
 def _label_variations(label: str) -> list[str]:

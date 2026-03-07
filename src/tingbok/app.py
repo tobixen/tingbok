@@ -142,12 +142,13 @@ async def _discover_source_uris_background() -> None:
 
     Results persist only in memory; they are rebuilt from the SKOS cache on next startup.
     """
-    # Include AGROVOC only when the local Oxigraph store is available — the REST
-    # API has too many false positives for a reliable auto-discovery pass.
-    agrovoc_available = skos_service.get_agrovoc_store(SKOS_CACHE_DIR) is not None
-    skos_sources = ("agrovoc", "dbpedia", "wikidata") if agrovoc_available else ("dbpedia", "wikidata")
-
     for concept_id, data in vocabulary.items():
+        # Re-check AGROVOC availability each iteration — the store may finish
+        # loading in the background partway through the discovery pass.
+        # AGROVOC REST API has too many false positives, so only use it when
+        # the local Oxigraph store is available.
+        agrovoc_available = skos_service.get_agrovoc_store(SKOS_CACHE_DIR) is not None
+        skos_sources = ("agrovoc", "dbpedia", "wikidata") if agrovoc_available else ("dbpedia", "wikidata")
         static_uris: list[str] = data.get("source_uris", [])
         excluded: set[str] = set(data.get("excluded_sources", []))
 
@@ -268,6 +269,7 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
     global vocabulary, manual_ean  # noqa: PLW0603
     vocabulary = _load_vocabulary()
     manual_ean = ean_service.load_manual_ean(MANUAL_EAN_PATH)
+    skos_service.load_agrovoc_background(SKOS_CACHE_DIR)
     discovery_task = asyncio.create_task(_discover_source_uris_background())
     labels_task = asyncio.create_task(_fetch_labels_background())
     try:
