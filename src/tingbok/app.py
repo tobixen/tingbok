@@ -355,17 +355,16 @@ async def health():
 def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:
     """Build the full source_uris list for a concept.
 
-    Combines static URIs from vocabulary.yaml with auto-discovered URIs, always
-    prepending the canonical tingbok self-URI.
+    Combines static URIs from vocabulary.yaml with auto-discovered URIs.
+    The canonical tingbok self-URI is exposed via the separate ``uri`` field
+    and is excluded from ``source_uris`` to avoid redundancy.
     """
     self_uri = f"{TINGBOK_BASE_URL}/api/vocabulary/{concept_id}"
-    source_uris: list[str] = list(data.get("source_uris", []))
+    source_uris: list[str] = [u for u in data.get("source_uris", []) if u != self_uri]
     # Merge in any auto-discovered URIs (values only; skip if already present)
     for uri in _discovered_source_uris.get(concept_id, {}).values():
-        if uri not in source_uris:
+        if uri not in source_uris and uri != self_uri:
             source_uris.append(uri)
-    if self_uri not in source_uris:
-        source_uris.insert(0, self_uri)
     return source_uris
 
 
@@ -468,7 +467,7 @@ def _record_lookup_warning(label: str, source_roots: dict[str, str], source_path
         logger.warning("Failed to write lookup warning for %r: %s", label, exc)
 
 
-@app.get("/api/vocabulary/{concept_id}")
+@app.get("/api/vocabulary/{concept_id:path}")
 async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
     """Return a single concept from the package vocabulary."""
     from fastapi import HTTPException

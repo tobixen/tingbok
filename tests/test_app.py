@@ -47,9 +47,10 @@ async def test_vocabulary_concept_has_source_uris(client):
     data = response.json()
     assert "source_uris" in data
     assert isinstance(data["source_uris"], list)
+    # The tingbok self-URI lives in "uri", not "source_uris"
+    assert not any("tingbok.plann.no" in u for u in data["source_uris"])
+    # food has several external source URIs
     assert len(data["source_uris"]) >= 1
-    # Should contain the tingbok self-URI
-    assert any("tingbok.plann.no" in u for u in data["source_uris"])
 
 
 @pytest.mark.anyio
@@ -69,8 +70,11 @@ async def test_full_vocabulary_has_source_uris(client):
     for concept_id, concept in data.items():
         assert "source_uris" in concept, f"Concept {concept_id} missing source_uris"
         assert isinstance(concept["source_uris"], list)
-        # Every concept should have at least the tingbok self-URI
-        assert len(concept["source_uris"]) >= 1, f"Concept {concept_id} has empty source_uris"
+        # The tingbok self-URI lives in "uri", not "source_uris"; some concepts
+        # (e.g. _root) have no external source URIs so the list may be empty.
+        assert not any("tingbok.plann.no" in u for u in concept["source_uris"]), (
+            f"Concept {concept_id} has redundant tingbok self-URI in source_uris"
+        )
 
 
 @pytest.mark.anyio

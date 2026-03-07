@@ -1013,7 +1013,7 @@ concepts:
 
     source_uris:
     - http://dbpedia.org/resource/Potato
-    - http://www.wikidata.org/entity/Q135021431
+    - http://www.wikidata.org/entity/Q16587531
     - http://aims.fao.org/aos/agrovoc/c_13551
     - gpt:6586
     - off:en:potatoes

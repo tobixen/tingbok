@@ -612,7 +612,7 @@ def _get_wikidata_description(uri: str, lang: str) -> str | None:
     qid = uri.rstrip("/").split("/")[-1]
     if not qid.startswith("Q"):
         return None
-    url = f"https://www.wikidata.org/w/rest.php/wikibase/v0/entities/items/{qid}/descriptions"
+    url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{qid}/descriptions"
     headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
     try:
         with niquests.Session() as session:
@@ -1375,7 +1375,7 @@ def _get_wikidata_labels(uri: str, languages: list[str]) -> dict[str, str] | Non
     qid = uri.rstrip("/").split("/")[-1]
     if not qid.startswith("Q"):
         return {}
-    url = f"https://www.wikidata.org/w/rest.php/wikibase/v0/entities/items/{qid}/labels"
+    url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{qid}/labels"
     try:
         with niquests.Session() as session:
             response = session.get(url, timeout=DEFAULT_TIMEOUT)
@@ -1422,7 +1422,7 @@ def _get_wikidata_alt_labels(uri: str, languages: list[str]) -> dict[str, list[s
     qid = uri.rstrip("/").split("/")[-1]
     if not qid.startswith("Q"):
         return {}
-    url = f"https://www.wikidata.org/w/rest.php/wikibase/v0/entities/items/{qid}/aliases"
+    url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{qid}/aliases"
     try:
         with niquests.Session() as session:
             response = session.get(url, timeout=DEFAULT_TIMEOUT)
