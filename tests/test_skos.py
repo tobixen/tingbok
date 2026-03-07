@@ -1006,3 +1006,46 @@ def test_lookup_dbpedia_filters_list_articles_from_hierarchy(tmp_path: Path) -> 
     broader_uris = [b["uri"] for b in result["broader"]]
     assert "http://dbpedia.org/resource/List_of_ancient_dishes" not in broader_uris
     assert "http://dbpedia.org/resource/Bread" in broader_uris
+
+
+def test_lookup_dbpedia_rejects_list_article_as_primary_result(tmp_path: Path) -> None:
+    """A List_of_* URI returned as the primary DBpedia result is rejected outright."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    # DBpedia returns a list article as the only result
+    response_data = {
+        "docs": [
+            {"resource": ["http://dbpedia.org/resource/List_of_Naruto_episodes"], "label": ["List of Naruto episodes"]}
+        ]
+    }
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result, failed = _lookup_dbpedia("mounting tool", "en")
+
+    assert not failed
+    assert result is None
+
+
+def test_lookup_concept_evicts_stale_dbpedia_list_article_cache(tmp_path: Path) -> None:
+    """A cached DBpedia result with a List_of_* URI is evicted and re-fetched."""
+    from tingbok.services.skos import _get_cache_path, _save_to_cache, lookup_concept
+
+    # Seed cache with a stale bad result
+    cache_key = "concept:dbpedia:en:mounting tool"
+    cache_path = _get_cache_path(tmp_path, cache_key)
+    stale = {
+        "uri": "http://dbpedia.org/resource/List_of_Naruto_episodes",
+        "prefLabel": "List of Naruto episodes",
+        "source": "dbpedia",
+        "broader": [],
+    }
+    _save_to_cache(cache_path, stale)
+
+    # Upstream returns nothing for the re-fetch
+    with patch("tingbok.services.skos._upstream_lookup", return_value=(None, False)):
+        result = lookup_concept("mounting tool", "en", "dbpedia", tmp_path)
+
+    assert result is None
+    assert not cache_path.exists()  # evicted

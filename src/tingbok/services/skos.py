@@ -273,7 +273,15 @@ def lookup_concept(label: str, lang: str, source: str, cache_dir: Path) -> dict 
 
     cached = _load_from_cache(cache_path)
     if cached is not None and cached.get("uri"):
-        return cached
+        # Evict stale DBpedia results that are list articles (cached before the filter was added)
+        if source == "dbpedia" and _is_dbpedia_list_uri(cached["uri"]):
+            logger.debug("Evicting stale DBpedia list-article cache entry for '%s'", label)
+            try:
+                cache_path.unlink()
+            except OSError:
+                pass
+        else:
+            return cached
 
     if _is_in_not_found_cache(cache_dir, cache_key):
         return None
@@ -990,7 +998,12 @@ def _lookup_dbpedia(label: str, lang: str) -> tuple[dict | None, bool]:
     if data is None:
         return None, False
 
-    results: list[dict] = data.get("docs", [])
+    # Filter list articles immediately — they are never useful as concepts
+    def _result_uri(r: dict) -> str:
+        res = r.get("resource", [])
+        return res[0] if isinstance(res, list) and res else (res if isinstance(res, str) else "")
+
+    results: list[dict] = [r for r in data.get("docs", []) if not _is_dbpedia_list_uri(_result_uri(r))]
     if not results:
         return None, False
 
