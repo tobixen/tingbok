@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 import niquests
+import yaml
 
 from tingbok.services.skos import (
     _add_to_not_found_cache,
@@ -326,3 +327,47 @@ def lookup_product(code: str, cache_dir: Path) -> dict[str, Any] | None:
         _save_to_cache(cache_path, result)
 
     return result
+
+
+def load_manual_ean(path: Path) -> dict[str, Any]:
+    """Load manually curated EAN data from a YAML file.
+
+    Returns an empty dict if the file does not exist or cannot be parsed.
+    Keys are EAN strings; values are dicts with supplementary or full product data.
+    """
+    if not path.exists():
+        return {}
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+        # Normalise keys to strings (YAML may parse numeric EANs as ints)
+        return {str(k): v for k, v in data.items()}
+    except Exception as exc:
+        logger.warning("Failed to load manual EAN data from %s: %s", path, exc)
+        return {}
+
+
+def merge_manual_data(upstream: dict[str, Any] | None, manual: dict[str, Any] | None) -> dict[str, Any] | None:
+    """Merge upstream product data with a manual-ean.yaml entry.
+
+    * If upstream is present: supplementary fields (``prices``, ``receipt_names``,
+      ``note``) from *manual* are merged in; all other upstream fields are preserved.
+    * If upstream is absent and *manual* has ``source: manual``: the manual entry
+      is returned as the product result.
+    * Otherwise: ``None`` is returned.
+    """
+    if upstream is not None:
+        if not manual:
+            return upstream
+        result = dict(upstream)
+        for key in ("prices", "receipt_names"):
+            if manual.get(key):
+                result[key] = manual[key]
+        if manual.get("note"):
+            result["note"] = manual["note"]
+        return result
+
+    if manual and manual.get("source") == "manual":
+        return dict(manual)
+
+    return None

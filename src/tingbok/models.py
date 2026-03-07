@@ -68,6 +68,25 @@ class CacheStatsResponse(BaseModel):
     cache_dir: str
 
 
+class PriceObservation(BaseModel):
+    """A single observed price for a product at a shop on a date."""
+
+    shop: str
+    date: str
+    price: float
+    currency: str = "NOK"
+    unit: str | None = None
+
+
+class ReceiptNameObservation(BaseModel):
+    """A product name as printed on a shop receipt, with observation period."""
+
+    shop: str
+    name: str
+    first_seen: str | None = None
+    last_seen: str | None = None
+
+
 class ProductResponse(BaseModel):
     """Product data from an EAN/barcode lookup."""
 
@@ -82,6 +101,12 @@ class ProductResponse(BaseModel):
     author: str | None = None
     #: Product type: ``"product"``, ``"book"``, etc.
     type: str = "product"
+    #: Locally observed shop prices.
+    prices: list[PriceObservation] = []
+    #: Receipt name observations (may differ by shop/locale).
+    receipt_names: list[ReceiptNameObservation] = []
+    #: Free-text note (e.g. "Lidl internal barcode").
+    note: str | None = None
 
 
 class VocabularyConcept(BaseModel):

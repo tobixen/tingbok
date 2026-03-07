@@ -16,6 +16,7 @@ from fastapi_mcp import FastApiMCP
 from tingbok import __version__
 from tingbok.models import HealthResponse, VocabularyConcept
 from tingbok.routers import ean, skos
+from tingbok.services import ean as ean_service
 from tingbok.services import gpt as gpt_service
 from tingbok.services import off as off_service
 from tingbok.services import skos as skos_service
@@ -23,6 +24,7 @@ from tingbok.services import skos as skos_service
 logger = logging.getLogger(__name__)
 
 VOCABULARY_PATH = Path(__file__).parent / "data" / "vocabulary.yaml"
+MANUAL_EAN_PATH = Path(__file__).parent / "data" / "manual-ean.yaml"
 TINGBOK_BASE_URL = "https://tingbok.plann.no"
 
 #: Root of the tingbok cache.  Set ``TINGBOK_CACHE_DIR`` to override.
@@ -35,6 +37,9 @@ SKOS_CACHE_DIR: Path = _CACHE_BASE / "skos"
 EAN_CACHE_DIR: Path = _CACHE_BASE / "ean"
 
 vocabulary: dict[str, Any] = {}
+
+#: Manually curated EAN data loaded from manual-ean.yaml.
+manual_ean: dict[str, Any] = {}
 
 #: Auto-discovered external source URIs for concepts that have none in vocabulary.yaml.
 #: Maps concept_id -> {source_name: uri}.  Populated by _discover_source_uris_background().
@@ -216,8 +221,9 @@ async def _fetch_labels_background() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001
     """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
-    global vocabulary  # noqa: PLW0603
+    global vocabulary, manual_ean  # noqa: PLW0603
     vocabulary = _load_vocabulary()
+    manual_ean = ean_service.load_manual_ean(MANUAL_EAN_PATH)
     discovery_task = asyncio.create_task(_discover_source_uris_background())
     labels_task = asyncio.create_task(_fetch_labels_background())
     try:

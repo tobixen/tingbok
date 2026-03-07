@@ -1,0 +1,329 @@
+'20003937':
+  prices:
+  - currency: EUR
+    date: '2026-01-24'
+    price: 1.02
+    shop: Lidl Varna
+    unit: pcs
+  receipt_names:
+  - first_seen: '2026-01-24'
+    last_seen: '2026-01-24'
+    name: СОС БОЛОНЕЗЕ
+    shop: Lidl Varna
+'20039547':
+  prices:
+  - currency: EUR
+    date: '2026-03-04'
+    price: 1.12
+    shop: Lidl Varna
+    unit: pcs
+  receipt_names:
+  - first_seen: '2026-03-04'
+    last_seen: '2026-03-04'
+    name: СМЕТАНА 30 %
+    shop: Lidl Varna
+'20144173':
+  brand: W5 (Lidl)
+  categories:
+  - Cleaning
+  name: MAXI POWER limescale cleaner
+  source: manual
+'20163402':
+  brand: Combino
+  categories:
+  - Tomato sauces
+  - Passata
+  name: Passata
+  prices:
+  - currency: EUR
+    date: '2026-01-24'
+    price: 0.37
+    shop: Lidl Varna
+    unit: pcs
+  quantity: 500g
+  receipt_names:
+  - first_seen: '2026-01-24'
+    last_seen: '2026-01-24'
+    name: ПАСИРАНИ ДОМАТИ
+    shop: Lidl Varna
+  source: manual
+'2037795575':
+  brand: БОНИ
+  categories:
+  - Meat
+  - Dried meat
+  name: БОНИ Сушеница
+  note: Lidl internal barcode
+  quantity: 140g
+  receipt_names:
+  - name: СУШЕНИЦА
+  source: manual
+'20531164':
+  receipt_names:
+  - name: МОРСКИ ДАРОВЕ ТИКВ.
+'2640660003584':
+  brand: Bella Bulgaria
+  categories:
+  - Meat
+  - Salami
+  name: Bella Bulgaria Луканков салам
+  note: Lidl internal barcode (variable weight)
+  quantity: variable weight
+  receipt_names:
+  - name: ЛУКАНКОВ САЛАМ
+  source: manual
+'3608409854254':
+  brand: DECATHLON
+  categories:
+  - Repair
+  - Adhesives
+  name: Repair kit
+  quantity: model 8563766
+  source: manual
+'4008153752353':
+  brand: UNITEC
+  categories:
+  - Cargo
+  - Straps
+  name: Ratchet tie down + hook
+  quantity: 225 daN
+  source: manual
+'4015600734138':
+  brand: P&G
+  categories:
+  - Hygiene
+  - Personal care
+  name: Body wash/shampoo
+  quantity: 360ml
+  source: manual
+'4031396000592':
+  brand: YACHTICON
+  categories:
+  - Boat
+  - Cleaning
+  name: PURYSAN marine toilet cleaner
+  quantity: 500ml
+  source: manual
+'4032526841801':
+  brand: suki
+  categories:
+  - Hardware
+  - Rope
+  name: Rope/cord spool
+  quantity: Ø4mm, 30m
+  source: manual
+'4032526845427':
+  brand: suki
+  categories:
+  - Hardware
+  - Rope
+  name: Rope/cord spool
+  quantity: Ø4mm, 30m
+  source: manual
+'4052489642931':
+  brand: Стряха
+  categories:
+  - Preserved vegetables
+  - Peppers
+  name: Чушки белени пълнени с чесън и магданоз
+  prices:
+  - currency: EUR
+    date: '2026-01-28'
+    price: 2.05
+    shop: Lidl Varna
+    unit: pcs
+  quantity: 1 jar
+  receipt_names:
+  - first_seen: '2026-01-28'
+    last_seen: '2026-01-28'
+    name: ЧУШКИ С ЧЕСЪН И МАГД
+    shop: Lidl Varna
+  source: manual
+'4056489080510':
+  prices:
+  - currency: EUR
+    date: '2026-01-24'
+    price: 0.72
+    shop: Lidl Varna
+    unit: pcs
+  - currency: EUR
+    date: '2026-03-04'
+    price: 1.43
+    shop: Lidl Varna
+    unit: pcs
+  receipt_names:
+  - first_seen: '2026-01-24'
+    last_seen: '2026-03-04'
+    name: ПРЯСНО МЛЯКО 3%
+    shop: Lidl Varna
+'4056489108160':
+  prices:
+  - currency: EUR
+    date: '2026-03-04'
+    price: 1.43
+    shop: Lidl Varna
+    unit: pcs
+  receipt_names:
+  - first_seen: '2026-03-04'
+    last_seen: '2026-03-04'
+    name: МЛЯКО UHT 3,5%
+    shop: Lidl Varna
+'4056489150510':
+  prices:
+  - currency: EUR
+    date: '2026-01-24'
+    price: 0.66
+    shop: Lidl Varna
+    unit: pcs
+  receipt_names:
+  - first_seen: '2026-01-24'
+    last_seen: '2026-01-24'
+    name: ИНДИЙСКО ОРЕХЧЕ ЦЯЛО
+    shop: Lidl Varna
+'4056489693307':
+  brand: Pilos/Lidl
+  categories:
+  - Meat
+  - Sausages
+  - Cured meats
+  - Dry sausages
+  name: Ловджийска Луканка
+  prices:
+  - currency: EUR
+    date: '2026-03-04'
+    price: 2.04
+    shop: Lidl Varna
+    unit: pcs
+  quantity: 150 g
+  receipt_names:
+  - first_seen: '2026-03-04'
+    last_seen: '2026-03-04'
+    name: ЛОВДЖИЙСКА ЛУКАНКА
+    shop: Lidl Varna
+  source: manual
+'4056489941200':
+  brand: Pilos
+  categories:
+  - Dairy
+  - Yogurt
+  name: Pilos Кисело мляко 3.6%
+  prices:
+  - currency: EUR
+    date: '2026-01-24'
+    price: 0.78
+    shop: Lidl Varna
+    unit: pcs
+  - currency: EUR
+    date: '2026-03-04'
+    price: 1.53
+    shop: Lidl Varna
+    unit: pcs
+  quantity: 1kg
+  receipt_names:
+  - first_seen: '2026-01-24'
+    last_seen: '2026-03-04'
+    name: КИСЕЛО МЛЯКО 3,6%
+    shop: Lidl Varna
+  source: manual
+'4056489942597':
+  brand: Lidl
+  categories:
+  - Meat
+  - Sausage
+  name: Пресен суджук от конско месо
+  prices:
+  - currency: EUR
+    date: '2026-01-24'
+    price: 6.64
+    shop: Lidl Varna
+    unit: pcs
+  quantity: 500g
+  receipt_names:
+  - first_seen: '2026-01-24'
+    last_seen: '2026-01-24'
+    name: ПРЕСЕН СУДЖУК КОНС.М
+    shop: Lidl Varna
+  source: manual
+'4056489947882':
+  brand: Pilos
+  categories:
+  - Dairy
+  - Milk
+  name: Прясно мляко 3.7%
+  quantity: 1 л
+  receipt_names:
+  - name: ПРЯСНО МЛЯКО 3,7%
+  source: manual
+'4335619100947':
+  receipt_names:
+  - name: МЛЕЧ.ШОКОЛ.С КАШУ
+'4337185452635':
+  brand: Kaufland
+  categories:
+  - Hygiene
+  - Soap
+  name: Sensitive liquid soap refill
+  quantity: 1L
+  source: manual
+'5000204890785':
+  brand: Unknown
+  categories:
+  - Chemicals
+  - Spray
+  name: ENDURA spray
+  source: manual
+'5201314587552':
+  brand: SANITAS
+  categories:
+  - Kitchen
+  - Food wrap
+  name: Cling film 30m
+  quantity: 30m
+  source: manual
+'5902062007025':
+  brand: GRAPHITE
+  categories:
+  - Tools
+  - Welding
+  name: Welding electrodes 56H835
+  quantity: 1kg, Ø3.25mm
+  source: manual
+'5905858676245':
+  receipt_names:
+  - name: МЛЕЧ.ШОКОЛАД ФЪСЪЦИ
+'5908068806808':
+  brand: GRAPHITE/Ihtiman
+  categories:
+  - Tools
+  - Welding
+  name: Welding electrodes
+  quantity: 1kg
+  source: manual
+'5949065025434':
+  brand: Unknown
+  categories:
+  - Hygiene
+  - Wipes
+  name: Wet wipes floral
+  source: manual
+'7340011453437':
+  brand: Coop
+  categories:
+  - Cleaning
+  name: Änglamark window cleaner
+  quantity: 750ml
+  source: manual
+'8714789732671':
+  brand: Colgate
+  categories:
+  - Hygiene
+  - Dental
+  name: Mouthwash
+  source: manual
+'8718951295711':
+  brand: Colgate
+  categories:
+  - Hygiene
+  - Dental
+  name: Bamboo charcoal toothbrush
+  source: manual

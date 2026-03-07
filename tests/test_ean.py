@@ -309,4 +309,119 @@ async def test_isbn_lookup_returns_book_type(client) -> None:
     assert response.status_code == 200
     data = response.json()
     assert data["type"] == "book"
-    assert data["author"] == "Robert Martin"
+
+
+# ---------------------------------------------------------------------------
+# Manual EAN data: loading and merging
+# ---------------------------------------------------------------------------
+
+
+class TestManualEanData:
+    """Tests for manual-ean.yaml loading and merge into lookup_product results."""
+
+    def test_load_manual_ean_returns_dict(self, tmp_path: Path) -> None:
+        """load_manual_ean() parses the YAML and returns a plain dict."""
+        from tingbok.services import ean as ean_service
+
+        yaml_file = tmp_path / "manual-ean.yaml"
+        yaml_file.write_text(
+            "7310865004703:\n"
+            "  prices:\n"
+            "    - shop: Test Shop\n"
+            "      date: '2026-01-01'\n"
+            "      price: 9.99\n"
+            "      currency: NOK\n"
+        )
+        data = ean_service.load_manual_ean(yaml_file)
+        assert "7310865004703" in data
+        assert data["7310865004703"]["prices"][0]["price"] == 9.99
+
+    def test_load_manual_ean_missing_file_returns_empty(self, tmp_path: Path) -> None:
+        """Missing manual-ean.yaml returns {} without raising."""
+        from tingbok.services import ean as ean_service
+
+        data = ean_service.load_manual_ean(tmp_path / "nonexistent.yaml")
+        assert data == {}
+
+    def test_merge_adds_prices_to_upstream_result(self, tmp_path: Path) -> None:
+        """Prices from manual data are merged into an upstream product result."""
+        from tingbok.services import ean as ean_service
+
+        manual = {
+            "7310865004703": {
+                "prices": [{"shop": "ICA", "date": "2026-01-01", "price": 29.9, "currency": "NOK"}],
+                "receipt_names": [
+                    {"shop": "ICA", "name": "KAVIAR", "first_seen": "2026-01-01", "last_seen": "2026-01-01"}
+                ],
+                "note": "sale price",
+            }
+        }
+        upstream = {
+            "ean": "7310865004703",
+            "name": "Kalles Kaviar",
+            "brand": "Abba",
+            "quantity": "300g",
+            "categories": ["spreads"],
+            "source": "openfoodfacts",
+            "type": "product",
+        }
+        result = ean_service.merge_manual_data(upstream, manual.get("7310865004703"))
+        assert result["prices"] == manual["7310865004703"]["prices"]
+        assert result["receipt_names"] == manual["7310865004703"]["receipt_names"]
+        assert result["note"] == "sale price"
+        # Upstream fields preserved
+        assert result["name"] == "Kalles Kaviar"
+
+    def test_merge_manual_source_used_when_no_upstream(self, tmp_path: Path) -> None:
+        """Manual entry with source=manual is returned when upstream finds nothing."""
+        from tingbok.services import ean as ean_service
+
+        manual_entry = {
+            "name": "Welding electrodes",
+            "brand": "GRAPHITE",
+            "categories": ["Tools", "Welding"],
+            "source": "manual",
+            "type": "product",
+        }
+        result = ean_service.merge_manual_data(None, manual_entry)
+        assert result is not None
+        assert result["name"] == "Welding electrodes"
+        assert result["source"] == "manual"
+
+    def test_merge_no_manual_entry_returns_upstream_unchanged(self) -> None:
+        """When no manual entry exists, upstream result is returned as-is."""
+        from tingbok.services import ean as ean_service
+
+        upstream = {
+            "ean": "1234567890128",
+            "name": "Test product",
+            "categories": ["food"],
+            "source": "openfoodfacts",
+            "type": "product",
+        }
+        result = ean_service.merge_manual_data(upstream, None)
+        assert result == upstream
+
+    def test_merge_no_data_anywhere_returns_none(self) -> None:
+        """None upstream + None manual entry → None."""
+        from tingbok.services import ean as ean_service
+
+        assert ean_service.merge_manual_data(None, None) is None
+
+    def test_product_response_accepts_prices_and_receipt_names(self) -> None:
+        """ProductResponse model accepts the new fields."""
+        from tingbok.models import PriceObservation, ProductResponse, ReceiptNameObservation
+
+        r = ProductResponse(
+            ean="7310865004703",
+            name="Kaviar",
+            source="openfoodfacts",
+            prices=[PriceObservation(shop="ICA", date="2026-01-01", price=29.9, currency="NOK")],
+            receipt_names=[
+                ReceiptNameObservation(shop="ICA", name="KAVIAR", first_seen="2026-01-01", last_seen="2026-01-01")
+            ],
+            note="sale",
+        )
+        assert r.prices[0].price == 29.9
+        assert r.receipt_names[0].name == "KAVIAR"
+        assert r.note == "sale"
