@@ -42,10 +42,17 @@ EAN_CACHE_DIR: Path = _CACHE_BASE / "ean"
 #: sources disagree on a concept's top-level hierarchy root.
 WARNINGS_PATH: Path = _CACHE_BASE / "lookup-warnings.json"
 
+#: Runtime-writable JSON file for inventory-sourced EAN observations (category + name).
+#: Separate from the git-tracked ean-db.yaml; accumulates PUT /api/ean/{ean} calls.
+EAN_OBSERVATIONS_PATH: Path = _CACHE_BASE / "ean-db.json"
+
 vocabulary: dict[str, Any] = {}
 
 #: Manually curated EAN data loaded from manual-ean.yaml.
 manual_ean: dict[str, Any] = {}
+
+#: Inventory-sourced EAN observations loaded from ean-db.json (written by PUT /api/ean/{ean}).
+ean_observations: dict[str, Any] = {}
 
 #: Auto-discovered external source URIs for concepts that have none in vocabulary.yaml.
 #: Maps concept_id -> {source_name: uri}.  Populated by _discover_source_uris_background().
@@ -266,9 +273,10 @@ async def _fetch_labels_background() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001
     """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
-    global vocabulary, manual_ean  # noqa: PLW0603
+    global vocabulary, manual_ean, ean_observations  # noqa: PLW0603
     vocabulary = _load_vocabulary()
     manual_ean = ean_service.load_manual_ean(MANUAL_EAN_PATH)
+    ean_observations = ean_service.load_ean_observations(EAN_OBSERVATIONS_PATH)
     skos_service.load_agrovoc_background(SKOS_CACHE_DIR)
     discovery_task = asyncio.create_task(_discover_source_uris_background())
     labels_task = asyncio.create_task(_fetch_labels_background())

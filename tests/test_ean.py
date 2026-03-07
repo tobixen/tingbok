@@ -449,3 +449,101 @@ class TestManualEanData:
         assert r.prices[0].price == 29.9
         assert r.receipt_names[0].name == "KAVIAR"
         assert r.note == "sale"
+
+
+# ---------------------------------------------------------------------------
+# EAN observation: save / load / merge
+# ---------------------------------------------------------------------------
+
+
+class TestEanObservations:
+    def test_save_and_load_observation(self, tmp_path: Path) -> None:
+        """save_ean_observation persists to JSON; load_ean_observations reads it back."""
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        ean_service.save_ean_observation(path, "1234567890", ["food/dairy"], "Milk", quantity="1l")
+        data = ean_service.load_ean_observations(path)
+        assert data["1234567890"]["categories"] == ["food/dairy"]
+        assert data["1234567890"]["name"] == "Milk"
+        assert data["1234567890"]["quantity"] == "1l"
+
+    def test_save_merges_prices_without_duplicates(self, tmp_path: Path) -> None:
+        """Saving the same price twice does not create a duplicate."""
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        price = {"date": "2026-01-01", "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": None}
+        ean_service.save_ean_observation(path, "111", [], None, prices=[price])
+        ean_service.save_ean_observation(path, "111", [], None, prices=[price])
+        data = ean_service.load_ean_observations(path)
+        assert len(data["111"]["prices"]) == 1
+
+    def test_merge_observation_prepends_categories(self) -> None:
+        """Inventory categories are prepended, giving them priority."""
+        from tingbok.services import ean as ean_service
+
+        result = {"ean": "1", "source": "off", "categories": ["Food/Dairy"], "name": "Milk"}
+        obs = {"categories": ["food/dairy/yogurt"]}
+        merged = ean_service.merge_observation(result, obs)
+        assert merged["categories"][0] == "food/dairy/yogurt"
+        assert "Food/Dairy" in merged["categories"]
+
+    def test_merge_observation_fills_missing_name_and_quantity(self) -> None:
+        """name and quantity from observation fill gaps in upstream data."""
+        from tingbok.services import ean as ean_service
+
+        result = {"ean": "1", "source": "off", "categories": []}
+        obs = {"name": "Organic Milk", "quantity": "1l"}
+        merged = ean_service.merge_observation(result, obs)
+        assert merged["name"] == "Organic Milk"
+        assert merged["quantity"] == "1l"
+
+    def test_merge_observation_does_not_overwrite_existing_name(self) -> None:
+        """Upstream name takes precedence over observation name."""
+        from tingbok.services import ean as ean_service
+
+        result = {"ean": "1", "source": "off", "categories": [], "name": "Official Name"}
+        obs = {"name": "Inventory Name"}
+        merged = ean_service.merge_observation(result, obs)
+        assert merged["name"] == "Official Name"
+
+
+# ---------------------------------------------------------------------------
+# PUT /api/ean/{ean} endpoint
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.anyio
+async def test_put_ean_observation_stores_and_returns_product(client, tmp_path: Path) -> None:
+    """PUT /api/ean/{ean} stores the observation and returns a merged product."""
+    from unittest.mock import patch
+
+    import tingbok.app as _app
+
+    obs_path = tmp_path / "ean-db.json"
+    upstream = {
+        "ean": "4006381333931",
+        "name": "Tesa tape",
+        "source": "upcitemdb",
+        "categories": [],
+    }
+    with patch.object(_app, "EAN_OBSERVATIONS_PATH", obs_path):
+        with patch.object(_app, "ean_observations", {}):
+            with patch("tingbok.services.ean.lookup_product", return_value=upstream):
+                response = await client.put(
+                    "/api/ean/4006381333931",
+                    json={"categories": ["household/office"], "name": "Tesa tape", "quantity": "10m"},
+                )
+    assert response.status_code == 200
+    data = response.json()
+    assert "household/office" in data["categories"]
+    assert data["quantity"] == "10m"
+    assert obs_path.exists()
+
+
+@pytest.mark.anyio
+async def test_put_ean_observation_empty_body_returns_422(client) -> None:
+    """PUT with neither categories nor name is rejected."""
+    response = await client.put("/api/ean/1234567890", json={})
+    assert response.status_code == 422

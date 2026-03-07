@@ -109,6 +109,21 @@ class ProductResponse(BaseModel):
     note: str | None = None
 
 
+class EanObservationRequest(BaseModel):
+    """Inventory-sourced observation for an EAN product."""
+
+    #: Category path(s) as classified in the inventory (e.g. ``["food/dairy"]``).
+    categories: list[str] = []
+    #: Clean product name extracted from the inventory item text.
+    name: str | None = None
+    #: Weight or volume string (e.g. ``"140g"``, ``"1l"``).
+    quantity: str | None = None
+    #: Observed prices (e.g. from the inventory price: tag).
+    prices: list[PriceObservation] = []
+    #: Receipt name observations (e.g. Lidl receipt names in local language).
+    receipt_names: list[ReceiptNameObservation] = []
+
+
 class VocabularyConcept(BaseModel):
     """A single concept from the package vocabulary."""
 

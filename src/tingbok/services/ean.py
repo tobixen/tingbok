@@ -10,6 +10,7 @@ Results (including not-found) are cached in the EAN cache directory.
 
 from __future__ import annotations
 
+import json
 import logging
 from pathlib import Path
 from typing import Any
@@ -345,6 +346,111 @@ def load_manual_ean(path: Path) -> dict[str, Any]:
     except Exception as exc:
         logger.warning("Failed to load manual EAN data from %s: %s", path, exc)
         return {}
+
+
+def load_ean_observations(path: Path) -> dict[str, Any]:
+    """Load inventory-sourced EAN observations from *path* (JSON).
+
+    Returns an empty dict if the file does not exist or cannot be parsed.
+    Keys are EAN strings; values are dicts with ``categories`` and/or ``name``.
+    """
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        logger.warning("Failed to load EAN observations from %s: %s", path, exc)
+        return {}
+
+
+def save_ean_observation(
+    path: Path,
+    ean: str,
+    categories: list[str],
+    name: str | None,
+    quantity: str | None = None,
+    prices: list[dict[str, Any]] | None = None,
+    receipt_names: list[dict[str, Any]] | None = None,
+) -> None:
+    """Persist a single EAN observation to *path* (JSON), merging with existing data.
+
+    Existing entries for *ean* are updated in-place; all other EANs are preserved.
+    Price observations are appended (de-duplicated by date+currency+price).
+    """
+    data = load_ean_observations(path)
+    entry: dict[str, Any] = data.get(ean, {})
+    if categories:
+        entry["categories"] = categories
+    if name:
+        entry["name"] = name
+    if quantity:
+        entry["quantity"] = quantity
+    if prices:
+        existing_prices: list[dict[str, Any]] = entry.get("prices", [])
+        for p in prices:
+            key = (p.get("date"), p.get("currency"), p.get("price"))
+            if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in existing_prices):
+                existing_prices.append(p)
+        entry["prices"] = existing_prices
+    if receipt_names:
+        existing_rn: list[dict[str, Any]] = entry.get("receipt_names", [])
+        for rn in receipt_names:
+            rn_name = rn.get("name", "")
+            rn_shop = rn.get("shop")
+            existing = next((e for e in existing_rn if e.get("name") == rn_name and e.get("shop") == rn_shop), None)
+            if existing:
+                # Update last_seen date if newer
+                if rn.get("last_seen", "") > existing.get("last_seen", ""):
+                    existing["last_seen"] = rn["last_seen"]
+            else:
+                existing_rn.append(rn)
+        entry["receipt_names"] = existing_rn
+    data[ean] = entry
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+    logger.debug("Saved EAN observation for %s to %s", ean, path)
+
+
+def merge_observation(result: dict[str, Any], observation: dict[str, Any]) -> dict[str, Any]:
+    """Merge an inventory observation into a product result dict.
+
+    * ``categories``: observation categories are prepended (de-duplicated).
+    * ``name``: used only when the result has no name yet.
+    * ``quantity``: used only when the result has no quantity yet.
+    * ``prices``: appended to existing price observations (de-duplicated).
+    """
+    if not observation:
+        return result
+    merged = dict(result)
+    obs_cats: list[str] = observation.get("categories") or []
+    if obs_cats:
+        existing: list[str] = list(merged.get("categories") or [])
+        for cat in reversed(obs_cats):
+            if cat not in existing:
+                existing.insert(0, cat)
+        merged["categories"] = existing
+    if observation.get("name") and not merged.get("name"):
+        merged["name"] = observation["name"]
+    if observation.get("quantity") and not merged.get("quantity"):
+        merged["quantity"] = observation["quantity"]
+    obs_prices: list[dict[str, Any]] = observation.get("prices") or []
+    if obs_prices:
+        existing_prices: list[dict[str, Any]] = list(merged.get("prices") or [])
+        for p in obs_prices:
+            key = (p.get("date"), p.get("currency"), p.get("price"))
+            if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in existing_prices):
+                existing_prices.append(p)
+        merged["prices"] = existing_prices
+    obs_rn: list[dict[str, Any]] = observation.get("receipt_names") or []
+    if obs_rn:
+        existing_rn: list[dict[str, Any]] = list(merged.get("receipt_names") or [])
+        for rn in obs_rn:
+            rn_name = rn.get("name", "")
+            rn_shop = rn.get("shop")
+            if not any(e.get("name") == rn_name and e.get("shop") == rn_shop for e in existing_rn):
+                existing_rn.append(rn)
+        merged["receipt_names"] = existing_rn
+    return merged
 
 
 def merge_manual_data(upstream: dict[str, Any] | None, manual: dict[str, Any] | None) -> dict[str, Any] | None:
