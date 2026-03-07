@@ -83,6 +83,44 @@ _DEFAULT_FETCH_LANGUAGES: list[str] = [
 ]
 
 
+#: Maps GPT top-level category labels (lowercased) to tingbok vocabulary root IDs.
+_GPT_ROOT_MAPPING: dict[str, str] = {
+    "animals & pet supplies": "pets",
+    "apparel & accessories": "clothing",
+    "arts & entertainment": "entertainment",
+    "baby & toddler": "baby",
+    "cameras & optics": "electronics",
+    "electronics": "electronics",
+    "food, beverages & tobacco": "food",
+    "furniture": "furniture",
+    "hardware": "hardware",
+    "health & beauty": "health",
+    "home & garden": "household",
+    "luggage & bags": "bag",
+    "media": "media",
+    "office supplies": "office",
+    "sporting goods": "sports",
+    "toys & games": "entertainment",
+    "vehicles & parts": "vehicle",
+}
+
+
+def _gpt_path_from_parts(path_parts: list[str]) -> str | None:
+    """Derive a tingbok hierarchy path from a GPT taxonomy path_parts list.
+
+    The first path part is mapped to a tingbok root via ``_GPT_ROOT_MAPPING``.
+    Remaining parts are lowercased with spaces replaced by underscores.
+    Returns ``None`` if the root is not recognised.
+    """
+    if not path_parts:
+        return None
+    root = _GPT_ROOT_MAPPING.get(path_parts[0].lower())
+    if root is None:
+        return None
+    rest = [p.lower().replace(" & ", "_and_").replace(" ", "_") for p in path_parts[1:]]
+    return "/".join([root] + rest)
+
+
 def _load_vocabulary() -> dict[str, Any]:
     """Load the package vocabulary from YAML."""
     with open(VOCABULARY_PATH) as f:
@@ -531,6 +569,19 @@ async def lookup_concept(
 
         if not wikipedia_url:
             wikipedia_url = concept.get("wikipediaUrl")
+
+    # Also query GPT (local taxonomy, no network) — provides product hierarchy paths
+    gpt_concept = await asyncio.to_thread(gpt_service.lookup_concept, label, lang, _CACHE_BASE)
+    if gpt_concept:
+        gpt_uri = gpt_concept.get("uri", "")
+        if gpt_uri and gpt_uri not in source_uris:
+            source_uris.append(gpt_uri)
+        gpt_path = _gpt_path_from_parts(gpt_concept.get("path_parts", []))
+        if gpt_path and concept_id is None:
+            concept_id = gpt_path
+        gpt_labels = await asyncio.to_thread(gpt_service.get_labels, gpt_uri, fetch_languages, _CACHE_BASE)
+        for lg, lbl in gpt_labels.items():
+            merged_labels.setdefault(lg, lbl)
 
     if not source_uris and concept_id is None:
         raise HTTPException(status_code=404, detail=f"Concept '{label}' not found in vocabulary or SKOS sources")

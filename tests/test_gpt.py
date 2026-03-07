@@ -158,6 +158,50 @@ def _run_download(tmp_path: Path, extra_args: list[str]) -> tuple[int, str]:
     return rc, captured.getvalue()
 
 
+def test_gpt_lookup_singular_finds_plural_label(tmp_path: Path) -> None:
+    """Querying a singular form finds the concept when the GPT label is plural."""
+    sample = """\
+# Google_Product_Taxonomy_Version: 2021-09-21
+569 - Home & Garden > Bedding
+4951 - Home & Garden > Bedding > Pillows
+"""
+    _write_gpt_file(tmp_path, "en-GB", sample)
+
+    from tingbok.services import gpt as gpt_service
+
+    result = gpt_service.lookup_concept("pillow", "en", tmp_path)
+    assert result is not None
+    assert result["uri"] == "gpt:4951"
+    assert result["prefLabel"] == "Pillows"
+
+
+def test_gpt_lookup_plural_finds_singular_label(tmp_path: Path) -> None:
+    """Querying a plural form finds the concept when the GPT label is singular."""
+    sample = """\
+# Google_Product_Taxonomy_Version: 2021-09-21
+1 - Electronics
+99 - Electronics > Camera
+"""
+    _write_gpt_file(tmp_path, "en-GB", sample)
+
+    from tingbok.services import gpt as gpt_service
+
+    result = gpt_service.lookup_concept("cameras", "en", tmp_path)
+    assert result is not None
+    assert result["uri"] == "gpt:99"
+
+
+def test_gpt_lookup_returns_path_parts(tmp_path: Path) -> None:
+    """lookup_concept result includes path_parts for hierarchy derivation."""
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
+
+    from tingbok.services import gpt as gpt_service
+
+    result = gpt_service.lookup_concept("Cameras & Optics", "en", tmp_path)
+    assert result is not None
+    assert result.get("path_parts") == ["Electronics", "Cameras & Optics"]
+
+
 def test_download_taxonomy_gpt_writes_file(tmp_path: Path) -> None:
     """--gpt should download the en-GB GPT file into cache_dir/gpt/."""
     fake_response = MagicMock()

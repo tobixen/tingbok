@@ -1698,6 +1698,30 @@ concepts:
     - agrovoc
     # AGROVOC returns "litter for animals" (farm bedding) - use DBpedia
 
+  pillow:
+    prefLabel: "Pillow"
+    broader: bedding
+    source_uris:
+    - http://www.wikidata.org/entity/Q82821
+    - gpt:4951
+    excluded_sources:
+    - dbpedia
+    # DBpedia matches "The Pillows" (Japanese band) instead of the household item
+
+  duvet:
+    prefLabel: "Duvet"
+    broader: bedding
+    source_uris:
+    - "http://dbpedia.org/resource/Duvet"
+    - http://www.wikidata.org/entity/Q468242
+
+  blanket:
+    prefLabel: "Blanket"
+    broader: bedding
+    source_uris:
+    - "http://dbpedia.org/resource/Blanket"
+    - http://www.wikidata.org/entity/Q131549
+
   # =============================================================================
   # BOOKS SUBCATEGORIES
   # =============================================================================

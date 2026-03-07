@@ -184,7 +184,22 @@ def lookup_concept(label: str, lang: str, cache_dir: Path) -> dict | None:
         return None
 
     index = _parse_gpt_file(gpt_file)
-    entry = index.get(label.lower())
+
+    # Try exact match, then simple plural/singular variants
+    key = label.lower()
+    label_candidates = [key]
+    if key.endswith("s"):
+        label_candidates.append(key[:-1])  # "pillows" → "pillow"
+        if key.endswith("es") and len(key) > 3:
+            label_candidates.append(key[:-2])  # "boxes" → "box"
+    else:
+        label_candidates.append(key + "s")  # "pillow" → "pillows"
+
+    entry = None
+    for candidate in label_candidates:
+        entry = index.get(candidate)
+        if entry is not None:
+            break
     if entry is None:
         return None
 
@@ -206,6 +221,7 @@ def lookup_concept(label: str, lang: str, cache_dir: Path) -> dict | None:
         "prefLabel": pref_label,
         "source": "gpt",
         "broader": broader,
+        "path_parts": path_parts,
     }
 
 

@@ -8,6 +8,16 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ## [Unreleased]
 
+### Change
+
+I'm not sure if this is a good idea ... but I decided to go for it after observing that the same query failed over and over again:
+
+- **Transient upstream failures now cached with a short TTL** — when DBpedia, AGROVOC, or
+  Wikidata returns a timeout or connection error, `lookup_concept` now adds a transient entry
+  to the not-found cache (4-hour TTL, marked `"transient": true`).  Previously the failure was
+  not cached at all, causing concepts like `"writing supplies"` (no DBpedia article) to time out
+  and retry on every parse run.  After 4 hours the entry expires and the upstream is retried.
+
 ### Fixed
 - **`ReceiptNameObservation.shop`** is now optional (`str | None = None`); previously required,
   which caused 500 errors for EAN entries migrated from `ean_cache.json` that had a receipt name
@@ -26,17 +36,14 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 - **DBpedia 'List of …' articles filtered from hierarchy** — ``List_of_*`` and
   ``Lists_of_*`` URIs are no longer followed when building broader-concept chains,
   preventing paths like ``list_of_ancient_dishes/bread/bread_crumbs``.
+
+### Added
+
 - **`/api/lookup` source-conflict warnings** — when SKOS sources return hierarchy
   paths under different top-level roots (e.g. AGROVOC: ``livestock/bedding``,
   DBpedia: ``household/bedding``), a warning entry is appended to
   ``{TINGBOK_CACHE_DIR}/lookup-warnings.json``.  Operators can inspect this file to
   add ``excluded_sources:`` entries for ambiguous concepts in ``vocabulary.yaml``.
-- **Transient upstream failures now cached with a short TTL** — when DBpedia, AGROVOC, or
-  Wikidata returns a timeout or connection error, `lookup_concept` now adds a transient entry
-  to the not-found cache (4-hour TTL, marked `"transient": true`).  Previously the failure was
-  not cached at all, causing concepts like `"writing supplies"` (no DBpedia article) to time out
-  and retry on every parse run.  After 4 hours the entry expires and the upstream is retried.
-
 
 ## [v0.12.0] - 2026-03-07
 
