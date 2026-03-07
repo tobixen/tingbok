@@ -88,6 +88,7 @@ concepts:
     - food/preserved
     - food/baking
     - food/spices
+    - food/staples
 
   tools:
     prefLabel: "Tools"
@@ -401,6 +402,26 @@ concepts:
   # FOOD SUBCATEGORIES
   # =============================================================================
 
+  food/staples:
+    prefLabel: "Staple foods"
+    altLabel:
+      en: ["staples", "basic foods"]
+    broader: food
+    narrower:
+      - potatoes
+      - rice
+      - pasta
+
+    source_uris:
+    - http://dbpedia.org/resource/Staple_food
+    - http://www.wikidata.org/entity/Q1241622
+    - gpt:441
+  food/plant_products/spices:
+    prefLabel: "Spices"
+    broader:
+      - food/spices
+      - food/plant_products
+
   food/beverages:
     prefLabel: "Beverages"
     altLabel:
@@ -656,6 +677,7 @@ concepts:
     broader: food
     narrower:
     - bouillon
+    - salt
     - food/spices/pepper
     - food/spices/cinnamon
     - food/spices/paprika
@@ -663,9 +685,13 @@ concepts:
     - food/spices/thyme
     - food/spices/oregano
     - food/spices/basil
+    - food/plant_products/spices
 
     source_uris:
-    - http://dbpedia.org/resource/List_of_culinary_herbs_and_spices
+    - http://dbpedia.org/resource/Herb
+    - http://www.wikidata.org/entity/Q42527
+    - http://aims.fao.org/aos/agrovoc/c_7042
+    - gpt:455
   food/spices/pepper:
     prefLabel: "Pepper"
     altLabel:
@@ -981,7 +1007,9 @@ concepts:
     altLabel:
       en: ["potato"]
       bg: ["картофи"]
-    broader: food/vegetables
+    broader:
+      - food/vegetables
+      - food/staples
 
     source_uris:
     - http://dbpedia.org/resource/Potato
@@ -1202,7 +1230,9 @@ concepts:
     prefLabel: "Salt"
     altLabel:
       bg: ["сол"]
-    broader: food/condiments
+    broader:
+      - food/condiments
+      - food/spices
 
     source_uris:
     - http://dbpedia.org/resource/Salt
@@ -1413,7 +1443,7 @@ concepts:
     broader: food/spices
 
     source_uris:
-    - http://dbpedia.org/resource/Godfrey_of_Bouillon
+    - http://dbpedia.org/resource/Bouillon_cube
     - http://www.wikidata.org/entity/Q895022
     - off:en:broths
 
