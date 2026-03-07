@@ -101,6 +101,40 @@ ROOT_MAPPING: dict[str, dict[str, str]] = {
     "wikidata": {},
 }
 
+#: Labels that indicate a hierarchy branch has wandered into abstract
+#: Wikipedia/DBpedia meta-categories unrelated to any product taxonomy.
+#: When encountered as a broader concept, the branch is silently discarded.
+_HIERARCHY_DEAD_ENDS: frozenset[str] = frozenset(
+    {
+        # Abstract philosophy / ontology
+        "property",
+        "physical property",
+        "chemical property",
+        "mathematical property",
+        "abstract object",
+        "abstraction",
+        "concept",
+        # Mathematics / physics
+        "quantity",
+        "physical quantity",
+        "scalar",
+        "scalar quantity",
+        "vector",
+        "tensor",
+        "ratio",
+        "value",
+        "number",
+        "multilinear map",
+        "individual quantity",
+        # Arts meta-categories
+        "elements of music",
+        "elements of art",
+        # Wikipedia structural categories
+        "categories",
+        "main topic classifications",
+    }
+)
+
 
 # ---------------------------------------------------------------------------
 # Cache utilities (format-compatible with inventory-md skos.py)
@@ -382,7 +416,7 @@ def build_hierarchy_paths(
         _visited_uris = frozenset()
 
     if _depth >= _max_depth:
-        logger.warning("Max hierarchy depth reached for label '%s'", label)
+        logger.debug("Max hierarchy depth reached for label '%s'", label)
         return [], False, {}
 
     try:
@@ -437,6 +471,9 @@ def build_hierarchy_paths(
         else:
             broader_label = str(broader_item)
         if not broader_label:
+            continue
+        if broader_label.lower() in _HIERARCHY_DEAD_ENDS:
+            logger.debug("Skipping abstract dead-end broader concept '%s'", broader_label)
             continue
 
         sub_paths, sub_found, sub_uri_map = build_hierarchy_paths(

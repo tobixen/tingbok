@@ -362,6 +362,23 @@ def test_hierarchy_label_normalisation(tmp_path: Path) -> None:
     assert "root_vegetables" in paths[0]
 
 
+def test_hierarchy_dead_end_broader_discards_branch(tmp_path: Path) -> None:
+    """A broader concept matching _HIERARCHY_DEAD_ENDS silently discards that branch."""
+    # "cushion" has a broader of "property" (a dead-end) — the branch should be dropped
+    cushion = {
+        "uri": "http://dbpedia.org/resource/Cushion",
+        "prefLabel": "Cushion",
+        "source": "dbpedia",
+        "broader": [{"uri": "http://dbpedia.org/resource/Property", "label": "property"}],
+    }
+    _write_concept_cache(tmp_path, "cushion", "en", "dbpedia", cushion)
+
+    paths, found, uri_map = build_hierarchy_paths("cushion", "en", "dbpedia", tmp_path)
+    # found=True because cushion itself was found; but no complete path emitted via "property"
+    assert found is True
+    assert not any("property" in p for p in paths)
+
+
 # ---------------------------------------------------------------------------
 # Unit tests for batch label fetching
 # ---------------------------------------------------------------------------
