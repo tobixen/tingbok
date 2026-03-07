@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
+## [v0.11.0] - 2026-03-07
+
+### Added
+- **`GET /api/lookup/{label}`** — unified concept lookup endpoint that returns
+  `VocabularyConcept` format regardless of whether the concept is in `vocabulary.yaml`.
+  Checks vocabulary by ID and by `prefLabel`/`altLabel` (case-insensitive) first; if not
+  found, queries AGROVOC, DBpedia, and Wikidata **in parallel** and merges the results:
+  labels (first-per-language), `altLabel` (union), description (longest wins), and
+  `source_uris` (union).  Returns 404 only if all sources miss.
+  The canonical concept ID is derived from the hierarchy path (e.g. `food/spices/cumin`).
+- **EAN/ISBN product lookup service** (`services/ean.py`) — multi-source lookup with 60-day
+  caching.  ISBNs (978/979 prefix) are routed to Open Library, with a fallback to nb.no for
+  Norwegian titles.  Other EAN/UPC codes are routed to Open Food Facts, with a fallback to
+  UPCitemdb.
+- **`ProductResponse.author`** (optional `str`) and **`ProductResponse.type`** (`"product"`
+  or `"book"`) fields added to `models.py`.
+
+### Changed
+- **`GET /api/ean/{ean}`** now uses the new multi-source service; book lookups return
+  `type="book"` and `author` when available.
+
+### Refactored
+- **`_vocabulary_concept_from_data(concept_id, data)`** helper extracted in `app.py` to
+  remove ~20 lines of duplication between `get_vocabulary()` and `get_vocabulary_concept()`.
+
 ## [v0.10.0] - 2026-03-06
 
 ### Added
