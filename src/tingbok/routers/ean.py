@@ -26,4 +26,5 @@ async def lookup_ean(ean: str) -> ProductResponse:
     result = ean_service.merge_manual_data(upstream, manual)
     if result is None:
         raise HTTPException(status_code=404, detail=f"Product not found for EAN {ean}")
+    result.setdefault("ean", ean)
     return ProductResponse(**result)

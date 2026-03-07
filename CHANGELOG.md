@@ -12,6 +12,9 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 - **`ReceiptNameObservation.shop`** is now optional (`str | None = None`); previously required,
   which caused 500 errors for EAN entries migrated from `ean_cache.json` that had a receipt name
   but no associated shop price to infer the shop from.
+- **`GET /api/ean/{ean}` injects `ean` into manual-only results** — `source: manual` entries
+  in `ean-db.yaml` don't contain the EAN (it is the YAML key), causing 500 validation errors.
+  The router now calls `result.setdefault("ean", ean)` before constructing `ProductResponse`.
 - **Transient upstream failures now cached with a short TTL** — when DBpedia, AGROVOC, or
   Wikidata returns a timeout or connection error, `lookup_concept` now adds a transient entry
   to the not-found cache (4-hour TTL, marked `"transient": true`).  Previously the failure was

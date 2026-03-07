@@ -311,6 +311,30 @@ async def test_isbn_lookup_returns_book_type(client) -> None:
     assert data["type"] == "book"
 
 
+@pytest.mark.anyio
+async def test_manual_only_ean_returns_200(client) -> None:
+    """EAN with source=manual and no upstream data returns 200 with ean field injected."""
+    import tingbok.app as _app
+    from tingbok.services import ean as ean_service
+
+    manual_entry = {
+        "name": "Welding electrodes",
+        "brand": "GRAPHITE",
+        "categories": ["Tools"],
+        "source": "manual",
+        "type": "product",
+    }
+    with patch.object(ean_service, "lookup_product", return_value=None):
+        with patch.object(_app, "manual_ean", {"2037795575": manual_entry}):
+            response = await client.get("/api/ean/2037795575")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["ean"] == "2037795575"
+    assert data["name"] == "Welding electrodes"
+    assert data["source"] == "manual"
+
+
 # ---------------------------------------------------------------------------
 # Manual EAN data: loading and merging
 # ---------------------------------------------------------------------------
