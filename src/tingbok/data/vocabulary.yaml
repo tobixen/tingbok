@@ -1688,9 +1688,6 @@ concepts:
   # Simple household mappings
   bedding:
     prefLabel: "Bedding"
-    altLabel:
-      en: ["bed linen", "bedclothes", "duvet", "pillow"]
-      nb: ["sengetøy"]
     broader: household
     uri: "http://dbpedia.org/resource/Bedding"
     source_uris:
