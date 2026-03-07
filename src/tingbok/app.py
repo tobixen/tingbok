@@ -583,6 +583,23 @@ async def lookup_concept(
         for lg, lbl in gpt_labels.items():
             merged_labels.setdefault(lg, lbl)
 
+    # Also query OFF (local food taxonomy, no network) — URI and multilingual labels only;
+    # hierarchy path building from OFF is deferred to future work since AGROVOC covers food.
+    off_concept = await asyncio.to_thread(off_service.lookup_concept, label, lang, SKOS_CACHE_DIR)
+    if off_concept:
+        off_uri = off_concept.get("uri", "")
+        if off_uri and off_uri not in source_uris:
+            source_uris.append(off_uri)
+        off_labels = await asyncio.to_thread(off_service.get_labels, off_uri, fetch_languages)
+        for lg, lbl in off_labels.items():
+            merged_labels.setdefault(lg, lbl)
+        off_alts = await asyncio.to_thread(off_service.get_alt_labels, off_uri, fetch_languages)
+        for lg, alts in off_alts.items():
+            existing = merged_alts.setdefault(lg, [])
+            for alt in alts:
+                if alt not in existing:
+                    existing.append(alt)
+
     if not source_uris and concept_id is None:
         raise HTTPException(status_code=404, detail=f"Concept '{label}' not found in vocabulary or SKOS sources")
 
