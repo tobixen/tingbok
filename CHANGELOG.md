@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
+## [Unreleased]
+
+### Fixed
+- **`ReceiptNameObservation.shop`** is now optional (`str | None = None`); previously required,
+  which caused 500 errors for EAN entries migrated from `ean_cache.json` that had a receipt name
+  but no associated shop price to infer the shop from.
+- **Transient upstream failures now cached with a short TTL** — when DBpedia, AGROVOC, or
+  Wikidata returns a timeout or connection error, `lookup_concept` now adds a transient entry
+  to the not-found cache (4-hour TTL, marked `"transient": true`).  Previously the failure was
+  not cached at all, causing concepts like `"writing supplies"` (no DBpedia article) to time out
+  and retry on every parse run.  After 4 hours the entry expires and the upstream is retried.
+
+
 ## [v0.12.0] - 2026-03-07
 
 ### Added

@@ -170,12 +170,36 @@ def test_lookup_concept_cache_miss_upstream_not_found(tmp_path: Path) -> None:
 
 
 def test_lookup_concept_query_failed_raises_upstream_error(tmp_path: Path) -> None:
-    """When upstream query fails transiently, UpstreamError is raised and nothing is cached."""
+    """When upstream query fails transiently, UpstreamError is raised.
+
+    The failure IS cached with a short TTL so repeated calls within that
+    window skip the upstream and return None quickly.
+    """
     with patch("tingbok.services.skos._upstream_lookup", return_value=(None, True)):
         with pytest.raises(UpstreamError):
             lookup_concept("potato", "en", "agrovoc", tmp_path)
 
-    assert not _is_in_not_found_cache(tmp_path, "concept:agrovoc:en:potato")
+    # Transient failure cached with short TTL — subsequent call returns None without retrying
+    assert _is_in_not_found_cache(tmp_path, "concept:agrovoc:en:potato")
+
+    with patch("tingbok.services.skos._upstream_lookup") as mock_upstream:
+        result = lookup_concept("potato", "en", "agrovoc", tmp_path)
+    assert result is None
+    mock_upstream.assert_not_called()
+
+
+def test_lookup_concept_transient_failure_retried_after_ttl(tmp_path: Path) -> None:
+    """Transient not-found entries expire after TRANSIENT_TTL_SECONDS, not the full 60-day TTL."""
+    from tingbok.services.skos import TRANSIENT_TTL_SECONDS
+
+    with patch("tingbok.services.skos._upstream_lookup", return_value=(None, True)):
+        with pytest.raises(UpstreamError):
+            lookup_concept("spanner", "en", "dbpedia", tmp_path)
+
+    # Simulate the transient TTL having expired
+    with patch("tingbok.services.skos.time") as mock_time:
+        mock_time.time.return_value = time.time() + TRANSIENT_TTL_SECONDS + 1
+        assert not _is_in_not_found_cache(tmp_path, "concept:dbpedia:en:spanner")
 
 
 # ---------------------------------------------------------------------------
@@ -463,11 +487,15 @@ async def test_skos_lookup_cache_miss_upstream_not_found(client, skos_cache_dir:
 
 @pytest.mark.anyio
 async def test_skos_lookup_upstream_error_returns_502(client, skos_cache_dir: Path) -> None:
-    """Transient upstream error (e.g. 403) returns 502, not 404, and is not cached."""
+    """Transient upstream error (e.g. 403/timeout) returns 502, not 404.
+
+    The failure IS cached with a short TTL so it is not immediately retried on the
+    next request.
+    """
     with patch("tingbok.services.skos._upstream_lookup", return_value=(None, True)):
         response = await client.get("/api/skos/lookup", params={"label": "cumin", "lang": "nb", "source": "wikidata"})
     assert response.status_code == 502
-    assert not _is_in_not_found_cache(skos_cache_dir, "concept:wikidata:nb:cumin")
+    assert _is_in_not_found_cache(skos_cache_dir, "concept:wikidata:nb:cumin")
 
 
 @pytest.mark.anyio

@@ -33,6 +33,7 @@ def _parse_json(response: niquests.Response, context: str = "") -> dict | None:
 
 
 CACHE_TTL_SECONDS = 60 * 60 * 24 * 60  # 60 days — matches inventory-md
+TRANSIENT_TTL_SECONDS = 60 * 60 * 4  # 4 hours — short TTL for transient failures
 DEFAULT_TIMEOUT = 10.0
 
 _REST_ENDPOINTS: dict[str, str] = {
@@ -110,7 +111,11 @@ def _save_to_cache(cache_path: Path, data: dict) -> None:
 
 
 def _is_in_not_found_cache(cache_dir: Path, key: str, ttl: int = CACHE_TTL_SECONDS) -> bool:
-    """Return True if *key* is present (and not expired) in the not-found cache."""
+    """Return True if *key* is present (and not expired) in the not-found cache.
+
+    Transient entries (timeouts/connection errors) use ``TRANSIENT_TTL_SECONDS``
+    regardless of the *ttl* argument.
+    """
     cache_path = _get_not_found_cache_path(cache_dir)
     if not cache_path.exists():
         return False
@@ -120,14 +125,21 @@ def _is_in_not_found_cache(cache_dir: Path, key: str, ttl: int = CACHE_TTL_SECON
         entry = data.get("entries", {}).get(key)
         if entry is None:
             return False
-        return time.time() - entry.get("cached_at", 0) <= ttl
+        effective_ttl = TRANSIENT_TTL_SECONDS if entry.get("transient") else ttl
+        return time.time() - entry.get("cached_at", 0) <= effective_ttl
     except (json.JSONDecodeError, OSError) as e:
         logger.debug("Not-found cache read failed: %s", e)
         return False
 
 
-def _add_to_not_found_cache(cache_dir: Path, key: str) -> None:
-    """Add *key* to the consolidated not-found cache file."""
+def _add_to_not_found_cache(cache_dir: Path, key: str, *, transient: bool = False) -> None:
+    """Add *key* to the consolidated not-found cache file.
+
+    Args:
+        transient: When True the entry is a transient failure (timeout / connection
+            error) and will expire after ``TRANSIENT_TTL_SECONDS`` instead of the
+            normal 60-day TTL.
+    """
     cache_path = _get_not_found_cache_path(cache_dir)
     data: dict = {"entries": {}}
     if cache_path.exists():
@@ -136,7 +148,10 @@ def _add_to_not_found_cache(cache_dir: Path, key: str) -> None:
                 data = json.load(f)
         except (json.JSONDecodeError, OSError):
             data = {"entries": {}}
-    data.setdefault("entries", {})[key] = {"cached_at": time.time()}
+    entry: dict = {"cached_at": time.time()}
+    if transient:
+        entry["transient"] = True
+    data.setdefault("entries", {})[key] = entry
     try:
         cache_dir.mkdir(parents=True, exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
@@ -197,6 +212,7 @@ def lookup_concept(label: str, lang: str, source: str, cache_dir: Path) -> dict 
     concept, query_failed = _upstream_lookup(label, lang, source, cache_dir)
 
     if query_failed:
+        _add_to_not_found_cache(cache_dir, cache_key, transient=True)
         raise UpstreamError(f"{source} request failed transiently for '{label}'")
 
     if concept:

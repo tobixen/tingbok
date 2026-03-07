@@ -81,7 +81,7 @@ class PriceObservation(BaseModel):
 class ReceiptNameObservation(BaseModel):
     """A product name as printed on a shop receipt, with observation period."""
 
-    shop: str
+    shop: str | None = None
     name: str
     first_seen: str | None = None
     last_seen: str | None = None
