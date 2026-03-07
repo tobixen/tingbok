@@ -39,6 +39,22 @@ I'm not sure if this is a good idea ... but I decided to go for it after observi
 
 ### Added
 
+- **`PUT /api/ean/{ean}`** — new endpoint that accepts inventory-sourced EAN observations
+  (`categories`, `name`, `quantity`, `prices`, `receipt_names`).  Observations are persisted
+  to `ean-db.json` in the cache directory (runtime-writable, separate from the git-tracked
+  `ean-db.yaml`), merged into future `GET` responses (inventory categories take priority),
+  and the merged product view is returned immediately.
+- **`GET /api/ean/{ean}`** now also merges runtime `ean-db.json` observations into responses.
+- **AGROVOC labels and altLabels served from local Oxigraph store** — previously the server
+  fell back to the AGROVOC REST API even when the local NT store was loaded.  SKOS-XL
+  `prefLabel` and `altLabel` are now queried directly via Oxigraph SPARQL, eliminating
+  unnecessary online lookups during parse runs.
+- **AGROVOC Oxigraph store loaded in background thread at startup** — the server now
+  responds immediately after startup using the AGROVOC REST API as fallback while the
+  store is loading.  Once loading completes, all label/alt-label/lookup calls switch to
+  the local store automatically.
+- **INFO log when AGROVOC REST API is used** — operators can now see the reason
+  ("still loading" or "store unavailable") in logs when the server goes online for AGROVOC.
 - **`/api/lookup` source-conflict warnings** — when SKOS sources return hierarchy
   paths under different top-level roots (e.g. AGROVOC: ``livestock/bedding``,
   DBpedia: ``household/bedding``), a warning entry is appended to
