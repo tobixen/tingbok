@@ -31,6 +31,9 @@ _CACHE_BASE = Path(os.environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache
 #: Directory used for SKOS concept/label caches.
 SKOS_CACHE_DIR: Path = _CACHE_BASE / "skos"
 
+#: Directory used for EAN/product lookup caches.
+EAN_CACHE_DIR: Path = _CACHE_BASE / "ean"
+
 vocabulary: dict[str, Any] = {}
 
 #: Auto-discovered external source URIs for concepts that have none in vocabulary.yaml.

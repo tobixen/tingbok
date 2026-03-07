@@ -78,6 +78,10 @@ class ProductResponse(BaseModel):
     categories: list[str] = []
     image_url: str | None = None
     source: str
+    #: Author(s) — populated for books/ISBNs.
+    author: str | None = None
+    #: Product type: ``"product"``, ``"book"``, etc.
+    type: str = "product"
 
 
 class VocabularyConcept(BaseModel):
