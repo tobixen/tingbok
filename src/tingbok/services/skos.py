@@ -812,6 +812,43 @@ def _get_broader_agrovoc_oxigraph(concept_uri: str, lang: str, store: object) ->
         return []
 
 
+def _get_agrovoc_labels_oxigraph(uri: str, languages: list[str], store: object) -> dict[str, str]:
+    """Fetch SKOS-XL prefLabels for *uri* from the local Oxigraph store."""
+    query = f"""
+    PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
+    SELECT DISTINCT ?label WHERE {{
+        <{uri}> skosxl:prefLabel/skosxl:literalForm ?label .
+    }}
+    """
+    try:
+        results = list(store.query(query))  # type: ignore[union-attr]
+        return {r["label"].language: r["label"].value for r in results if r["label"].language in languages}
+    except Exception as exc:
+        logger.debug("Oxigraph prefLabel query failed for %s: %s", uri, exc)
+        return {}
+
+
+def _get_agrovoc_alt_labels_oxigraph(uri: str, languages: list[str], store: object) -> dict[str, list[str]]:
+    """Fetch SKOS-XL altLabels for *uri* from the local Oxigraph store."""
+    query = f"""
+    PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
+    SELECT DISTINCT ?label WHERE {{
+        <{uri}> skosxl:altLabel/skosxl:literalForm ?label .
+    }}
+    """
+    try:
+        results = list(store.query(query))  # type: ignore[union-attr]
+        alts: dict[str, list[str]] = {}
+        for r in results:
+            lang = r["label"].language
+            if lang in languages:
+                alts.setdefault(lang, []).append(r["label"].value)
+        return alts
+    except Exception as exc:
+        logger.debug("Oxigraph altLabel query failed for %s: %s", uri, exc)
+        return {}
+
+
 def _lookup_agrovoc_oxigraph(label: str, lang: str, store: object) -> tuple[dict | None, bool]:
     """Look up a concept in AGROVOC via the local Oxigraph store.
 
@@ -883,7 +920,8 @@ def _lookup_agrovoc(label: str, lang: str, cache_dir: Path) -> tuple[dict | None
     store = get_agrovoc_store(cache_dir)
     if store is not None:
         return _lookup_agrovoc_oxigraph(label, lang, store)
-    # Fall back to REST
+    # Fall back to REST — local store not loaded yet (or unavailable)
+    logger.info("Querying AGROVOC REST API for concept '%s' (local Oxigraph store not available)", label)
     rest_base = _REST_ENDPOINTS["agrovoc"]
     url = f"{rest_base}/search/"
     params = {"query": label, "lang": lang}
@@ -1257,11 +1295,15 @@ def _upstream_get_labels(uri: str, source: str, languages: list[str]) -> dict[st
 
 
 def _get_agrovoc_labels(uri: str, languages: list[str]) -> dict[str, str] | None:
-    """Fetch multilingual labels for an AGROVOC URI via REST.
+    """Fetch multilingual labels for an AGROVOC URI.
 
+    Uses the local Oxigraph store when available; falls back to the REST API.
     Returns ``None`` on transient (non-HTTP) errors; ``{}`` when the server
     responded but found no labels (e.g. 404).
     """
+    if _agrovoc_store is not None:
+        return _get_agrovoc_labels_oxigraph(uri, languages, _agrovoc_store)
+    logger.debug("Querying AGROVOC REST API for labels: %s", uri)
     rest_base = _REST_ENDPOINTS["agrovoc"]
     url = f"{rest_base}/data/"
     params = {"uri": uri}
@@ -1396,7 +1438,13 @@ def _get_wikidata_alt_labels(uri: str, languages: list[str]) -> dict[str, list[s
 
 
 def _get_agrovoc_alt_labels(uri: str, languages: list[str]) -> dict[str, list[str]] | None:
-    """Fetch SKOS altLabels for an AGROVOC URI via the REST data endpoint."""
+    """Fetch SKOS altLabels for an AGROVOC URI.
+
+    Uses the local Oxigraph store when available; falls back to the REST API.
+    """
+    if _agrovoc_store is not None:
+        return _get_agrovoc_alt_labels_oxigraph(uri, languages, _agrovoc_store)
+    logger.debug("Querying AGROVOC REST API for alt labels: %s", uri)
     rest_base = _REST_ENDPOINTS["agrovoc"]
     url = f"{rest_base}/data/"
     params = {"uri": uri}
