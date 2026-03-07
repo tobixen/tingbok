@@ -608,3 +608,79 @@ async def test_lookup_vocab_concept_has_labels(client):
     data = response.json()
     # labels dict should at least have "en"
     assert "en" in data.get("labels", {})
+
+
+# ---------------------------------------------------------------------------
+# Translation-conflict warnings
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.anyio
+async def test_lookup_records_warning_on_source_root_conflict(client, tmp_path):
+    """When sources return paths with different top-level roots, a warning is written."""
+    import json
+    from unittest.mock import patch
+
+    import tingbok.app as _app
+
+    warnings_path = tmp_path / "lookup-warnings.json"
+
+    def make_concept(uri):
+        return {"uri": uri, "prefLabel": "Bedding", "source": "test"}
+
+    # AGROVOC: livestock root; DBpedia: household root; wikidata: no path
+    def fake_lookup(label, lang, source, cache_dir):
+        return make_concept(f"http://example.com/{source}/{label}")
+
+    def fake_paths(label, lang, source, cache_dir):
+        if source == "agrovoc":
+            return (["livestock/pool_blanket_xyzzy"], True, {})
+        if source == "dbpedia":
+            return (["household/pool_blanket_xyzzy"], True, {})
+        return ([], False, {})
+
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=fake_lookup):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=fake_paths):
+            with patch("tingbok.app.skos_service.get_labels", return_value={}):
+                with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                    with patch("tingbok.app.skos_service.get_description", return_value=None):
+                        with patch.object(_app, "WARNINGS_PATH", warnings_path):
+                            # Use a label not in vocabulary so SKOS sources are queried
+                            response = await client.get("/api/lookup/pool_blanket_xyzzy")
+
+    assert response.status_code == 200
+    assert warnings_path.exists(), "Warning file should be created"
+    data = json.loads(warnings_path.read_text())
+    assert "pool_blanket_xyzzy" in data
+    warning = data["pool_blanket_xyzzy"]
+    assert warning["roots_per_source"]["agrovoc"] == "livestock"
+    assert warning["roots_per_source"]["dbpedia"] == "household"
+
+
+@pytest.mark.anyio
+async def test_lookup_no_warning_when_sources_agree(client, tmp_path):
+    """When all sources return paths under the same root, no warning is written."""
+    from unittest.mock import patch
+
+    import tingbok.app as _app
+
+    warnings_path = tmp_path / "lookup-warnings.json"
+
+    def make_concept(uri):
+        return {"uri": uri, "prefLabel": "Cumin", "source": "test"}
+
+    def fake_paths(label, lang, source, cache_dir):
+        return (["food/spices/cumin"], True, {})
+
+    with patch(
+        "tingbok.app.skos_service.lookup_concept", side_effect=lambda *a, **kw: make_concept("http://example.com")
+    ):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=fake_paths):
+            with patch("tingbok.app.skos_service.get_labels", return_value={}):
+                with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                    with patch("tingbok.app.skos_service.get_description", return_value=None):
+                        with patch.object(_app, "WARNINGS_PATH", warnings_path):
+                            response = await client.get("/api/lookup/cumin")
+
+    assert response.status_code == 200
+    assert not warnings_path.exists(), "No warning file should be created when sources agree"

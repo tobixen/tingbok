@@ -15,6 +15,22 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 - **`GET /api/ean/{ean}` injects `ean` into manual-only results** — `source: manual` entries
   in `ean-db.yaml` don't contain the EAN (it is the YAML key), causing 500 validation errors.
   The router now calls `result.setdefault("ean", ean)` before constructing `ProductResponse`.
+- **`_lookup_dbpedia` HTML stripping** — DBpedia Lookup API sometimes returns
+  HTML-highlighted labels (e.g. ``<b>plastic</b> <b>bag</b> <b>ban</b>``).
+  HTML tags are now stripped from prefLabel and description before storing.
+- **`_lookup_dbpedia` and `_lookup_wikidata` similarity threshold** — when no
+  exact-label match is found, the first result is now accepted only if its label
+  has ≥ 60 % token-set-ratio similarity to the query (rapidfuzz).  Previously the
+  first result was returned unconditionally, causing nonsensical mappings such as
+  `mounting tool` → ``list_of_naruto_episodes`` or `electrical misc` → ``microphone``.
+- **DBpedia 'List of …' articles filtered from hierarchy** — ``List_of_*`` and
+  ``Lists_of_*`` URIs are no longer followed when building broader-concept chains,
+  preventing paths like ``list_of_ancient_dishes/bread/bread_crumbs``.
+- **`/api/lookup` source-conflict warnings** — when SKOS sources return hierarchy
+  paths under different top-level roots (e.g. AGROVOC: ``livestock/bedding``,
+  DBpedia: ``household/bedding``), a warning entry is appended to
+  ``{TINGBOK_CACHE_DIR}/lookup-warnings.json``.  Operators can inspect this file to
+  add ``excluded_sources:`` entries for ambiguous concepts in ``vocabulary.yaml``.
 - **Transient upstream failures now cached with a short TTL** — when DBpedia, AGROVOC, or
   Wikidata returns a timeout or connection error, `lookup_concept` now adds a transient entry
   to the not-found cache (4-hour TTL, marked `"transient": true`).  Previously the failure was

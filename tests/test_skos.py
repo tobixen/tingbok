@@ -902,3 +902,90 @@ async def test_skos_cache_stats(client, skos_cache_dir: Path) -> None:
     assert data["labels_count"] >= 1
     assert data["not_found_count"] >= 1
     assert "cache_dir" in data
+
+
+# ---------------------------------------------------------------------------
+# DBpedia label quality: HTML stripping and similarity threshold
+# ---------------------------------------------------------------------------
+
+
+def _make_dbpedia_response(label: str, resource_uri: str) -> dict:
+    """Build a minimal DBpedia Lookup API response dict."""
+    return {"docs": [{"resource": [resource_uri], "label": [label]}]}
+
+
+def test_lookup_dbpedia_strips_html_from_label(tmp_path: Path) -> None:
+    """DBpedia labels with HTML highlight markup are stripped before caching."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    response_data = _make_dbpedia_response("<b>Plastic</b> <b>bag</b>", "http://dbpedia.org/resource/Plastic_bag")
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        with patch("tingbok.services.skos._get_broader_dbpedia", return_value=[]):
+            result, failed = _lookup_dbpedia("plastic bag", "en")
+
+    assert not failed
+    assert result is not None
+    assert "<b>" not in result["prefLabel"]
+    assert result["prefLabel"] == "Plastic bag"
+
+
+def test_lookup_dbpedia_rejects_low_similarity_fallback(tmp_path: Path) -> None:
+    """When no exact match, a first result unrelated to the query returns None."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    # "mounting tool" → DBpedia happens to return "List of Naruto episodes" first
+    response_data = _make_dbpedia_response(
+        "List of Naruto episodes", "http://dbpedia.org/resource/List_of_Naruto_episodes"
+    )
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result, failed = _lookup_dbpedia("mounting tool", "en")
+
+    assert not failed
+    assert result is None  # Low-similarity first result must be rejected
+
+
+def test_lookup_dbpedia_accepts_similar_fallback(tmp_path: Path) -> None:
+    """A first result sufficiently similar to the query is accepted."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    # "bread crumbs" → DBpedia returns "Bread crumb" (singular, high similarity)
+    response_data = _make_dbpedia_response("Bread crumb", "http://dbpedia.org/resource/Bread_crumb")
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        with patch("tingbok.services.skos._get_broader_dbpedia", return_value=[]):
+            result, failed = _lookup_dbpedia("bread crumbs", "en")
+
+    assert not failed
+    assert result is not None  # High-similarity result accepted
+
+
+def test_lookup_dbpedia_filters_list_articles_from_hierarchy(tmp_path: Path) -> None:
+    """DBpedia 'List_of_*' URIs are skipped during broader-concept traversal."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    resource_uri = "http://dbpedia.org/resource/Bread_crumbs"
+    response_data = _make_dbpedia_response("Bread crumbs", resource_uri)
+    broader_with_list = [
+        {"uri": "http://dbpedia.org/resource/List_of_ancient_dishes", "label": "List of ancient dishes"},
+        {"uri": "http://dbpedia.org/resource/Bread", "label": "Bread"},
+    ]
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        with patch("tingbok.services.skos._get_broader_dbpedia", return_value=broader_with_list):
+            result, failed = _lookup_dbpedia("bread crumbs", "en")
+
+    assert not failed
+    assert result is not None
+    broader_uris = [b["uri"] for b in result["broader"]]
+    assert "http://dbpedia.org/resource/List_of_ancient_dishes" not in broader_uris
+    assert "http://dbpedia.org/resource/Bread" in broader_uris

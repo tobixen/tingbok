@@ -1,8 +1,10 @@
 """FastAPI application for tingbok."""
 
 import asyncio
+import json
 import logging
 import os
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
@@ -35,6 +37,10 @@ SKOS_CACHE_DIR: Path = _CACHE_BASE / "skos"
 
 #: Directory used for EAN/product lookup caches.
 EAN_CACHE_DIR: Path = _CACHE_BASE / "ean"
+
+#: Path to the lookup-conflict warnings file.  Written whenever /api/lookup sees
+#: sources disagree on a concept's top-level hierarchy root.
+WARNINGS_PATH: Path = _CACHE_BASE / "lookup-warnings.json"
 
 vocabulary: dict[str, Any] = {}
 
@@ -389,6 +395,31 @@ def _vocabulary_concept_from_data(concept_id: str, data: dict[str, Any]) -> Voca
     )
 
 
+def _record_lookup_warning(label: str, source_roots: dict[str, str], source_paths: dict[str, list[str]]) -> None:
+    """Write a source-conflict warning for *label* to ``WARNINGS_PATH``.
+
+    Called when two or more sources return hierarchy paths whose top-level root
+    differs (e.g. AGROVOC says ``livestock/bedding`` while DBpedia says
+    ``household/bedding``), which indicates a likely semantic mismatch.
+    """
+    try:
+        data: dict = {}
+        if WARNINGS_PATH.exists():
+            try:
+                data = json.loads(WARNINGS_PATH.read_text(encoding="utf-8"))
+            except Exception:  # noqa: BLE001
+                pass
+        data[label] = {
+            "roots_per_source": source_roots,
+            "paths_per_source": source_paths,
+            "last_seen": time.strftime("%Y-%m-%d"),
+        }
+        WARNINGS_PATH.parent.mkdir(parents=True, exist_ok=True)
+        WARNINGS_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Failed to write lookup warning for %r: %s", label, exc)
+
+
 @app.get("/api/vocabulary/{concept_id}")
 async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
     """Return a single concept from the package vocabulary."""
@@ -503,6 +534,17 @@ async def lookup_concept(
 
     if not source_uris and concept_id is None:
         raise HTTPException(status_code=404, detail=f"Concept '{label}' not found in vocabulary or SKOS sources")
+
+    # Detect semantic conflicts: if two or more sources found paths but under different
+    # top-level roots, record a warning so the operator can add excluded_sources entries.
+    warn_roots: dict[str, str] = {}
+    warn_paths: dict[str, list[str]] = {}
+    for src, (_, src_paths, _) in zip(skos_sources, results, strict=False):
+        if src_paths:
+            warn_roots[src] = src_paths[0].split("/")[0]
+            warn_paths[src] = src_paths
+    if len(set(warn_roots.values())) > 1:
+        _record_lookup_warning(label, warn_roots, warn_paths)
 
     if concept_id is None:
         concept_id = label_lower.replace(" ", "_")

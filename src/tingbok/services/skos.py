@@ -8,6 +8,7 @@ inventory-md SKOS cache.
 import hashlib
 import json
 import logging
+import re
 import time
 from pathlib import Path
 
@@ -35,6 +36,39 @@ def _parse_json(response: niquests.Response, context: str = "") -> dict | None:
 CACHE_TTL_SECONDS = 60 * 60 * 24 * 60  # 60 days — matches inventory-md
 TRANSIENT_TTL_SECONDS = 60 * 60 * 4  # 4 hours — short TTL for transient failures
 DEFAULT_TIMEOUT = 10.0
+
+#: Minimum similarity (0–100) for an unmatched DBpedia/Wikidata fallback result to be accepted.
+_LOOKUP_SIMILARITY_THRESHOLD = 60
+
+_HTML_TAG_RE = re.compile(r"<[^>]+>")
+
+
+def _strip_html(text: str) -> str:
+    """Strip HTML tags from *text* (e.g. DBpedia highlight markup ``<b>word</b>``)."""
+    return _HTML_TAG_RE.sub("", text).strip()
+
+
+def _label_similarity(a: str, b: str) -> float:
+    """Return 0–100 similarity score between two lowercased labels.
+
+    Uses rapidfuzz when available; falls back to exact-match (100) or 0.
+    """
+    a, b = a.lower().strip(), b.lower().strip()
+    if a == b:
+        return 100.0
+    try:
+        from rapidfuzz import fuzz  # noqa: PLC0415
+
+        return fuzz.token_set_ratio(a, b)
+    except ImportError:
+        return 0.0
+
+
+def _is_dbpedia_list_uri(uri: str) -> bool:
+    """Return True if *uri* is a DBpedia 'List of …' article (not a real concept)."""
+    local = uri.rsplit("/", 1)[-1]
+    return local.startswith("List_of_") or local.startswith("Lists_of_")
+
 
 _REST_ENDPOINTS: dict[str, str] = {
     "agrovoc": "https://agrovoc.fao.org/browse/rest/v1",
@@ -907,11 +941,22 @@ def _lookup_dbpedia(label: str, lang: str) -> tuple[dict | None, bool]:
     for result in results:
         raw_labels = result.get("label", [])
         labels = raw_labels if isinstance(raw_labels, list) else [raw_labels]
-        if any(lbl.lower() == label_lower for lbl in labels):
+        if any(_strip_html(lbl).lower() == label_lower for lbl in labels):
             best = result
             break
     if best is None:
-        best = results[0]
+        # No exact match — accept first result only if it is sufficiently similar
+        candidate = results[0]
+        raw_labels = candidate.get("label", [])
+        candidate_label = _strip_html(raw_labels[0] if isinstance(raw_labels, list) and raw_labels else str(raw_labels))
+        if _label_similarity(label, candidate_label) < _LOOKUP_SIMILARITY_THRESHOLD:
+            logger.debug(
+                "DBpedia fallback result %r rejected for query %r (low similarity)",
+                candidate_label,
+                label,
+            )
+            return None, False
+        best = candidate
 
     resource = best.get("resource", [])
     uri = resource[0] if isinstance(resource, list) and resource else (resource if isinstance(resource, str) else "")
@@ -919,12 +964,14 @@ def _lookup_dbpedia(label: str, lang: str) -> tuple[dict | None, bool]:
         return None, False
 
     raw_labels = best.get("label", [])
-    pref_label = raw_labels[0] if isinstance(raw_labels, list) and raw_labels else str(raw_labels)
+    pref_label = _strip_html(raw_labels[0] if isinstance(raw_labels, list) and raw_labels else str(raw_labels))
     comment = best.get("comment", [])
-    description: str | None = comment[0] if isinstance(comment, list) and comment else (comment or None)
+    raw_description = comment[0] if isinstance(comment, list) and comment else (comment or None)
+    description: str | None = _strip_html(raw_description) if raw_description else None
 
-    # Fetch broader from the DBpedia data endpoint (skos:broader)
-    broader = _get_broader_dbpedia(uri, lang)
+    # Fetch broader from the DBpedia data endpoint (skos:broader); skip list articles
+    broader_raw = _get_broader_dbpedia(uri, lang)
+    broader = [b for b in broader_raw if not _is_dbpedia_list_uri(b.get("uri", ""))]
 
     return {
         "uri": uri,
@@ -1006,7 +1053,18 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
         return None, False
 
     label_lower = label.lower()
-    best = next((r for r in results if r.get("label", "").lower() == label_lower), results[0])
+    best = next((r for r in results if r.get("label", "").lower() == label_lower), None)
+    if best is None:
+        candidate = results[0]
+        candidate_label = candidate.get("label", "")
+        if _label_similarity(label, candidate_label) < _LOOKUP_SIMILARITY_THRESHOLD:
+            logger.debug(
+                "Wikidata fallback result %r rejected for query %r (low similarity)",
+                candidate_label,
+                label,
+            )
+            return None, False
+        best = candidate
     qid: str = best.get("id", "")
     if not qid:
         return None, False
