@@ -504,3 +504,107 @@ async def test_vocabulary_api_uses_source_description_as_fallback(client):
         assert data["description"] == "A description from sources."
     finally:
         app_module._fetched_descriptions.pop(concept_without_desc, None)
+
+
+# ---------------------------------------------------------------------------
+# Tests for GET /api/lookup/{label}
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.anyio
+async def test_lookup_by_concept_id(client):
+    """Concept present in vocabulary is found by its ID."""
+    response = await client.get("/api/lookup/food")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "food"
+    assert data["prefLabel"].lower() == "food"
+
+
+@pytest.mark.anyio
+async def test_lookup_by_preflabel(client):
+    """Concept is found by its prefLabel (case-insensitive)."""
+    # 'food' should match the concept with prefLabel "Food"
+    response = await client.get("/api/lookup/Food")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "food"
+
+
+@pytest.mark.anyio
+async def test_lookup_falls_back_to_skos(client):
+    """Label not in vocabulary triggers SKOS lookup across all sources, merged."""
+    from unittest.mock import patch
+
+    fake_concept = {
+        "uri": "http://aims.fao.org/aos/agrovoc/c_12851",
+        "prefLabel": "Cumin",
+        "source": "agrovoc",
+    }
+    fake_paths = (["food/spices/cumin"], True, {"food/spices/cumin": "http://aims.fao.org/aos/agrovoc/c_12851"})
+
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
+            with patch("tingbok.app.skos_service.get_labels", return_value={"en": "Cumin", "nb": "Karve"}):
+                with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                    with patch("tingbok.app.skos_service.get_description", return_value=None):
+                        response = await client.get("/api/lookup/cumin")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["prefLabel"] == "Cumin"
+    assert data["id"] == "food/spices/cumin"
+    # Source URIs collected from all sources
+    assert "http://aims.fao.org/aos/agrovoc/c_12851" in data["source_uris"]
+    # Labels merged from all sources
+    assert "nb" in data["labels"]
+
+
+@pytest.mark.anyio
+async def test_lookup_merges_descriptions_from_all_sources(client):
+    """The longest description across all sources is selected."""
+    from unittest.mock import patch
+
+    fake_concept = {
+        "uri": "http://aims.fao.org/aos/agrovoc/c_12851",
+        "prefLabel": "Cumin",
+        "source": "agrovoc",
+    }
+    fake_paths = (["food/spices/cumin"], True, {})
+    descriptions = {"agrovoc": "Short.", "dbpedia": "A much longer description of cumin.", "wikidata": None}
+
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
+            with patch("tingbok.app.skos_service.get_labels", return_value={}):
+                with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                    with patch(
+                        "tingbok.app.skos_service.get_description",
+                        side_effect=lambda uri, source, lang, cache_dir: descriptions.get(source),
+                    ):
+                        response = await client.get("/api/lookup/cumin")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["description"] == "A much longer description of cumin."
+
+
+@pytest.mark.anyio
+async def test_lookup_not_found_returns_404(client):
+    """404 is returned when label is not in vocabulary or any SKOS source."""
+    from unittest.mock import patch
+
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=([], False, {})):
+            response = await client.get("/api/lookup/xyzzy_nonexistent_label")
+
+    assert response.status_code == 404
+
+
+@pytest.mark.anyio
+async def test_lookup_vocab_concept_has_labels(client):
+    """Vocabulary concept returned via /api/lookup has labels dict populated."""
+    response = await client.get("/api/lookup/food")
+    assert response.status_code == 200
+    data = response.json()
+    # labels dict should at least have "en"
+    assert "en" in data.get("labels", {})

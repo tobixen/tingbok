@@ -360,35 +360,11 @@ def _build_description(concept_id: str, data: dict[str, Any]) -> str | None:
 @app.get("/api/vocabulary")
 async def get_vocabulary() -> dict[str, VocabularyConcept]:
     """Return the full package vocabulary."""
-    result = {}
-    for concept_id, data in vocabulary.items():
-        broader = data.get("broader", [])
-        if isinstance(broader, str):
-            broader = [broader]
-        result[concept_id] = VocabularyConcept(
-            id=concept_id,
-            prefLabel=data.get("prefLabel", concept_id),
-            altLabel=_build_alt_labels(concept_id, data),
-            broader=broader,
-            narrower=data.get("narrower", []),
-            uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{concept_id}",
-            source_uris=_build_source_uris(concept_id, data),
-            excluded_sources=data.get("excluded_sources", []),
-            labels=_build_labels(concept_id, data),
-            description=_build_description(concept_id, data),
-            wikipediaUrl=data.get("wikipediaUrl"),
-        )
-    return result
+    return {concept_id: _vocabulary_concept_from_data(concept_id, data) for concept_id, data in vocabulary.items()}
 
 
-@app.get("/api/vocabulary/{concept_id}")
-async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
-    """Return a single concept from the package vocabulary."""
-    from fastapi import HTTPException
-
-    data = vocabulary.get(concept_id)
-    if data is None:
-        raise HTTPException(status_code=404, detail=f"Concept '{concept_id}' not found")
+def _vocabulary_concept_from_data(concept_id: str, data: dict[str, Any]) -> VocabularyConcept:
+    """Build a VocabularyConcept from a vocabulary.yaml entry."""
     broader = data.get("broader", [])
     if isinstance(broader, str):
         broader = [broader]
@@ -404,4 +380,136 @@ async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
         labels=_build_labels(concept_id, data),
         description=_build_description(concept_id, data),
         wikipediaUrl=data.get("wikipediaUrl"),
+    )
+
+
+@app.get("/api/vocabulary/{concept_id}")
+async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
+    """Return a single concept from the package vocabulary."""
+    from fastapi import HTTPException
+
+    data = vocabulary.get(concept_id)
+    if data is None:
+        raise HTTPException(status_code=404, detail=f"Concept '{concept_id}' not found")
+    return _vocabulary_concept_from_data(concept_id, data)
+
+
+@app.get("/api/lookup/{label:path}")
+async def lookup_concept(
+    label: str,
+    lang: str = "en",
+) -> VocabularyConcept:
+    """Look up a concept by label or ID, merging data from all available sources.
+
+    1. If ``label`` matches a vocabulary concept ID or prefLabel/altLabel → return
+       that concept (already enriched with external-source data in the background).
+    2. Otherwise query AGROVOC, DBpedia and Wikidata **in parallel**, merge labels,
+       altLabels, descriptions and source URIs from all sources, and derive the
+       canonical concept ID from the hierarchy path.  Returns 404 only when no
+       source finds the label.
+    """
+    from fastapi import HTTPException
+
+    # 1. Exact concept-ID match in vocabulary
+    data = vocabulary.get(label)
+    if data is not None:
+        return _vocabulary_concept_from_data(label, data)
+
+    # 2. Match by prefLabel or altLabel in vocabulary (case-insensitive)
+    label_lower = label.lower()
+    for concept_id, vdata in vocabulary.items():
+        if vdata.get("prefLabel", "").lower() == label_lower:
+            return _vocabulary_concept_from_data(concept_id, vdata)
+        for alts in (vdata.get("altLabel") or {}).values():
+            if label_lower in [a.lower() for a in alts]:
+                return _vocabulary_concept_from_data(concept_id, vdata)
+
+    # 3. Query all SKOS sources in parallel, merge results
+    skos_sources = ("agrovoc", "dbpedia", "wikidata")
+    fetch_languages = _DEFAULT_FETCH_LANGUAGES
+
+    async def _fetch_source(source: str) -> tuple[dict | None, list[str], list[str]]:
+        """Return (concept, paths, source_uris) for one source; never raises."""
+        try:
+            concept = await asyncio.to_thread(skos_service.lookup_concept, label, lang, source, SKOS_CACHE_DIR)
+            if not concept:
+                return None, [], []
+            uri = concept.get("uri") or ""
+            paths, found, _ = await asyncio.to_thread(
+                skos_service.build_hierarchy_paths, label, lang, source, SKOS_CACHE_DIR
+            )
+            return concept, (paths if found else []), ([uri] if uri else [])
+        except Exception as exc:
+            logger.debug("Lookup failed for '%s' via %s: %s", label, source, exc)
+            return None, [], []
+
+    results = await asyncio.gather(*(_fetch_source(s) for s in skos_sources))
+
+    # Merge across sources
+    merged_labels: dict[str, str] = {}
+    merged_alts: dict[str, list[str]] = {}
+    source_uris: list[str] = []
+    descriptions: list[str] = []
+    wikipedia_url: str | None = None
+    concept_id: str | None = None
+    pref_label: str = label
+
+    for source, (concept, paths, uris) in zip(skos_sources, results, strict=False):
+        if concept is None:
+            continue
+
+        # Collect source URIs
+        for uri in uris:
+            if uri and uri not in source_uris:
+                source_uris.append(uri)
+
+        # Prefer hierarchy-derived concept ID (most specific path first)
+        if paths and concept_id is None:
+            concept_id = paths[0]
+
+        # Collect prefLabel (en wins if available)
+        if lang not in merged_labels:
+            pref_label = concept.get("prefLabel", label)
+            merged_labels[lang] = pref_label
+
+        # Fetch labels + altLabels for all languages
+        uri = concept.get("uri")
+        if uri:
+            fetched = await asyncio.to_thread(skos_service.get_labels, uri, fetch_languages, source, SKOS_CACHE_DIR)
+            for lg, lbl in fetched.items():
+                merged_labels.setdefault(lg, lbl)
+
+            fetched_alts = await asyncio.to_thread(
+                skos_service.get_alt_labels, uri, fetch_languages, source, SKOS_CACHE_DIR
+            )
+            for lg, alts in fetched_alts.items():
+                existing = merged_alts.setdefault(lg, [])
+                for alt in alts:
+                    if alt not in existing:
+                        existing.append(alt)
+
+            desc = await asyncio.to_thread(skos_service.get_description, uri, source, lang, SKOS_CACHE_DIR)
+            if desc:
+                descriptions.append(desc)
+
+        if not wikipedia_url:
+            wikipedia_url = concept.get("wikipediaUrl")
+
+    if not source_uris and concept_id is None:
+        raise HTTPException(status_code=404, detail=f"Concept '{label}' not found in vocabulary or SKOS sources")
+
+    if concept_id is None:
+        concept_id = label_lower.replace(" ", "_")
+    broader = ["/".join(concept_id.split("/")[:-1])] if "/" in concept_id else []
+    best_description = max(descriptions, key=len) if descriptions else None
+
+    return VocabularyConcept(
+        id=concept_id,
+        prefLabel=merged_labels.get(lang, pref_label),
+        source_uris=source_uris,
+        broader=broader,
+        labels=merged_labels,
+        altLabel=merged_alts,
+        description=best_description,
+        wikipediaUrl=wikipedia_url,
     )
