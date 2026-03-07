@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
+## [v0.12.0] - 2026-03-07
+
+### Added
+- **`data/ean-db.yaml`** — git-tracked store for manually curated and locally observed
+  EAN/ISBN product data.  Two kinds of entries: `source: manual` for products not found
+  in any upstream source (tools, hardware, etc.), and supplementary-only entries that add
+  locally-observed data on top of what upstream sources provide.
+- **`PriceObservation`** model — `{shop, date, price, currency, unit}` — records a
+  single observed price at a shop on a date.
+- **`ReceiptNameObservation`** model — `{shop, name, first_seen, last_seen}` — records
+  how a product name appears on a shop receipt, with an observation period.  Receipt names
+  can differ by shop and locale (e.g. Lidl Bulgaria vs. Lidl Germany).
+- **`ProductResponse.prices`**, **`.receipt_names`**, **`.note`** fields — new optional
+  fields on `ProductResponse` for locally observed data.
+- **`services/ean.load_manual_ean(path)`** — loads `ean-db.yaml` at startup.
+- **`services/ean.merge_manual_data(upstream, manual)`** — merges upstream product data
+  with a manual entry: supplementary fields are added to upstream results; `source: manual`
+  entries are returned as-is when no upstream data exists.
+- **`scripts/migrate-ean-cache.py`** — one-time migration script that converts an
+  existing `ean_cache.json` (flat dict format) to tingbok formats: per-file upstream cache
+  entries, `ean-db.yaml` for manual/supplementary data, and `_not_found.json` for nulls.
+
+### Changed
+- **`GET /api/ean/{ean}`** now merges `ean-db.yaml` data into every response.
+- **`_save_to_cache` and `_add_to_not_found_cache`** in `services/skos.py` — `mkdir()`
+  moved inside the `OSError` handler so a permission failure is logged and silently skipped
+  rather than propagating as an unhandled exception (this was preventing the EAN cache
+  directory from being created on the server).
+
 ## [v0.11.0] - 2026-03-07
 
 ### Added

@@ -24,7 +24,7 @@ from tingbok.services import skos as skos_service
 logger = logging.getLogger(__name__)
 
 VOCABULARY_PATH = Path(__file__).parent / "data" / "vocabulary.yaml"
-MANUAL_EAN_PATH = Path(__file__).parent / "data" / "manual-ean.yaml"
+MANUAL_EAN_PATH = Path(__file__).parent / "data" / "ean-db.yaml"
 TINGBOK_BASE_URL = "https://tingbok.plann.no"
 
 #: Root of the tingbok cache.  Set ``TINGBOK_CACHE_DIR`` to override.
