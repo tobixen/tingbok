@@ -100,9 +100,9 @@ def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | N
 
 def _save_to_cache(cache_path: Path, data: dict) -> None:
     """Save data to a cache file, stamping _cached_at."""
-    cache_path.parent.mkdir(parents=True, exist_ok=True)
     payload = {**data, "_cached_at": time.time()}
     try:
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False, indent=2)
     except OSError as e:
@@ -129,7 +129,6 @@ def _is_in_not_found_cache(cache_dir: Path, key: str, ttl: int = CACHE_TTL_SECON
 def _add_to_not_found_cache(cache_dir: Path, key: str) -> None:
     """Add *key* to the consolidated not-found cache file."""
     cache_path = _get_not_found_cache_path(cache_dir)
-    cache_dir.mkdir(parents=True, exist_ok=True)
     data: dict = {"entries": {}}
     if cache_path.exists():
         try:
@@ -139,6 +138,7 @@ def _add_to_not_found_cache(cache_dir: Path, key: str) -> None:
             data = {"entries": {}}
     data.setdefault("entries", {})[key] = {"cached_at": time.time()}
     try:
+        cache_dir.mkdir(parents=True, exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
     except OSError as e:
