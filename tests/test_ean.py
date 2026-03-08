@@ -547,3 +547,29 @@ async def test_put_ean_observation_empty_body_returns_422(client) -> None:
     """PUT with neither categories nor name is rejected."""
     response = await client.put("/api/ean/1234567890", json={})
     assert response.status_code == 422
+
+
+@pytest.mark.anyio
+async def test_put_ean_observation_null_shop_price_accepted(client, tmp_path: Path) -> None:
+    """PUT with a price where shop is null must be accepted (not 422).
+
+    inventory-md sends shop=None when no shop is known, so PriceObservation.shop
+    must be optional.
+    """
+    import tingbok.app as _app
+
+    obs_path = tmp_path / "ean-db.json"
+    upstream = {"ean": "1234567890", "name": "Foo", "source": "upcitemdb", "categories": []}
+    with patch.object(_app, "EAN_OBSERVATIONS_PATH", obs_path):
+        with patch.object(_app, "ean_observations", {}):
+            with patch("tingbok.services.ean.lookup_product", return_value=upstream):
+                response = await client.put(
+                    "/api/ean/1234567890",
+                    json={
+                        "categories": ["food"],
+                        "prices": [
+                            {"currency": "NOK", "price": 9.90, "unit": "pcs", "date": "2026-03-08", "shop": None}
+                        ],
+                    },
+                )
+    assert response.status_code == 200

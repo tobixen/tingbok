@@ -71,7 +71,7 @@ class CacheStatsResponse(BaseModel):
 class PriceObservation(BaseModel):
     """A single observed price for a product at a shop on a date."""
 
-    shop: str
+    shop: str | None = None
     date: str
     price: float
     currency: str = "NOK"

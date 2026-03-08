@@ -11,6 +11,7 @@ from typing import Any
 
 import yaml
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi_mcp import FastApiMCP
@@ -321,6 +322,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(RequestValidationError)
+async def _log_validation_error(request: Request, exc: RequestValidationError) -> JSONResponse:
+    """Log the full validation error detail before returning 422."""
+    logger.warning("422 validation error on %s %s: %s", request.method, request.url.path, exc.errors())
+    return JSONResponse(status_code=422, content={"detail": exc.errors()})
+
 
 app.include_router(skos.router, prefix="/api/skos", tags=["skos"])
 app.include_router(ean.router, prefix="/api/ean", tags=["ean"])
