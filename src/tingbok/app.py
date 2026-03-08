@@ -284,7 +284,6 @@ async def _fetch_labels_background() -> None:
     logger.info("Background label fetch complete (%d concepts)", total)
 
 
-@asynccontextmanager
 def _cache_refresh_config() -> tuple[float, float]:
     """Read cache refresh settings from environment variables.
 
@@ -301,6 +300,7 @@ def _cache_refresh_config() -> tuple[float, float]:
     return max_age_days * 86400, divisor
 
 
+@asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001
     """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
     global vocabulary, ean_observations  # noqa: PLW0603
