@@ -118,15 +118,15 @@ async def test_full_vocabulary_has_source_uris(client):
 @pytest.mark.parametrize(
     ("concept_id", "expected_uri"),
     [
-        ("food", "http://dbpedia.org/resource/Food"),
-        ("tools", "http://dbpedia.org/resource/Tool"),
-        ("medicine", "http://dbpedia.org/resource/Medicine"),
-        ("bedding", "http://dbpedia.org/resource/Bedding"),
-        ("washer", "http://dbpedia.org/resource/Washer_(hardware)"),
-        ("seal", "http://dbpedia.org/resource/Hermetic_seal"),
-        ("disc", "http://dbpedia.org/resource/Disc"),
-        ("tubing", "http://dbpedia.org/resource/Tubing_(material)"),
-        ("gps", "http://dbpedia.org/resource/Global_Positioning_System"),
+        ("food", "https://dbpedia.org/resource/Food"),
+        ("tools", "https://dbpedia.org/resource/Tool"),
+        ("medicine", "https://dbpedia.org/resource/Medicine"),
+        ("bedding", "https://dbpedia.org/resource/Bedding"),
+        ("washer", "https://dbpedia.org/resource/Washer_(hardware)"),
+        ("seal", "https://dbpedia.org/resource/Hermetic_seal"),
+        ("disc", "https://dbpedia.org/resource/Disc"),
+        ("tubing", "https://dbpedia.org/resource/Tubing_(material)"),
+        ("gps", "https://dbpedia.org/resource/Global_Positioning_System"),
     ],
 )
 async def test_concept_has_external_uri_in_source_uris(client, concept_id, expected_uri):
@@ -168,7 +168,7 @@ async def test_discover_source_uris_populates_memory(client):
     import tingbok.app as app_module
 
     # Use a concept that has no external source_uris in vocabulary.yaml
-    fake_uri = "http://dbpedia.org/resource/Boat_equipment"
+    fake_uri = "https://dbpedia.org/resource/Boat_equipment"
 
     def fake_lookup(label, lang, source, cache_dir):
         if source == "wikidata" and "boat" in label.lower():
@@ -247,7 +247,7 @@ async def test_vocabulary_api_includes_discovered_uris(client):
     """API should merge auto-discovered URIs into source_uris response."""
     import tingbok.app as app_module
 
-    fake_uri = "http://dbpedia.org/resource/Electronics"
+    fake_uri = "https://dbpedia.org/resource/Electronics"
     app_module._discovered_source_uris["electronics"] = {"dbpedia": fake_uri}
 
     try:
@@ -273,7 +273,7 @@ async def test_discover_queries_agrovoc_when_store_available(tmp_path, monkeypat
     app_module._discovered_source_uris.clear()
     queried_sources: set[str] = set()
 
-    fake_agrovoc_uri = "http://aims.fao.org/aos/agrovoc/c_12345"
+    fake_agrovoc_uri = "https://aims.fao.org/aos/agrovoc/c_12345"
 
     def recording_lookup(label, lang, source, cache_dir):
         queried_sources.add(source)
@@ -665,11 +665,11 @@ async def test_lookup_falls_back_to_skos(client):
     from unittest.mock import patch
 
     fake_concept = {
-        "uri": "http://aims.fao.org/aos/agrovoc/c_12851",
+        "uri": "https://aims.fao.org/aos/agrovoc/c_12851",
         "prefLabel": "Cumin",
         "source": "agrovoc",
     }
-    fake_paths = (["food/spices/cumin"], True, {"food/spices/cumin": "http://aims.fao.org/aos/agrovoc/c_12851"})
+    fake_paths = (["food/spices/cumin"], True, {"food/spices/cumin": "https://aims.fao.org/aos/agrovoc/c_12851"})
 
     with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
         with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
@@ -683,7 +683,7 @@ async def test_lookup_falls_back_to_skos(client):
     assert data["prefLabel"] == "Cumin"
     assert data["id"] == "food/spices/cumin"
     # Source URIs collected from all sources
-    assert "http://aims.fao.org/aos/agrovoc/c_12851" in data["source_uris"]
+    assert "https://aims.fao.org/aos/agrovoc/c_12851" in data["source_uris"]
     # Labels merged from all sources
     assert "nb" in data["labels"]
 
@@ -694,7 +694,7 @@ async def test_lookup_merges_descriptions_from_all_sources(client):
     from unittest.mock import patch
 
     fake_concept = {
-        "uri": "http://aims.fao.org/aos/agrovoc/c_12851",
+        "uri": "https://aims.fao.org/aos/agrovoc/c_12851",
         "prefLabel": "Cumin",
         "source": "agrovoc",
     }
@@ -739,7 +739,7 @@ async def test_lookup_prefers_vocabulary_anchored_path(client):
     from unittest.mock import patch
 
     fake_concept = {
-        "uri": "http://aims.fao.org/aos/agrovoc/c_10205",
+        "uri": "https://aims.fao.org/aos/agrovoc/c_10205",
         "prefLabel": "Cumin",
         "source": "agrovoc",
     }
@@ -747,7 +747,7 @@ async def test_lookup_prefers_vocabulary_anchored_path(client):
     fake_paths = (
         ["food/plant_products/spices/cumin", "food/spices/cumin", "food/plant_products/cumin"],
         True,
-        {"food/plant_products/spices/cumin": "http://aims.fao.org/aos/agrovoc/c_10205"},
+        {"food/plant_products/spices/cumin": "https://aims.fao.org/aos/agrovoc/c_10205"},
     )
 
     with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):

@@ -400,17 +400,27 @@ async def health(request: Request):
     return result
 
 
+def _normalise_uri(uri: str) -> str:
+    """Normalise a source URI: upgrade http:// to https:// for known HTTPS hosts."""
+    if uri.startswith("http://"):
+        # All major LOD hubs serve over HTTPS; normalise unconditionally.
+        return "https://" + uri[7:]
+    return uri
+
+
 def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:
     """Build the full source_uris list for a concept.
 
     Combines static URIs from vocabulary.yaml with auto-discovered URIs.
     The canonical tingbok self-URI is exposed via the separate ``uri`` field
     and is excluded from ``source_uris`` to avoid redundancy.
+    All http:// URIs are normalised to https://.
     """
     self_uri = f"{TINGBOK_BASE_URL}/api/vocabulary/{concept_id}"
-    source_uris: list[str] = [u for u in data.get("source_uris", []) if u != self_uri]
+    source_uris: list[str] = [_normalise_uri(u) for u in data.get("source_uris", []) if u != self_uri]
     # Merge in any auto-discovered URIs (values only; skip if already present)
     for uri in _discovered_source_uris.get(concept_id, {}).values():
+        uri = _normalise_uri(uri)
         if uri not in source_uris and uri != self_uri:
             source_uris.append(uri)
     return source_uris
@@ -665,8 +675,9 @@ async def lookup_concept(
         if concept is None:
             continue
 
-        # Collect source URIs
+        # Collect source URIs (normalise http → https)
         for uri in uris:
+            uri = _normalise_uri(uri)
             if uri and uri not in source_uris:
                 source_uris.append(uri)
 
