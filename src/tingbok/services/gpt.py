@@ -44,7 +44,7 @@ GPT_LOCALES: list[str] = [
     "it-IT",
     "nl-NL",
     "sv-SE",
-    "nb-NO",
+    "no-NO",
     "da-DK",
     "fi-FI",
     "pt-BR",
