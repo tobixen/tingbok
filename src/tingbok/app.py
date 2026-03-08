@@ -27,7 +27,6 @@ from tingbok.services import skos as skos_service
 logger = logging.getLogger(__name__)
 
 VOCABULARY_PATH = Path(__file__).parent / "data" / "vocabulary.yaml"
-MANUAL_EAN_PATH = Path(__file__).parent / "data" / "ean-db.yaml"
 TINGBOK_BASE_URL = "https://tingbok.plann.no"
 
 #: Root of the tingbok cache.  Set ``TINGBOK_CACHE_DIR`` to override.
@@ -49,10 +48,7 @@ EAN_OBSERVATIONS_PATH: Path = Path(__file__).parent / "data" / "ean-db.json"
 
 vocabulary: dict[str, Any] = {}
 
-#: Manually curated EAN data loaded from manual-ean.yaml.
-manual_ean: dict[str, Any] = {}
-
-#: Inventory-sourced EAN observations loaded from ean-db.json (written by PUT /api/ean/{ean}).
+#: EAN observations loaded from ean-db.json (written by PUT /api/ean/{ean}).
 ean_observations: dict[str, Any] = {}
 
 #: Auto-discovered external source URIs for concepts that have none in vocabulary.yaml.
@@ -291,9 +287,8 @@ async def _fetch_labels_background() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001
     """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
-    global vocabulary, manual_ean, ean_observations  # noqa: PLW0603
+    global vocabulary, ean_observations  # noqa: PLW0603
     vocabulary = _load_vocabulary()
-    manual_ean = ean_service.load_manual_ean(MANUAL_EAN_PATH)
     ean_observations = ean_service.load_ean_observations(EAN_OBSERVATIONS_PATH)
     skos_service.load_agrovoc_background(SKOS_CACHE_DIR)
     discovery_task = asyncio.create_task(_discover_source_uris_background())

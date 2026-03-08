@@ -317,7 +317,7 @@ async def test_manual_only_ean_returns_200(client) -> None:
     import tingbok.app as _app
     from tingbok.services import ean as ean_service
 
-    manual_entry = {
+    observation_entry = {
         "name": "Welding electrodes",
         "brand": "GRAPHITE",
         "categories": ["Tools"],
@@ -325,7 +325,7 @@ async def test_manual_only_ean_returns_200(client) -> None:
         "type": "product",
     }
     with patch.object(ean_service, "lookup_product", return_value=None):
-        with patch.object(_app, "manual_ean", {"2037795575": manual_entry}):
+        with patch.object(_app, "ean_observations", {"2037795575": observation_entry}):
             response = await client.get("/api/ean/2037795575")
 
     assert response.status_code == 200

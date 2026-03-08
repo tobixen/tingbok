@@ -20,19 +20,23 @@ async def lookup_ean(ean: str) -> ProductResponse:
 
     Returns product name, brand, quantity, category hints and image URL
     sourced from Open Food Facts, UPCitemdb, Open Library, or nb.no.
-    Locally observed data (prices, receipt names, notes) from manual-ean.yaml
+    Locally observed data (categories, prices, receipt names) from ean-db.json
     is merged into the response.  Results are cached for 60 days.
     Returns 404 when the barcode is not found in any source.
     """
     upstream = await asyncio.to_thread(ean_service.lookup_product, ean, _app.EAN_CACHE_DIR)
-    manual = _app.manual_ean.get(ean)
-    result = ean_service.merge_manual_data(upstream, manual)
-    if result is None:
-        raise HTTPException(status_code=404, detail=f"Product not found for EAN {ean}")
-    result.setdefault("ean", ean)
     observation = _app.ean_observations.get(ean)
-    if observation:
-        result = ean_service.merge_observation(result, observation)
+    if upstream is None:
+        if not observation:
+            raise HTTPException(status_code=404, detail=f"Product not found for EAN {ean}")
+        result = dict(observation)
+        result.setdefault("ean", ean)
+        result.setdefault("source", "observation")
+    else:
+        result = dict(upstream)
+        result.setdefault("ean", ean)
+        if observation:
+            result = ean_service.merge_observation(result, observation)
     return ProductResponse(**result)
 
 
@@ -94,19 +98,12 @@ async def observe_ean(ean: str, body: EanObservationRequest) -> ProductResponse:
 
     # Return the full merged product view
     upstream = await asyncio.to_thread(ean_service.lookup_product, ean, _app.EAN_CACHE_DIR)
-    manual = _app.manual_ean.get(ean)
-    result = ean_service.merge_manual_data(upstream, manual)
-    if result is None:
-        # No upstream data — synthesise a minimal response from the observation
-        result = {
-            "ean": ean,
-            "source": "observation",
-            "categories": body.categories,
-            "name": body.name,
-            "quantity": body.quantity,
-            "prices": prices_raw,
-        }
+    if upstream is None:
+        result = dict(entry)
+        result.setdefault("ean", ean)
+        result.setdefault("source", "observation")
     else:
+        result = dict(upstream)
         result.setdefault("ean", ean)
         result = ean_service.merge_observation(result, entry)
     return ProductResponse(**result)
