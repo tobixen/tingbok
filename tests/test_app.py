@@ -769,6 +769,28 @@ async def test_lookup_prefers_vocabulary_anchored_path(client):
 
 
 @pytest.mark.anyio
+async def test_lookup_path_and_label_return_same_id(client):
+    """/api/lookup/food/spices and /api/lookup/spices must return the same concept ID.
+
+    Looking up by the exact vocabulary path (food/spices) hits step 1 (ID match).
+    Looking up by just 'spices' must also resolve to food/spices via altLabel or
+    prefLabel match, not fall through to SKOS and get a different canonical path.
+    """
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                r1 = await client.get("/api/lookup/food/spices")
+                r2 = await client.get("/api/lookup/spices")
+
+    assert r1.status_code == 200
+    assert r2.status_code == 200
+    assert r1.json()["id"] == r2.json()["id"], (
+        f"/api/lookup/food/spices returned id={r1.json()['id']!r} but "
+        f"/api/lookup/spices returned id={r2.json()['id']!r}"
+    )
+
+
+@pytest.mark.anyio
 async def test_lookup_vocab_concept_has_labels(client):
     """Vocabulary concept returned via /api/lookup has labels dict populated."""
     response = await client.get("/api/lookup/food")

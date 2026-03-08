@@ -321,13 +321,17 @@ concepts:
     excluded_sources:
     - dbpedia
 
-    long-johns:
-      source_uris:
-        gpt:1807
-        https://www.wikidata.org/entity/Q2472769
-      broader:
-        - clothing/underwear
-        - clothing/thermal
+  long-johns:
+    prefLabel: "Long johns"
+    altLabel:
+      en: ["long underwear", "thermal underwear", "base layer"]
+      nb: ["lange underbukser", "ullundertøy", "termoundertøy"]
+    source_uris:
+    - gpt:1807
+    - https://www.wikidata.org/entity/Q2472769
+    broader:
+    - clothing/underwear
+    - clothing/thermal
 
   household:
     prefLabel: "Household"
@@ -354,6 +358,7 @@ concepts:
       fr: ["Vêtement"]
       es: ["Prenda para vestir"]
     labels:
+      nb: "Klær"
       nn: "Klede"
       da: "Tøj"
       fi: "Vaatteet"
@@ -669,7 +674,7 @@ concepts:
   food/spices:
     prefLabel: "Spices & herbs"
     altLabel:
-      en: ["spice", "herbs", "seasonings"]
+      en: ["spice", "spices", "herbs", "seasonings"]
     broader:
       - food
       - food/conditment
