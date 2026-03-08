@@ -154,7 +154,11 @@ def _get_not_found_cache_path(cache_dir: Path) -> Path:
 
 
 def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | None:
-    """Load cached data if it exists and has not expired."""
+    """Load cached data if it exists and has not expired.
+
+    Stamps ``_last_accessed`` on every hit so that :func:`prune_cache` can
+    distinguish recently-used entries from abandoned ones.
+    """
     if not cache_path.exists():
         return None
     try:
@@ -162,6 +166,13 @@ def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | N
             data: dict = json.load(f)
         if time.time() - data.get("_cached_at", 0) > ttl:
             return None
+        now = time.time()
+        data["_last_accessed"] = now
+        try:
+            with open(cache_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+        except OSError as e:
+            logger.debug("Cache access-stamp failed for %s: %s", cache_path, e)
         return data
     except (json.JSONDecodeError, OSError) as e:
         logger.debug("Cache read failed for %s: %s", cache_path, e)

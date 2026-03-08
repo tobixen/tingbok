@@ -39,7 +39,9 @@ download-taxonomy
 from __future__ import annotations
 
 import argparse
+import json
 import sys
+import time
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -438,6 +440,65 @@ def _prune_vocabulary(
 
 
 # ---------------------------------------------------------------------------
+# prune-cache
+# ---------------------------------------------------------------------------
+
+CACHE_MAX_AGE_DAYS = 60  # entries not accessed within this window are deleted
+
+
+def _prune_cache(cache_dir: Path, max_age_days: int = CACHE_MAX_AGE_DAYS, *, dry_run: bool = False) -> int:
+    """Delete SKOS cache files that have not been accessed within *max_age_days*.
+
+    Uses ``_last_accessed`` when present, falling back to ``_cached_at``.  The
+    not-found index (``_not_found.json``) is handled entry-by-entry.
+
+    Returns the number of entries removed (or that would be removed in dry-run).
+    """
+    cutoff = time.time() - max_age_days * 86400
+    removed = 0
+
+    for cache_path in cache_dir.rglob("*.json"):
+        if cache_path.name == "_not_found.json":
+            removed += _prune_not_found_cache(cache_path, cutoff, dry_run=dry_run)
+            continue
+        try:
+            with open(cache_path, encoding="utf-8") as f:
+                data: dict = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            continue
+        last_used = data.get("_last_accessed") or data.get("_cached_at", 0)
+        if last_used < cutoff:
+            if not dry_run:
+                cache_path.unlink(missing_ok=True)
+            removed += 1
+
+    return removed
+
+
+def _prune_not_found_cache(cache_path: Path, cutoff: float, *, dry_run: bool = False) -> int:
+    """Prune stale entries from a ``_not_found.json`` index file in-place."""
+    try:
+        with open(cache_path, encoding="utf-8") as f:
+            data: dict = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return 0
+    entries: dict = data.get("entries", {})
+    stale = [k for k, v in entries.items() if v.get("cached_at", 0) < cutoff]
+    if not stale:
+        return 0
+    if not dry_run:
+        for k in stale:
+            del entries[k]
+        data["entries"] = entries
+        try:
+            with open(cache_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+        except OSError as exc:
+            print(f"Warning: could not write {cache_path}: {exc}", file=sys.stderr)
+    return len(stale)
+
+
+# ---------------------------------------------------------------------------
 # download-taxonomy
 # ---------------------------------------------------------------------------
 
@@ -620,6 +681,33 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Download the latest AGROVOC LOD N-Triples dump from FAO",
     )
 
+    # prune-cache
+    pc = sub.add_parser(
+        "prune-cache",
+        help="Delete SKOS cache entries not accessed within the retention window",
+        description=(
+            "Scan the SKOS cache directory and delete files whose ``_last_accessed``\n"
+            f"timestamp (falling back to ``_cached_at``) is older than {CACHE_MAX_AGE_DAYS} days.\n"
+            "Run this periodically (e.g. via a systemd timer or cron job) to prevent\n"
+            "unbounded cache growth while keeping recently used entries intact."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    pc.add_argument(
+        "--cache-dir",
+        metavar="DIR",
+        default=None,
+        help="Cache root directory (default: ~/.cache/tingbok).  Scans DIR/skos/ and DIR/ean/.",
+    )
+    pc.add_argument(
+        "--max-age",
+        metavar="DAYS",
+        type=int,
+        default=CACHE_MAX_AGE_DAYS,
+        help=f"Delete entries not accessed for more than DAYS days (default: {CACHE_MAX_AGE_DAYS})",
+    )
+    pc.add_argument("--dry-run", action="store_true", help="Report what would be deleted without deleting anything")
+
     return parser
 
 
@@ -672,3 +760,30 @@ def main() -> None:
             gpt_locales = args.gpt if args.gpt else ["en-GB"]
         rc = _download_taxonomy(cache_dir, gpt_locales=gpt_locales, agrovoc=args.agrovoc)
         sys.exit(rc)
+
+    if args.command == "prune-cache":
+        from os import environ  # noqa: PLC0415
+
+        cache_dir = (
+            Path(args.cache_dir)
+            if args.cache_dir
+            else Path(environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache" / "tingbok")))
+        )
+        max_age = args.max_age
+        dry_run = args.dry_run
+        total = 0
+        for subdir in ("skos", "ean"):
+            d = cache_dir / subdir
+            if d.exists():
+                n = _prune_cache(d, max_age_days=max_age, dry_run=dry_run)
+                if n:
+                    action = "Would remove" if dry_run else "Removed"
+                    print(f"  {action} {n} entries from {d}")
+                total += n
+        if not total:
+            print("Nothing to prune.")
+        elif dry_run:
+            print(f"Dry run: {total} entries would be removed.")
+        else:
+            print(f"Pruned {total} entries.")
+        sys.exit(0)

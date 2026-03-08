@@ -92,6 +92,17 @@ def test_load_cache_respects_ttl(tmp_path: Path) -> None:
     assert result is None
 
 
+def test_load_cache_stamps_last_accessed(tmp_path: Path) -> None:
+    cache_path = tmp_path / "test.json"
+    _save_to_cache(cache_path, {"uri": "http://example.org/potato"})
+    before = time.time()
+    _load_from_cache(cache_path)
+    with open(cache_path) as f:
+        stored = json.load(f)
+    assert "_last_accessed" in stored, "_load_from_cache should stamp _last_accessed on hit"
+    assert stored["_last_accessed"] >= before
+
+
 def test_not_found_cache_add_and_check(tmp_path: Path) -> None:
     key = "concept:agrovoc:en:xyzzy"
     assert not _is_in_not_found_cache(tmp_path, key)

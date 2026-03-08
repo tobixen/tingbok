@@ -1,5 +1,8 @@
 """Tests for the tingbok CLI (populate-uris command)."""
 
+import json
+import sys
+import time
 from pathlib import Path
 from unittest.mock import patch
 
@@ -36,7 +39,6 @@ def _run_populate(
     vocab_content: str = MINIMAL_VOCAB,
 ) -> tuple[int, str]:
     """Run the populate-uris command against a temp vocabulary file."""
-    import sys
     from io import StringIO
     from unittest.mock import patch as _patch
 
@@ -176,7 +178,6 @@ def test_populate_uris_queries_agrovoc_when_store_present(tmp_path):
 
 def test_populate_uris_nonexistent_vocab_exits_with_error(tmp_path):
     """Should exit with a non-zero code when the vocabulary file does not exist."""
-    import sys
 
     import tingbok.cli as cli_module
 
@@ -237,7 +238,6 @@ def _run_prune(
     ``skos_service.get_alt_labels``.  Pass a callable or a dict-return
     value to test alt-label pruning behaviour.
     """
-    import sys
     from io import StringIO
     from unittest.mock import patch as _patch
 
@@ -616,3 +616,73 @@ def test_populate_uris_skips_gpt_when_excluded(tmp_path):
     updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
     source_uris = updated["concepts"]["electronics"].get("source_uris", [])
     assert not any(u.startswith("gpt:") for u in source_uris)
+
+
+# ---------------------------------------------------------------------------
+# prune-cache
+# ---------------------------------------------------------------------------
+
+
+def _write_cache(path: Path, cached_at: float, last_accessed: float | None = None) -> None:
+    data: dict = {"uri": "http://example.org/x", "_cached_at": cached_at}
+    if last_accessed is not None:
+        data["_last_accessed"] = last_accessed
+    path.write_text(json.dumps(data))
+
+
+def _run_prune_cache(cache_dir: Path, extra_args: list[str] | None = None) -> tuple[int, str]:
+    import io
+    from unittest.mock import patch
+
+    argv = ["tingbok", "prune-cache", "--cache-dir", str(cache_dir)]
+    argv += extra_args or []
+    with patch("sys.argv", argv):
+        with patch("sys.stdout", new_callable=io.StringIO) as mock_out:
+            try:
+                from tingbok.cli import main
+
+                main()
+            except SystemExit as exc:
+                return int(exc.code or 0), mock_out.getvalue()
+    return 0, mock_out.getvalue()
+
+
+def test_prune_cache_deletes_old_entries(tmp_path: Path) -> None:
+    """Files not accessed for more than max_age_days are deleted."""
+    cache_dir = tmp_path / "skos"
+    cache_dir.mkdir()
+    old = cache_dir / "old.json"
+    recent = cache_dir / "recent.json"
+    age_61_days = time.time() - 61 * 86400
+    age_1_day = time.time() - 86400
+    _write_cache(old, cached_at=age_61_days, last_accessed=age_61_days)
+    _write_cache(recent, cached_at=age_1_day, last_accessed=age_1_day)
+
+    rc, _ = _run_prune_cache(tmp_path)
+
+    assert rc == 0
+    assert not old.exists(), "old entry should be pruned"
+    assert recent.exists(), "recent entry should be kept"
+
+
+def test_prune_cache_uses_last_accessed_over_cached_at(tmp_path: Path) -> None:
+    """An entry cached long ago but recently accessed should be kept."""
+    cache_dir = tmp_path / "skos"
+    cache_dir.mkdir()
+    f = cache_dir / "item.json"
+    _write_cache(f, cached_at=time.time() - 90 * 86400, last_accessed=time.time() - 86400)
+
+    _run_prune_cache(tmp_path)
+
+    assert f.exists(), "recently accessed entry must not be pruned even if old cached_at"
+
+
+def test_prune_cache_dry_run_does_not_delete(tmp_path: Path) -> None:
+    cache_dir = tmp_path / "skos"
+    cache_dir.mkdir()
+    f = cache_dir / "old.json"
+    _write_cache(f, cached_at=time.time() - 90 * 86400, last_accessed=time.time() - 90 * 86400)
+
+    _run_prune_cache(tmp_path, extra_args=["--dry-run"])
+
+    assert f.exists(), "dry-run must not delete anything"
