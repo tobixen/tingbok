@@ -369,6 +369,33 @@ async def test_fetch_labels_background_picks_longest_description():
 
 
 @pytest.mark.anyio
+async def test_vocabulary_concept_fetches_labels_eagerly(client):
+    """GET /api/vocabulary/{concept} should fetch labels on-demand if not yet done."""
+    import tingbok.app as app_module
+
+    app_module._concepts_fetched.discard("potatoes")
+    app_module._fetched_labels.pop("potatoes", None)
+    app_module._fetched_descriptions.pop("potatoes", None)
+    app_module._fetched_alt_labels.pop("potatoes", None)
+
+    fake_labels = {"en": "Potatoes", "nb": "Poteter", "de": "Kartoffeln"}
+
+    with patch("tingbok.app.skos_service.get_labels", return_value=fake_labels):
+        with patch("tingbok.app.skos_service.get_description", return_value="A starchy tuber."):
+            with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                with patch("tingbok.app.off_service.get_labels", return_value={}):
+                    with patch("tingbok.app.off_service.get_alt_labels", return_value={}):
+                        with patch("tingbok.app.gpt_service.get_labels", return_value={}):
+                            response = await client.get("/api/vocabulary/potatoes")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["labels"].get("nb") == "Poteter"
+    assert data["description"] == "A starchy tuber."
+    assert "potatoes" in app_module._concepts_fetched
+
+
+@pytest.mark.anyio
 async def test_vocabulary_api_merges_source_labels(client):
     """Vocabulary API should include source-fetched labels in the response."""
     import tingbok.app as app_module

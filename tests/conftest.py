@@ -14,9 +14,16 @@ def anyio_backend():
 
 @pytest.fixture(autouse=True)
 def _load_vocabulary():
-    """Ensure vocabulary is loaded for all tests."""
+    """Ensure vocabulary is loaded for all tests.
+
+    Also pre-marks all concepts as fetched so that existing tests using
+    ``GET /api/vocabulary/{concept}`` don't trigger the on-demand label fetch.
+    Tests that specifically test eager fetching should call
+    ``app_module._concepts_fetched.discard(concept_id)`` in their setup.
+    """
     if not app_module.vocabulary:
         app_module.vocabulary = app_module._load_vocabulary()
+    app_module._concepts_fetched.update(app_module.vocabulary.keys())
 
 
 @pytest.fixture

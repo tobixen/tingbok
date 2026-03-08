@@ -70,6 +70,10 @@ _fetched_descriptions: dict[str, str] = {}
 #: Maps concept_id -> {lang: [altLabel, ...]}.  Populated by _fetch_labels_background().
 _fetched_alt_labels: dict[str, dict[str, list[str]]] = {}
 
+#: Concept IDs that have already had their labels/descriptions fetched (either by the
+#: background task or by an on-demand fetch in get_vocabulary_concept).
+_concepts_fetched: set[str] = set()
+
 #: Languages to fetch from external sources in the background.
 _DEFAULT_FETCH_LANGUAGES: list[str] = [
     "en",
@@ -199,75 +203,88 @@ async def _discover_source_uris_background() -> None:
             _discovered_source_uris[concept_id] = discovered
 
 
+async def _fetch_concept_labels(concept_id: str, data: dict[str, Any]) -> None:
+    """Fetch labels, altLabels, and descriptions for a single vocabulary concept.
+
+    Queries all known external source URIs for *concept_id* and merges the results
+    into the module-level ``_fetched_labels``, ``_fetched_alt_labels``, and
+    ``_fetched_descriptions`` dicts.  Marks the concept as done in
+    ``_concepts_fetched`` on completion (even if no labels were found).
+
+    Results are backed by the SKOS disk cache so network calls only happen on
+    cache misses.
+    """
+    all_uris: list[str] = list(data.get("source_uris") or [])
+    for uri in _discovered_source_uris.get(concept_id, {}).values():
+        if uri not in all_uris:
+            all_uris.append(uri)
+
+    merged: dict[str, str] = {}
+    merged_alts: dict[str, list[str]] = {}
+    best_description: str | None = None
+
+    for uri in all_uris:
+        if uri.startswith(TINGBOK_BASE_URL):
+            continue
+        source = skos_service.uri_to_source(uri)
+        if source is None:
+            continue
+
+        try:
+            if source in ("agrovoc", "dbpedia", "wikidata"):
+                fetched = await asyncio.to_thread(
+                    skos_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, source, SKOS_CACHE_DIR
+                )
+                fetched_alts = await asyncio.to_thread(
+                    skos_service.get_alt_labels, uri, _DEFAULT_FETCH_LANGUAGES, source, SKOS_CACHE_DIR
+                )
+                desc = await asyncio.to_thread(skos_service.get_description, uri, source, "en", SKOS_CACHE_DIR)
+                if desc and (best_description is None or len(desc) > len(best_description)):
+                    best_description = desc
+            elif source == "off":
+                fetched = await asyncio.to_thread(off_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES)
+                fetched_alts = await asyncio.to_thread(off_service.get_alt_labels, uri, _DEFAULT_FETCH_LANGUAGES)
+            elif source == "gpt":
+                fetched = await asyncio.to_thread(gpt_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, _CACHE_BASE)
+                fetched_alts = {}
+            else:
+                continue
+
+            # First source wins for each language (preferred labels)
+            for lang, label in fetched.items():
+                if lang not in merged:
+                    merged[lang] = label
+            # Merge alt labels (accumulate across sources, deduplicate later)
+            for lang, alts in fetched_alts.items():
+                existing = merged_alts.setdefault(lang, [])
+                for alt in alts:
+                    if alt not in existing:
+                        existing.append(alt)
+        except Exception as exc:  # noqa: BLE001
+            logger.debug("Label fetch failed for '%s' (%s): %s", concept_id, uri, exc)
+
+    if merged:
+        _fetched_labels[concept_id] = merged
+    if merged_alts:
+        _fetched_alt_labels[concept_id] = merged_alts
+    if best_description:
+        _fetched_descriptions[concept_id] = best_description
+    _concepts_fetched.add(concept_id)
+
+
 async def _fetch_labels_background() -> None:
     """Fetch labels and descriptions from source_uris for all vocabulary concepts.
 
-    For each concept, queries all known external source URIs and merges the
-    returned translations into ``_fetched_labels``.  Descriptions are fetched
-    for DBpedia and Wikidata sources; the longest available description is
-    stored in ``_fetched_descriptions``.
-
-    Results are rebuilt from the SKOS cache on every startup (expensive API
-    calls only happen on cache misses, which are then cached for 60 days).
+    Delegates to :func:`_fetch_concept_labels` for each concept.  Results are
+    rebuilt from the SKOS cache on every startup (expensive API calls only happen
+    on cache misses, which are then cached for 60 days).
     """
-    for concept_id, data in vocabulary.items():
-        all_uris: list[str] = list(data.get("source_uris") or [])
-        for uri in _discovered_source_uris.get(concept_id, {}).values():
-            if uri not in all_uris:
-                all_uris.append(uri)
-
-        merged: dict[str, str] = {}
-        merged_alts: dict[str, list[str]] = {}
-        best_description: str | None = None
-
-        for uri in all_uris:
-            if uri.startswith(TINGBOK_BASE_URL):
-                continue
-            source = skos_service.uri_to_source(uri)
-            if source is None:
-                continue
-
-            try:
-                if source in ("agrovoc", "dbpedia", "wikidata"):
-                    fetched = await asyncio.to_thread(
-                        skos_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, source, SKOS_CACHE_DIR
-                    )
-                    fetched_alts = await asyncio.to_thread(
-                        skos_service.get_alt_labels, uri, _DEFAULT_FETCH_LANGUAGES, source, SKOS_CACHE_DIR
-                    )
-                    desc = await asyncio.to_thread(skos_service.get_description, uri, source, "en", SKOS_CACHE_DIR)
-                    if desc and (best_description is None or len(desc) > len(best_description)):
-                        best_description = desc
-                elif source == "off":
-                    fetched = await asyncio.to_thread(off_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES)
-                    fetched_alts = await asyncio.to_thread(off_service.get_alt_labels, uri, _DEFAULT_FETCH_LANGUAGES)
-                elif source == "gpt":
-                    fetched = await asyncio.to_thread(
-                        gpt_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, _CACHE_BASE
-                    )
-                    fetched_alts = {}
-                else:
-                    continue
-
-                # First source wins for each language (preferred labels)
-                for lang, label in fetched.items():
-                    if lang not in merged:
-                        merged[lang] = label
-                # Merge alt labels (accumulate across sources, deduplicate later)
-                for lang, alts in fetched_alts.items():
-                    existing = merged_alts.setdefault(lang, [])
-                    for alt in alts:
-                        if alt not in existing:
-                            existing.append(alt)
-            except Exception as exc:  # noqa: BLE001
-                logger.debug("Label fetch failed for '%s' (%s): %s", concept_id, uri, exc)
-
-        if merged:
-            _fetched_labels[concept_id] = merged
-        if merged_alts:
-            _fetched_alt_labels[concept_id] = merged_alts
-        if best_description:
-            _fetched_descriptions[concept_id] = best_description
+    total = len(vocabulary)
+    for i, (concept_id, data) in enumerate(vocabulary.items(), 1):
+        if i % 10 == 0 or i == total:
+            logger.info("Fetching labels [%d/%d]: %s", i, total, concept_id)
+        await _fetch_concept_labels(concept_id, data)
+    logger.info("Background label fetch complete (%d concepts)", total)
 
 
 @asynccontextmanager
@@ -469,12 +486,18 @@ def _record_lookup_warning(label: str, source_roots: dict[str, str], source_path
 
 @app.get("/api/vocabulary/{concept_id:path}")
 async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
-    """Return a single concept from the package vocabulary."""
+    """Return a single concept from the package vocabulary.
+
+    If labels have not yet been fetched for this concept by the background task,
+    they are fetched on-demand before the response is built.
+    """
     from fastapi import HTTPException
 
     data = vocabulary.get(concept_id)
     if data is None:
         raise HTTPException(status_code=404, detail=f"Concept '{concept_id}' not found")
+    if concept_id not in _concepts_fetched:
+        await _fetch_concept_labels(concept_id, data)
     return _vocabulary_concept_from_data(concept_id, data)
 
 
