@@ -522,6 +522,64 @@ def test_prune_vocabulary_case_insensitive_match(tmp_path):
     assert "en" not in updated["concepts"]["food"].get("labels", {})
 
 
+def test_prune_vocabulary_removes_redundant_altlabels(tmp_path):
+    """altLabel entries available from sources should be removed from vocabulary.yaml."""
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        return {}
+
+    def fake_get_alt_labels(uri, languages, source, cache_dir):
+        # Source provides all altLabels already in VOCAB_WITH_ALTLABELS
+        if source == "dbpedia":
+            return {"en": ["groceries", "provisions"], "nb": ["matbiter"]}
+        return {}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_alt_labels", side_effect=fake_get_alt_labels):
+            with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+                rc, output = _run_prune(tmp_path, vocab_content=VOCAB_WITH_ALTLABELS)
+
+    assert rc == 0
+    import yaml
+
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    food = updated["concepts"]["food"]
+    # All altLabels were provided by source — should be removed
+    assert not food.get("altLabel"), f"Expected altLabel removed, got: {food.get('altLabel')}"
+
+
+def test_prune_vocabulary_keeps_altlabels_not_in_sources(tmp_path):
+    """altLabel entries NOT available from sources should be kept."""
+    from tingbok.services import skos as skos_service
+
+    def fake_get_labels(uri, languages, source, cache_dir):
+        return {}
+
+    def fake_get_alt_labels(uri, languages, source, cache_dir):
+        # Source only provides one of the altLabels
+        if source == "dbpedia":
+            return {"en": ["groceries"]}  # "provisions" and "nb" not provided
+        return {}
+
+    with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
+        with patch.object(skos_service, "get_alt_labels", side_effect=fake_get_alt_labels):
+            with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+                rc, output = _run_prune(tmp_path, vocab_content=VOCAB_WITH_ALTLABELS)
+
+    assert rc == 0
+    import yaml
+
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    food = updated["concepts"]["food"]
+    # "provisions" not in source → kept
+    assert "provisions" in food.get("altLabel", {}).get("en", [])
+    # "groceries" in source → removed
+    assert "groceries" not in food.get("altLabel", {}).get("en", [])
+    # nb altLabel not in source → kept
+    assert "matbiter" in food.get("altLabel", {}).get("nb", [])
+
+
 def test_populate_uris_skips_gpt_when_excluded(tmp_path):
     """Should not add GPT URIs when 'gpt' is in excluded_sources."""
     SAMPLE_GPT = "# Google_Product_Taxonomy_Version: 2021-09-21\n632 - Electronics\n"

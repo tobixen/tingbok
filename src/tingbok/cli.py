@@ -264,6 +264,7 @@ def _prune_vocabulary(
     languages = list(all_langs) if all_langs else [lang]
 
     removals: dict[str, dict[str, set[str]]] = {}  # concept_id -> lang -> set of values to remove
+    alt_removals: dict[str, dict[str, set[str]]] = {}  # concept_id -> lang -> set of altLabel values to remove
     deviations: list[str] = []
 
     print(f"Checking {len(concepts)} concepts against sources...")
@@ -273,7 +274,7 @@ def _prune_vocabulary(
             continue
         static_labels: dict = data.get("labels") or {}
         alt_labels: dict = data.get("altLabel") or {}
-        if not static_labels:
+        if not static_labels and not alt_labels:
             continue
 
         source_uris: list[str] = list(data.get("source_uris") or [])
@@ -304,6 +305,33 @@ def _prune_vocabulary(
                             existing[fetch_lang] = fetch_label
             except Exception as exc:  # noqa: BLE001
                 print(f"  Warning: label fetch failed for '{concept_id}' ({uri}): {exc}", file=sys.stderr)
+
+        # Fetch alt-labels from all source URIs and flag redundant altLabel entries
+        for uri in source_uris:
+            if not uri or uri.startswith("https://tingbok.plann.no/"):
+                continue
+            if uri.startswith(("http://aims.fao.org/", "https://aims.fao.org/")):
+                source = "agrovoc"
+            elif uri.startswith(("http://dbpedia.org/", "https://dbpedia.org/")):
+                source = "dbpedia"
+            elif uri.startswith(("http://www.wikidata.org/", "https://www.wikidata.org/")):
+                source = "wikidata"
+            else:
+                continue
+            try:
+                fetched_alts = skos_service.get_alt_labels(uri, languages, source, skos_dir)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  Warning: alt-label fetch failed for '{concept_id}' ({uri}): {exc}", file=sys.stderr)
+                continue
+            for fetch_lang, fetch_vals in (fetched_alts or {}).items():
+                vocab_alts = alt_labels.get(fetch_lang, [])
+                for fetch_val in fetch_vals:
+                    for vocab_val in vocab_alts:
+                        if _labels_match(vocab_val, fetch_val) or _labels_near_match(vocab_val, fetch_val):
+                            alt_removals.setdefault(concept_id, {}).setdefault(fetch_lang, set()).add(vocab_val)
+                            print(
+                                f"  {concept_id} altLabel[{fetch_lang}]: '{vocab_val}' matches {source} → will remove"
+                            )
 
         if not per_source:
             continue
@@ -364,17 +392,20 @@ def _prune_vocabulary(
         for line in deviations:
             print(line)
 
-    if not removals:
+    total_labels = sum(len(langs) for langs in removals.values())
+    total_alts = sum(len(vals) for langs in alt_removals.values() for vals in langs.values())
+
+    if not removals and not alt_removals:
         print("\nNo redundant labels found.")
         return 0
 
-    total = sum(len(langs) for langs in removals.values())
+    total = total_labels + total_alts
     print(f"\n{'(dry-run) ' if dry_run else ''}Would remove {total} redundant label(s).")
 
     if dry_run:
         return 0
 
-    # Apply removals
+    # Apply label removals
     for concept_id, lang_map in removals.items():
         data = concepts[concept_id]
         labels_block: dict = data.get("labels") or {}
@@ -383,6 +414,21 @@ def _prune_vocabulary(
                 del labels_block[remove_lang]
         if not labels_block:
             del data["labels"]
+
+    # Apply altLabel removals
+    for concept_id, lang_map in alt_removals.items():
+        data = concepts[concept_id]
+        alt_block: dict = data.get("altLabel") or {}
+        for remove_lang, remove_vals in lang_map.items():
+            if remove_lang not in alt_block:
+                continue
+            remaining = [v for v in alt_block[remove_lang] if v not in remove_vals]
+            if remaining:
+                alt_block[remove_lang] = remaining
+            else:
+                del alt_block[remove_lang]
+        if not alt_block:
+            del data["altLabel"]
 
     with open(vocab_path, "w") as f:
         yaml.dump(doc, f)
