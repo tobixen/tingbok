@@ -25,6 +25,21 @@ async def test_get_vocabulary(client):
 
 
 @pytest.mark.anyio
+async def test_get_vocabulary_returns_503_when_not_ready(client):
+    """Full vocabulary returns 503 Retry-After when background fetch is incomplete."""
+    import tingbok.app as app_module
+
+    original = set(app_module._concepts_fetched)
+    app_module._concepts_fetched.clear()
+    try:
+        response = await client.get("/api/vocabulary")
+        assert response.status_code == 503
+        assert "Retry-After" in response.headers
+    finally:
+        app_module._concepts_fetched.update(original)
+
+
+@pytest.mark.anyio
 async def test_get_vocabulary_concept(client):
     response = await client.get("/api/vocabulary/food")
     assert response.status_code == 200

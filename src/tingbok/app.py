@@ -435,7 +435,22 @@ def _build_description(concept_id: str, data: dict[str, Any]) -> str | None:
 
 @app.get("/api/vocabulary")
 async def get_vocabulary() -> dict[str, VocabularyConcept]:
-    """Return the full package vocabulary."""
+    """Return the full package vocabulary.
+
+    Returns 503 with a ``Retry-After`` header when the background label-fetch
+    task has not yet processed all concepts, to avoid silently returning
+    incomplete data.  Use ``GET /api/vocabulary/{concept_id}`` for individual
+    concepts — that endpoint fetches labels on-demand.
+    """
+    from fastapi import HTTPException
+
+    if len(_concepts_fetched) < len(vocabulary):
+        remaining = len(vocabulary) - len(_concepts_fetched)
+        raise HTTPException(
+            status_code=503,
+            detail=f"Vocabulary enrichment in progress ({remaining} concepts remaining); retry shortly.",
+            headers={"Retry-After": "10"},
+        )
     return {concept_id: _vocabulary_concept_from_data(concept_id, data) for concept_id, data in vocabulary.items()}
 
 
