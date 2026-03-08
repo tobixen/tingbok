@@ -670,7 +670,9 @@ concepts:
     prefLabel: "Spices & herbs"
     altLabel:
       en: ["spice", "herbs", "seasonings"]
-    broader: food
+    broader:
+      - food
+      - food/conditment
     narrower:
     - bouillon
     - salt
@@ -681,18 +683,29 @@ concepts:
     - food/spices/thyme
     - food/spices/oregano
     - food/spices/basil
-    - food/plant_products/spices
 
     source_uris:
-    - http://dbpedia.org/resource/Herb
+    - http://dbpedia.org/resource/Spice
     - http://www.wikidata.org/entity/Q42527
     - http://aims.fao.org/aos/agrovoc/c_7042
     - gpt:455
+
+  food/spices/herb:
+    prefLabel: "Herb"
+    broader: food/spices
+    narrower:
+    - food/spices/thyme
+    - food/spices/oregano
+    - food/spices/basil
+    source_uris:
+    - http://dbpedia.org/resource/Herb
+
   food/spices/pepper:
     prefLabel: "Pepper"
     altLabel:
       en: ["black pepper", "peppercorns"]
-    broader: food/spices
+    broader:
+      - food/spices
 
     source_uris:
     - http://dbpedia.org/resource/Pepper
