@@ -285,18 +285,36 @@ async def _fetch_labels_background() -> None:
 
 
 @asynccontextmanager
+def _cache_refresh_config() -> tuple[float, float]:
+    """Read cache refresh settings from environment variables.
+
+    ``TINGBOK_CACHE_MAX_AGE_DAYS`` — how old (in days) the oldest entry must be
+    before it is considered stale (default: 60).
+
+    ``TINGBOK_CACHE_REFRESH_DIVISOR`` — controls sleep between refreshes;
+    ``sleep = (max_age - age) / divisor`` (default: 100).
+    """
+    import os  # noqa: PLC0415
+
+    max_age_days = float(os.environ.get("TINGBOK_CACHE_MAX_AGE_DAYS", "60"))
+    divisor = float(os.environ.get("TINGBOK_CACHE_REFRESH_DIVISOR", "100"))
+    return max_age_days * 86400, divisor
+
+
 async def lifespan(app: FastAPI):  # noqa: ARG001
     """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
     global vocabulary, ean_observations  # noqa: PLW0603
     vocabulary = _load_vocabulary()
     ean_observations = ean_service.load_ean_observations(EAN_OBSERVATIONS_PATH)
     skos_service.load_agrovoc_background(SKOS_CACHE_DIR)
+    max_age_seconds, divisor = _cache_refresh_config()
     discovery_task = asyncio.create_task(_discover_source_uris_background())
     labels_task = asyncio.create_task(_fetch_labels_background())
+    refresh_task = asyncio.create_task(skos_service.cache_refresh_loop(SKOS_CACHE_DIR, max_age_seconds, divisor))
     try:
         yield
     finally:
-        for task in (discovery_task, labels_task):
+        for task in (discovery_task, labels_task, refresh_task):
             task.cancel()
             try:
                 await task

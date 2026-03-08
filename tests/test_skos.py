@@ -84,13 +84,15 @@ def test_load_cache_returns_none_for_missing_file(tmp_path: Path) -> None:
     assert result is None
 
 
-def test_load_cache_respects_ttl(tmp_path: Path) -> None:
+def test_load_cache_returns_stale_data(tmp_path: Path) -> None:
+    """TTL is no longer enforced — stale entries are served; freshness is the refresh loop's job."""
     cache_path = tmp_path / "old.json"
     data = {"uri": "http://example.org/potato", "_cached_at": time.time() - 999999}
     with open(cache_path, "w") as f:
         json.dump(data, f)
     result = _load_from_cache(cache_path, ttl=3600)
-    assert result is None
+    assert result is not None
+    assert result["uri"] == "http://example.org/potato"
 
 
 def test_load_cache_stamps_last_accessed(tmp_path: Path) -> None:

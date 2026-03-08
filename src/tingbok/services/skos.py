@@ -153,8 +153,12 @@ def _get_not_found_cache_path(cache_dir: Path) -> Path:
     return cache_dir / "_not_found.json"
 
 
-def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | None:
-    """Load cached data if it exists and has not expired.
+def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | None:  # noqa: ARG001
+    """Load cached data if it exists.
+
+    The *ttl* parameter is retained for call-site compatibility but is no longer
+    enforced — freshness is maintained by the background :func:`cache_refresh_loop`
+    rather than by hard expiry.  Stale-but-present data is always returned.
 
     Stamps ``_last_accessed`` on every hit so that :func:`prune_cache` can
     distinguish recently-used entries from abandoned ones.
@@ -164,8 +168,6 @@ def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | N
     try:
         with open(cache_path, encoding="utf-8") as f:
             data: dict = json.load(f)
-        if time.time() - data.get("_cached_at", 0) > ttl:
-            return None
         now = time.time()
         data["_last_accessed"] = now
         try:
@@ -179,7 +181,13 @@ def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | N
         return None
 
 
-def _save_to_cache(cache_path: Path, data: dict, *, last_accessed: float | None = None) -> None:
+def _save_to_cache(
+    cache_path: Path,
+    data: dict,
+    *,
+    last_accessed: float | None = None,
+    cache_key: str | None = None,
+) -> None:
     """Save data to a cache file, stamping ``_cached_at``.
 
     Args:
@@ -188,10 +196,14 @@ def _save_to_cache(cache_path: Path, data: dict, *, last_accessed: float | None 
             instead of being left absent.  Pass ``None`` (default) to omit the field
             so that the next :func:`_load_from_cache` hit stamps it with the real
             access time.
+        cache_key: When provided, stored as ``_cache_key`` so that
+            :func:`_refresh_entry` can re-fetch the entry without external context.
     """
     payload = {**data, "_cached_at": time.time()}
     if last_accessed is not None:
         payload["_last_accessed"] = last_accessed
+    if cache_key is not None:
+        payload["_cache_key"] = cache_key
     try:
         cache_path.parent.mkdir(parents=True, exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
@@ -226,6 +238,138 @@ def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
     if oldest_path is None:
         return None
     return oldest_path, oldest_ts
+
+
+def _refresh_entry(cache_path: Path, cache_dir: Path) -> bool:
+    """Re-fetch the upstream data for a single cache entry in-place.
+
+    Reads ``_cache_key`` from the file to determine the entry type and fetch
+    parameters, calls the appropriate upstream function, then writes the result
+    back preserving the original ``_last_accessed`` timestamp so the access
+    clock is not reset by the background refresh.
+
+    Returns ``True`` on success, ``False`` when the entry cannot be refreshed
+    (missing key, unknown type, upstream error, etc.).
+    """
+    try:
+        with open(cache_path, encoding="utf-8") as f:
+            data: dict = json.load(f)
+    except (json.JSONDecodeError, OSError) as e:
+        logger.debug("Refresh skipped — cannot read %s: %s", cache_path, e)
+        return False
+
+    cache_key: str | None = data.get("_cache_key")
+    if not cache_key:
+        logger.debug("Refresh skipped — no _cache_key in %s", cache_path)
+        return False
+
+    last_accessed: float | None = data.get("_last_accessed")
+
+    try:
+        prefix, *rest = cache_key.split(":", 1)
+        tail = rest[0] if rest else ""
+
+        if prefix == "concept":
+            # key: concept:{source}:{lang}:{label}
+            parts = tail.split(":", 2)
+            if len(parts) < 3:  # noqa: PLR2004
+                return False
+            source, lang, label = parts
+            concept, query_failed = _upstream_lookup(label, lang, source, cache_dir)
+            if query_failed:
+                return False
+            new_data = concept if concept else {}
+            _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
+            return bool(concept)
+
+        elif prefix in ("labels", "alt_labels"):
+            uri = data.get("uri", "")
+            source = data.get("source", "")
+            if not uri or not source:
+                return False
+            if prefix == "labels":
+                languages = list((data.get("labels") or {}).keys()) or ["en"]
+                result = _upstream_get_labels(uri, source, languages)
+                if result is None:
+                    return False
+                new_data = {"uri": uri, "source": source, "labels": result}
+            else:
+                languages = list((data.get("alt_labels") or {}).keys()) or ["en"]
+                result = _upstream_get_alt_labels(uri, source, languages)
+                if result is None:
+                    return False
+                new_data = {"uri": uri, "source": source, "alt_labels": result}
+            _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
+            return True
+
+        elif prefix == "description":
+            uri = data.get("uri", "")
+            source = data.get("source", "")
+            lang = data.get("lang", "en")
+            if not uri or not source:
+                return False
+            desc = _upstream_get_description(uri, source, lang)
+            new_data = {"uri": uri, "source": source, "lang": lang, "description": desc}
+            _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
+            return True
+
+    except Exception as exc:  # noqa: BLE001
+        logger.debug("Refresh failed for %s: %s", cache_path, exc)
+
+    return False
+
+
+async def cache_refresh_loop(
+    cache_dir: Path,
+    max_age_seconds: float = CACHE_TTL_SECONDS,
+    divisor: float = 100.0,
+) -> None:
+    """Background task: continuously refresh the oldest cache entry.
+
+    Sleep duration is proportional to how fresh the oldest entry is::
+
+        sleep = max(0, (max_age_seconds - age_seconds) / divisor)
+
+    When the oldest entry is younger than *max_age_seconds*, the task sleeps
+    for a while before checking again.  When it is at or past *max_age_seconds*,
+    the task refreshes immediately and loops without sleeping.
+
+    Args:
+        cache_dir:       Root cache directory.  Both ``skos/`` and ``ean/``
+                         subdirectories are scanned for the oldest entry; only
+                         SKOS entries (those with a ``_cache_key``) can be
+                         re-fetched automatically.
+        max_age_seconds: Target freshness window (default: ``CACHE_TTL_SECONDS``).
+        divisor:         Controls refresh aggressiveness.  Higher values mean
+                         longer sleeps and less frequent refreshes (default: 100).
+    """
+    import asyncio  # noqa: PLC0415
+
+    logger.info(
+        "Cache refresh loop started (max_age=%.0fd, divisor=%.0f)",
+        max_age_seconds / 86400,
+        divisor,
+    )
+    while True:
+        oldest = _find_oldest_cache_entry(cache_dir)
+        if oldest is None:
+            await asyncio.sleep(3600)
+            continue
+
+        cache_path, oldest_ts = oldest
+        age = time.time() - oldest_ts
+        sleep_secs = max(0.0, (max_age_seconds - age) / divisor)
+
+        if sleep_secs > 0:
+            logger.debug(
+                "Oldest cache entry is %.1fd old; sleeping %.0fs before refresh",
+                age / 86400,
+                sleep_secs,
+            )
+            await asyncio.sleep(sleep_secs)
+
+        logger.debug("Refreshing oldest cache entry: %s (age %.1fd)", cache_path.name, age / 86400)
+        await asyncio.to_thread(_refresh_entry, cache_path, cache_dir)
 
 
 def _is_in_not_found_cache(cache_dir: Path, key: str, ttl: int = CACHE_TTL_SECONDS) -> bool:
@@ -342,7 +486,7 @@ def lookup_concept(label: str, lang: str, source: str, cache_dir: Path) -> dict 
         raise UpstreamError(f"{source} request failed transiently for '{label}'")
 
     if concept:
-        _save_to_cache(cache_path, concept)
+        _save_to_cache(cache_path, concept, cache_key=cache_key)
     else:
         _add_to_not_found_cache(cache_dir, cache_key)
 
@@ -377,7 +521,7 @@ def get_labels(uri: str, languages: list[str], source: str, cache_dir: Path) -> 
         # Transient error — do not cache; caller gets empty result this time
         return {}
     # Cache even an empty dict so we don't re-query on every run
-    _save_to_cache(cache_path, {"uri": uri, "source": source, "labels": all_labels})
+    _save_to_cache(cache_path, {"uri": uri, "source": source, "labels": all_labels}, cache_key=cache_key)
     return {lang: all_labels[lang] for lang in languages if lang in all_labels}
 
 
@@ -411,7 +555,7 @@ def get_alt_labels(uri: str, languages: list[str], source: str, cache_dir: Path)
     if all_alts is None:
         # Transient error — do not cache
         return {}
-    _save_to_cache(cache_path, {"uri": uri, "source": source, "alt_labels": all_alts})
+    _save_to_cache(cache_path, {"uri": uri, "source": source, "alt_labels": all_alts}, cache_key=cache_key)
     return {lang: all_alts[lang] for lang in languages if lang in all_alts}
 
 
@@ -620,7 +764,7 @@ def get_description(uri: str, source: str, lang: str, cache_dir: Path) -> str | 
         return cached.get("description")
 
     desc = _upstream_get_description(uri, source, lang)
-    _save_to_cache(cache_path, {"uri": uri, "source": source, "description": desc})
+    _save_to_cache(cache_path, {"uri": uri, "source": source, "lang": lang, "description": desc}, cache_key=cache_key)
     return desc
 
 
