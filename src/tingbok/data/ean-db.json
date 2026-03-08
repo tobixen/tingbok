@@ -44,6 +44,13 @@
         "price": 1.12,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.12,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
     "quantity": "200ml",
@@ -257,6 +264,13 @@
         "price": 1.43,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.43,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
@@ -285,6 +299,13 @@
       {
         "currency": "EUR",
         "date": "2026-03-08",
+        "price": 1.43,
+        "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
         "price": 1.43,
         "shop": null,
         "unit": "pcs"
