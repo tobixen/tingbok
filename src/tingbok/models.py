@@ -143,6 +143,9 @@ class VocabularyConcept(BaseModel):
     #: path for this concept within the GPT taxonomy, letting clients build
     #: proper per-source subtrees rather than a flat list.
     source_paths: dict[str, str] = {}
+    #: Language-keyed path aliases.  E.g. ``{"nb": ["klær/vinter"]}`` means
+    #: ``GET /api/lookup/klær/vinter?lang=nb`` resolves to this concept.
+    path_aliases: dict[str, list[str]] = {}
 
 
 class HealthResponse(BaseModel):

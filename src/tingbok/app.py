@@ -532,6 +532,7 @@ def _vocabulary_concept_from_data(concept_id: str, data: dict[str, Any]) -> Voca
         description=_build_description(concept_id, data),
         wikipediaUrl=data.get("wikipediaUrl"),
         source_paths=_build_source_paths(data),
+        path_aliases=data.get("path_aliases") or {},
     )
 
 
@@ -618,12 +619,31 @@ async def lookup_concept(
     if data is not None:
         return _vocabulary_concept_from_data(label, data)
 
+    # 1.5. Language-specific path alias match (e.g. "klær/vinter" → clothing/thermal
+    #      when lang=nb).  Checked before generic label matching so that a foreign-
+    #      language path never accidentally hits an English concept with the same text.
+    #      Both "no" and "nb" are treated as equivalent (both refer to Norwegian Bokmål).
+    label_lower = label.lower()
+    _nb_langs = {"nb", "no", "nn"}
+
+    def _alias_lang_matches(alias_lang: str, req_lang: str) -> bool:
+        if alias_lang == req_lang:
+            return True
+        # Treat nb/no/nn as the same group
+        return alias_lang in _nb_langs and req_lang in _nb_langs
+
+    if "/" in label:  # only full-path labels can be path aliases
+        for concept_id, vdata in vocabulary.items():
+            for alias_lang, aliases in (vdata.get("path_aliases") or {}).items():
+                if _alias_lang_matches(alias_lang, lang):
+                    if label_lower in [a.lower() for a in aliases]:
+                        return _vocabulary_concept_from_data(concept_id, vdata)
+
     # 2. Match by prefLabel, altLabel, or runtime-fetched labels/altLabels
     #    in vocabulary (case-insensitive).
     #    This also catches e.g. "spices" → food/spices when Wikidata has returned
     #    "Spices" as an altLabel for that concept at runtime, even though it is not
     #    listed in vocabulary.yaml.
-    label_lower = label.lower()
     for concept_id, vdata in vocabulary.items():
         if vdata.get("prefLabel", "").lower() == label_lower:
             return _vocabulary_concept_from_data(concept_id, vdata)

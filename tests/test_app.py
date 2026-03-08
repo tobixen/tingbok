@@ -769,6 +769,33 @@ async def test_lookup_prefers_vocabulary_anchored_path(client):
 
 
 @pytest.mark.anyio
+async def test_lookup_path_alias_norwegian(client):
+    """A Norwegian path alias resolves to the canonical English concept when lang=nb."""
+    # clothing/thermal has path_aliases: nb: ["klær/vinter", "klær/vinterklær"]
+    response = await client.get("/api/lookup/klær/vinter", params={"lang": "nb"})
+    assert response.status_code == 200
+    assert response.json()["id"] == "clothing/thermal"
+
+
+@pytest.mark.anyio
+async def test_lookup_path_alias_norwegian_no_lang_code(client):
+    """lang=no (generic Norwegian) also resolves nb path aliases."""
+    response = await client.get("/api/lookup/klær/vinterklær", params={"lang": "no"})
+    assert response.status_code == 200
+    assert response.json()["id"] == "clothing/thermal"
+
+
+@pytest.mark.anyio
+async def test_lookup_path_alias_wrong_language_not_found(client):
+    """Norwegian path aliases must NOT resolve when lang=en (language mismatch)."""
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                response = await client.get("/api/lookup/klær/vinter", params={"lang": "en"})
+    assert response.status_code == 404
+
+
+@pytest.mark.anyio
 async def test_lookup_path_and_label_return_same_id(client):
     """/api/lookup/food/spices and /api/lookup/spices must return the same concept ID.
 

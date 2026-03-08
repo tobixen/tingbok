@@ -2069,6 +2069,8 @@ concepts:
       en: ["Winter clothes"]
       nb: ["Vinterklær", "Varme klær"]
     broader: clothing
+    path_aliases:
+      nb: ["klær/vinter", "klær/vinterklær"]
 
   clothing/accessories:
     prefLabel: "Clothing accessories"
