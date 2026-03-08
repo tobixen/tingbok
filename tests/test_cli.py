@@ -229,13 +229,20 @@ def _run_prune(
     tmp_path: Path,
     extra_args: list[str] | None = None,
     vocab_content: str = "",
+    alt_labels_side_effect=None,
 ) -> tuple[int, str]:
-    """Run the prune-vocabulary command against a temp vocabulary file."""
+    """Run the prune-vocabulary command against a temp vocabulary file.
+
+    ``alt_labels_side_effect`` overrides the default no-op mock for
+    ``skos_service.get_alt_labels``.  Pass a callable or a dict-return
+    value to test alt-label pruning behaviour.
+    """
     import sys
     from io import StringIO
     from unittest.mock import patch as _patch
 
     import tingbok.cli as cli_module
+    from tingbok.services import skos as skos_service
 
     vocab_file = tmp_path / "vocabulary.yaml"
     vocab_file.write_text(vocab_content)
@@ -245,14 +252,17 @@ def _run_prune(
     if extra_args:
         argv.extend(extra_args)
 
+    _default_no_alts = alt_labels_side_effect if alt_labels_side_effect is not None else (lambda *_: {})
+
     captured = StringIO()
     with _patch.object(sys, "argv", argv):
         with _patch("sys.stdout", captured):
-            try:
-                cli_module.main()
-                rc = 0
-            except SystemExit as exc:
-                rc = exc.code if isinstance(exc.code, int) else 0
+            with _patch.object(skos_service, "get_alt_labels", side_effect=_default_no_alts):
+                try:
+                    cli_module.main()
+                    rc = 0
+                except SystemExit as exc:
+                    rc = exc.code if isinstance(exc.code, int) else 0
     return rc, captured.getvalue()
 
 
@@ -536,9 +546,10 @@ def test_prune_vocabulary_removes_redundant_altlabels(tmp_path):
         return {}
 
     with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
-        with patch.object(skos_service, "get_alt_labels", side_effect=fake_get_alt_labels):
-            with patch.object(skos_service, "get_agrovoc_store", return_value=None):
-                rc, output = _run_prune(tmp_path, vocab_content=VOCAB_WITH_ALTLABELS)
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(
+                tmp_path, vocab_content=VOCAB_WITH_ALTLABELS, alt_labels_side_effect=fake_get_alt_labels
+            )
 
     assert rc == 0
     import yaml
@@ -563,9 +574,10 @@ def test_prune_vocabulary_keeps_altlabels_not_in_sources(tmp_path):
         return {}
 
     with patch.object(skos_service, "get_labels", side_effect=fake_get_labels):
-        with patch.object(skos_service, "get_alt_labels", side_effect=fake_get_alt_labels):
-            with patch.object(skos_service, "get_agrovoc_store", return_value=None):
-                rc, output = _run_prune(tmp_path, vocab_content=VOCAB_WITH_ALTLABELS)
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, output = _run_prune(
+                tmp_path, vocab_content=VOCAB_WITH_ALTLABELS, alt_labels_side_effect=fake_get_alt_labels
+            )
 
     assert rc == 0
     import yaml
