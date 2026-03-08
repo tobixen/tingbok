@@ -485,6 +485,25 @@ async def get_vocabulary() -> dict[str, VocabularyConcept]:
     return {concept_id: _vocabulary_concept_from_data(concept_id, data) for concept_id, data in vocabulary.items()}
 
 
+def _build_source_paths(data: dict[str, Any]) -> dict[str, str]:
+    """Compute source-specific hierarchy paths for a vocabulary concept.
+
+    Currently handles GPT: for each ``gpt:{id}`` URI found in ``source_uris``,
+    looks up the GPT taxonomy to get the full path_parts and normalises them
+    via :func:`_gpt_path_from_parts`.  Other sources may be added here later.
+    """
+    paths: dict[str, str] = {}
+    for uri in data.get("source_uris", []):
+        if not uri.startswith("gpt:"):
+            continue
+        gpt_concept = gpt_service.lookup_by_uri(uri, "en", _CACHE_BASE)
+        if gpt_concept:
+            gpt_path = _gpt_path_from_parts(gpt_concept.get("path_parts", []))
+            if gpt_path:
+                paths["gpt"] = gpt_path
+    return paths
+
+
 def _vocabulary_concept_from_data(concept_id: str, data: dict[str, Any]) -> VocabularyConcept:
     """Build a VocabularyConcept from a vocabulary.yaml entry."""
     broader = data.get("broader", [])
@@ -502,6 +521,7 @@ def _vocabulary_concept_from_data(concept_id: str, data: dict[str, Any]) -> Voca
         labels=_build_labels(concept_id, data),
         description=_build_description(concept_id, data),
         wikipediaUrl=data.get("wikipediaUrl"),
+        source_paths=_build_source_paths(data),
     )
 
 

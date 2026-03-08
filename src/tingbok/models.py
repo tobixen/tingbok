@@ -138,6 +138,11 @@ class VocabularyConcept(BaseModel):
     labels: dict[str, str] = {}
     description: str | None = None
     wikipediaUrl: str | None = None
+    #: Source-specific hierarchy paths, keyed by source name.  E.g.
+    #: ``{"gpt": "food/food_items/fruit/bananas"}`` gives the tingbok-normalised
+    #: path for this concept within the GPT taxonomy, letting clients build
+    #: proper per-source subtrees rather than a flat list.
+    source_paths: dict[str, str] = {}
 
 
 class HealthResponse(BaseModel):

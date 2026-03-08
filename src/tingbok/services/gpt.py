@@ -225,6 +225,39 @@ def lookup_concept(label: str, lang: str, cache_dir: Path) -> dict | None:
     }
 
 
+def lookup_by_uri(uri: str, lang: str, cache_dir: Path) -> dict | None:
+    """Look up a GPT concept by its ``gpt:{id}`` URI.
+
+    Returns the same dict as :func:`lookup_concept` (``uri``, ``prefLabel``,
+    ``source``, ``broader``, ``path_parts``), or ``None`` if the file or ID is
+    not found.
+
+    Args:
+        uri:       GPT URI string (e.g. ``"gpt:1234"``).
+        lang:      BCP-47 language code for label lookup (e.g. ``"en"``).
+        cache_dir: Cache directory containing GPT files.
+    """
+    if not uri.startswith("gpt:"):
+        return None
+    gpt_id = uri[4:]
+    gpt_file = _find_gpt_file(lang, cache_dir)
+    if gpt_file is None:
+        return None
+    index = _id_index(gpt_file)
+    entry = index.get(gpt_id)
+    if entry is None:
+        return None
+    label, path_parts = entry
+    broader = path_parts[-2] if len(path_parts) > 1 else None
+    return {
+        "uri": uri,
+        "prefLabel": label,
+        "source": "gpt",
+        "broader": broader,
+        "path_parts": path_parts,
+    }
+
+
 def get_labels(uri: str, languages: list[str], cache_dir: Path) -> dict[str, str]:
     """Fetch labels for a ``gpt:{id}`` URI in the requested languages.
 

@@ -253,6 +253,52 @@ def test_download_taxonomy_agrovoc_writes_file(tmp_path: Path) -> None:
     assert nt_file.exists()
 
 
+def test_gpt_lookup_by_uri_returns_concept(tmp_path: Path) -> None:
+    """lookup_by_uri returns concept dict for a known gpt: URI."""
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
+
+    from tingbok.services import gpt as gpt_service
+
+    result = gpt_service.lookup_by_uri("gpt:499", "en", tmp_path)
+    assert result is not None
+    assert result["uri"] == "gpt:499"
+    assert result["prefLabel"] == "Cameras & Optics"
+    assert result["source"] == "gpt"
+    assert result["path_parts"] == ["Electronics", "Cameras & Optics"]
+
+
+def test_gpt_lookup_by_uri_unknown_id_returns_none(tmp_path: Path) -> None:
+    """lookup_by_uri returns None for an unknown gpt ID."""
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
+
+    from tingbok.services import gpt as gpt_service
+
+    result = gpt_service.lookup_by_uri("gpt:99999", "en", tmp_path)
+    assert result is None
+
+
+def test_gpt_lookup_by_uri_non_gpt_uri_returns_none(tmp_path: Path) -> None:
+    """lookup_by_uri returns None for URIs that are not gpt: scheme."""
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
+
+    from tingbok.services import gpt as gpt_service
+
+    result = gpt_service.lookup_by_uri("http://example.org/something", "en", tmp_path)
+    assert result is None
+
+
+def test_gpt_lookup_by_uri_root_has_no_broader(tmp_path: Path) -> None:
+    """lookup_by_uri for a root category returns broader=None."""
+    _write_gpt_file(tmp_path, "en-GB", SAMPLE_GPT_EN)
+
+    from tingbok.services import gpt as gpt_service
+
+    result = gpt_service.lookup_by_uri("gpt:632", "en", tmp_path)
+    assert result is not None
+    assert result["broader"] is None
+    assert result["path_parts"] == ["Electronics"]
+
+
 def test_download_taxonomy_no_flags_shows_help(tmp_path: Path) -> None:
     """Running download-taxonomy without --gpt or --agrovoc should print usage hint."""
     rc, output = _run_download(tmp_path, [])
