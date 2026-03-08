@@ -1,4 +1,11 @@
 {
+  "20000646": {
+    "categories": [
+      "jam"
+    ],
+    "name": "Maribel Конфитюр вишна екстра cherry jam extra",
+    "quantity": "450g"
+  },
   "20003937": {
     "prices": [
       {
@@ -19,6 +26,10 @@
     ]
   },
   "20039547": {
+    "categories": [
+      "whipping-cream"
+    ],
+    "name": "Pilos СМЕТАНА 30% UHT whipping cream (Lidl 2026-03-04)",
     "prices": [
       {
         "currency": "EUR",
@@ -26,8 +37,16 @@
         "price": 1.12,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-08",
+        "price": 1.12,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
+    "quantity": "200ml",
     "receipt_names": [
       {
         "first_seen": "2026-03-04",
@@ -87,6 +106,20 @@
       }
     ],
     "source": "manual"
+  },
+  "20469894": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Italiamo Pesto Trapanese (tomato, almonds)",
+    "quantity": "180g"
+  },
+  "20529772": {
+    "categories": [
+      "honey"
+    ],
+    "name": "Родна стряха 100% Български пчелен мед букет Bulgarian honey (added 2026-01-11)",
+    "quantity": "900g"
   },
   "20531164": {
     "receipt_names": [
@@ -199,6 +232,10 @@
     "source": "manual"
   },
   "4056489080510": {
+    "categories": [
+      "milk"
+    ],
+    "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk (Lidl 2026-03-04)",
     "prices": [
       {
         "currency": "EUR",
@@ -213,8 +250,16 @@
         "price": 1.43,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-08",
+        "price": 1.43,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
+    "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
@@ -225,6 +270,10 @@
     ]
   },
   "4056489108160": {
+    "categories": [
+      "milk"
+    ],
+    "name": "Pilos МЛЯКО UHT 3.5% UHT whole milk (Lidl 2026-03-04)",
     "prices": [
       {
         "currency": "EUR",
@@ -232,8 +281,16 @@
         "price": 1.43,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-08",
+        "price": 1.43,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
+    "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-03-04",
@@ -393,6 +450,13 @@
     "name": "ENDURA spray",
     "source": "manual"
   },
+  "5201031250739": {
+    "categories": [
+      "vinegar"
+    ],
+    "name": "Kalamata Papadimitriou Balsamic Cream Fig",
+    "quantity": "250ml"
+  },
   "5201314587552": {
     "brand": "SANITAS",
     "categories": [
@@ -414,6 +478,11 @@
     "source": "manual"
   },
   "5905858676245": {
+    "categories": [
+      "chocolate"
+    ],
+    "name": "Millano Milk Chocolate with Peanuts",
+    "quantity": "100g",
     "receipt_names": [
       {
         "name": "МЛЕЧ.ШОКОЛАД ФЪСЪЦИ"
