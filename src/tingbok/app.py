@@ -44,8 +44,8 @@ EAN_CACHE_DIR: Path = _CACHE_BASE / "ean"
 WARNINGS_PATH: Path = _CACHE_BASE / "lookup-warnings.json"
 
 #: Runtime-writable JSON file for inventory-sourced EAN observations (category + name).
-#: Separate from the git-tracked ean-db.yaml; accumulates PUT /api/ean/{ean} calls.
-EAN_OBSERVATIONS_PATH: Path = _CACHE_BASE / "ean-db.json"
+#: Lives next to vocabulary.yaml so observations persist across deployments.
+EAN_OBSERVATIONS_PATH: Path = Path(__file__).parent / "data" / "ean-db.json"
 
 vocabulary: dict[str, Any] = {}
 
