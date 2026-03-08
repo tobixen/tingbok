@@ -600,6 +600,66 @@ async def test_lookup_by_preflabel(client):
 
 
 @pytest.mark.anyio
+async def test_lookup_by_altlabel(client):
+    """Concept in vocabulary is found by its altLabel (case-insensitive)."""
+    # food/spices has altLabel: en: ["spice", "herbs", "seasonings"]
+    response = await client.get("/api/lookup/spice")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "food/spices"
+
+
+@pytest.mark.anyio
+async def test_lookup_by_fetched_altlabel(client):
+    """Concept in vocabulary is found via dynamically fetched altLabels.
+
+    Fetched altLabels (from external sources at runtime) must also be searched
+    so that e.g. '/api/lookup/spices' finds food/spices even though 'spices'
+    is not listed in vocabulary.yaml.
+    """
+    import tingbok.app as app_module
+
+    saved = dict(app_module._fetched_alt_labels)
+    try:
+        # Simulate Wikidata having returned "spices" as an altLabel for food/spices
+        app_module._fetched_alt_labels["food/spices"] = {"en": ["Spices"]}
+        with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                    response = await client.get("/api/lookup/spices")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["id"] == "food/spices"
+    finally:
+        app_module._fetched_alt_labels.clear()
+        app_module._fetched_alt_labels.update(saved)
+
+
+@pytest.mark.anyio
+async def test_lookup_by_fetched_label(client):
+    """Concept in vocabulary is found via fetched translated labels.
+
+    A fetched label like 'Krydder' (Norwegian for food/spices) must be matched
+    so that '/api/lookup/Krydder' returns food/spices rather than a SKOS result.
+    """
+    import tingbok.app as app_module
+
+    saved = dict(app_module._fetched_labels)
+    try:
+        app_module._fetched_labels["food/spices"] = {"nb": "Krydder"}
+        with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                    response = await client.get("/api/lookup/Krydder")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["id"] == "food/spices"
+    finally:
+        app_module._fetched_labels.clear()
+        app_module._fetched_labels.update(saved)
+
+
+@pytest.mark.anyio
 async def test_lookup_falls_back_to_skos(client):
     """Label not in vocabulary triggers SKOS lookup across all sources, merged."""
     from unittest.mock import patch

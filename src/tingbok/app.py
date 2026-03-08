@@ -550,13 +550,26 @@ async def lookup_concept(
     if data is not None:
         return _vocabulary_concept_from_data(label, data)
 
-    # 2. Match by prefLabel or altLabel in vocabulary (case-insensitive)
+    # 2. Match by prefLabel, altLabel, or runtime-fetched labels/altLabels
+    #    in vocabulary (case-insensitive).
+    #    This also catches e.g. "spices" → food/spices when Wikidata has returned
+    #    "Spices" as an altLabel for that concept at runtime, even though it is not
+    #    listed in vocabulary.yaml.
     label_lower = label.lower()
     for concept_id, vdata in vocabulary.items():
         if vdata.get("prefLabel", "").lower() == label_lower:
             return _vocabulary_concept_from_data(concept_id, vdata)
+        # Static altLabels from vocabulary.yaml
         for alts in (vdata.get("altLabel") or {}).values():
             if label_lower in [a.lower() for a in alts]:
+                return _vocabulary_concept_from_data(concept_id, vdata)
+        # Runtime-fetched altLabels from external sources (Wikidata, DBpedia, …)
+        for alts in (_fetched_alt_labels.get(concept_id) or {}).values():
+            if label_lower in [a.lower() for a in alts]:
+                return _vocabulary_concept_from_data(concept_id, vdata)
+        # Runtime-fetched translated prefLabels from external sources
+        for lbl in (_fetched_labels.get(concept_id) or {}).values():
+            if lbl.lower() == label_lower:
                 return _vocabulary_concept_from_data(concept_id, vdata)
 
     # 3. Query all SKOS sources in parallel, merge results
