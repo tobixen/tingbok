@@ -72,7 +72,7 @@ class PriceObservation(BaseModel):
     """A single observed price for a product at a shop on a date."""
 
     shop: str | None = None
-    date: str
+    date: str | None = None
     price: float
     currency: str = "NOK"
     unit: str | None = None
