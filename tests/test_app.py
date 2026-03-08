@@ -729,6 +729,46 @@ async def test_lookup_not_found_returns_404(client):
 
 
 @pytest.mark.anyio
+async def test_lookup_prefers_vocabulary_anchored_path(client):
+    """When AGROVOC returns multiple paths, prefer the one rooted at a vocabulary concept.
+
+    AGROVOC may return both "food/plant_products/spices/cumin" and "food/spices/cumin"
+    for the same concept.  Since food/spices is in the vocabulary, the canonical ID
+    should be food/spices/cumin, not food/plant_products/spices/cumin.
+    """
+    from unittest.mock import patch
+
+    fake_concept = {
+        "uri": "http://aims.fao.org/aos/agrovoc/c_10205",
+        "prefLabel": "Cumin",
+        "source": "agrovoc",
+    }
+    # AGROVOC returns the raw path first, vocabulary-anchored path second
+    fake_paths = (
+        ["food/plant_products/spices/cumin", "food/spices/cumin", "food/plant_products/cumin"],
+        True,
+        {"food/plant_products/spices/cumin": "http://aims.fao.org/aos/agrovoc/c_10205"},
+    )
+
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
+            with patch("tingbok.app.skos_service.get_labels", return_value={}):
+                with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                    with patch("tingbok.app.skos_service.get_description", return_value=None):
+                        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                                response = await client.get("/api/lookup/cumin")
+
+    assert response.status_code == 200
+    data = response.json()
+    # Must prefer the vocabulary-anchored path
+    assert data["id"] == "food/spices/cumin", (
+        f"Expected food/spices/cumin but got {data['id']!r}. "
+        "food/spices is in the vocabulary so paths through it should be preferred."
+    )
+
+
+@pytest.mark.anyio
 async def test_lookup_vocab_concept_has_labels(client):
     """Vocabulary concept returned via /api/lookup has labels dict populated."""
     response = await client.get("/api/lookup/food")

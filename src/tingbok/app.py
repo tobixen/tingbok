@@ -487,6 +487,26 @@ def _vocabulary_concept_from_data(concept_id: str, data: dict[str, Any]) -> Voca
     )
 
 
+def _best_vocabulary_anchored_path(paths: list[str], vocab: dict) -> str:
+    """Pick the path whose longest prefix segment is present in the vocabulary.
+
+    For each candidate path, walk up its parent segments (longest-first) and
+    return the path whose deepest parent is anchored in *vocab*.  If two paths
+    tie, the shorter (less specific) path wins so we stay closer to known
+    vocabulary structure.  Falls back to ``paths[0]`` if no prefix is found.
+    """
+
+    def _score(path: str) -> tuple[int, int]:
+        parts = path.split("/")
+        for depth in range(len(parts) - 1, 0, -1):
+            prefix = "/".join(parts[:depth])
+            if prefix in vocab:
+                return depth, -len(parts)  # higher depth wins; fewer parts breaks ties
+        return 0, -len(parts)
+
+    return max(paths, key=_score)
+
+
 def _record_lookup_warning(label: str, source_roots: dict[str, str], source_paths: dict[str, list[str]]) -> None:
     """Write a source-conflict warning for *label* to ``WARNINGS_PATH``.
 
@@ -601,6 +621,7 @@ async def lookup_concept(
     wikipedia_url: str | None = None
     concept_id: str | None = None
     pref_label: str = label
+    all_paths: list[str] = []  # every path from every source, for multi-path broader
 
     for source, (concept, paths, uris) in zip(skos_sources, results, strict=False):
         if concept is None:
@@ -611,9 +632,10 @@ async def lookup_concept(
             if uri and uri not in source_uris:
                 source_uris.append(uri)
 
-        # Prefer hierarchy-derived concept ID (most specific path first)
-        if paths and concept_id is None:
-            concept_id = paths[0]
+        # Accumulate all paths; canonical ID chosen below once all sources are merged
+        for p in paths:
+            if p not in all_paths:
+                all_paths.append(p)
 
         # Collect prefLabel (en wins if available)
         if lang not in merged_labels:
@@ -673,7 +695,7 @@ async def lookup_concept(
                 if alt not in existing:
                     existing.append(alt)
 
-    if not source_uris and concept_id is None:
+    if not source_uris and not all_paths:
         raise HTTPException(status_code=404, detail=f"Concept '{label}' not found in vocabulary or SKOS sources")
 
     # Detect semantic conflicts: if two or more sources found paths but under different
@@ -687,9 +709,20 @@ async def lookup_concept(
     if len(set(warn_roots.values())) > 1:
         _record_lookup_warning(label, warn_roots, warn_paths)
 
+    # Pick vocabulary-anchored canonical path as concept ID; fall back to label slug
+    if all_paths:
+        concept_id = _best_vocabulary_anchored_path(all_paths, vocabulary)
     if concept_id is None:
         concept_id = label_lower.replace(" ", "_")
-    broader = ["/".join(concept_id.split("/")[:-1])] if "/" in concept_id else []
+
+    # Build broader from ALL paths so every hierarchy link is preserved
+    # (one concept, multiple paths — each path contributes its direct parent)
+    broader_set: list[str] = []
+    for p in all_paths:
+        parent = "/".join(p.split("/")[:-1])
+        if parent and parent not in broader_set:
+            broader_set.append(parent)
+    broader = broader_set if broader_set else (["/".join(concept_id.split("/")[:-1])] if "/" in concept_id else [])
     best_description = max(descriptions, key=len) if descriptions else None
 
     return VocabularyConcept(

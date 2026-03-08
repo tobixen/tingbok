@@ -881,7 +881,7 @@ concepts:
 
     source_uris:
     - http://dbpedia.org/resource/Pasta
-    - http://www.wikidata.org/entity/Q3897473
+    - http://www.wikidata.org/entity/Q178
     - http://aims.fao.org/aos/agrovoc/c_5621
     - off:en:pastas
   rice:
