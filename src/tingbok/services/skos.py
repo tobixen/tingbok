@@ -179,15 +179,53 @@ def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | N
         return None
 
 
-def _save_to_cache(cache_path: Path, data: dict) -> None:
-    """Save data to a cache file, stamping _cached_at."""
+def _save_to_cache(cache_path: Path, data: dict, *, last_accessed: float | None = None) -> None:
+    """Save data to a cache file, stamping ``_cached_at``.
+
+    Args:
+        last_accessed: When provided (e.g. during a background refresh that should
+            not reset the access clock), the value is written as ``_last_accessed``
+            instead of being left absent.  Pass ``None`` (default) to omit the field
+            so that the next :func:`_load_from_cache` hit stamps it with the real
+            access time.
+    """
     payload = {**data, "_cached_at": time.time()}
+    if last_accessed is not None:
+        payload["_last_accessed"] = last_accessed
     try:
         cache_path.parent.mkdir(parents=True, exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False, indent=2)
     except OSError as e:
         logger.warning("Cache write failed for %s: %s", cache_path, e)
+
+
+def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
+    """Return ``(path, timestamp)`` of the least-recently-used cache file in *cache_dir*.
+
+    The timestamp is ``_last_accessed`` when present, falling back to ``_cached_at``.
+    ``_not_found.json`` is skipped (it is a compound index, not a single entry).
+    Returns ``None`` when the directory is empty or contains no readable entries.
+    """
+    oldest_path: Path | None = None
+    oldest_ts: float = float("inf")
+
+    for cache_path in cache_dir.glob("*.json"):
+        if cache_path.name == "_not_found.json":
+            continue
+        try:
+            with open(cache_path, encoding="utf-8") as f:
+                data: dict = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            continue
+        ts = data.get("_last_accessed") or data.get("_cached_at", float("inf"))
+        if ts < oldest_ts:
+            oldest_ts = ts
+            oldest_path = cache_path
+
+    if oldest_path is None:
+        return None
+    return oldest_path, oldest_ts
 
 
 def _is_in_not_found_cache(cache_dir: Path, key: str, ttl: int = CACHE_TTL_SECONDS) -> bool:

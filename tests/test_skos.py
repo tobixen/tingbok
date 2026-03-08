@@ -10,6 +10,7 @@ import pytest
 from tingbok.services.skos import (
     UpstreamError,
     _add_to_not_found_cache,
+    _find_oldest_cache_entry,
     _get_cache_path,
     _is_in_not_found_cache,
     _load_from_cache,
@@ -101,6 +102,51 @@ def test_load_cache_stamps_last_accessed(tmp_path: Path) -> None:
         stored = json.load(f)
     assert "_last_accessed" in stored, "_load_from_cache should stamp _last_accessed on hit"
     assert stored["_last_accessed"] >= before
+
+
+def test_save_to_cache_preserves_last_accessed(tmp_path: Path) -> None:
+    """A refresh (re-save) with an explicit last_accessed preserves the original access time."""
+    cache_path = tmp_path / "test.json"
+    original_accessed = time.time() - 86400  # pretend accessed yesterday
+    _save_to_cache(cache_path, {"uri": "http://example.org/potato"}, last_accessed=original_accessed)
+    with open(cache_path) as f:
+        stored = json.load(f)
+    assert stored.get("_last_accessed") == original_accessed
+
+
+def test_find_oldest_cache_entry_returns_oldest(tmp_path: Path) -> None:
+    """_find_oldest_cache_entry returns the path with the smallest last_accessed timestamp."""
+    old = tmp_path / "old.json"
+    recent = tmp_path / "recent.json"
+    t_old = time.time() - 50 * 86400
+    t_new = time.time() - 5 * 86400
+    _save_to_cache(old, {"uri": "http://example.org/old"}, last_accessed=t_old)
+    _save_to_cache(recent, {"uri": "http://example.org/new"}, last_accessed=t_new)
+
+    result = _find_oldest_cache_entry(tmp_path)
+    assert result is not None
+    path, ts = result
+    assert path == old
+    assert abs(ts - t_old) < 1
+
+
+def test_find_oldest_cache_entry_empty_dir(tmp_path: Path) -> None:
+    assert _find_oldest_cache_entry(tmp_path) is None
+
+
+def test_find_oldest_prefers_last_accessed_over_cached_at(tmp_path: Path) -> None:
+    """cached_at is only used as fallback when _last_accessed is absent."""
+    f = tmp_path / "item.json"
+    # cached_at is old, but it has been accessed recently
+    _save_to_cache(f, {"uri": "http://example.org/x"}, last_accessed=time.time() - 86400)
+    # write a second file with no last_accessed but a newer cached_at
+    old_no_access = tmp_path / "no_access.json"
+    old_no_access.write_text(json.dumps({"_cached_at": time.time() - 90 * 86400}))
+
+    result = _find_oldest_cache_entry(tmp_path)
+    assert result is not None
+    path, _ = result
+    assert path == old_no_access  # the one without last_accessed (oldest fallback) wins
 
 
 def test_not_found_cache_add_and_check(tmp_path: Path) -> None:
