@@ -416,11 +416,6 @@ concepts:
     - http://dbpedia.org/resource/Staple_food
     - http://www.wikidata.org/entity/Q1241622
     - gpt:441
-  food/plant_products/spices:
-    prefLabel: "Spices"
-    broader:
-      - food/spices
-      - food/plant_products
 
   food/beverages:
     prefLabel: "Beverages"
@@ -1423,18 +1418,6 @@ concepts:
     - gpt:4947
     - off:en:honeys
 
-  # Spices
-  spice:
-    prefLabel: "Spice"
-    altLabel:
-      en: ["spices"]
-      bg: ["подправки"]
-    broader: food/spices
-
-    source_uris:
-    - http://dbpedia.org/resource/Spice
-    - http://www.wikidata.org/entity/Q42527
-    - off:en:spices
   bouillon:
     prefLabel: "Bouillon"
     altLabel:
