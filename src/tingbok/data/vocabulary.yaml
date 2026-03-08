@@ -321,6 +321,14 @@ concepts:
     excluded_sources:
     - dbpedia
 
+    long-johns:
+      source_uris:
+        gpt:1807
+        https://www.wikidata.org/entity/Q2472769
+      broader:
+        - clothing/underwear
+        - clothing/thermal
+
   household:
     prefLabel: "Household"
     altLabel:
@@ -2015,6 +2023,12 @@ concepts:
   # CLOTHING SUBCATEGORIES
   # =============================================================================
 
+  clothing/underwear:
+    prefLabel: "Underwear"
+    broader: clothing
+    source_uris:
+      https://www.wikidata.org/wiki/Q198763
+
   clothing/workwear:
     prefLabel: "Workwear"
     broader: clothing
@@ -2030,6 +2044,11 @@ concepts:
     source_uris:
     - http://dbpedia.org/resource/Footwear
     - http://www.wikidata.org/entity/Q161928
+
+  clothing/thermal:
+    prefLabel: "Warm clothes"
+    broader: clothing
+
   clothing/accessories:
     prefLabel: "Clothing accessories"
     broader: clothing
