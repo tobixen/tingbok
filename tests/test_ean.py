@@ -479,6 +479,20 @@ class TestEanObservations:
         data = ean_service.load_ean_observations(path)
         assert len(data["111"]["prices"]) == 1
 
+    def test_save_permission_error_is_logged_and_raised(self, tmp_path: Path) -> None:
+        """PermissionError on write should be logged at ERROR level and re-raised."""
+        from unittest.mock import patch
+
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        with patch.object(path.__class__, "write_text", side_effect=PermissionError("denied")):
+            with patch.object(ean_service.logger, "error") as mock_log:
+                with pytest.raises(PermissionError):
+                    ean_service.save_ean_observation(path, "1234", ["food"], "Test")
+        mock_log.assert_called_once()
+        assert str(path) in str(mock_log.call_args)
+
     def test_merge_observation_prepends_categories(self) -> None:
         """Inventory categories are prepended, giving them priority."""
         from tingbok.services import ean as ean_service

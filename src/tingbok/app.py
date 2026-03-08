@@ -373,9 +373,18 @@ async def root(request: Request):
 
 
 @app.get("/health", response_model=HealthResponse)
-async def health():
+async def health(request: Request):
     """Liveness check."""
-    return HealthResponse(version=__version__)
+    result = HealthResponse(version=__version__)
+    client_host = request.client.host if request.client else None
+    if client_host in {"127.0.0.1", "::1", "localhost"}:
+        result.paths = {
+            "vocabulary": str(VOCABULARY_PATH),
+            "ean_db": str(EAN_OBSERVATIONS_PATH),
+            "skos_cache": str(SKOS_CACHE_DIR),
+            "ean_cache": str(EAN_CACHE_DIR),
+        }
+    return result
 
 
 def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:

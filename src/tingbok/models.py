@@ -145,3 +145,4 @@ class HealthResponse(BaseModel):
 
     status: str = "ok"
     version: str
+    paths: dict[str, str] | None = None

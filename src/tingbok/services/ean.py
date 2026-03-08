@@ -407,7 +407,11 @@ def save_ean_observation(
         entry["receipt_names"] = existing_rn
     data[ean] = entry
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+    try:
+        path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+    except PermissionError as exc:
+        logger.error("Cannot write EAN observations to %s: %s", path, exc)
+        raise
     logger.debug("Saved EAN observation for %s to %s", ean, path)
 
 

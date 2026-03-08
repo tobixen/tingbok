@@ -3,6 +3,9 @@
 from unittest.mock import patch
 
 import pytest
+from httpx import ASGITransport, AsyncClient
+
+from tingbok.app import app
 
 
 @pytest.mark.anyio
@@ -12,6 +15,25 @@ async def test_health(client):
     data = response.json()
     assert data["status"] == "ok"
     assert "version" in data
+
+
+@pytest.mark.anyio
+async def test_health_localhost_exposes_paths():
+    """Health check from localhost should include path information."""
+    async with AsyncClient(
+        transport=ASGITransport(app=app, client=("127.0.0.1", 12345)),
+        base_url="http://127.0.0.1",
+    ) as ac:
+        response = await ac.get("/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
+    paths = data.get("paths")
+    assert paths is not None, "Expected paths dict for localhost request"
+    assert "vocabulary" in paths
+    assert "ean_db" in paths
+    assert "skos_cache" in paths
+    assert "ean_cache" in paths
 
 
 @pytest.mark.anyio
