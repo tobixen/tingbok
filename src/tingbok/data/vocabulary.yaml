@@ -112,15 +112,9 @@ concepts:
     labels:
       en: "Tools"
       nb: "Verktøy"
-      de: "Werkzeuge"
       da: "Værktøj"
       fi: "Työkalut"
-      fr: "Outils"
-      es: "Herramientas"
       it: "Utensili"
-      pl: "Narzędzia"
-      ru: "Инструменты"
-      uk: "Інструменти"
       bg: "Инструменти"
 
   recreation:
@@ -355,7 +349,6 @@ concepts:
       nn: "Klede"
       da: "Tøj"
       fi: "Vaatteet"
-      fr: "Vêtements"
       bg: "Облекло"
 
     source_uris:
@@ -371,7 +364,7 @@ concepts:
     broader: household
 
     source_uris:
-    - http://dbpedia.org/resource/Children's_literature
+    - http://dbpedia.org/resource/Book
     - http://www.wikidata.org/entity/Q4943275
     - gpt:784
     - off:en:books
@@ -408,9 +401,9 @@ concepts:
       en: ["staples", "basic foods"]
     broader: food
     narrower:
-      - potatoes
-      - rice
-      - pasta
+    - potatoes
+    - rice
+    - pasta
 
     source_uris:
     - http://dbpedia.org/resource/Staple_food
@@ -1003,8 +996,8 @@ concepts:
       en: ["potato"]
       bg: ["картофи"]
     broader:
-      - food/vegetables
-      - food/staples
+    - food/vegetables
+    - food/staples
 
     source_uris:
     - http://dbpedia.org/resource/Potato
@@ -1226,8 +1219,8 @@ concepts:
     altLabel:
       bg: ["сол"]
     broader:
-      - food/condiments
-      - food/spices
+    - food/condiments
+    - food/spices
 
     source_uris:
     - http://dbpedia.org/resource/Salt
