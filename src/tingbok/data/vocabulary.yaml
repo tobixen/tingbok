@@ -621,7 +621,7 @@ concepts:
     broader: food
     narrower:
     - chips
-    - nuts
+    - food/nuts
     - biscuits
     - chocolate
     - food/snacks/crackers
@@ -1302,14 +1302,19 @@ concepts:
     - https://www.wikidata.org/entity/Q5101730
     - off:en:crisps
     - gpt:2392
-  nuts:
+  food/nuts:
     prefLabel: "Nuts"
     altLabel:
-      en: ["nut", "cashews", "peanuts", "almonds"]
+      en: ["nut", "mixed nuts", "almonds"]
+      nb: ["nøtter", "mandler"]
     broader: food/snacks
+    narrower:
+    - peanuts
+    - cashews
+    - coconut
 
     source_uris:
-    - https://dbpedia.org/resource/Nut
+    - https://dbpedia.org/resource/Nut_(fruit)
     - https://www.wikidata.org/entity/Q130392098
     - https://aims.fao.org/aos/agrovoc/c_12873
     - off:en:nuts
@@ -1318,7 +1323,7 @@ concepts:
     altLabel:
       en: ["cashew"]
       bg: ["кашу"]
-    broader: food/snacks
+    broader: food/nuts
 
     source_uris:
     - https://dbpedia.org/resource/Cashew
@@ -1329,7 +1334,7 @@ concepts:
     altLabel:
       en: ["peanut", "groundnuts"]
       bg: ["фъстъци"]
-    broader: food/snacks
+    broader: food/nuts
     uri: "https://dbpedia.org/resource/Peanut"
     source_uris:
     - "https://dbpedia.org/resource/Peanut"
@@ -1339,6 +1344,18 @@ concepts:
     excluded_sources:
     - agrovoc
     # AGROVOC uses "groundnuts" which is less common
+  coconut:
+    prefLabel: "Coconut"
+    altLabel:
+      en: ["coconuts", "coconut milk", "coconut cream"]
+      nb: ["kokosnøtt", "kokosmelk"]
+    broader: food/nuts
+
+    source_uris:
+    - https://dbpedia.org/resource/Coconut
+    - https://www.wikidata.org/entity/Q34687
+    - https://aims.fao.org/aos/agrovoc/c_1792
+    - off:en:coconuts
 
   biscuits:
     prefLabel: "Biscuits"
@@ -2713,13 +2730,26 @@ concepts:
   fasteners:
     prefLabel: "Fasteners"
     altLabel:
-      en: ["screws", "bolts", "nails"]
+      en: ["screws", "bolts", "nails", "nut", "nuts", "washers"]
+      nb: ["skruer", "bolter", "muttere", "spiker"]
     broader: construction
+    narrower:
+    - hardware/nut
 
     source_uris:
     - https://dbpedia.org/resource/Fastener
     - https://www.wikidata.org/entity/Q107380930
     - gpt:500054
+  hardware/nut:
+    prefLabel: "Nuts (hardware)"
+    altLabel:
+      en: ["hex nut", "wing nut", "lock nut", "nyloc nut"]
+      nb: ["mutter", "sekskantmutter", "vingemutter", "låsemutter"]
+    broader: fasteners
+
+    source_uris:
+    - https://dbpedia.org/resource/Nut_(hardware)
+    - https://www.wikidata.org/entity/Q159083
   plumbing:
     prefLabel: "Plumbing"
     broader: construction
