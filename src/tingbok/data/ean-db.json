@@ -1,4 +1,16 @@
 {
+  "00501163": {
+    "categories": [
+      "spice"
+    ],
+    "name": "Hacendado Paella con azafrán (saffron) spice packets (4g each)"
+  },
+  "0064791550": {
+    "categories": [
+      "pump-service-kit"
+    ],
+    "name": "Whale Service Kit AK1550 for Gulper 220 pump (diaphragm, valves, gaskets)"
+  },
   "20000646": {
     "categories": [
       "jam"
@@ -7,6 +19,10 @@
     "quantity": "450g"
   },
   "20003937": {
+    "categories": [
+      "bolognese"
+    ],
+    "name": "Combino СОС БОЛОНЕЗЕ Bolognese sauce",
     "prices": [
       {
         "currency": "EUR",
@@ -14,8 +30,16 @@
         "price": 1.02,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.02,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
+    "quantity": "400g",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
@@ -66,24 +90,30 @@
   "20144173": {
     "brand": "W5 (Lidl)",
     "categories": [
-      "Cleaning"
+      "cleaning"
     ],
-    "name": "MAXI POWER limescale cleaner",
+    "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)",
     "source": "manual"
   },
   "20163402": {
     "brand": "Combino",
     "categories": [
-      "Tomato sauces",
-      "Passata"
+      "passata"
     ],
-    "name": "Passata",
+    "name": "Combino ПАСИРАНИ ДОМАТИ Passata (crushed tomatoes)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-01-24",
         "price": 0.37,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.37,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -98,14 +128,62 @@
     ],
     "source": "manual"
   },
+  "20163822": {
+    "categories": [
+      "instant-foods",
+      "potatoes-instant"
+    ],
+    "name": "КАРТОФЕНО ПЮРЕ potato puree 12x200g portions",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.68,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "20289867": {
+    "categories": [
+      "rusks"
+    ],
+    "name": "Tastino Wheat & Rye rusks (4x11 slices)",
+    "quantity": "360g"
+  },
+  "20349714": {
+    "categories": [
+      "kitchen",
+      "kitchen-paper"
+    ],
+    "name": "КУХНЕНСКА ХАРТИЯ kitchen paper rolls 2-pack (Lidl, added 2026-01-17)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.52,
+        "shop": null,
+        "unit": "pack"
+      }
+    ]
+  },
   "2037795575": {
     "brand": "БОНИ",
     "categories": [
-      "Meat",
-      "Dried meat"
+      "dried-meat",
+      "meat"
     ],
-    "name": "БОНИ Сушеница",
+    "name": "БОНИ Сушеница dried meat (Lidl internal barcode)",
     "note": "Lidl internal barcode",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.78,
+        "shop": null,
+        "unit": "piece"
+      }
+    ],
     "quantity": "140g",
     "receipt_names": [
       {
@@ -113,6 +191,28 @@
       }
     ],
     "source": "manual"
+  },
+  "20400569": {
+    "categories": [
+      "lentils"
+    ],
+    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.38,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "20425562": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Italiamo Pesto Rosso (sun-dried tomato)",
+    "quantity": "190g"
   },
   "20469894": {
     "categories": [
@@ -135,6 +235,43 @@
       }
     ]
   },
+  "20621414": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Deluxe Гурме Песто Маслини olive pesto",
+    "quantity": "190g"
+  },
+  "20710118": {
+    "categories": [
+      "lentils"
+    ],
+    "name": "РОДНА СТРЯХА ЛЕЩА Bulgarian lentils (Plovdiv)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.12,
+        "shop": null,
+        "unit": "piece"
+      }
+    ],
+    "quantity": "500g"
+  },
+  "20710187": {
+    "categories": [
+      "canning",
+      "pate"
+    ],
+    "name": "Baky ПАСТЕТ АПЕТИТ Bulgarian pâté"
+  },
+  "20856090": {
+    "categories": [
+      "canning",
+      "maize"
+    ],
+    "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
+  },
   "2640660003584": {
     "brand": "Bella Bulgaria",
     "categories": [
@@ -151,53 +288,170 @@
     ],
     "source": "manual"
   },
+  "3583787174722": {
+    "categories": [
+      "lubricant",
+      "chain-lubricant"
+    ],
+    "name": "Decathlon Bike Chain Lubricant All Weather 03 (added 2026-01-18)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.11,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3608409854254": {
     "brand": "DECATHLON",
     "categories": [
-      "Repair",
-      "Adhesives"
+      "bike-repair-kit"
     ],
-    "name": "Repair kit",
+    "name": "DECATHLON repair kit for bike tubes (model 8563766)",
     "quantity": "model 8563766",
     "source": "manual"
+  },
+  "3800052253181": {
+    "categories": [
+      "beer"
+    ],
+    "name": "ASTIKA БИРА Bulgarian beer cans (added 2026-01-21)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.42,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "3800106400011": {
+    "categories": [
+      "rice"
+    ],
+    "name": "KRINA ОРИЗ ПЕРЛЕН pearl rice Camolino (Bulgaria)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.24,
+        "shop": null,
+        "unit": "kg"
+      }
+    ],
+    "quantity": "1kg"
+  },
+  "3800106401018": {
+    "categories": [
+      "beans"
+    ],
+    "name": "KRINA БОБ ТРАПЕЗЕН white table beans (Egypt)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.3,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "3800106402053": {
+    "categories": [
+      "rice"
+    ],
+    "name": "KRINA ОРИЗ СРЕДНОЗЪРНЕСТ medium grain rice",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.48,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "3800232441247": {
+    "categories": [
+      "honey"
+    ],
+    "name": "НАТ. ПЧЕЛЕН КРЕМ МЕД Natural creamy bee honey (Bulgarian)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.67,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "4004764390564": {
+    "categories": [
+      "marker"
+    ],
+    "name": "edding permanent marker (black, 1.5-3mm,"
+  },
+  "4004764390571": {
+    "categories": [
+      "marker"
+    ],
+    "name": "edding 300 permanent marker (red, 1.5-3mm, refillable,"
+  },
+  "4004847422021": {
+    "categories": [
+      "power-connector"
+    ],
+    "name": "Meister power coupling connector (7422020-Kupplung, black, German)"
   },
   "4008153752353": {
     "brand": "UNITEC",
     "categories": [
-      "Cargo",
-      "Straps"
+      "tools"
     ],
-    "name": "Ratchet tie down + hook",
+    "name": "Ratchet tie down + hook, orange, 225 daN, UNITEC model 75235",
     "quantity": "225 daN",
     "source": "manual"
+  },
+  "4008496559862": {
+    "categories": [
+      "battery"
+    ],
+    "name": "VARTA Longlife Power 9V alkaline"
+  },
+  "4009800001602": {
+    "categories": [
+      "personal-care"
+    ],
+    "name": "Speick vegan deodorant 40ml (German)"
   },
   "4015600734138": {
     "brand": "P&G",
     "categories": [
-      "Hygiene",
-      "Personal care"
+      "personal-care"
     ],
-    "name": "Body wash/shampoo",
+    "name": "P&G body wash/shampoo 360ml",
     "quantity": "360ml",
     "source": "manual"
   },
   "4031396000592": {
     "brand": "YACHTICON",
     "categories": [
-      "Boat",
-      "Cleaning"
+      "cleaning"
     ],
-    "name": "PURYSAN marine toilet cleaner",
+    "name": "YACHTICON PURYSAN marine toilet cleaner 500ml",
     "quantity": "500ml",
     "source": "manual"
   },
   "4032526841801": {
     "brand": "suki",
     "categories": [
-      "Hardware",
-      "Rope"
+      "boat"
     ],
-    "name": "Rope/cord spool",
+    "name": "suki braided rope spool Ø4mm 30m (white, article 3421147)",
     "quantity": "Ø4mm, 30m",
     "source": "manual"
   },
@@ -211,19 +465,31 @@
     "quantity": "Ø4mm, 30m",
     "source": "manual"
   },
+  "4046681001413": {
+    "categories": [
+      "ph-test-strips"
+    ],
+    "name": "Macherey-Nagel pH-Fix test strips 0-14 (100 strips, LOT 10D3242)"
+  },
   "4052489642931": {
     "brand": "Стряха",
     "categories": [
-      "Preserved vegetables",
-      "Peppers"
+      "preserved-vegetables"
     ],
-    "name": "Чушки белени пълнени с чесън и магданоз",
+    "name": "Стряха ЧУШКИ БЕЛЕНИ ПЪЛНЕНИ С ЧЕСЪН И МАГДАНОЗ peppers stuffed with garlic and parsley",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-01-28",
         "price": 2.05,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.05,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -237,6 +503,13 @@
       }
     ],
     "source": "manual"
+  },
+  "4056489056010": {
+    "categories": [
+      "beans"
+    ],
+    "name": "Lidl Μαυρομάτικα Φασόλια (Black eyed beans) - EXPIRED",
+    "quantity": "500g"
   },
   "4056489080510": {
     "categories": [
@@ -283,6 +556,13 @@
       }
     ]
   },
+  "4056489105381": {
+    "categories": [
+      "cashews"
+    ],
+    "name": "Alesto Cashews roasted & salted XXL",
+    "quantity": "250g"
+  },
   "4056489108160": {
     "categories": [
       "milk"
@@ -322,6 +602,10 @@
     ]
   },
   "4056489150510": {
+    "categories": [
+      "spice"
+    ],
+    "name": "Kania ИНДИЙСКО ОРЕХЧЕ ЦЯЛО = Whole nutmeg",
     "prices": [
       {
         "currency": "EUR",
@@ -329,8 +613,16 @@
         "price": 0.66,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.66,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
+    "quantity": "9g",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
@@ -339,6 +631,12 @@
         "shop": "Lidl Varna"
       }
     ]
+  },
+  "4056489352501": {
+    "categories": [
+      "jam"
+    ],
+    "name": "Lidl Мус от сливи plum mousse"
   },
   "4056489693307": {
     "brand": "Pilos/Lidl",
@@ -372,10 +670,9 @@
   "4056489941200": {
     "brand": "Pilos",
     "categories": [
-      "Dairy",
-      "Yogurt"
+      "yogurt"
     ],
-    "name": "Pilos Кисело мляко 3.6%",
+    "name": "Pilos КИСЕЛО МЛЯКО 3.6% yogurt (Lidl 2026-03-04)",
     "prices": [
       {
         "currency": "EUR",
@@ -389,6 +686,13 @@
         "date": "2026-03-04",
         "price": 1.53,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.53,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -445,7 +749,18 @@
     ],
     "source": "manual"
   },
+  "4250206204146": {
+    "categories": [
+      "electrical-connector"
+    ],
+    "name": "Lindemann EK30262 brass chrome 2-pole connector 3A 12V"
+  },
   "4335619100947": {
+    "categories": [
+      "chocolate"
+    ],
+    "name": "Fin Carré Cashew-Kracher milk chocolate with cashew",
+    "quantity": "100g",
     "receipt_names": [
       {
         "name": "МЛЕЧ.ШОКОЛ.С КАШУ"
@@ -455,21 +770,25 @@
   "4337185452635": {
     "brand": "Kaufland",
     "categories": [
-      "Hygiene",
-      "Soap"
+      "personal-care"
     ],
-    "name": "Sensitive liquid soap refill",
+    "name": "Kaufland Sensitive liquid soap refill 1L (aloe vera)",
     "quantity": "1L",
     "source": "manual"
   },
   "5000204890785": {
     "brand": "Unknown",
     "categories": [
-      "Chemicals",
-      "Spray"
+      "air-freshener"
     ],
-    "name": "ENDURA spray",
+    "name": "Glade Air Freshener \"Woodland Grove\" (green can, pine scent)",
     "source": "manual"
+  },
+  "5032227340015": {
+    "categories": [
+      "lubricant"
+    ],
+    "name": "WD-40 multi-purpose lubricant 100ml"
   },
   "5201031250739": {
     "categories": [
@@ -481,20 +800,50 @@
   "5201314587552": {
     "brand": "SANITAS",
     "categories": [
-      "Kitchen",
-      "Food wrap"
+      "clingfilm"
     ],
-    "name": "Cling film 30m",
+    "name": "SANITAS cling film 30m (Greek, ΜΕΜΒΡΑΝΗ ΕΛΑΣΤΙΚΟΤΗΤΑΣ & ΑΝΤΟΧΗΣ)",
     "quantity": "30m",
     "source": "manual"
+  },
+  "5201502117219": {
+    "categories": [
+      "beans"
+    ],
+    "name": "Agrino ΡΕΒΙΘΙΑ ΧΟΝΔΡΑ Greek chickpeas (from Mexico)",
+    "quantity": "500g"
+  },
+  "5207032200554": {
+    "categories": [
+      "chemicals"
+    ],
+    "name": "ΟΙΝΟΠΝΕΥΜΑ ΚΑΘΑΡΟΝ rubbing alcohol 95° (Greek, ΒΙΚΤΩΡ ΑΒΕΕ, Samos)"
+  },
+  "5606026027714": {
+    "categories": [
+      "utility-blade"
+    ],
+    "name": "MacFer L-100 utility knife blades 18mm (10pcs, SK4 steel, Art. 027.0071,"
+  },
+  "5709404112603": {
+    "categories": [
+      "pool-chlorine"
+    ],
+    "name": "Matas Tør-Klor (dry chlorine for pool disinfection, 1kg, with cyanuric acid UV stabilizer)"
+  },
+  "5901098167109": {
+    "categories": [
+      "measuring-jug"
+    ],
+    "name": "BranQ measuring jug (Art. 1671, Made in Poland)",
+    "quantity": "500ml"
   },
   "5902062007025": {
     "brand": "GRAPHITE",
     "categories": [
-      "Tools",
-      "Welding"
+      "welding-electrode"
     ],
-    "name": "Welding electrodes 56H835",
+    "name": "GRAPHITE welding electrodes Ø3.25mm 1kg (model 56H835, graphite.pl)",
     "quantity": "1kg, Ø3.25mm",
     "source": "manual"
   },
@@ -510,50 +859,162 @@
       }
     ]
   },
+  "5906741601299": {
+    "categories": [
+      "marker"
+    ],
+    "name": "Richmann C0129 carpenter's pencil (red,"
+  },
   "5908068806808": {
     "brand": "GRAPHITE/Ihtiman",
     "categories": [
-      "Tools",
-      "Welding"
+      "welding-electrode"
     ],
-    "name": "Welding electrodes",
+    "name": "Welding electrodes Ø3.25mm 1kg (electrodi.net / Ihtiman)",
     "quantity": "1kg",
     "source": "manual"
   },
   "5949065025434": {
     "brand": "Unknown",
     "categories": [
-      "Hygiene",
-      "Wipes"
+      "personal-care"
     ],
-    "name": "Wet wipes floral",
+    "name": "Wet wipes with floral pattern (Romanian)",
     "source": "manual"
+  },
+  "5997010314324": {
+    "categories": [
+      "canning",
+      "tomatoes"
+    ],
+    "name": "K Classic passierte Tomaten crushed (Kaufland)"
+  },
+  "671880520959": {
+    "categories": [
+      "toilet-service-kit"
+    ],
+    "name": "Jabsco toilet service kit 90197-0000 (joker valve, lip seal, square cut ring, washer - OLD, emergency use only)"
+  },
+  "6900000279899": {
+    "categories": [
+      "t-shirt"
+    ],
+    "name": "ELECTRA coral/pink t-shirt (size S oversize, 100% cotton, made in Turkey)"
+  },
+  "6940322700049": {
+    "categories": [
+      "antenna-adapter"
+    ],
+    "name": "MARITIM VHF antenna adapter (prod.nr 9551-26, stainless)"
+  },
+  "7025921630108": {
+    "categories": [
+      "flange"
+    ],
+    "name": "WEMA FL-2 flange for fuel sender (prod.nr 8018-00)"
+  },
+  "7070893159096": {
+    "categories": [
+      "cockpit-lamp"
+    ],
+    "name": "Biltema cockpit lamp"
+  },
+  "7309860323636": {
+    "categories": [
+      "battery"
+    ],
+    "name": "Kjell & Company CR2032 Lithium 3V coin cells (10 pack)"
+  },
+  "7330571258344": {
+    "categories": [
+      "corner-bracket"
+    ],
+    "name": "Jula corner brackets 28x28mm (402-452,"
+  },
+  "7331210066481": {
+    "categories": [
+      "vase"
+    ],
+    "name": "ICA Decanter Capas 1.5L clear (plastic, used as a flower vase)"
   },
   "7340011453437": {
     "brand": "Coop",
     "categories": [
-      "Cleaning"
+      "cleaning"
     ],
-    "name": "Änglamark window cleaner",
+    "name": "Änglamark window cleaner 750ml (Coop)",
     "quantity": "750ml",
     "source": "manual"
+  },
+  "7340191137097": {
+    "categories": [
+      "spread"
+    ],
+    "name": "Coop Extra Kaviar cod roe spread tubes (190g)"
+  },
+  "7393173096165": {
+    "categories": [
+      "screw"
+    ],
+    "name": "Clas Ohlson crosshead screws 2.9x16mm PZ-1 EXTREME (11.1412-1)"
+  },
+  "7393173096189": {
+    "categories": [
+      "screw"
+    ],
+    "name": "Clas Ohlson crosshead screws 4.2x16mm PZ-2 DIN 7982 EXTREME (11.1412-3)"
+  },
+  "7622210678546": {
+    "categories": [
+      "chocolate"
+    ],
+    "name": "Freia Melkesjokolade Salt Lakris (EXPIRED - use soon!)"
+  },
+  "8024827060988": {
+    "categories": [
+      "buoy-holder"
+    ],
+    "name": "Hesteskobøye holder 15100-02 (horseshoe buoy holder,"
+  },
+  "8480000400691": {
+    "categories": [
+      "personal-care"
+    ],
+    "name": "Deliplus deodorant spray \"Máxima Protección\" green tea 24h (Spanish)"
+  },
+  "8690105000115": {
+    "categories": [
+      "tea"
+    ],
+    "name": "Çaykur Rize Turist Çayı Turkish black tea",
+    "quantity": "1000g"
+  },
+  "8697664908052,": {
+    "categories": [
+      "cable-tie"
+    ],
+    "name": "TORK Cable Ties 150x2.5mm 100pcs Made in Turkey, halogen free)"
   },
   "8714789732671": {
     "brand": "Colgate",
     "categories": [
-      "Hygiene",
-      "Dental"
+      "personal-care"
     ],
-    "name": "Mouthwash",
+    "name": "Colgate PLAX Fresh&Protect mouthwash 24/7",
     "source": "manual"
   },
   "8718951295711": {
     "brand": "Colgate",
     "categories": [
-      "Hygiene",
-      "Dental"
+      "personal-care"
     ],
-    "name": "Bamboo charcoal toothbrush",
+    "name": "Colgate bamboo charcoal toothbrush",
     "source": "manual"
+  },
+  "9002539214888": {
+    "categories": [
+      "tools"
+    ],
+    "name": "Telescoping handle for paint roller, Schuller Eh'klar Art.Nr. 214888 (rollers in epoxy storage)"
   }
 }
