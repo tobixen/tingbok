@@ -2180,7 +2180,7 @@ concepts:
   office/writing:
     prefLabel: "Writing supplies"
     broader: office
-    exclude_sources:
+    excluded_sources:
       - dbpedia
 
   office/paper:
