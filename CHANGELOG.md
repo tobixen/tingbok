@@ -6,43 +6,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
-## [Unreleased]
+## [v0.13.0] - 2026-03-10
 
-### Change
-
-I'm not sure if this is a good idea ... but I decided to go for it after observing that the same query failed over and over again:
-
-- **Transient upstream failures now cached with a short TTL** — when DBpedia, AGROVOC, or
-  Wikidata returns a timeout or connection error, `lookup_concept` now adds a transient entry
-  to the not-found cache (4-hour TTL, marked `"transient": true`).  Previously the failure was
-  not cached at all, causing concepts like `"writing supplies"` (no DBpedia article) to time out
-  and retry on every parse run.  After 4 hours the entry expires and the upstream is retried.
-
-### Fixed
-- **`ReceiptNameObservation.shop`** is now optional (`str | None = None`); previously required,
-  which caused 500 errors for EAN entries migrated from `ean_cache.json` that had a receipt name
-  but no associated shop price to infer the shop from.
-- **`GET /api/ean/{ean}` injects `ean` into manual-only results** — `source: manual` entries
-  in `ean-db.yaml` don't contain the EAN (it is the YAML key), causing 500 validation errors.
-  The router now calls `result.setdefault("ean", ean)` before constructing `ProductResponse`.
-- **`_lookup_dbpedia` HTML stripping** — DBpedia Lookup API sometimes returns
-  HTML-highlighted labels (e.g. ``<b>plastic</b> <b>bag</b> <b>ban</b>``).
-  HTML tags are now stripped from prefLabel and description before storing.
-- **`_lookup_dbpedia` and `_lookup_wikidata` similarity threshold** — when no
-  exact-label match is found, the first result is now accepted only if its label
-  has ≥ 60 % token-set-ratio similarity to the query (rapidfuzz).  Previously the
-  first result was returned unconditionally, causing nonsensical mappings such as
-  `mounting tool` → ``list_of_naruto_episodes`` or `electrical misc` → ``microphone``.
-- **DBpedia 'List of …' articles filtered from hierarchy** — ``List_of_*`` and
-  ``Lists_of_*`` URIs are no longer followed when building broader-concept chains,
-  preventing paths like ``list_of_ancient_dishes/bread/bread_crumbs``.
+Lots of changes - still trying to get the category system in inventory-md to work reasonably well.
 
 ### Added
 
+- **GPT and OFF added to `/api/lookup`** — the unified concept lookup now queries the
+  Google Product Taxonomy (GPT) and Open Food Facts taxonomy (OFF) alongside AGROVOC,
+  DBpedia, and Wikidata.  GPT contributes hierarchy path derivation and multilingual labels;
+  OFF contributes `off:` source URIs and food labels/altLabels.  GPT lookup also tries
+  singular/plural variants when an exact label match fails.
+- **`source_paths` field on `VocabularyConcept`** — carries tingbok-normalised hierarchy
+  paths per source (e.g. `{"gpt": "food/beverages"}`), populated at serve time from
+  GPT URI-based lookup.
+- **Language-specific `path_aliases` on `VocabularyConcept`** — allows e.g. `klær/vinter`
+  (Norwegian) to resolve to `clothing/thermal` when queried with `lang=nb/no/nn`, without
+  accidentally matching other languages.
+- **`prune-cache` CLI subcommand** — removes the oldest cache entries until the cache is
+  below a target size, using the new `_last_accessed` timestamps to determine eviction order.
+- **Cache access tracking** — `_save_to_cache` now records `_last_accessed` on every write
+  and `_load_from_cache` updates it on every hit, enabling LRU-style `prune-cache` behaviour.
+- **On-demand label fetching in `GET /api/vocabulary/{concept}`** — the single-concept
+  endpoint now fetches labels, altLabels, and descriptions eagerly when the background task
+  has not yet processed that concept, so it never returns incomplete data after a fresh start.
+- **`/health` exposes file paths for localhost** — when the request originates from
+  `127.0.0.1` / `::1`, the health response includes resolved paths for the data dir,
+  cache dir, EAN observations file, etc.
+- **DBpedia hierarchy dead-end blacklist** — when DBpedia traversal reaches abstract
+  Wikipedia meta-categories (property, quantity, scalar, ratio, elements of music, …)
+  the branch is silently discarded rather than chasing the chain to max depth.
 - **`PUT /api/ean/{ean}`** — new endpoint that accepts inventory-sourced EAN observations
   (`categories`, `name`, `quantity`, `prices`, `receipt_names`).  Observations are persisted
-  to `ean-db.json` in the cache directory (runtime-writable, separate from the git-tracked
-  `ean-db.yaml`), merged into future `GET` responses (inventory categories take priority),
+  to `ean-db.json`, merged into future `GET` responses (inventory categories take priority),
   and the merged product view is returned immediately.
 - **`GET /api/ean/{ean}`** now also merges runtime `ean-db.json` observations into responses.
 - **AGROVOC labels and altLabels served from local Oxigraph store** — previously the server
@@ -60,6 +56,75 @@ I'm not sure if this is a good idea ... but I decided to go for it after observi
   DBpedia: ``household/bedding``), a warning entry is appended to
   ``{TINGBOK_CACHE_DIR}/lookup-warnings.json``.  Operators can inspect this file to
   add ``excluded_sources:`` entries for ambiguous concepts in ``vocabulary.yaml``.
+
+### Changed
+
+- **Cache: background refresh loop replaces TTL-based expiry** — `_load_from_cache` no
+  longer evicts stale entries; a background task (`cache_refresh_loop`) proactively
+  refreshes the oldest entry, so stale data is always served immediately while a fresh
+  fetch happens in the background.  The `_cache_key` is stored alongside cached data so
+  the refresh loop knows which upstream function to call.
+- **EAN data unified into `ean-db.json`** — `ean-db.yaml` is no longer loaded at startup;
+  all EAN data (including previously manual entries) flows through `PUT /api/ean/{ean}` and
+  is persisted in `ean-db.json`.  `ean-db.yaml` remains in the repo as an archived reference.
+- **`ean-db.json` moved from cache dir to data dir** — inventory observations are persistent
+  data, not a cache artefact; the file now lives alongside `vocabulary.yaml` so it survives
+  cache clears and is visible to git.
+- **Source URIs normalised to `https://`** — all `http://` DBpedia, Wikidata, and AGROVOC
+  URIs in `vocabulary.yaml` are converted to `https://`; the `_normalise_uri()` helper also
+  normalises URIs discovered at runtime.
+- **`GET /api/vocabulary` returns 503 Retry-After while enrichment is incomplete** — avoids
+  silently serving partial data (missing translations/descriptions) while the background
+  label-fetch task is still running.  The single-concept endpoint is unaffected (fetches on-demand).
+- **`prune-vocabulary` also removes redundant `altLabel` entries** — fetches alt-labels from
+  source URIs at runtime and removes any `altLabel` entries in `vocabulary.yaml` that are
+  already provided by those sources, keeping the YAML minimal.
+- **Transient upstream failures now cached with a short TTL** — when DBpedia, AGROVOC, or
+  Wikidata returns a timeout or connection error, `lookup_concept` adds a transient entry
+  to the not-found cache (4-hour TTL, marked `"transient": true`) so the same query does
+  not time out on every parse run.
+
+### Fixed
+
+- **Wikidata API updated from v0 to v1** — the v0 endpoint now returns 404; descriptions,
+  labels, and aliases all updated to the v1 URL.
+- **`GET /api/vocabulary/{concept_id:path}` now handles slash-containing IDs** — concepts
+  like `food/spices` previously returned 404 because the path parameter stopped at the first
+  slash.
+- **`/api/lookup` matches vocabulary concepts via runtime-fetched labels** — the vocabulary
+  pre-check now also searches `_fetched_alt_labels` and `_fetched_labels` (synonyms and
+  translations fetched from external sources), so e.g. `spices` correctly resolves to
+  `food/spices` rather than falling through to an unrelated AGROVOC concept.
+- **`lookup_concept` prefers vocabulary-anchored paths for canonical concept ID** — when
+  AGROVOC returns multiple paths for the same concept, the path whose deepest ancestor
+  segment exists in `vocabulary.yaml` is selected as canonical.
+- **`PriceObservation.date` made optional** — inventory entries may not carry an explicit
+  observation date; `None` means date unknown.
+- **Fix misplaced `@asynccontextmanager`** — decorator slipped onto `_cache_refresh_config`
+  instead of `lifespan`, causing startup to fail with `TypeError`.
+- **`ReceiptNameObservation.shop`** is now optional (`str | None = None`); previously
+  required, causing 500 errors for EAN entries that had a receipt name but no shop.
+- **`GET /api/ean/{ean}` injects `ean` into manual-only results** — `source: manual` entries
+  don't contain the EAN (it is the YAML key), which caused 500 validation errors.
+- **`_lookup_dbpedia` HTML stripping** — DBpedia Lookup API sometimes returns
+  HTML-highlighted labels; tags are now stripped before storing.
+- **`_lookup_dbpedia` and `_lookup_wikidata` similarity threshold** — the first result is
+  now accepted only if its label has ≥ 60 % token-set-ratio similarity to the query,
+  preventing nonsensical mappings like `mounting tool` → `list_of_naruto_episodes`.
+- **DBpedia 'List of …' articles filtered from hierarchy** — ``List_of_*`` and
+  ``Lists_of_*`` URIs are no longer followed when building broader-concept chains.
+- **GPT locale corrected from `nb-NO` to `no-NO`** — the Norwegian taxonomy file uses
+  `no-NO` locale in its filename.
+- **EAN save `PermissionError` now logged at ERROR level** and re-raised so callers get a
+  500 rather than a silent success.
+
+### Data
+
+- **`hardware/nut` concept added** — covers hex/wing/lock nuts (fasteners); `nut`/`nuts`
+  altLabels added to `fasteners`; food/nuts hierarchy corrected (peanuts, cashews, coconut
+  moved under `food/nuts`; coconut added).
+- Various vocabulary improvements: spices hierarchy, salt, potatoes, roes/caviar, clothing
+  labels, altLabel cleanup, long-johns placement, source URI corrections.
 
 ## [v0.12.0] - 2026-03-07
 
