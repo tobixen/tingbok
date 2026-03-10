@@ -89,6 +89,7 @@ concepts:
     - food/baking
     - food/spices
     - food/staples
+    - food/roes
 
   tools:
     prefLabel: "Tools"
@@ -395,8 +396,7 @@ concepts:
   registration-plate:
     prefLabel: "Registration plate"
     altLabel:
-      en: ["license plate", "number plate", "boat registration", "vehicle registration
-          plate"]
+      en: ["license plate", "number plate", "boat registration", "vehicle registration plate"]
       nb: ["registreringsskilt", "nummerskilt"]
     broader: documents
 
@@ -407,6 +407,17 @@ concepts:
   # =============================================================================
   # FOOD SUBCATEGORIES
   # =============================================================================
+
+  food/roes:
+    broader: food
+    sources:
+      - https://www.wikidata.org/wiki/Q12366140
+      - https://aims.fao.org/aos/agrovoc/c_6634
+    narrower:
+      - caviar
+
+  food/caviar:
+    broader: food/roes
 
   food/staples:
     prefLabel: "Staple foods"
