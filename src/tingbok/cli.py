@@ -4,6 +4,14 @@ Entry point: ``tingbok`` (see ``[project.scripts]`` in pyproject.toml).
 
 Subcommands
 -----------
+condense-vocabulary
+    Strip redundant ``broader`` and ``narrower`` entries from vocabulary.yaml.
+
+    ``narrower`` is removed from all non-``_root`` concepts (recomputed at
+    load time).  ``broader`` is removed from path-style concept IDs when its
+    value equals the parent path (e.g. ``food/dairy: broader: food`` is
+    redundant).  Run after editing vocabulary.yaml to keep the file clean.
+
 populate-uris
     Discover external source URIs for vocabulary concepts that have none and
     write the results back into the vocabulary YAML file.
@@ -175,6 +183,80 @@ def _populate_uris(
         yaml.dump(doc, f)
 
     print(f"Updated {vocab_path}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# condense-vocabulary
+# ---------------------------------------------------------------------------
+
+
+def _condense_vocabulary(vocab_path: Path, *, dry_run: bool = False) -> int:
+    """Core logic for the ``condense-vocabulary`` subcommand.
+
+    Strips redundant ``broader`` and ``narrower`` entries from vocabulary.yaml:
+
+    * ``narrower`` is removed from every concept except ``_root`` (where it
+      defines the top-level ordering and has no ``broader`` counterpart).
+    * ``broader`` is removed from path-style concept IDs when its value equals
+      the parent path segment (e.g. ``food/dairy: broader: food`` → redundant
+      because :func:`_load_vocabulary` infers this at runtime).  ``broader``
+      values that differ from the path-inferred parent are kept.
+
+    Returns an exit code (0 = success).
+    """
+    try:
+        from ruamel.yaml import YAML  # noqa: PLC0415
+    except ImportError:
+        print(
+            "ruamel.yaml is required for condense-vocabulary.  Install it with: pip install ruamel.yaml",
+            file=sys.stderr,
+        )
+        return 1
+
+    if not vocab_path.exists():
+        print(f"Error: vocabulary file not found: {vocab_path}", file=sys.stderr)
+        return 1
+
+    yaml = YAML()
+    yaml.preserve_quotes = True
+    with open(vocab_path) as f:
+        doc = yaml.load(f)
+
+    concepts: dict = doc.get("concepts", {})
+    changes = 0
+
+    for concept_id, data in concepts.items():
+        if data is None:
+            continue
+
+        # Strip narrower from all concepts except _root (defines ordering).
+        if concept_id != "_root" and "narrower" in data:
+            if not dry_run:
+                del data["narrower"]
+            changes += 1
+
+        # Strip broader from path-style IDs when it equals the inferred parent.
+        if "/" in concept_id and "broader" in data:
+            inferred_parent = "/".join(concept_id.split("/")[:-1])
+            broader = data["broader"]
+            broader_list = [broader] if isinstance(broader, str) else list(broader)
+            if broader_list == [inferred_parent]:
+                if not dry_run:
+                    del data["broader"]
+                changes += 1
+
+    if changes == 0:
+        print("Vocabulary already condensed.")
+        return 0
+
+    print(f"{'(dry-run) ' if dry_run else ''}Removed {changes} redundant field(s).")
+
+    if not dry_run:
+        with open(vocab_path, "w") as f:
+            yaml.dump(doc, f)
+        print(f"Updated {vocab_path}")
+
     return 0
 
 
@@ -638,6 +720,22 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--dry-run", action="store_true", help="Print proposed changes without modifying the file")
     p.add_argument("--lang", default="en", metavar="LANG", help="Language for concept lookup (default: en)")
 
+    # condense-vocabulary
+    cv = sub.add_parser(
+        "condense-vocabulary",
+        help="Strip redundant broader/narrower entries from vocabulary.yaml",
+        description=(
+            "Remove broader and narrower entries that can be inferred at runtime.\n\n"
+            "narrower is removed from all concepts except _root (which defines the\n"
+            "top-level ordering).  broader is removed from path-style concept IDs\n"
+            "when its value matches the parent path segment (e.g. food/dairy: broader:\n"
+            "food is redundant because tingbok infers this from the concept ID).\n"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    cv.add_argument("vocabulary", metavar="VOCABULARY_YAML", help="Path to vocabulary.yaml")
+    cv.add_argument("--dry-run", action="store_true", help="Print proposed changes without modifying the file")
+
     # prune-vocabulary
     pv = sub.add_parser(
         "prune-vocabulary",
@@ -746,6 +844,10 @@ def main() -> None:
             dry_run=args.dry_run,
             lang=args.lang,
         )
+        sys.exit(rc)
+
+    if args.command == "condense-vocabulary":
+        rc = _condense_vocabulary(Path(args.vocabulary), dry_run=args.dry_run)
         sys.exit(rc)
 
     if args.command == "prune-vocabulary":

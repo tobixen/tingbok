@@ -649,6 +649,144 @@ def test_populate_uris_skips_gpt_when_excluded(tmp_path):
 
 
 # ---------------------------------------------------------------------------
+# condense-vocabulary
+# ---------------------------------------------------------------------------
+
+VOCAB_WITH_REDUNDANT_HIERARCHY = """\
+concepts:
+  _root:
+    prefLabel: "Root"
+    narrower:
+      - food
+
+  food:
+    prefLabel: "Food"
+    narrower:
+      - food/dairy
+      - food/snacks
+
+  food/dairy:
+    prefLabel: "Dairy"
+    broader: food
+    narrower:
+      - food/dairy/yogurt
+
+  food/dairy/yogurt:
+    prefLabel: "Yogurt"
+    broader: food/dairy
+
+  food/snacks:
+    prefLabel: "Snacks"
+    broader: food
+
+  food/roes:
+    prefLabel: "Roes"
+
+  food/caviar:
+    prefLabel: "Caviar"
+    broader: food/roes
+"""
+
+
+def _run_condense(
+    tmp_path: Path,
+    extra_args: list[str] | None = None,
+    vocab_content: str = VOCAB_WITH_REDUNDANT_HIERARCHY,
+) -> tuple[int, str]:
+    """Run the condense-vocabulary command against a temp vocabulary file."""
+    from io import StringIO
+    from unittest.mock import patch as _patch
+
+    import tingbok.cli as cli_module
+
+    vocab_file = tmp_path / "vocabulary.yaml"
+    vocab_file.write_text(vocab_content)
+    argv = ["tingbok", "condense-vocabulary", str(vocab_file)]
+    if extra_args:
+        argv.extend(extra_args)
+
+    captured = StringIO()
+    with _patch.object(sys, "argv", argv):
+        with _patch("sys.stdout", captured):
+            try:
+                cli_module.main()
+                rc = 0
+            except SystemExit as exc:
+                rc = exc.code if isinstance(exc.code, int) else 0
+    return rc, captured.getvalue()
+
+
+def test_condense_vocabulary_removes_path_derivable_broader(tmp_path: Path) -> None:
+    """broader that matches the path-inferred parent should be removed."""
+    rc, _ = _run_condense(tmp_path)
+    assert rc == 0
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    assert "broader" not in updated["concepts"]["food/dairy"]
+    assert "broader" not in updated["concepts"]["food/dairy/yogurt"]
+    assert "broader" not in updated["concepts"]["food/snacks"]
+
+
+def test_condense_vocabulary_keeps_override_broader(tmp_path: Path) -> None:
+    """broader that differs from the path-inferred parent must be kept."""
+    rc, _ = _run_condense(tmp_path)
+    assert rc == 0
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    # food/caviar has broader: food/roes (not food as path would give) → kept
+    assert updated["concepts"]["food/caviar"].get("broader") == "food/roes"
+
+
+def test_condense_vocabulary_removes_narrower(tmp_path: Path) -> None:
+    """narrower lists on non-_root concepts should be removed."""
+    rc, _ = _run_condense(tmp_path)
+    assert rc == 0
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    assert "narrower" not in updated["concepts"]["food"]
+    assert "narrower" not in updated["concepts"]["food/dairy"]
+
+
+def test_condense_vocabulary_preserves_root_narrower(tmp_path: Path) -> None:
+    """_root.narrower should NOT be removed."""
+    rc, _ = _run_condense(tmp_path)
+    assert rc == 0
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    assert updated["concepts"]["_root"]["narrower"] == ["food"]
+
+
+def test_condense_vocabulary_dry_run_does_not_write(tmp_path: Path) -> None:
+    """--dry-run should not modify the vocabulary file."""
+    vocab_file = tmp_path / "vocabulary.yaml"
+    vocab_file.write_text(VOCAB_WITH_REDUNDANT_HIERARCHY)
+    rc, _ = _run_condense(tmp_path, extra_args=["--dry-run"])
+    assert rc == 0
+    assert vocab_file.read_text() == VOCAB_WITH_REDUNDANT_HIERARCHY
+
+
+def test_condense_vocabulary_preserves_yaml_comments(tmp_path: Path) -> None:
+    """ruamel.yaml round-trip should preserve existing comments."""
+    vocab_with_comment = """\
+concepts:
+  # Important comment about the root
+  _root:
+    prefLabel: "Root"
+    narrower:
+      - food
+
+  food:
+    prefLabel: "Food"
+    narrower:
+      - food/dairy
+
+  food/dairy:
+    prefLabel: "Dairy"
+    broader: food
+"""
+    rc, _ = _run_condense(tmp_path, vocab_content=vocab_with_comment)
+    assert rc == 0
+    updated_text = (tmp_path / "vocabulary.yaml").read_text()
+    assert "Important comment about the root" in updated_text
+
+
+# ---------------------------------------------------------------------------
 # prune-cache
 # ---------------------------------------------------------------------------
 

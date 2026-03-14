@@ -132,11 +132,52 @@ def _gpt_path_from_parts(path_parts: list[str]) -> str | None:
     return "/".join([root] + rest)
 
 
-def _load_vocabulary() -> dict[str, Any]:
-    """Load the package vocabulary from YAML."""
-    with open(VOCABULARY_PATH) as f:
+def _load_vocabulary(path: Path | None = None) -> dict[str, Any]:
+    """Load the package vocabulary from YAML.
+
+    For concept IDs containing ``/``, ``broader`` is inferred from the path
+    when not explicitly given (e.g. ``food/dairy`` → ``broader: [food]``).
+    ``narrower`` for every concept is recomputed as the inverse of all
+    ``broader`` relationships; explicit ``narrower`` entries that have no
+    ``broader`` counterpart (e.g. ``_root.narrower``) are preserved as-is.
+    """
+    p = path or VOCABULARY_PATH
+    with open(p) as f:
         data = yaml.safe_load(f)
-    return data.get("concepts", {})
+    concepts: dict[str, Any] = data.get("concepts", {})
+
+    # Pass 1: infer ``broader`` for path-style IDs that have none.
+    for concept_id, entry in concepts.items():
+        if entry is None:
+            continue
+        if "/" in concept_id and not entry.get("broader"):
+            parent = "/".join(concept_id.split("/")[:-1])
+            if parent in concepts:
+                entry["broader"] = [parent]
+
+    # Pass 2: compute ``narrower`` as the inverse of all ``broader`` links.
+    computed_narrower: dict[str, list[str]] = {}
+    for concept_id, entry in concepts.items():
+        if entry is None:
+            continue
+        broader = entry.get("broader") or []
+        if isinstance(broader, str):
+            broader = [broader]
+        for b in broader:
+            lst = computed_narrower.setdefault(b, [])
+            if concept_id not in lst:
+                lst.append(concept_id)
+
+    for concept_id, entry in concepts.items():
+        if entry is None:
+            continue
+        computed = computed_narrower.get(concept_id)
+        if computed:
+            # Replace with computed children (keeps things consistent).
+            entry["narrower"] = computed
+        # Otherwise keep any explicit YAML narrower (e.g. _root ordering list).
+
+    return concepts
 
 
 async def _discover_source_uris_background() -> None:

@@ -38,6 +38,20 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   `http://` to `https://` when comparing discovered URIs against existing ones, preventing
   duplicate entries when a source switches scheme between runs.
 
+### Added
+
+- **`condense-vocabulary` CLI subcommand** — strips redundant `broader` and
+  `narrower` entries from `vocabulary.yaml`.  `narrower` is removed from all
+  non-`_root` concepts (recomputed at load time from the inverse of `broader`).
+  `broader` is removed from path-style concept IDs when its value matches the
+  parent path segment (e.g. `food/dairy: broader: food` is redundant because the
+  hierarchy is inferred from the concept ID at startup).  Supports `--dry-run`.
+- **vocabulary.yaml is now self-healing at load time** — `_load_vocabulary` infers
+  `broader` from the concept ID path for any path-style concept that lacks an
+  explicit `broader` (e.g. `food/dairy` → `broader: [food]`), and recomputes all
+  `narrower` lists as the inverse of the established `broader` relationships.
+  Explicit `_root.narrower` (which defines top-level ordering) is preserved as-is.
+
 ### Changed
 
 - **`/health` now exposes uptime and vocabulary enrichment progress** — the response

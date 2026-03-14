@@ -3,6 +3,7 @@
 from unittest.mock import patch
 
 import pytest
+import yaml as _yaml
 from httpx import ASGITransport, AsyncClient
 
 from tingbok.app import app
@@ -198,6 +199,83 @@ async def test_ean_lookup_normalizes_categories(client) -> None:
     # "spreads" → "spread" (altLabel match); "fish spreads" unknown → kept
     assert "spread" in data["categories"]
     assert "fish spreads" in data["categories"]
+
+
+# ---------------------------------------------------------------------------
+# _load_vocabulary path inference
+# ---------------------------------------------------------------------------
+
+
+def _write_vocab(path, concepts):  # type: ignore[no-untyped-def]
+    """Write a minimal vocabulary.yaml to *path*."""
+    path.write_text(_yaml.dump({"concepts": concepts}))
+
+
+def test_load_vocabulary_infers_broader_from_path(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Path-style concept ID without explicit broader gets it inferred from path."""
+    import tingbok.app as app_module
+
+    vocab = tmp_path / "vocabulary.yaml"
+    _write_vocab(vocab, {"food": {"prefLabel": "Food"}, "food/dairy": {"prefLabel": "Dairy"}})
+    loaded = app_module._load_vocabulary(vocab)
+    broader = loaded["food/dairy"].get("broader")
+    assert broader == ["food"]
+
+
+def test_load_vocabulary_preserves_explicit_broader_override(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Explicit broader on a path-style concept is kept even if it differs from the path."""
+    import tingbok.app as app_module
+
+    vocab = tmp_path / "vocabulary.yaml"
+    _write_vocab(
+        vocab,
+        {
+            "food": {"prefLabel": "Food"},
+            "food/roes": {"prefLabel": "Roes"},
+            "food/caviar": {"prefLabel": "Caviar", "broader": "food/roes"},
+        },
+    )
+    loaded = app_module._load_vocabulary(vocab)
+    broader = loaded["food/caviar"].get("broader")
+    if isinstance(broader, str):
+        broader = [broader]
+    assert "food/roes" in broader
+    assert "food" not in broader
+
+
+def test_load_vocabulary_computes_narrower_as_inverse(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Narrower is computed as the inverse of broader."""
+    import tingbok.app as app_module
+
+    vocab = tmp_path / "vocabulary.yaml"
+    _write_vocab(
+        vocab,
+        {
+            "food": {"prefLabel": "Food"},
+            "food/dairy": {"prefLabel": "Dairy"},
+            "food/dairy/yogurt": {"prefLabel": "Yogurt"},
+        },
+    )
+    loaded = app_module._load_vocabulary(vocab)
+    assert "food/dairy" in loaded["food"].get("narrower", [])
+    assert "food/dairy/yogurt" in loaded["food/dairy"].get("narrower", [])
+
+
+def test_load_vocabulary_preserves_root_narrower(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """_root.narrower (no broader counterpart) is preserved from YAML."""
+    import tingbok.app as app_module
+
+    vocab = tmp_path / "vocabulary.yaml"
+    _write_vocab(
+        vocab,
+        {
+            "_root": {"prefLabel": "Root", "narrower": ["food", "tools"]},
+            "food": {"prefLabel": "Food"},
+            "tools": {"prefLabel": "Tools"},
+        },
+    )
+    loaded = app_module._load_vocabulary(vocab)
+    assert loaded["_root"].get("narrower") == ["food", "tools"]
 
 
 @pytest.mark.anyio
