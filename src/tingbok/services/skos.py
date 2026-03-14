@@ -71,6 +71,89 @@ def _is_dbpedia_list_uri(uri: str) -> bool:
     return local.startswith("List_of_") or local.startswith("Lists_of_")
 
 
+#: RDF type URIs that identify DBpedia results as persons or geographical places.
+#: Results containing any of these types are silently rejected — they are never
+#: useful as product/category concepts.
+_DBPEDIA_BLOCKED_TYPES: frozenset[str] = frozenset(
+    {
+        # Persons
+        "http://dbpedia.org/ontology/Person",
+        "http://xmlns.com/foaf/0.1/Person",
+        "http://schema.org/Person",
+        # Populated geographical places (cities, countries, districts …)
+        "http://dbpedia.org/ontology/PopulatedPlace",
+        "http://schema.org/Country",
+        "http://schema.org/City",
+        "http://schema.org/AdministrativeArea",
+        # Natural geographical features (rivers, mountains, islands …)
+        "http://dbpedia.org/ontology/NaturalPlace",
+    }
+)
+
+
+def _is_dbpedia_non_concept(doc: dict) -> bool:
+    """Return True if a DBpedia Lookup result doc should be excluded.
+
+    Checks the ``type`` list for person or geographical-place RDF types.
+    """
+    types = doc.get("type") or []
+    if isinstance(types, str):
+        types = [types]
+    return bool(set(types) & _DBPEDIA_BLOCKED_TYPES)
+
+
+#: Wikidata QIDs (P31 "instance of" values) that identify non-concept entities
+#: (persons, geographic places, disambiguation/list pages).
+_WIKIDATA_BLOCKED_P31: frozenset[str] = frozenset(
+    {
+        # Persons
+        "Q5",  # human
+        "Q15632617",  # fictional human
+        # Wikimedia meta-pages
+        "Q4167410",  # Wikimedia disambiguation page
+        "Q4167836",  # Wikimedia category page
+        "Q13406463",  # Wikimedia list article
+        # Geographical places (populated)
+        "Q6256",  # country
+        "Q515",  # city
+        "Q3957",  # town
+        "Q532",  # village
+        "Q1549591",  # big city
+        "Q7930989",  # city/town
+        "Q1093829",  # city of the United States
+        # Geographical places (natural)
+        "Q23442",  # island
+        "Q8502",  # mountain
+        "Q4022",  # river
+        "Q23397",  # lake
+        "Q82794",  # geographic region
+        "Q35145743",  # natural geographic object
+    }
+)
+
+
+def _is_wikidata_non_concept(entity: dict) -> bool:
+    """Return True if a Wikidata entity should be excluded from source lookups.
+
+    Checks:
+    * P31 (instance of) — rejects entities whose type is in _WIKIDATA_BLOCKED_P31.
+    * P625 (coordinate location) — rejects geographic entities that have
+      explicit map coordinates (almost always populated places or natural features).
+    """
+    claims = entity.get("claims") or {}
+    # P625: coordinate location — geographic entities
+    if "P625" in claims:
+        return True
+    # P31: instance of — check each value's QID
+    for claim in claims.get("P31", []):
+        mainsnak = claim.get("mainsnak", {})
+        if mainsnak.get("snaktype") == "value":
+            qid = mainsnak.get("datavalue", {}).get("value", {}).get("id", "")
+            if qid in _WIKIDATA_BLOCKED_P31:
+                return True
+    return False
+
+
 _REST_ENDPOINTS: dict[str, str] = {
     "agrovoc": "https://agrovoc.fao.org/browse/rest/v1",
     "dbpedia": "https://lookup.dbpedia.org/api",
@@ -1229,12 +1312,14 @@ def _lookup_dbpedia(label: str, lang: str) -> tuple[dict | None, bool]:
     if data is None:
         return None, False
 
-    # Filter list articles immediately — they are never useful as concepts
+    # Filter list articles and non-concept entities (persons, places) immediately
     def _result_uri(r: dict) -> str:
         res = r.get("resource", [])
         return res[0] if isinstance(res, list) and res else (res if isinstance(res, str) else "")
 
-    results: list[dict] = [r for r in data.get("docs", []) if not _is_dbpedia_list_uri(_result_uri(r))]
+    results: list[dict] = [
+        r for r in data.get("docs", []) if not _is_dbpedia_list_uri(_result_uri(r)) and not _is_dbpedia_non_concept(r)
+    ]
     if not results:
         return None, False
 
@@ -1375,8 +1460,66 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
     pref_label = best.get("label", label)
     description = best.get("description")
 
-    # Fetch P279 (subclass-of) claims for hierarchy building
-    broader = _get_broader_wikidata(qid, lang, headers)
+    # Fetch entity claims (P31 for filtering + P279 for hierarchy) in one request
+    entity_claims_url = "https://www.wikidata.org/w/api.php"
+    entity_params: dict = {
+        "action": "wbgetentities",
+        "ids": qid,
+        "props": "claims",
+        "format": "json",
+    }
+    try:
+        with niquests.Session() as session:
+            entity_response = session.get(
+                entity_claims_url, params=entity_params, headers=headers, timeout=DEFAULT_TIMEOUT
+            )
+            entity_response.raise_for_status()
+        entity_data = _parse_json(entity_response, qid)
+        entity = (entity_data or {}).get("entities", {}).get(qid, {})
+    except niquests.exceptions.RequestException as e:
+        logger.debug("Wikidata entity claims fetch failed for %s: %s", qid, e)
+        return None, True  # Transient error
+
+    # Reject persons, geographic places, and disambiguation/list pages
+    if _is_wikidata_non_concept(entity):
+        logger.debug("Wikidata %s filtered out (person/place/disambiguation)", qid)
+        return None, False
+
+    # Extract P279 broader QIDs from the same entity data
+    p279_claims = entity.get("claims", {}).get("P279", [])
+    broader_qids: list[str] = []
+    for claim in p279_claims:
+        mainsnak = claim.get("mainsnak", {})
+        if mainsnak.get("snaktype") == "value":
+            target_qid = mainsnak.get("datavalue", {}).get("value", {}).get("id", "")
+            if target_qid:
+                broader_qids.append(target_qid)
+
+    # Fetch labels for broader QIDs
+    broader: list[dict] = []
+    if broader_qids:
+        label_params: dict = {
+            "action": "wbgetentities",
+            "ids": "|".join(broader_qids),
+            "props": "labels",
+            "languages": lang,
+            "format": "json",
+        }
+        try:
+            with niquests.Session() as session:
+                lbl_response = session.get(
+                    entity_claims_url, params=label_params, headers=headers, timeout=DEFAULT_TIMEOUT
+                )
+                lbl_response.raise_for_status()
+            lbl_data = _parse_json(lbl_response, "|".join(broader_qids))
+            entities = (lbl_data or {}).get("entities", {})
+            for bqid in broader_qids:
+                broader_uri = f"http://www.wikidata.org/entity/{bqid}"
+                lbl = entities.get(bqid, {}).get("labels", {}).get(lang, {}).get("value", "")
+                broader.append({"uri": broader_uri, "label": lbl})
+        except niquests.exceptions.RequestException as e:
+            logger.debug("Wikidata label fetch for broader failed: %s", e)
+            broader = [{"uri": f"http://www.wikidata.org/entity/{bqid}", "label": ""} for bqid in broader_qids]
 
     return {
         "uri": uri,

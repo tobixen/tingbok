@@ -1087,6 +1087,159 @@ def test_lookup_dbpedia_rejects_list_article_as_primary_result(tmp_path: Path) -
     assert result is None
 
 
+def _make_dbpedia_response_with_types(label: str, resource_uri: str, types: list[str]) -> dict:
+    """Build a DBpedia Lookup API response with explicit RDF type URIs."""
+    return {"docs": [{"resource": [resource_uri], "label": [label], "type": types}]}
+
+
+def _make_wikidata_entity_response(qid: str, p31_qids: list[str], has_coordinate: bool = False) -> dict:
+    """Build a minimal wbgetentities response for filtering tests."""
+    p31_claims = [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": q}}}} for q in p31_qids]
+    claims: dict = {"P279": [], "P31": p31_claims}
+    if has_coordinate:
+        claims["P625"] = [{"mainsnak": {"snaktype": "value"}}]
+    return {"entities": {qid: {"claims": claims, "labels": {}}}}
+
+
+def test_lookup_dbpedia_filters_persons(tmp_path: Path) -> None:
+    """DBpedia result typed as dbo:Person should be rejected."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    response_data = _make_dbpedia_response_with_types(
+        "Martin",
+        "http://dbpedia.org/resource/Martin",
+        ["http://dbpedia.org/ontology/Person", "http://schema.org/Person"],
+    )
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result, failed = _lookup_dbpedia("martin", "en")
+
+    assert not failed
+    assert result is None, "Person entity must be filtered out"
+
+
+def test_lookup_dbpedia_filters_populated_places(tmp_path: Path) -> None:
+    """DBpedia result typed as dbo:PopulatedPlace should be rejected."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    response_data = _make_dbpedia_response_with_types(
+        "Berlin",
+        "http://dbpedia.org/resource/Berlin",
+        ["http://dbpedia.org/ontology/PopulatedPlace", "http://dbpedia.org/ontology/City"],
+    )
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result, failed = _lookup_dbpedia("berlin", "en")
+
+    assert not failed
+    assert result is None, "PopulatedPlace entity must be filtered out"
+
+
+def test_lookup_dbpedia_filters_natural_places(tmp_path: Path) -> None:
+    """DBpedia result typed as dbo:NaturalPlace should be rejected."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    response_data = _make_dbpedia_response_with_types(
+        "Rhine",
+        "http://dbpedia.org/resource/Rhine",
+        ["http://dbpedia.org/ontology/NaturalPlace", "http://dbpedia.org/ontology/River"],
+    )
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result, failed = _lookup_dbpedia("rhine", "en")
+
+    assert not failed
+    assert result is None, "NaturalPlace entity must be filtered out"
+
+
+def test_lookup_dbpedia_accepts_normal_concept(tmp_path: Path) -> None:
+    """DBpedia result with no blocked types should be accepted."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    response_data = _make_dbpedia_response_with_types(
+        "Bread",
+        "http://dbpedia.org/resource/Bread",
+        ["http://dbpedia.org/ontology/Food", "http://schema.org/Thing"],
+    )
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        with patch("tingbok.services.skos._get_broader_dbpedia", return_value=[]):
+            result, failed = _lookup_dbpedia("bread", "en")
+
+    assert not failed
+    assert result is not None, "Normal food concept must be accepted"
+
+
+def test_lookup_wikidata_filters_human_p31(tmp_path: Path) -> None:
+    """Wikidata entity with P31=Q5 (human) should be rejected."""
+    from tingbok.services.skos import _lookup_wikidata
+
+    search_response = {"search": [{"id": "Q12345", "label": "Some Person", "description": "Norwegian politician"}]}
+    entity_response = _make_wikidata_entity_response("Q12345", p31_qids=["Q5"])  # Q5 = human
+
+    responses = iter([search_response, entity_response])
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.side_effect = lambda: next(responses)
+        result, failed = _lookup_wikidata("some person", "en")
+
+    assert not failed
+    assert result is None, "Human entity must be filtered out"
+
+
+def test_lookup_wikidata_filters_entity_with_coordinate_location(tmp_path: Path) -> None:
+    """Wikidata entity with P625 (coordinate location) should be rejected."""
+    from tingbok.services.skos import _lookup_wikidata
+
+    search_response = {
+        "search": [{"id": "Q64", "label": "Berlin", "description": "capital and largest city of Germany"}]
+    }
+    entity_response = _make_wikidata_entity_response("Q64", p31_qids=["Q515"], has_coordinate=True)
+
+    responses = iter([search_response, entity_response])
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.side_effect = lambda: next(responses)
+        result, failed = _lookup_wikidata("berlin", "en")
+
+    assert not failed
+    assert result is None, "Geographic entity with coordinate must be filtered out"
+
+
+def test_lookup_wikidata_accepts_normal_concept(tmp_path: Path) -> None:
+    """Wikidata entity with no blocked P31 and no P625 should be accepted."""
+    from tingbok.services.skos import _lookup_wikidata
+
+    search_response = {"search": [{"id": "Q7802", "label": "bread", "description": "food made from dough"}]}
+    # P31 = Q2095 (food) — not in blocklist, no P625
+    entity_response = _make_wikidata_entity_response("Q7802", p31_qids=["Q2095"], has_coordinate=False)
+    # Third response: label lookup for broader (empty)
+    broader_labels_response: dict = {"entities": {}}
+
+    responses = iter([search_response, entity_response, broader_labels_response])
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.side_effect = lambda: next(responses)
+        result, failed = _lookup_wikidata("bread", "en")
+
+    assert not failed
+    assert result is not None, "Normal food concept must be accepted"
+
+
 def test_lookup_concept_evicts_stale_dbpedia_list_article_cache(tmp_path: Path) -> None:
     """A cached DBpedia result with a List_of_* URI is evicted and re-fetched."""
     from tingbok.services.skos import _get_cache_path, _save_to_cache, lookup_concept

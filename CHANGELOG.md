@@ -10,6 +10,20 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Fixed
 
+- **DBpedia results typed as persons or geographical places are now filtered out** —
+  results whose RDF types include `dbo:Person`, `dbo:PopulatedPlace`,
+  `dbo:NaturalPlace`, or the equivalent `schema.org` and `foaf` types are
+  silently rejected.  This prevents cities, politicians, and mountains from
+  appearing as source URIs in vocabulary concepts.
+- **Wikidata results that are persons or geographic places are now filtered out** —
+  after finding a candidate entity the lookup now fetches its P31 (instance of)
+  and P625 (coordinate location) claims in a single `wbgetentities` request.
+  Entities whose P31 includes humans (Q5), cities/towns/villages, islands,
+  mountains, rivers, lakes, geographic regions, or Wikimedia
+  disambiguation/list pages are rejected; entities with a P625 coordinate
+  location are also rejected.  This shares the existing `wbgetentities` call
+  used for P279 (subclass-of) hierarchy fetching, so no extra round-trips are
+  added.
 - **Book lookups always include `"book"` in categories** — Open Library and nb.no results
   previously returned an empty category list when no subjects were available.  `"book"` is
   now appended to the categories list for all ISBN lookups.
