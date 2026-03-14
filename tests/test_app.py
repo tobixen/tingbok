@@ -106,6 +106,100 @@ async def test_vocabulary_concept_has_excluded_sources(client):
     assert isinstance(data["excluded_sources"], list)
 
 
+# ---------------------------------------------------------------------------
+# EAN category normalisation
+# ---------------------------------------------------------------------------
+
+
+def test_normalize_ean_categories_prefLabel_match() -> None:
+    """A category matching a vocabulary prefLabel is replaced with the concept ID."""
+    import tingbok.app as app_module
+
+    cats = app_module._normalize_ean_categories(["Dairy"])
+    assert cats == ["food/dairy"]
+
+
+def test_normalize_ean_categories_altLabel_match() -> None:
+    """A category matching a vocabulary altLabel is replaced with the concept ID."""
+    import tingbok.app as app_module
+
+    # "spreads" is an altLabel for concept "spread"
+    cats = app_module._normalize_ean_categories(["spreads"])
+    assert cats == ["spread"]
+
+
+def test_normalize_ean_categories_concept_id_segment_match() -> None:
+    """A category matching the last path segment of a concept ID is normalized."""
+    import tingbok.app as app_module
+
+    # "caviar" should match concept "food/caviar"
+    cats = app_module._normalize_ean_categories(["caviar"])
+    assert cats == ["food/caviar"]
+
+
+def test_normalize_ean_categories_already_canonical() -> None:
+    """A category that is already a valid concept ID is kept as-is."""
+    import tingbok.app as app_module
+
+    cats = app_module._normalize_ean_categories(["food/dairy"])
+    assert cats == ["food/dairy"]
+
+
+def test_normalize_ean_categories_unknown_kept() -> None:
+    """A category with no vocabulary match is returned unchanged."""
+    import tingbok.app as app_module
+
+    cats = app_module._normalize_ean_categories(["xyzzy-unknown-category"])
+    assert cats == ["xyzzy-unknown-category"]
+
+
+def test_normalize_ean_categories_mixed() -> None:
+    """Mixed list: some normalised, some unknown."""
+    import tingbok.app as app_module
+
+    cats = app_module._normalize_ean_categories(["Dairy", "unknown-thing", "spreads"])
+    assert cats[0] == "food/dairy"
+    assert cats[1] == "unknown-thing"
+    assert cats[2] == "spread"
+
+
+def test_normalize_ean_categories_case_insensitive() -> None:
+    """Matching is case-insensitive."""
+    import tingbok.app as app_module
+
+    cats = app_module._normalize_ean_categories(["dairy"])
+    assert cats == ["food/dairy"]
+
+
+@pytest.mark.anyio
+async def test_ean_lookup_normalizes_categories(client) -> None:
+    """GET /api/ean/{ean} normalizes categories against the vocabulary."""
+    from unittest.mock import patch
+
+    from tingbok.services import ean as ean_service
+
+    product = {
+        "ean": "7310865004703",
+        "name": "Kalles Kaviar",
+        "brand": "Abba",
+        "quantity": "300g",
+        # "spreads" is an altLabel for "spread" in the vocabulary
+        "categories": ["spreads", "fish spreads"],
+        "image_url": None,
+        "source": "openfoodfacts",
+        "author": None,
+        "type": "product",
+    }
+    with patch.object(ean_service, "lookup_product", return_value=product):
+        response = await client.get("/api/ean/7310865004703")
+
+    assert response.status_code == 200
+    data = response.json()
+    # "spreads" → "spread" (altLabel match); "fish spreads" unknown → kept
+    assert "spread" in data["categories"]
+    assert "fish spreads" in data["categories"]
+
+
 @pytest.mark.anyio
 async def test_full_vocabulary_has_source_uris(client):
     response = await client.get("/api/vocabulary")

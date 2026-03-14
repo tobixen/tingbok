@@ -10,6 +10,13 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Fixed
 
+- **EAN category strings are now normalised against the vocabulary** — after an
+  EAN/barcode lookup the raw category strings returned by upstream sources
+  (Open Food Facts, UPCitemdb, Open Library, nb.no) are matched
+  case-insensitively against vocabulary concept IDs, prefLabels, altLabels, and
+  path-segment aliases.  Matched categories are replaced with the canonical
+  concept ID (e.g. ``"spreads"`` → ``"spread"``); unmatched categories are kept
+  as-is.  The lookup index is built lazily on first use.
 - **DBpedia results typed as persons or geographical places are now filtered out** —
   results whose RDF types include `dbo:Person`, `dbo:PopulatedPlace`,
   `dbo:NaturalPlace`, or the equivalent `schema.org` and `foaf` types are

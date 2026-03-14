@@ -417,6 +417,57 @@ def _oldest_cache_entry_age_days(*cache_dirs: Path) -> float | None:
     return (time.time() - oldest_ts) / 86400
 
 
+#: Lazy-built index for EAN category normalisation: normalised label → concept_id.
+#: Rebuilt whenever the vocabulary changes.  ``None`` means not yet built.
+_category_index: dict[str, str] | None = None
+
+
+def _build_category_index() -> dict[str, str]:
+    """Build a case-insensitive label → concept_id lookup from the loaded vocabulary.
+
+    Covers prefLabels, static altLabels, and the final path segment of each
+    concept ID (e.g. "caviar" → "food/caviar").  Concept IDs themselves are
+    also included as exact matches.
+    """
+    index: dict[str, str] = {}
+    for concept_id, data in vocabulary.items():
+        if data is None:
+            continue
+        # Exact concept ID
+        index[concept_id.lower()] = concept_id
+        # Last path segment (e.g. "caviar" for "food/caviar")
+        segment = concept_id.split("/")[-1].lower().replace("_", " ")
+        index.setdefault(segment, concept_id)
+        # prefLabel
+        pref = data.get("prefLabel", "")
+        if pref:
+            index.setdefault(pref.lower(), concept_id)
+        # Static altLabels
+        for alts in (data.get("altLabel") or {}).values():
+            for alt in alts:
+                index.setdefault(alt.lower(), concept_id)
+    return index
+
+
+def _normalize_ean_categories(categories: list[str]) -> list[str]:
+    """Normalize raw EAN category strings against the vocabulary.
+
+    Each category is matched (case-insensitively) against vocabulary concept
+    IDs, prefLabels, altLabels, and path-segment aliases.  Matched categories
+    are replaced with the canonical concept ID; unmatched ones are kept as-is.
+    """
+    global _category_index  # noqa: PLW0603
+    if not vocabulary:
+        return categories
+    if _category_index is None:
+        _category_index = _build_category_index()
+    result: list[str] = []
+    for cat in categories:
+        normalized = _category_index.get(cat.lower().strip())
+        result.append(normalized if normalized is not None else cat)
+    return result
+
+
 @app.get("/health", response_model=HealthResponse)
 async def health(request: Request):
     """Liveness check."""

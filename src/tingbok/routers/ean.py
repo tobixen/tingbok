@@ -37,6 +37,8 @@ async def lookup_ean(ean: str) -> ProductResponse:
         result.setdefault("ean", ean)
         if observation:
             result = ean_service.merge_observation(result, observation)
+    if result.get("categories"):
+        result["categories"] = _app._normalize_ean_categories(result["categories"])
     return ProductResponse(**result)
 
 
