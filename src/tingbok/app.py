@@ -46,6 +46,9 @@ WARNINGS_PATH: Path = _CACHE_BASE / "lookup-warnings.json"
 #: Lives next to vocabulary.yaml so observations persist across deployments.
 EAN_OBSERVATIONS_PATH: Path = Path(__file__).parent / "data" / "ean-db.json"
 
+#: Unix timestamp recorded when the application finished startup (overridden by lifespan).
+_startup_time: float = time.time()
+
 vocabulary: dict[str, Any] = {}
 
 #: EAN observations loaded from ean-db.json (written by PUT /api/ean/{ean}).
@@ -307,6 +310,8 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
     vocabulary = _load_vocabulary()
     ean_observations = ean_service.load_ean_observations(EAN_OBSERVATIONS_PATH)
     skos_service.load_agrovoc_background(SKOS_CACHE_DIR)
+    global _startup_time  # noqa: PLW0603
+    _startup_time = time.time()
     max_age_seconds, divisor = _cache_refresh_config()
     discovery_task = asyncio.create_task(_discover_source_uris_background())
     labels_task = asyncio.create_task(_fetch_labels_background())
@@ -385,10 +390,42 @@ async def root(request: Request):
     return JSONResponse(content=info)
 
 
+def _oldest_cache_entry_age_days(*cache_dirs: Path) -> float | None:
+    """Return age in days of the oldest (least recently used) entry across *cache_dirs*.
+
+    Scans all ``*.json`` files (excluding ``_not_found.json``) and picks the
+    smallest ``_last_accessed`` / ``_cached_at`` timestamp.  Returns ``None``
+    if no cache files exist.
+    """
+    oldest_ts: float | None = None
+    for cache_dir in cache_dirs:
+        if not cache_dir.exists():
+            continue
+        for path in cache_dir.rglob("*.json"):
+            if path.name.startswith("_"):
+                continue
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:  # noqa: BLE001
+                continue
+            ts = data.get("_last_accessed") or data.get("_cached_at")
+            if ts is not None:
+                if oldest_ts is None or ts < oldest_ts:
+                    oldest_ts = ts
+    if oldest_ts is None:
+        return None
+    return (time.time() - oldest_ts) / 86400
+
+
 @app.get("/health", response_model=HealthResponse)
 async def health(request: Request):
     """Liveness check."""
-    result = HealthResponse(version=__version__)
+    result = HealthResponse(
+        version=__version__,
+        uptime_seconds=time.time() - _startup_time,
+        vocabulary_concepts=len(vocabulary),
+        vocabulary_concepts_enriched=len(_concepts_fetched),
+    )
     client_host = request.client.host if request.client else None
     if client_host in {"127.0.0.1", "::1", "localhost"}:
         result.paths = {
@@ -397,6 +434,7 @@ async def health(request: Request):
             "skos_cache": str(SKOS_CACHE_DIR),
             "ean_cache": str(EAN_CACHE_DIR),
         }
+        result.cache_oldest_entry_age_days = _oldest_cache_entry_age_days(SKOS_CACHE_DIR, EAN_CACHE_DIR)
     return result
 
 

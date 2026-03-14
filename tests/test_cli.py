@@ -592,6 +592,36 @@ def test_prune_vocabulary_keeps_altlabels_not_in_sources(tmp_path):
     assert "matbiter" in food.get("altLabel", {}).get("nb", [])
 
 
+def test_populate_uris_no_http_https_duplicates(tmp_path):
+    """Should not add a https:// URI when http:// variant already exists in source_uris."""
+    # MINIMAL_VOCAB already has "http://dbpedia.org/resource/Food" for "food".
+    # If dbpedia now returns the https:// variant, it must not be added as a duplicate.
+
+    def fake_lookup(label, lang, source, cache_dir):
+        if source == "dbpedia" and label.lower() == "food":
+            return {
+                "uri": "https://dbpedia.org/resource/Food",  # https variant
+                "prefLabel": "Food",
+                "source": "dbpedia",
+                "broader": [],
+            }
+        return None
+
+    from tingbok.services import skos as skos_service
+
+    with patch.object(skos_service, "lookup_concept", side_effect=fake_lookup):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, _ = _run_populate(tmp_path)
+
+    assert rc == 0
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    food_uris = updated["concepts"]["food"].get("source_uris", [])
+    # Both http:// and https:// variants must not both be present
+    has_http = "http://dbpedia.org/resource/Food" in food_uris
+    has_https = "https://dbpedia.org/resource/Food" in food_uris
+    assert not (has_http and has_https), f"Duplicate http/https URIs found: {food_uris}"
+
+
 def test_populate_uris_skips_gpt_when_excluded(tmp_path):
     """Should not add GPT URIs when 'gpt' is in excluded_sources."""
     SAMPLE_GPT = "# Google_Product_Taxonomy_Version: 2021-09-21\n632 - Electronics\n"

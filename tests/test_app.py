@@ -15,11 +15,16 @@ async def test_health(client):
     data = response.json()
     assert data["status"] == "ok"
     assert "version" in data
+    assert "uptime_seconds" in data
+    assert data["uptime_seconds"] >= 0
+    assert "vocabulary_concepts" in data
+    assert data["vocabulary_concepts"] > 0
+    assert "vocabulary_concepts_enriched" in data
 
 
 @pytest.mark.anyio
 async def test_health_localhost_exposes_paths():
-    """Health check from localhost should include path information."""
+    """Health check from localhost should include path information and cache age."""
     async with AsyncClient(
         transport=ASGITransport(app=app, client=("127.0.0.1", 12345)),
         base_url="http://127.0.0.1",
@@ -34,6 +39,8 @@ async def test_health_localhost_exposes_paths():
     assert "ean_db" in paths
     assert "skos_cache" in paths
     assert "ean_cache" in paths
+    # cache_oldest_entry_age_days is present for localhost (may be None if cache is empty)
+    assert "cache_oldest_entry_age_days" in data
 
 
 @pytest.mark.anyio

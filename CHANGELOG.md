@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
+## [Unreleased]
+
+### Fixed
+
+- **Book lookups always include `"book"` in categories** — Open Library and nb.no results
+  previously returned an empty category list when no subjects were available.  `"book"` is
+  now appended to the categories list for all ISBN lookups.
+- **`populate-uris` no longer adds http/https duplicates** — the command now normalises
+  `http://` to `https://` when comparing discovered URIs against existing ones, preventing
+  duplicate entries when a source switches scheme between runs.
+
+### Changed
+
+- **`/health` now exposes uptime and vocabulary enrichment progress** — the response
+  includes `uptime_seconds`, `vocabulary_concepts`, and `vocabulary_concepts_enriched`
+  fields for all clients.  `cache_oldest_entry_age_days` is added for localhost clients
+  alongside the existing `paths` dict, making it possible to verify that the cache
+  refresh cycle is working.
+
 ## [v0.13.0] - 2026-03-10
 
 Lots of changes - still trying to get the category system in inventory-md to work reasonably well.

@@ -153,4 +153,12 @@ class HealthResponse(BaseModel):
 
     status: str = "ok"
     version: str
+    uptime_seconds: float | None = None
+    #: Total number of concepts in the vocabulary.
+    vocabulary_concepts: int | None = None
+    #: Number of concepts whose labels have been fetched from external sources.
+    vocabulary_concepts_enriched: int | None = None
+    #: Age in days of the oldest entry in the SKOS/EAN cache (localhost only).
+    cache_oldest_entry_age_days: float | None = None
+    #: File paths (localhost clients only).
     paths: dict[str, str] | None = None

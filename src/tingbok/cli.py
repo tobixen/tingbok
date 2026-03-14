@@ -49,6 +49,13 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 
 
+def _normalise_uri(uri: str) -> str:
+    """Upgrade http:// to https:// for normalised comparison."""
+    if uri.startswith("http://"):
+        return "https://" + uri[7:]
+    return uri
+
+
 def _populate_uris(
     vocab_path: Path,
     cache_dir: Path,
@@ -95,6 +102,8 @@ def _populate_uris(
             continue
         static_uris: list[str] = list(data.get("source_uris") or [])
         excluded: set[str] = set(data.get("excluded_sources") or [])
+        # Normalised set for dedup comparison (http ↔ https transparent)
+        existing_normalised: set[str] = {_normalise_uri(u) for u in static_uris}
 
         label: str = data.get("prefLabel") or concept_id.split("/")[-1].replace("_", " ")
         discovered: list[str] = []
@@ -106,9 +115,10 @@ def _populate_uris(
             try:
                 concept = skos_service.lookup_concept(label, lang, source, skos_dir)
                 if concept and concept.get("uri"):
-                    uri = concept["uri"]
-                    if uri not in static_uris and uri not in discovered:
-                        discovered.append(uri)
+                    n = _normalise_uri(concept["uri"])
+                    if n not in existing_normalised:
+                        existing_normalised.add(n)
+                        discovered.append(concept["uri"])
             except Exception as exc:  # noqa: BLE001
                 print(f"  Warning: lookup failed for '{concept_id}' via {source}: {exc}", file=sys.stderr)
 
@@ -117,9 +127,10 @@ def _populate_uris(
             try:
                 gpt_concept = gpt_service.lookup_concept(label, lang, cache_dir)
                 if gpt_concept and gpt_concept.get("uri"):
-                    uri = gpt_concept["uri"]
-                    if uri not in static_uris and uri not in discovered:
-                        discovered.append(uri)
+                    n = _normalise_uri(gpt_concept["uri"])
+                    if n not in existing_normalised:
+                        existing_normalised.add(n)
+                        discovered.append(gpt_concept["uri"])
             except Exception as exc:  # noqa: BLE001
                 print(f"  Warning: GPT lookup failed for '{concept_id}': {exc}", file=sys.stderr)
 
@@ -128,9 +139,10 @@ def _populate_uris(
             try:
                 off_concept = off_service.lookup_concept(label, lang, skos_dir)
                 if off_concept and off_concept.get("uri"):
-                    uri = off_concept["uri"]
-                    if uri not in static_uris and uri not in discovered:
-                        discovered.append(uri)
+                    n = _normalise_uri(off_concept["uri"])
+                    if n not in existing_normalised:
+                        existing_normalised.add(n)
+                        discovered.append(off_concept["uri"])
             except Exception as exc:  # noqa: BLE001
                 print(f"  Warning: OFF lookup failed for '{concept_id}': {exc}", file=sys.stderr)
 

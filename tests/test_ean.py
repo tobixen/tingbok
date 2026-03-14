@@ -215,6 +215,40 @@ class TestLookupISBN:
         mock_nb.assert_not_called()
         assert result is None
 
+    def test_openlibrary_book_has_book_category(self, tmp_path: Path) -> None:
+        from tingbok.services import ean as ean_service
+
+        # Even when Open Library returns no subjects, "book" should be in categories
+        data = {"title": "Some Book", "authors": [], "publishers": [], "subjects": []}
+        with patch("tingbok.services.ean._fetch_openlibrary", return_value=data):
+            result = ean_service.lookup_product(self.ISBN, tmp_path)
+
+        assert result is not None
+        assert "book" in result["categories"]
+
+    def test_openlibrary_book_with_subjects_also_has_book_category(self, tmp_path: Path) -> None:
+        from tingbok.services import ean as ean_service
+
+        with patch("tingbok.services.ean._fetch_openlibrary", return_value=_openlibrary_found("Clean Code")):
+            with patch("tingbok.services.ean._fetch_openlibrary_author", return_value={}):
+                result = ean_service.lookup_product(self.ISBN, tmp_path)
+
+        assert result is not None
+        assert "book" in result["categories"]
+        assert "Fiction" in result["categories"]
+        assert result["categories"].count("book") == 1  # no duplicate
+
+    def test_nb_no_book_has_book_category(self, tmp_path: Path) -> None:
+        from tingbok.services import ean as ean_service
+
+        norwegian_isbn = "9788205314726"
+        with patch("tingbok.services.ean._fetch_openlibrary", side_effect=Exception("not found")):
+            with patch("tingbok.services.ean._fetch_nb_no", return_value=_nb_no_found("Hunger", ["Knut Hamsun"])):
+                result = ean_service.lookup_product(norwegian_isbn, tmp_path)
+
+        assert result is not None
+        assert "book" in result["categories"]
+
 
 # ---------------------------------------------------------------------------
 # Caching

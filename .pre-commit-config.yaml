@@ -16,7 +16,7 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
 
-  # === PRE-PUSH STAGE (full test suite before pushing) ===
+  # === PRE-PUSH STAGE (full test) ===
 
   - repo: local
     hooks:
@@ -26,4 +26,13 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+        stages: [pre-push]  # Run with: pre-commit run lychee --hook-stage manual
+
+  - repo: https://github.com/lycheeverse/lychee
+    rev: lychee-v0.22.0
+    hooks:
+      - id: lychee
+        args: ["--no-progress", "--timeout", "10"]
+        types: [markdown, rst]
         stages: [pre-push]
+

@@ -203,6 +203,9 @@ def _parse_openlibrary(isbn: str, data: dict[str, Any]) -> dict[str, Any] | None
         if label:
             subjects.append(str(label))
 
+    if "book" not in subjects:
+        subjects.append("book")
+
     return {
         "ean": isbn,
         "name": title,
@@ -235,7 +238,7 @@ def _parse_nb_no(isbn: str, data: dict[str, Any]) -> dict[str, Any] | None:
         "name": title,
         "brand": origin.get("publisher") or None,
         "quantity": None,
-        "categories": [],
+        "categories": ["book"],
         "image_url": None,
         "source": "nb.no",
         "author": ", ".join(authors) if authors else None,
