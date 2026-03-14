@@ -1,5 +1,6 @@
 """Tests for the main FastAPI application."""
 
+from pathlib import Path
 from unittest.mock import patch
 
 import pytest
@@ -1080,3 +1081,104 @@ async def test_lookup_no_warning_when_sources_agree(client, tmp_path):
 
     assert response.status_code == 200
     assert not warnings_path.exists(), "No warning file should be created when sources agree"
+
+
+# ---------------------------------------------------------------------------
+# PUT /api/vocabulary/{concept_id} — concept update endpoint
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def temp_vocab_path(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """Temp vocabulary.yaml with a handful of concepts, wired into the app."""
+    import tingbok.app as app_module
+
+    vocab_data = {
+        "concepts": {
+            "food": {"prefLabel": "Food"},
+            "food/dairy": {"prefLabel": "Dairy", "source_uris": ["https://dbpedia.org/resource/Dairy"]},
+        }
+    }
+    vocab_path = tmp_path / "vocabulary.yaml"
+    vocab_path.write_text(_yaml.dump(vocab_data))
+    monkeypatch.setattr(app_module, "VOCABULARY_PATH", vocab_path)
+    monkeypatch.setattr(app_module, "vocabulary", app_module._load_vocabulary(vocab_path))
+    monkeypatch.setattr(app_module, "_category_index", None)
+    # Mark all concepts as fetched so 503 guard doesn't fire
+    app_module._concepts_fetched.update(app_module.vocabulary.keys())
+    return vocab_path
+
+
+@pytest.mark.anyio
+async def test_put_vocabulary_creates_new_concept(client, temp_vocab_path) -> None:
+    """PUT a concept that doesn't exist yet creates it."""
+    response = await client.put("/api/vocabulary/food/new-thing", json={"prefLabel": "New Thing"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "food/new-thing"
+    assert data["prefLabel"] == "New Thing"
+
+
+@pytest.mark.anyio
+async def test_put_vocabulary_creates_ancestor_concepts(client, temp_vocab_path) -> None:
+    """PUT a deep path concept creates missing ancestor concepts."""
+    import tingbok.app as app_module
+
+    response = await client.put("/api/vocabulary/food/new-sub/item", json={})
+    assert response.status_code == 200
+    # Ancestor food/new-sub must now exist in the in-memory vocabulary
+    assert "food/new-sub" in app_module.vocabulary
+
+
+@pytest.mark.anyio
+async def test_put_vocabulary_updates_preflabel(client, temp_vocab_path) -> None:
+    """PUT with prefLabel updates the existing concept's prefLabel."""
+    response = await client.put("/api/vocabulary/food/dairy", json={"prefLabel": "Dairy Products"})
+    assert response.status_code == 200
+    assert response.json()["prefLabel"] == "Dairy Products"
+
+
+@pytest.mark.anyio
+async def test_put_vocabulary_adds_source_uris(client, temp_vocab_path) -> None:
+    """PUT with add_source_uris appends URIs to the concept."""
+    new_uri = "https://www.wikidata.org/entity/Q1491"
+    response = await client.put("/api/vocabulary/food/dairy", json={"add_source_uris": [new_uri]})
+    assert response.status_code == 200
+    assert new_uri in response.json()["source_uris"]
+    # Existing URI must still be present
+    assert "https://dbpedia.org/resource/Dairy" in response.json()["source_uris"]
+
+
+@pytest.mark.anyio
+async def test_put_vocabulary_removes_source_uris(client, temp_vocab_path) -> None:
+    """PUT with remove_source_uris deletes the named URIs from the concept."""
+    response = await client.put(
+        "/api/vocabulary/food/dairy",
+        json={"remove_source_uris": ["https://dbpedia.org/resource/Dairy"]},
+    )
+    assert response.status_code == 200
+    assert "https://dbpedia.org/resource/Dairy" not in response.json()["source_uris"]
+
+
+@pytest.mark.anyio
+async def test_put_vocabulary_adds_excluded_sources(client, temp_vocab_path) -> None:
+    """PUT with add_excluded_sources marks a source as excluded."""
+    response = await client.put("/api/vocabulary/food/dairy", json={"add_excluded_sources": ["agrovoc"]})
+    assert response.status_code == 200
+    assert "agrovoc" in response.json()["excluded_sources"]
+
+
+@pytest.mark.anyio
+async def test_put_vocabulary_persists_to_yaml(client, temp_vocab_path) -> None:
+    """PUT writes changes to vocabulary.yaml."""
+    await client.put("/api/vocabulary/food/dairy", json={"prefLabel": "Dairy Products"})
+    updated = _yaml.safe_load(temp_vocab_path.read_text())
+    assert updated["concepts"]["food/dairy"]["prefLabel"] == "Dairy Products"
+
+
+@pytest.mark.anyio
+async def test_put_vocabulary_creates_ancestor_in_yaml(client, temp_vocab_path) -> None:
+    """PUT a deep path concept also writes the new ancestor to vocabulary.yaml."""
+    await client.put("/api/vocabulary/food/new-sub/item", json={})
+    updated = _yaml.safe_load(temp_vocab_path.read_text())
+    assert "food/new-sub" in updated["concepts"]

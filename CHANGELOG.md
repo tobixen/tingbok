@@ -40,6 +40,13 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Added
 
+- **`PUT /api/vocabulary/{concept_id}` endpoint** — creates or updates a
+  vocabulary concept and persists changes to `vocabulary.yaml`.  All body
+  fields (`prefLabel`, `labels`, `altLabel`, `add_source_uris`,
+  `remove_source_uris`, `add_excluded_sources`, `remove_excluded_sources`) are
+  optional.  When the concept ID contains path separators (e.g.
+  `food/roes/caviar`), any missing ancestor concepts are created automatically.
+  Changes are reflected immediately in the in-memory vocabulary.
 - **`condense-vocabulary` CLI subcommand** — strips redundant `broader` and
   `narrower` entries from `vocabulary.yaml`.  `narrower` is removed from all
   non-`_root` concepts (recomputed at load time from the inverse of `broader`).

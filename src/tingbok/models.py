@@ -148,6 +148,30 @@ class VocabularyConcept(BaseModel):
     path_aliases: dict[str, list[str]] = {}
 
 
+class VocabularyConceptUpdateRequest(BaseModel):
+    """Body for ``PUT /api/vocabulary/{concept_id}`` — partial concept update.
+
+    All fields are optional; omitted fields leave the existing concept data
+    unchanged.  When the concept (or any ancestor in the path) does not yet
+    exist, a minimal entry is created automatically.
+    """
+
+    #: New English preferred label.  Overrides the current ``prefLabel``.
+    prefLabel: str | None = None
+    #: Language-keyed labels to add or overwrite (merged into ``labels``).
+    labels: dict[str, str] = {}
+    #: Language-keyed lists of alternative labels to append (merged).
+    altLabel: dict[str, list[str]] = {}
+    #: External source URIs to add to ``source_uris``.
+    add_source_uris: list[str] = []
+    #: External source URIs to remove from ``source_uris``.
+    remove_source_uris: list[str] = []
+    #: Source names to add to ``excluded_sources``.
+    add_excluded_sources: list[str] = []
+    #: Source names to remove from ``excluded_sources``.
+    remove_excluded_sources: list[str] = []
+
+
 class HealthResponse(BaseModel):
     """Health check response."""
 

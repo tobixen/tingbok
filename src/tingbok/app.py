@@ -17,7 +17,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi_mcp import FastApiMCP
 
 from tingbok import __version__
-from tingbok.models import HealthResponse, VocabularyConcept
+from tingbok.models import HealthResponse, VocabularyConcept, VocabularyConceptUpdateRequest
 from tingbok.routers import ean, skos
 from tingbok.services import ean as ean_service
 from tingbok.services import gpt as gpt_service
@@ -725,6 +725,113 @@ async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
         raise HTTPException(status_code=404, detail=f"Concept '{concept_id}' not found")
     if concept_id not in _concepts_fetched:
         await _fetch_concept_labels(concept_id, data)
+    return _vocabulary_concept_from_data(concept_id, data)
+
+
+def _write_vocabulary_concept_update(
+    concept_id: str,
+    body: VocabularyConceptUpdateRequest,
+    vocab_path: Path,
+) -> None:
+    """Apply *body* to *concept_id* in *vocab_path* using ruamel.yaml.
+
+    Creates the concept (and any missing ancestor concepts in the path) if
+    they do not yet exist.  Preserves all existing comments and formatting.
+    """
+    try:
+        from ruamel.yaml import YAML  # noqa: PLC0415
+    except ImportError as exc:
+        raise RuntimeError("ruamel.yaml is required for vocabulary writes") from exc
+
+    yaml_rw = YAML()
+    yaml_rw.preserve_quotes = True
+
+    if vocab_path.exists():
+        with open(vocab_path) as f:
+            doc = yaml_rw.load(f)
+    else:
+        doc = {"concepts": {}}
+
+    concepts: dict = doc.setdefault("concepts", {})
+    parts = concept_id.split("/")
+
+    # Ensure all ancestor concepts exist.
+    for depth in range(1, len(parts)):
+        ancestor_id = "/".join(parts[:depth])
+        if ancestor_id not in concepts or concepts[ancestor_id] is None:
+            label = parts[depth - 1].replace("_", " ").replace("-", " ").title()
+            concepts[ancestor_id] = {"prefLabel": label}
+
+    # Ensure the concept itself exists.
+    if concept_id not in concepts or concepts[concept_id] is None:
+        label = parts[-1].replace("_", " ").replace("-", " ").title()
+        concepts[concept_id] = {"prefLabel": label}
+
+    entry = concepts[concept_id]
+
+    if body.prefLabel is not None:
+        entry["prefLabel"] = body.prefLabel
+    if body.labels:
+        if "labels" not in entry or entry["labels"] is None:
+            entry["labels"] = {}
+        entry["labels"].update(body.labels)
+    if body.altLabel:
+        if "altLabel" not in entry or entry["altLabel"] is None:
+            entry["altLabel"] = {}
+        for lang, alts in body.altLabel.items():
+            if lang not in entry["altLabel"]:
+                entry["altLabel"][lang] = []
+            for alt in alts:
+                if alt not in entry["altLabel"][lang]:
+                    entry["altLabel"][lang].append(alt)
+    if body.add_source_uris:
+        if "source_uris" not in entry or entry["source_uris"] is None:
+            entry["source_uris"] = []
+        for uri in body.add_source_uris:
+            if uri not in entry["source_uris"]:
+                entry["source_uris"].append(uri)
+    if body.remove_source_uris:
+        entry["source_uris"] = [u for u in (entry.get("source_uris") or []) if u not in body.remove_source_uris]
+    if body.add_excluded_sources:
+        if "excluded_sources" not in entry or entry["excluded_sources"] is None:
+            entry["excluded_sources"] = []
+        for src in body.add_excluded_sources:
+            if src not in entry["excluded_sources"]:
+                entry["excluded_sources"].append(src)
+    if body.remove_excluded_sources:
+        entry["excluded_sources"] = [
+            s for s in (entry.get("excluded_sources") or []) if s not in body.remove_excluded_sources
+        ]
+
+    with open(vocab_path, "w") as f:
+        yaml_rw.dump(doc, f)
+
+
+@app.put("/api/vocabulary/{concept_id:path}", response_model=VocabularyConcept)
+async def put_vocabulary_concept(concept_id: str, body: VocabularyConceptUpdateRequest) -> VocabularyConcept:
+    """Create or update a vocabulary concept.
+
+    Creates the concept entry (and any missing ancestors in the path hierarchy)
+    if it does not yet exist.  All body fields are optional; omitted fields
+    leave existing data unchanged.
+
+    Changes are persisted to ``vocabulary.yaml`` and immediately reflected in
+    the in-memory vocabulary so subsequent GET requests see the updated data.
+    """
+    global vocabulary, _category_index  # noqa: PLW0603
+
+    await asyncio.to_thread(_write_vocabulary_concept_update, concept_id, body, VOCABULARY_PATH)
+
+    # Reload so path-inference and narrower computation are consistent.
+    vocabulary = _load_vocabulary()
+    _category_index = None
+
+    data = vocabulary.get(concept_id)
+    if data is None:
+        from fastapi import HTTPException  # noqa: PLC0415
+
+        raise HTTPException(status_code=500, detail="Concept write succeeded but could not be read back")
+
     return _vocabulary_concept_from_data(concept_id, data)
 
 
