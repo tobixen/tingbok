@@ -16,6 +16,14 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
 
+  # === COMMIT-MSG STAGE (enforce conventional commits) ===
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+
   # === PRE-PUSH STAGE (full test) ===
 
   - repo: local
