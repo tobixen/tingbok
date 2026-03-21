@@ -13,6 +13,14 @@ def anyio_backend():
 
 
 @pytest.fixture(autouse=True)
+def _clear_skos_label_cache():
+    """Clear the in-memory reverse label cache between tests to prevent cross-test pollution."""
+    app_module._skos_label_cache.clear()
+    yield
+    app_module._skos_label_cache.clear()
+
+
+@pytest.fixture(autouse=True)
 def _load_vocabulary():
     """Ensure vocabulary is loaded for all tests.
 

@@ -313,6 +313,8 @@ def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
                 data: dict = json.load(f)
         except (json.JSONDecodeError, OSError):
             continue
+        if not data.get("_cache_key"):
+            continue
         ts = data.get("_last_accessed") or data.get("_cached_at", float("inf"))
         if ts < oldest_ts:
             oldest_ts = ts

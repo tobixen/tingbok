@@ -122,8 +122,8 @@ def test_find_oldest_cache_entry_returns_oldest(tmp_path: Path) -> None:
     recent = tmp_path / "recent.json"
     t_old = time.time() - 50 * 86400
     t_new = time.time() - 5 * 86400
-    _save_to_cache(old, {"uri": "http://example.org/old"}, last_accessed=t_old)
-    _save_to_cache(recent, {"uri": "http://example.org/new"}, last_accessed=t_new)
+    _save_to_cache(old, {"uri": "http://example.org/old"}, last_accessed=t_old, cache_key="concept:wikidata:en:old")
+    _save_to_cache(recent, {"uri": "http://example.org/new"}, last_accessed=t_new, cache_key="concept:wikidata:en:new")
 
     result = _find_oldest_cache_entry(tmp_path)
     assert result is not None
@@ -139,16 +139,41 @@ def test_find_oldest_cache_entry_empty_dir(tmp_path: Path) -> None:
 def test_find_oldest_prefers_last_accessed_over_cached_at(tmp_path: Path) -> None:
     """cached_at is only used as fallback when _last_accessed is absent."""
     f = tmp_path / "item.json"
-    # cached_at is old, but it has been accessed recently
-    _save_to_cache(f, {"uri": "http://example.org/x"}, last_accessed=time.time() - 86400)
-    # write a second file with no last_accessed but a newer cached_at
+    # cached_at is old, but it has been accessed recently — has _cache_key so it's refreshable
+    _save_to_cache(f, {"uri": "http://example.org/x"}, last_accessed=time.time() - 86400, cache_key="concept:wikidata:en:x")
+    # write a second file with no last_accessed but a much older cached_at — also refreshable
     old_no_access = tmp_path / "no_access.json"
-    old_no_access.write_text(json.dumps({"_cached_at": time.time() - 90 * 86400}))
+    old_no_access.write_text(json.dumps({"_cached_at": time.time() - 90 * 86400, "_cache_key": "concept:wikidata:en:old"}))
 
     result = _find_oldest_cache_entry(tmp_path)
     assert result is not None
     path, _ = result
     assert path == old_no_access  # the one without last_accessed (oldest fallback) wins
+
+
+def test_find_oldest_cache_entry_skips_entries_without_cache_key(tmp_path: Path) -> None:
+    """Entries without _cache_key (non-refreshable, e.g. OFF concept caches) must be skipped.
+
+    Without this, a non-refreshable entry that is older than max_age would cause the
+    cache_refresh_loop to spin in a tight loop, since _refresh_entry returns False and
+    _find_oldest_cache_entry keeps returning the same un-refreshable entry.
+    """
+    # Entry WITHOUT _cache_key — simulates an OFF concept cache file
+    no_key = tmp_path / "no_key.json"
+    no_key.write_text(json.dumps({"uri": "off:en:food", "_cached_at": 1.0}))  # very old
+
+    # Entry WITH _cache_key — a normal refreshable SKOS entry (recent)
+    t_recent = time.time() - 86400
+    _save_to_cache(
+        tmp_path / "with_key.json",
+        {"uri": "http://example.org/food", "_cache_key": "concept:wikidata:en:food"},
+        last_accessed=t_recent,
+    )
+
+    result = _find_oldest_cache_entry(tmp_path)
+    assert result is not None
+    path, _ = result
+    assert path != no_key, "_find_oldest_cache_entry must skip entries without _cache_key"
 
 
 def test_not_found_cache_add_and_check(tmp_path: Path) -> None:

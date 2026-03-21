@@ -137,9 +137,15 @@ def _parse_off(ean: str, data: dict[str, Any]) -> dict[str, Any] | None:
         return None
 
     categories: list[str] = []
-    for tag in product.get("categories_tags") or []:
+    all_tags = product.get("categories_tags") or []
+    for tag in all_tags:
         if tag.startswith("en:"):
             categories.append(tag[3:].replace("-", " "))
+    if not categories:
+        # Fall back to non-English tags when no en: tags exist
+        for tag in all_tags:
+            if ":" in tag:
+                categories.append(tag.split(":", 1)[1].replace("-", " "))
 
     return {
         "ean": ean,

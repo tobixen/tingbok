@@ -74,6 +74,12 @@ _fetched_alt_labels: dict[str, dict[str, list[str]]] = {}
 #: background task or by an on-demand fetch in get_vocabulary_concept).
 _concepts_fetched: set[str] = set()
 
+#: Reverse label cache for cross-language concept lookup.
+#: Maps (label_lower, lang) -> (concept_id, labels, alts, source_uris, broader, description, wikipedia_url)
+#: Populated when step-3 SKOS lookup succeeds so subsequent non-English lookups hit this cache
+#: instead of re-querying all SKOS sources.
+_skos_label_cache: dict[tuple[str, str], tuple] = {}
+
 #: Languages to fetch from external sources in the background.
 _DEFAULT_FETCH_LANGUAGES: list[str] = [
     "en",
@@ -897,6 +903,23 @@ async def lookup_concept(
             if lbl.lower() == label_lower:
                 return _vocabulary_concept_from_data(concept_id, vdata)
 
+    # 2.5. Check reverse label cache populated by previous successful SKOS lookups.
+    #      This allows e.g. "skrivemaskin?lang=nb" to find a concept previously
+    #      resolved via "typewriter?lang=en" without re-querying all SKOS sources.
+    cached_entry = _skos_label_cache.get((label_lower, lang))
+    if cached_entry is not None:
+        c_id, c_labels, c_alts, c_uris, c_broader, c_desc, c_wiki = cached_entry
+        return VocabularyConcept(
+            id=c_id,
+            prefLabel=c_labels.get(lang, label),
+            source_uris=c_uris,
+            broader=c_broader,
+            labels=c_labels,
+            altLabel=c_alts,
+            description=c_desc,
+            wikipediaUrl=c_wiki,
+        )
+
     # 3. Query all SKOS sources in parallel, merge results
     skos_sources = ("agrovoc", "dbpedia", "wikidata")
     fetch_languages = _DEFAULT_FETCH_LANGUAGES
@@ -1030,6 +1053,12 @@ async def lookup_concept(
             broader_set.append(parent)
     broader = broader_set if broader_set else (["/".join(concept_id.split("/")[:-1])] if "/" in concept_id else [])
     best_description = max(descriptions, key=len) if descriptions else None
+
+    # Populate reverse label cache so future non-English lookups can find this concept
+    # without re-querying all SKOS sources.
+    cache_entry = (concept_id, merged_labels, merged_alts, source_uris, broader, best_description, wikipedia_url)
+    for lg, lbl in merged_labels.items():
+        _skos_label_cache[(lbl.lower(), lg)] = cache_entry
 
     return VocabularyConcept(
         id=concept_id,

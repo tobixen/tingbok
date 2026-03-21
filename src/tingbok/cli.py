@@ -52,6 +52,8 @@ import sys
 import time
 from pathlib import Path
 
+from tingbok import __version__
+
 # ---------------------------------------------------------------------------
 # populate-uris
 # ---------------------------------------------------------------------------
@@ -698,6 +700,7 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="tingbok",
         description="tingbok vocabulary management tools",
     )
+    parser.add_argument("--version", action="version", version=__version__)
     sub = parser.add_subparsers(dest="command", metavar="COMMAND")
 
     # populate-uris

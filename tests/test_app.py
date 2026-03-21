@@ -1182,3 +1182,51 @@ async def test_put_vocabulary_creates_ancestor_in_yaml(client, temp_vocab_path) 
     await client.put("/api/vocabulary/food/new-sub/item", json={})
     updated = _yaml.safe_load(temp_vocab_path.read_text())
     assert "food/new-sub" in updated["concepts"]
+
+
+@pytest.mark.anyio
+async def test_lookup_reverse_label_cache_finds_non_vocab_concept(client) -> None:
+    """Searching in a non-English language finds a concept previously found via English.
+
+    Reproduces the bug: GET /api/lookup/typewriter?lang=en succeeds and caches labels
+    including nb: "skrivemaskin".  A subsequent GET /api/lookup/skrivemaskin?lang=nb
+    should return the same concept via the in-memory reverse label cache, even if the
+    SKOS sources don't support Norwegian label lookup.
+    """
+    import tingbok.app as app_module
+
+    fake_concept = {
+        "uri": "http://www.wikidata.org/entity/Q1020318",
+        "prefLabel": "typewriter",
+        "source": "wikidata",
+        "broader": [],
+    }
+    fake_paths = (["tools/typewriter"], True, {"tools/typewriter": "http://www.wikidata.org/entity/Q1020318"})
+    fake_labels = {"en": "typewriter", "nb": "skrivemaskin", "nn": "skrivemaskin"}
+
+    saved = dict(app_module._skos_label_cache)
+    try:
+        # Step 1: simulate a successful "typewriter?lang=en" lookup that populates the cache
+        with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
+            with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
+                with patch("tingbok.app.skos_service.get_labels", return_value=fake_labels):
+                    with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                        with patch("tingbok.app.skos_service.get_description", return_value=None):
+                            with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                                with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                                    r1 = await client.get("/api/lookup/typewriter?lang=en")
+        assert r1.status_code == 200
+
+        # Step 2: Norwegian lookup should now find it via the reverse cache (SKOS returns nothing)
+        with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                    r2 = await client.get("/api/lookup/skrivemaskin?lang=nb")
+
+        assert r2.status_code == 200, f"Expected 200, got {r2.status_code}: {r2.text}"
+        data = r2.json()
+        assert data["prefLabel"] == "skrivemaskin"
+        assert data["id"] == "tools/typewriter"
+    finally:
+        app_module._skos_label_cache.clear()
+        app_module._skos_label_cache.update(saved)

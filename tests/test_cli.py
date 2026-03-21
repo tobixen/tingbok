@@ -854,3 +854,24 @@ def test_prune_cache_dry_run_does_not_delete(tmp_path: Path) -> None:
     _run_prune_cache(tmp_path, extra_args=["--dry-run"])
 
     assert f.exists(), "dry-run must not delete anything"
+
+
+# ---------------------------------------------------------------------------
+# --version flag
+# ---------------------------------------------------------------------------
+
+
+def test_version_flag_prints_version_and_exits() -> None:
+    """tingbok --version should print the version string and exit with code 0."""
+    from io import StringIO
+
+    import tingbok.cli as cli_module
+    from tingbok import __version__
+
+    captured = StringIO()
+    with patch.object(sys, "argv", ["tingbok", "--version"]):
+        with patch("sys.stdout", captured):
+            with pytest.raises(SystemExit) as exc_info:
+                cli_module.main()
+    assert exc_info.value.code == 0
+    assert __version__ in captured.getvalue()

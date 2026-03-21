@@ -111,6 +111,17 @@ class TestLookupProductOFF:
         assert "snacks" in result["categories"]
         assert "produits-alimentaires" not in result["categories"]
 
+    def test_non_english_categories_used_as_fallback(self, tmp_path: Path) -> None:
+        """When no en: categories exist, fall back to categories from other languages."""
+        from tingbok.services import ean as ean_service
+
+        off_data = _off_found("4056489693901", "Lidl Product", categories_tags=["de:lebensmittel", "fr:aliments"])
+        with patch("tingbok.services.ean._fetch_off", return_value=off_data):
+            result = ean_service.lookup_product("4056489693901", tmp_path)
+
+        assert result is not None
+        assert len(result["categories"]) > 0, "Should fall back to non-English categories when no en: tags"
+
 
 # ---------------------------------------------------------------------------
 # Service-level tests — UPCitemdb fallback

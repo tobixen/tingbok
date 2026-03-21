@@ -1,6 +1,6 @@
 See also ~/inventory-md/docs/TODO-CATEGORIES.md
 
-* `tingbok --version` does not work
-* A query for https://tingbok.plann.no/api/lookup/skrivemaskin?lang=no or https://tingbok.plann.no/api/lookup/skrivemaskin?lang=nb returned nothing, *fast*, while  https://tingbok.plann.no/api/lookup/typewriter?lang=en returns a blob after thinking for quite long - and the blob does contain the information that it's "skrivemaskin" in nb - so this is a bug.
+* ~~`tingbok --version` does not work~~ Fixed: added `--version` flag to CLI.
+* ~~A query for https://tingbok.plann.no/api/lookup/skrivemaskin?lang=no returned nothing fast while typewriter?lang=en worked~~ Fixed: added `_skos_label_cache` in app.py so subsequent non-English lookups for a concept already resolved via another language are served from cache instead of re-querying SKOS sources (which may return nothing for non-English labels).
 * The code was updated recently to exclude lots of non-thingy-things (names, places, etc) from dbpedia and wikidata, but we probably still have many wrong concepts in the vocabulary.  It's needed to find and filter out wrong existing source URIs (dbo:wikiPageDisambiguates pages, etc.), probably making a tool for it in case more things will be added to the exclusion criterias.
-* `curl -s https://tingbok.plann.no/api/ean/4056489693901` gives data from openfoodfacts, but there is no category information.  Are there more data from openfoodfacts that is discarded?
+* ~~`curl -s https://tingbok.plann.no/api/ean/4056489693901` gives data from openfoodfacts, but there is no category information~~ Fixed: `_parse_off` now falls back to non-English category tags when no `en:` tags are present. Also fixed a related bug where `_find_oldest_cache_entry` in skos.py could select non-refreshable cache entries (without `_cache_key`), causing `cache_refresh_loop` to spin in a tight loop.
