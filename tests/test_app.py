@@ -1287,3 +1287,63 @@ def test_sigusr1_toggles_log_level() -> None:
         assert app_logger.level == logging.INFO, "Second SIGUSR1 should restore INFO"
     finally:
         app_logger.setLevel(original_level)
+
+
+def _git_init_with_commit(repo: Path, files: dict[str, str]) -> None:
+    """Helper: init a git repo, write files, and create an initial commit."""
+    import subprocess
+
+    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@localhost"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True, capture_output=True)
+    for name, content in files.items():
+        (repo / name).write_text(content)
+    subprocess.run(["git", "add", "."], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "initial"], cwd=repo, check=True, capture_output=True)
+
+
+def test_git_commit_data_commits_when_changed(tmp_path: Path) -> None:
+    """_git_commit_data should create a commit when tracked files have changed."""
+    import subprocess
+
+    from tingbok.app import _git_commit_data
+
+    _git_init_with_commit(tmp_path, {"ean-db.json": '{"a": 1}'})
+    # Modify the file to create a dirty working tree
+    (tmp_path / "ean-db.json").write_text('{"a": 2}')
+
+    _git_commit_data(tmp_path, frozenset(["192.168.1.1"]))
+
+    log = subprocess.run(["git", "log", "--oneline"], cwd=tmp_path, capture_output=True, text=True, check=True)
+    commits = log.stdout.strip().splitlines()
+    assert len(commits) == 2, f"Expected 2 commits, got: {commits}"
+    assert "192.168.1.1" in commits[0], f"IP not in commit message: {commits[0]}"
+
+
+def test_git_commit_data_skips_when_clean(tmp_path: Path) -> None:
+    """_git_commit_data should not create a commit when there are no changes."""
+    import subprocess
+
+    from tingbok.app import _git_commit_data
+
+    _git_init_with_commit(tmp_path, {"ean-db.json": '{"a": 1}'})
+
+    _git_commit_data(tmp_path, frozenset())
+
+    log = subprocess.run(["git", "log", "--oneline"], cwd=tmp_path, capture_output=True, text=True, check=True)
+    commits = log.stdout.strip().splitlines()
+    assert len(commits) == 1, f"Expected 1 commit (no-op), got: {commits}"
+
+
+def test_git_commit_data_handles_missing_files(tmp_path: Path) -> None:
+    """_git_commit_data should not crash when tracked files do not exist."""
+    import subprocess
+
+    from tingbok.app import _git_commit_data
+
+    subprocess.run(["git", "init"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@localhost"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=tmp_path, check=True, capture_output=True)
+
+    # Should not raise even though ean-db.json and vocabulary.yaml don't exist
+    _git_commit_data(tmp_path, frozenset())

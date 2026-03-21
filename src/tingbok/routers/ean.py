@@ -3,7 +3,7 @@
 import asyncio
 import logging
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 
 import tingbok.app as _app
 from tingbok.models import EanObservationRequest, ProductResponse
@@ -43,7 +43,7 @@ async def lookup_ean(ean: str) -> ProductResponse:
 
 
 @router.put("/{ean}", response_model=ProductResponse)
-async def observe_ean(ean: str, body: EanObservationRequest) -> ProductResponse:
+async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -> ProductResponse:
     """Store an inventory-sourced category and/or name for an EAN.
 
     The observation is persisted to ``ean-db.json`` in the cache directory
@@ -97,6 +97,7 @@ async def observe_ean(ean: str, body: EanObservationRequest) -> ProductResponse:
         len(prices_raw),
         len(receipt_names_raw),
     )
+    _app._schedule_git_commit(ip=request.client.host if request.client else None)
 
     # Return the full merged product view
     upstream = await asyncio.to_thread(ean_service.lookup_product, ean, _app.EAN_CACHE_DIR)

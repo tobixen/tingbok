@@ -4,7 +4,9 @@ import asyncio
 import json
 import logging
 import os
+import shutil
 import signal
+import subprocess
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -27,11 +29,19 @@ from tingbok.services import skos as skos_service
 
 logger = logging.getLogger(__name__)
 
-VOCABULARY_PATH = Path(__file__).parent / "data" / "vocabulary.yaml"
 TINGBOK_BASE_URL = "https://tingbok.plann.no"
 
 #: Root of the tingbok cache.  Set ``TINGBOK_CACHE_DIR`` to override.
 _CACHE_BASE = Path(os.environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache" / "tingbok")))
+
+#: Optional writable data directory for vocabulary.yaml and ean-db.json.
+#: Set ``TINGBOK_DATA_DIR`` to enable git-tracked auto-commits on writes.
+_DATA_BASE: Path | None = Path(os.environ["TINGBOK_DATA_DIR"]) if os.environ.get("TINGBOK_DATA_DIR") else None
+
+#: Path to the runtime-writable vocabulary file.
+VOCABULARY_PATH: Path = (
+    (_DATA_BASE / "vocabulary.yaml") if _DATA_BASE else Path(__file__).parent / "data" / "vocabulary.yaml"
+)
 
 #: Directory used for SKOS concept/label caches.
 SKOS_CACHE_DIR: Path = _CACHE_BASE / "skos"
@@ -45,10 +55,17 @@ WARNINGS_PATH: Path = _CACHE_BASE / "lookup-warnings.json"
 
 #: Runtime-writable JSON file for inventory-sourced EAN observations (category + name).
 #: Lives next to vocabulary.yaml so observations persist across deployments.
-EAN_OBSERVATIONS_PATH: Path = Path(__file__).parent / "data" / "ean-db.json"
+EAN_OBSERVATIONS_PATH: Path = (
+    (_DATA_BASE / "ean-db.json") if _DATA_BASE else Path(__file__).parent / "data" / "ean-db.json"
+)
 
 #: Unix timestamp recorded when the application finished startup (overridden by lifespan).
 _startup_time: float = time.time()
+
+#: Debounce state for git auto-commits triggered by data writes.
+_pending_commit_ips: set[str] = set()
+_pending_commit_task: asyncio.Task | None = None
+_GIT_DEBOUNCE_SECONDS: float = float(os.environ.get("TINGBOK_GIT_DEBOUNCE_SECONDS", "10"))
 
 vocabulary: dict[str, Any] = {}
 
@@ -132,6 +149,64 @@ _GPT_ROOT_MAPPING: dict[str, str] = {
     "toys & games": "entertainment",
     "vehicles & parts": "vehicle",
 }
+
+
+def _git_commit_data(data_dir: Path, ips: frozenset[str] = frozenset()) -> None:
+    """Stage and commit changed data files in *data_dir* using git.
+
+    Only ``ean-db.json`` and ``vocabulary.yaml`` are considered.  Does nothing
+    if neither file exists or neither has any uncommitted changes.  Runs
+    synchronously; call via ``asyncio.to_thread`` from async contexts.
+    """
+
+    def run(*cmd: str) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(cmd, cwd=data_dir, capture_output=True, text=True)
+
+    known = ["ean-db.json", "vocabulary.yaml"]
+    existing = [f for f in known if (data_dir / f).exists()]
+    if not existing:
+        return
+    if not run("git", "status", "--porcelain", *existing).stdout.strip():
+        return  # nothing changed
+    run("git", "add", *existing)
+    ip_str = f" (from {', '.join(sorted(ips))})" if ips else ""
+    result = run(
+        "git",
+        "commit",
+        "-m",
+        f"auto-commit: data update {time.strftime('%Y-%m-%dT%H:%M:%S')}{ip_str}",
+        "--author=tingbok <tingbok@localhost>",
+    )
+    if result.returncode == 0:
+        logger.info("Git auto-commit: %s", result.stdout.strip().splitlines()[0])
+    else:
+        logger.warning("Git auto-commit failed: %s", result.stderr.strip())
+
+
+def _schedule_git_commit(ip: str | None = None) -> None:
+    """Schedule a debounced git commit of data files.
+
+    Each call resets the debounce timer.  The commit runs
+    ``_GIT_DEBOUNCE_SECONDS`` after the last call.  Does nothing when
+    ``_DATA_BASE`` is not configured.
+    """
+    global _pending_commit_task  # noqa: PLW0603
+    if not _DATA_BASE:
+        return
+    if ip:
+        _pending_commit_ips.add(ip)
+    if _pending_commit_task is not None and not _pending_commit_task.done():
+        _pending_commit_task.cancel()
+    _pending_commit_task = asyncio.create_task(_do_git_commit_after_delay())
+
+
+async def _do_git_commit_after_delay() -> None:
+    """Coroutine: wait for the debounce window then commit."""
+    await asyncio.sleep(_GIT_DEBOUNCE_SECONDS)
+    ips = frozenset(_pending_commit_ips)
+    _pending_commit_ips.clear()
+    if _DATA_BASE:
+        await asyncio.to_thread(_git_commit_data, _DATA_BASE, ips)
 
 
 def _gpt_path_from_parts(path_parts: list[str]) -> str | None:
@@ -381,6 +456,14 @@ def _toggle_log_level(signum: int, frame: object) -> None:  # noqa: ARG001
 async def lifespan(app: FastAPI):  # noqa: ARG001
     """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
     global vocabulary, ean_observations  # noqa: PLW0603
+
+    # Bootstrap: copy default vocabulary.yaml to data dir if it doesn't exist yet.
+    if _DATA_BASE and not VOCABULARY_PATH.exists():
+        _DATA_BASE.mkdir(parents=True, exist_ok=True)
+        _pkg_vocab = Path(__file__).parent / "data" / "vocabulary.yaml"
+        shutil.copy(_pkg_vocab, VOCABULARY_PATH)
+        logger.info("Bootstrapped vocabulary.yaml to %s", VOCABULARY_PATH)
+
     vocabulary = _load_vocabulary()
     ean_observations = ean_service.load_ean_observations(EAN_OBSERVATIONS_PATH)
     skos_service.load_agrovoc_background(SKOS_CACHE_DIR)
@@ -413,6 +496,12 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
                 await task
             except asyncio.CancelledError:
                 pass
+        # Force-commit any pending data changes before exit (don't lose the last write).
+        if _DATA_BASE:
+            if _pending_commit_task is not None and not _pending_commit_task.done():
+                _pending_commit_task.cancel()
+            await asyncio.to_thread(_git_commit_data, _DATA_BASE, frozenset(_pending_commit_ips))
+            _pending_commit_ips.clear()
 
 
 app = FastAPI(
@@ -572,6 +661,7 @@ async def health(request: Request):
             "ean_db": str(EAN_OBSERVATIONS_PATH),
             "skos_cache": str(SKOS_CACHE_DIR),
             "ean_cache": str(EAN_CACHE_DIR),
+            **({"data_dir": str(_DATA_BASE)} if _DATA_BASE else {}),
         }
         result.cache_oldest_entry_age_days = _oldest_cache_entry_age_days(SKOS_CACHE_DIR, EAN_CACHE_DIR)
     return result
@@ -855,7 +945,9 @@ def _write_vocabulary_concept_update(
 
 
 @app.put("/api/vocabulary/{concept_id:path}", response_model=VocabularyConcept)
-async def put_vocabulary_concept(concept_id: str, body: VocabularyConceptUpdateRequest) -> VocabularyConcept:
+async def put_vocabulary_concept(
+    concept_id: str, body: VocabularyConceptUpdateRequest, request: Request
+) -> VocabularyConcept:
     """Create or update a vocabulary concept.
 
     Creates the concept entry (and any missing ancestors in the path hierarchy)
@@ -868,6 +960,7 @@ async def put_vocabulary_concept(concept_id: str, body: VocabularyConceptUpdateR
     global vocabulary, _category_index  # noqa: PLW0603
 
     await asyncio.to_thread(_write_vocabulary_concept_update, concept_id, body, VOCABULARY_PATH)
+    _schedule_git_commit(ip=request.client.host if request.client else None)
 
     # Reload so path-inference and narrower computation are consistent.
     vocabulary = _load_vocabulary()
