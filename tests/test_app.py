@@ -1269,3 +1269,21 @@ async def test_lookup_lang_fallback_for_scandinavian(client) -> None:
     data = response.json()
     assert data["id"] == "tools/typewriter"
     assert data["prefLabel"] == "skrivemaskin"
+
+
+def test_sigusr1_toggles_log_level() -> None:
+    """SIGUSR1 toggles the tingbok logger between INFO and DEBUG."""
+    import logging
+
+    import tingbok.app as app_module
+
+    app_logger = logging.getLogger("tingbok")
+    original_level = app_logger.level
+    try:
+        app_logger.setLevel(logging.INFO)
+        app_module._toggle_log_level(0, None)
+        assert app_logger.level == logging.DEBUG, "First SIGUSR1 should enable DEBUG"
+        app_module._toggle_log_level(0, None)
+        assert app_logger.level == logging.INFO, "Second SIGUSR1 should restore INFO"
+    finally:
+        app_logger.setLevel(original_level)

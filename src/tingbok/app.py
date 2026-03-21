@@ -4,6 +4,7 @@ import asyncio
 import json
 import logging
 import os
+import signal
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -361,6 +362,21 @@ def _cache_refresh_config() -> tuple[float, float]:
     return max_age_days * 86400, divisor
 
 
+def _toggle_log_level(signum: int, frame: object) -> None:  # noqa: ARG001
+    """Toggle the tingbok logger between INFO and DEBUG on SIGUSR1.
+
+    Send ``kill -USR1 <pid>`` to enable debug logging; send it again to disable.
+    The PID is available via ``systemctl show -p MainPID tingbok``.
+    """
+    app_logger = logging.getLogger("tingbok")
+    if app_logger.level == logging.DEBUG:
+        app_logger.setLevel(logging.INFO)
+        logger.info("SIGUSR1: debug logging disabled. Send SIGUSR1 again to re-enable.")
+    else:
+        app_logger.setLevel(logging.DEBUG)
+        logger.info("SIGUSR1: debug logging enabled. Send SIGUSR1 again to disable.")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001
     """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
@@ -370,6 +386,20 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
     skos_service.load_agrovoc_background(SKOS_CACHE_DIR)
     global _startup_time  # noqa: PLW0603
     _startup_time = time.time()
+
+    # Ensure application-level INFO+ messages appear in the journal.
+    # Uvicorn configures its own loggers but leaves tingbok.* silenced at root level.
+    _app_logger = logging.getLogger("tingbok")
+    if not _app_logger.handlers:
+        _handler = logging.StreamHandler()
+        _handler.setFormatter(logging.Formatter("%(levelname)s:%(name)s:%(message)s"))
+        _app_logger.addHandler(_handler)
+        _app_logger.propagate = False
+    _app_logger.setLevel(logging.INFO)
+
+    signal.signal(signal.SIGUSR1, _toggle_log_level)
+    logger.info("SIGUSR1 handler registered. Send 'kill -USR1 %d' to toggle debug logging.", os.getpid())
+
     max_age_seconds, divisor = _cache_refresh_config()
     discovery_task = asyncio.create_task(_discover_source_uris_background())
     labels_task = asyncio.create_task(_fetch_labels_background())
