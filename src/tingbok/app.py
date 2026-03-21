@@ -100,6 +100,17 @@ _DEFAULT_FETCH_LANGUAGES: list[str] = [
 ]
 
 
+#: Language fallback chains for closely related languages.
+#: When a SKOS lookup fails for the primary language, these languages are tried in order.
+#: Covers Scandinavian variants where the same word may be indexed under a sibling code.
+_LANGUAGE_FALLBACKS: dict[str, list[str]] = {
+    "nb": ["no", "da", "nn", "sv"],
+    "no": ["nb", "da", "nn", "sv"],
+    "nn": ["nb", "no", "da", "sv"],
+    "da": ["nb", "no", "nn", "sv"],
+    "sv": ["da", "nb", "no", "nn"],
+}
+
 #: Maps GPT top-level category labels (lowercased) to tingbok vocabulary root IDs.
 _GPT_ROOT_MAPPING: dict[str, str] = {
     "animals & pet supplies": "pets",
@@ -927,12 +938,21 @@ async def lookup_concept(
     async def _fetch_source(source: str) -> tuple[dict | None, list[str], list[str]]:
         """Return (concept, paths, source_uris) for one source; never raises."""
         try:
+            found_lang = lang
             concept = await asyncio.to_thread(skos_service.lookup_concept, label, lang, source, SKOS_CACHE_DIR)
+            if not concept:
+                for fallback_lang in _LANGUAGE_FALLBACKS.get(lang, []):
+                    concept = await asyncio.to_thread(
+                        skos_service.lookup_concept, label, fallback_lang, source, SKOS_CACHE_DIR
+                    )
+                    if concept:
+                        found_lang = fallback_lang
+                        break
             if not concept:
                 return None, [], []
             uri = concept.get("uri") or ""
             paths, found, _ = await asyncio.to_thread(
-                skos_service.build_hierarchy_paths, label, lang, source, SKOS_CACHE_DIR
+                skos_service.build_hierarchy_paths, label, found_lang, source, SKOS_CACHE_DIR
             )
             return concept, (paths if found else []), ([uri] if uri else [])
         except Exception as exc:

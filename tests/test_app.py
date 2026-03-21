@@ -1230,3 +1230,42 @@ async def test_lookup_reverse_label_cache_finds_non_vocab_concept(client) -> Non
     finally:
         app_module._skos_label_cache.clear()
         app_module._skos_label_cache.update(saved)
+
+
+@pytest.mark.anyio
+async def test_lookup_lang_fallback_for_scandinavian(client) -> None:
+    """When nb SKOS lookup fails, fall back to no/da/nn/sv for Scandinavian labels.
+
+    This covers the case where 'skrivemaskin?lang=nb' is searched first (before any
+    English lookup has populated _skos_label_cache) and the SKOS source only has the
+    label indexed under a sibling language variant.
+    """
+    from unittest.mock import patch
+
+    fake_concept = {
+        "uri": "http://www.wikidata.org/entity/Q1020318",
+        "prefLabel": "skrivemaskin",
+        "source": "wikidata",
+    }
+    fake_paths = (["tools/typewriter"], True, {})
+    fake_labels = {"en": "typewriter", "nb": "skrivemaskin", "no": "skrivemaskin"}
+
+    def lookup_side_effect(label: str, lang: str, source: str, cache_dir: object) -> dict | None:
+        # Only succeeds when lang=no (simulates nb not indexed but no is)
+        if lang == "no" and label == "skrivemaskin":
+            return fake_concept
+        return None
+
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=lookup_side_effect):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
+            with patch("tingbok.app.skos_service.get_labels", return_value=fake_labels):
+                with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                    with patch("tingbok.app.skos_service.get_description", return_value=None):
+                        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                                response = await client.get("/api/lookup/skrivemaskin?lang=nb")
+
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
+    data = response.json()
+    assert data["id"] == "tools/typewriter"
+    assert data["prefLabel"] == "skrivemaskin"
