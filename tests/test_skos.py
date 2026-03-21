@@ -140,10 +140,14 @@ def test_find_oldest_prefers_last_accessed_over_cached_at(tmp_path: Path) -> Non
     """cached_at is only used as fallback when _last_accessed is absent."""
     f = tmp_path / "item.json"
     # cached_at is old, but it has been accessed recently — has _cache_key so it's refreshable
-    _save_to_cache(f, {"uri": "http://example.org/x"}, last_accessed=time.time() - 86400, cache_key="concept:wikidata:en:x")
+    _save_to_cache(
+        f, {"uri": "http://example.org/x"}, last_accessed=time.time() - 86400, cache_key="concept:wikidata:en:x"
+    )
     # write a second file with no last_accessed but a much older cached_at — also refreshable
     old_no_access = tmp_path / "no_access.json"
-    old_no_access.write_text(json.dumps({"_cached_at": time.time() - 90 * 86400, "_cache_key": "concept:wikidata:en:old"}))
+    old_no_access.write_text(
+        json.dumps({"_cached_at": time.time() - 90 * 86400, "_cache_key": "concept:wikidata:en:old"})
+    )
 
     result = _find_oldest_cache_entry(tmp_path)
     assert result is not None
