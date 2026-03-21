@@ -144,6 +144,29 @@
       }
     ]
   },
+  "20239060": {
+    "categories": [
+      "food/vegetables/spinach"
+    ],
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-03-11",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-03-11",
+        "last_seen": "2026-03-11",
+        "name": "СПАНАК 500 Г ПЛИК",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "20289867": {
     "categories": [
       "rusks"
@@ -513,7 +536,7 @@
   },
   "4056489080510": {
     "categories": [
-      "milk"
+      "food/dairy/milk"
     ],
     "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk (Lidl 2026-03-04)",
     "prices": [
@@ -544,14 +567,51 @@
         "price": 1.43,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-07",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-11",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-03-04",
+        "last_seen": "2026-03-11",
         "name": "ПРЯСНО МЛЯКО 3%",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489104230": {
+    "categories": [
+      "food/nuts/cashews"
+    ],
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-03-11",
+        "price": 2.55,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "150g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-03-11",
+        "last_seen": "2026-03-11",
+        "name": "КАШУ СЪС СОЛ",
         "shop": "Lidl Varna"
       }
     ]
@@ -638,6 +698,67 @@
     ],
     "name": "Lidl Мус от сливи plum mousse"
   },
+  "4056489474340": {
+    "categories": [
+      "food/meat/cured-meat"
+    ],
+    "name": "Бабек слайс",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-03-07",
+        "price": 2.65,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-11",
+        "price": 2.65,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-15",
+        "price": 2.65,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "150g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-03-07",
+        "last_seen": "2026-03-15",
+        "name": "БАБЕК СЛАЙС",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489682677": {
+    "categories": [
+      "food/nuts/pecans"
+    ],
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-03-11",
+        "price": 5.11,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "180g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-03-11",
+        "last_seen": "2026-03-11",
+        "name": "ОРЕХИ ПЕКАН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489693307": {
     "brand": "Pilos/Lidl",
     "categories": [
@@ -654,23 +775,76 @@
         "price": 2.04,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-15",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
-    "quantity": "150 g",
+    "quantity": "150g",
     "receipt_names": [
       {
         "first_seen": "2026-03-04",
-        "last_seen": "2026-03-04",
+        "last_seen": "2026-03-15",
         "name": "ЛОВДЖИЙСКА ЛУКАНКА",
         "shop": "Lidl Varna"
       }
     ],
     "source": "manual"
   },
+  "4056489693901": {
+    "categories": [
+      "food/salads"
+    ],
+    "name": "Салата С Патладжан И Майонеза",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-03-20",
+        "price": 1.79,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-03-20",
+        "last_seen": "2026-03-20",
+        "name": "САЛАТА ПАТЛ. И МАЙОН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489940685": {
+    "categories": [
+      "food/meat/veal"
+    ],
+    "name": "Телешко за готвене от младо телешко",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-03-11",
+        "price": 6.49,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-03-11",
+        "last_seen": "2026-03-11",
+        "name": "ТЕЛЕШКО ЗА ГОТВЕНЕ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489941200": {
     "brand": "Pilos",
     "categories": [
-      "yogurt"
+      "food/dairy/yogurt"
     ],
     "name": "Pilos КИСЕЛО МЛЯКО 3.6% yogurt (Lidl 2026-03-04)",
     "prices": [
@@ -694,13 +868,27 @@
         "price": 1.53,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-07",
+        "price": 1.53,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-11",
+        "price": 1.53,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "1kg",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-03-04",
+        "last_seen": "2026-03-11",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl Varna"
       }
