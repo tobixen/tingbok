@@ -1,6 +1,12 @@
 See also ~/inventory-md/docs/TODO-CATEGORIES.md
 
-* ~~`tingbok --version` does not work~~ Fixed: added `--version` flag to CLI.
-* ~~A query for https://tingbok.plann.no/api/lookup/skrivemaskin?lang=no returned nothing fast while typewriter?lang=en worked~~ Fixed: added `_skos_label_cache` in app.py so subsequent non-English lookups for a concept already resolved via another language are served from cache instead of re-querying SKOS sources (which may return nothing for non-English labels).
-* The code was updated recently to exclude lots of non-thingy-things (names, places, etc) from dbpedia and wikidata, but we probably still have many wrong concepts in the vocabulary.  It's needed to find and filter out wrong existing source URIs (dbo:wikiPageDisambiguates pages, etc.), probably making a tool for it in case more things will be added to the exclusion criterias.
-* ~~`curl -s https://tingbok.plann.no/api/ean/4056489693901` gives data from openfoodfacts, but there is no category information~~ Fixed: `_parse_off` now falls back to non-English category tags when no `en:` tags are present. Also fixed a related bug where `_find_oldest_cache_entry` in skos.py could select non-refreshable cache entries (without `_cache_key`), causing `cache_refresh_loop` to spin in a tight loop.
+## Cache refresher thread
+
+I've tried to turn on debug logging, and I've tried monitoring the files under /var/cache/tingbok/skos and I think I may conclude: the cache refreshing system does not work.
+
+## Data that should be filtered
+
+Either the category source "is it a thing?" filtering does not work, or the filters should be sharpened.  https://tingbok.plann.no/api/lookup/teddy gives https://www.wikidata.org/wiki/Q18010041 which is a "given name" (instance of https://www.wikidata.org/wiki/Q12308941 - male name - which is a subclass of https://www.wikidata.org/wiki/Q202444 - given name - subclass of https://www.wikidata.org/wiki/Q10856962 - antrophonym.  None of those should be used as sources. The correct node is https://www.wikidata.org/wiki/Q213477
+
+It also gives https://dbpedia.org/page/Teddy_Stadium - again, https://dbpedia.org/page/Teddy_bear is the correct.  Teddy Stadium has attributes like dbp:tenants `georss:point` `geo:geometry` `geo:lat` `geo:long`, `dbo:buildingStartDate`, I think any dbpedia article with any of those attributes should be disqualified as it's most likely not a thing one would have in a domestic inventory.
+
