@@ -71,6 +71,16 @@ def _is_dbpedia_list_uri(uri: str) -> bool:
     return local.startswith("List_of_") or local.startswith("Lists_of_")
 
 
+def _is_dbpedia_disambiguation_uri(uri: str) -> bool:
+    """Return True if *uri* is a DBpedia disambiguation page.
+
+    Detects the common ``_(disambiguation)`` suffix used by DBpedia for
+    pages where the unqualified title is ambiguous.
+    """
+    local = uri.rsplit("/", 1)[-1]
+    return "_(disambiguation)" in local
+
+
 #: RDF type URIs that identify DBpedia results as persons or geographical places.
 #: Results containing any of these types are silently rejected — they are never
 #: useful as product/category concepts.
@@ -87,6 +97,8 @@ _DBPEDIA_BLOCKED_TYPES: frozenset[str] = frozenset(
         "http://schema.org/AdministrativeArea",
         # Natural geographical features (rivers, mountains, islands …)
         "http://dbpedia.org/ontology/NaturalPlace",
+        # Wikimedia meta-pages (mirrors Wikidata Q4167410 / Q4167836 / Q13406463)
+        "http://dbpedia.org/ontology/DisambiguationPage",
     }
 )
 
@@ -551,9 +563,12 @@ def lookup_concept(label: str, lang: str, source: str, cache_dir: Path) -> dict 
 
     cached = _load_from_cache(cache_path)
     if cached is not None and cached.get("uri"):
-        # Evict stale DBpedia results that are list articles (cached before the filter was added)
-        if source == "dbpedia" and _is_dbpedia_list_uri(cached["uri"]):
-            logger.debug("Evicting stale DBpedia list-article cache entry for '%s'", label)
+        # Evict stale DBpedia results that are list/disambiguation articles
+        # (cached before these filters were added)
+        if source == "dbpedia" and (
+            _is_dbpedia_list_uri(cached["uri"]) or _is_dbpedia_disambiguation_uri(cached["uri"])
+        ):
+            logger.debug("Evicting stale DBpedia junk-URI cache entry for '%s'", label)
             try:
                 cache_path.unlink()
             except OSError:

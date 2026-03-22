@@ -1290,3 +1290,43 @@ def test_lookup_concept_evicts_stale_dbpedia_list_article_cache(tmp_path: Path) 
 
     assert result is None
     assert not cache_path.exists()  # evicted
+
+
+def test_lookup_dbpedia_filters_disambiguation_pages(tmp_path: Path) -> None:
+    """DBpedia result typed as dbo:DisambiguationPage should be rejected."""
+    from tingbok.services.skos import _lookup_dbpedia
+
+    response_data = _make_dbpedia_response_with_types(
+        "Nail",
+        "http://dbpedia.org/resource/Nail_(disambiguation)",
+        ["http://dbpedia.org/ontology/DisambiguationPage"],
+    )
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result, failed = _lookup_dbpedia("nail", "en")
+
+    assert not failed
+    assert result is None, "Disambiguation page must be filtered out"
+
+
+def test_lookup_concept_evicts_stale_dbpedia_disambiguation_cache(tmp_path: Path) -> None:
+    """A cached DBpedia result with a _(disambiguation) URI is evicted and re-fetched."""
+    from tingbok.services.skos import _get_cache_path, _save_to_cache, lookup_concept
+
+    cache_key = "concept:dbpedia:en:nail"
+    cache_path = _get_cache_path(tmp_path, cache_key)
+    stale = {
+        "uri": "http://dbpedia.org/resource/Nail_(disambiguation)",
+        "prefLabel": "Nail",
+        "source": "dbpedia",
+        "broader": [],
+    }
+    _save_to_cache(cache_path, stale)
+
+    with patch("tingbok.services.skos._upstream_lookup", return_value=(None, False)):
+        result = lookup_concept("nail", "en", "dbpedia", tmp_path)
+
+    assert result is None
+    assert not cache_path.exists()  # evicted
