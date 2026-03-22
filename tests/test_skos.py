@@ -1725,6 +1725,54 @@ def test_is_non_concept_uri_wikidata_valid_concept() -> None:
     assert result is False
 
 
+def test_is_non_concept_uri_wikidata_family_name_blocked() -> None:
+    """Wikidata items that are family names (P31=Q101352) should be rejected."""
+    from tingbok.services.skos import is_non_concept_uri
+
+    # Q37013115 is the "Tools" family name — P31 = Q101352 (family name)
+    fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q101352"}}}}]}}
+    with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
+        result = is_non_concept_uri("https://www.wikidata.org/entity/Q37013115")
+
+    assert result is True
+
+
+def test_is_non_concept_uri_wikidata_given_name_blocked() -> None:
+    """Wikidata items that are given names (P31=Q202444) should be rejected."""
+    from tingbok.services.skos import is_non_concept_uri
+
+    fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q202444"}}}}]}}
+    with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
+        result = is_non_concept_uri("https://www.wikidata.org/entity/Q99999")
+
+    assert result is True
+
+
+def test_is_non_concept_uri_wikidata_anthroponym_subclass_blocked() -> None:
+    """Entities whose P31 value is an unknown subclass of anthroponym (Q10856962) are rejected."""
+    from tingbok.services.skos import is_non_concept_uri
+
+    # Hypothetical name type not in the fast-path direct blocklist
+    fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q9999991"}}}}]}}
+    with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
+        with patch("tingbok.services.skos._batch_fetch_p279", return_value=frozenset({"Q10856962"})):
+            result = is_non_concept_uri("https://www.wikidata.org/entity/Q9999991")
+
+    assert result is True
+
+
+def test_is_non_concept_uri_wikidata_p279_network_error_does_not_block() -> None:
+    """A network error during P279 ancestor fetch should not cause a false positive block."""
+    from tingbok.services.skos import is_non_concept_uri
+
+    fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q2095"}}}}]}}
+    with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
+        with patch("tingbok.services.skos._batch_fetch_p279", return_value=frozenset()):
+            result = is_non_concept_uri("https://www.wikidata.org/entity/Q7802")
+
+    assert result is False
+
+
 def test_is_non_concept_uri_unsupported_source_returns_none() -> None:
     from tingbok.services.skos import is_non_concept_uri
 

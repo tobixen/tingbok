@@ -148,6 +148,14 @@ _WIKIDATA_BLOCKED_P31: frozenset[str] = frozenset(
         "Q1549591",  # big city
         "Q7930989",  # city/town
         "Q1093829",  # city of the United States
+        # Human names — all are subclasses of Q10856962 (anthroponym); listed here
+        # as a fast-path so the ancestor check below can avoid an API call for these
+        # common cases.
+        "Q101352",  # family name / surname
+        "Q202444",  # given name (forename)
+        "Q12308941",  # male given name
+        "Q11879590",  # female given name
+        "Q3409032",  # unisex given name
         # Geographical places (natural)
         "Q23442",  # island
         "Q8502",  # mountain
@@ -179,6 +187,67 @@ def _is_wikidata_non_concept(entity: dict) -> bool:
             if qid in _WIKIDATA_BLOCKED_P31:
                 return True
     return False
+
+
+#: P31 ancestor QIDs whose *entire subclass tree* should be treated as non-concepts.
+#: When a Wikidata entity's P31 value has any of these in its P279 (subclass-of) chain
+#: (checked one level deep via :func:`_batch_fetch_p279`), the entity is rejected.
+_WIKIDATA_BLOCKED_P31_ANCESTORS: frozenset[str] = frozenset(
+    {
+        "Q10856962",  # anthroponym — covers all human name classes not in the fast-path list above
+    }
+)
+
+
+def _extract_p31_qids(entity: dict) -> list[str]:
+    """Return the list of QIDs from an entity's P31 (instance-of) claims."""
+    qids: list[str] = []
+    for claim in (entity.get("claims") or {}).get("P31", []):
+        ms = claim.get("mainsnak", {})
+        if ms.get("snaktype") == "value":
+            q = ms.get("datavalue", {}).get("value", {}).get("id", "")
+            if q:
+                qids.append(q)
+    return qids
+
+
+def _batch_fetch_p279(qids: list[str], headers: dict | None = None) -> frozenset[str]:
+    """Batch-fetch P279 (subclass-of) values for *qids* from the Wikibase Action API.
+
+    Returns the union of all P279 target QIDs found.  Network errors return an empty set
+    (caller is responsible for deciding how to handle the ambiguity).
+    """
+    if not qids:
+        return frozenset()
+    if headers is None:
+        headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+    url = "https://www.wikidata.org/w/api.php"
+    params: dict = {
+        "action": "wbgetentities",
+        "ids": "|".join(qids[:50]),  # API limit is 50 IDs per request
+        "props": "claims",
+        "format": "json",
+    }
+    try:
+        with niquests.Session() as session:
+            response = session.get(url, params=params, headers=headers, timeout=DEFAULT_TIMEOUT)
+            response.raise_for_status()
+    except niquests.exceptions.RequestException as e:
+        logger.debug("P279 batch fetch failed for %s: %s", qids, e)
+        return frozenset()
+    data = _parse_json(response, str(qids))
+    if data is None:
+        return frozenset()
+    result: set[str] = set()
+    for qid in qids:
+        ent = (data.get("entities") or {}).get(qid, {})
+        for claim in (ent.get("claims") or {}).get("P279", []):
+            ms = claim.get("mainsnak", {})
+            if ms.get("snaktype") == "value":
+                parent = ms.get("datavalue", {}).get("value", {}).get("id", "")
+                if parent:
+                    result.add(parent)
+    return frozenset(result)
 
 
 _REST_ENDPOINTS: dict[str, str] = {
@@ -1630,6 +1699,15 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
         logger.debug("Wikidata %s filtered out (person/place/disambiguation)", qid)
         return None, False
 
+    # Reject entities whose P31 value is a subclass of a blocked ancestor category
+    # (e.g. a name type not yet in the fast-path list above).
+    p31_qids = _extract_p31_qids(entity)
+    if p31_qids:
+        p31_parents = _batch_fetch_p279(p31_qids, headers)
+        if p31_parents & _WIKIDATA_BLOCKED_P31_ANCESTORS:
+            logger.debug("Wikidata %s filtered out (P31 is subclass of blocked ancestor)", qid)
+            return None, False
+
     # Extract P279 broader QIDs from the same entity data
     p279_claims = entity.get("claims", {}).get("P279", [])
     broader_qids: list[str] = []
@@ -2062,6 +2140,13 @@ def is_non_concept_uri(uri: str, cache_dir: Path | None = None) -> bool | None:
         if entity is None:
             return None  # network error — do not remove
         result = _is_wikidata_non_concept(entity)
+        if not result:
+            # Secondary check: is any P31 value a subclass of a blocked ancestor?
+            p31_qids = _extract_p31_qids(entity)
+            if p31_qids:
+                p31_parents = _batch_fetch_p279(p31_qids)
+                if p31_parents & _WIKIDATA_BLOCKED_P31_ANCESTORS:
+                    result = True
 
     else:
         # agrovoc, off, gpt, etc. — cannot determine from URI alone
