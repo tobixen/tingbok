@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -32,6 +33,26 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from tingbok.services.skos import is_junk_uri
+
+_TINGBOK_CONF = Path("/etc/tingbok/tingbok.conf")
+
+
+def _resolve_cache_dir() -> Path:
+    """Return the SKOS cache directory.
+
+    Resolution order:
+    1. ``TINGBOK_CACHE_DIR`` environment variable.
+    2. ``TINGBOK_CACHE_DIR`` parsed from ``/etc/tingbok/tingbok.conf``.
+    3. ``~/.cache/tingbok`` user-level fallback.
+    """
+    if "TINGBOK_CACHE_DIR" in os.environ:
+        return Path(os.environ["TINGBOK_CACHE_DIR"]) / "skos"
+    if _TINGBOK_CONF.exists():
+        for line in _TINGBOK_CONF.read_text().splitlines():
+            line = line.strip()
+            if line.startswith("TINGBOK_CACHE_DIR="):
+                return Path(line.split("=", 1)[1].strip()) / "skos"
+    return Path.home() / ".cache" / "tingbok" / "skos"
 
 
 def scan_skos_cache(cache_dir: Path, dry_run: bool) -> tuple[int, int]:
@@ -114,8 +135,8 @@ def main() -> None:
     parser.add_argument(
         "--cache-dir",
         type=Path,
-        default=Path.home() / ".cache" / "tingbok" / "skos",
-        help="SKOS cache directory (default: ~/.cache/tingbok/skos)",
+        default=_resolve_cache_dir(),
+        help="SKOS cache directory (default: from TINGBOK_CACHE_DIR / /etc/tingbok/tingbok.conf)",
     )
     parser.add_argument(
         "--dry-run",
