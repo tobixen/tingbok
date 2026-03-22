@@ -10,6 +10,16 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Fixed
 
+- **Cache refresh loop now handles legacy entries written before `_cache_key` was added** —
+  ~7 800 SKOS cache files (up to 55 days old) were silently skipped by
+  `_find_oldest_cache_entry` because they lacked the `_cache_key` field, causing the
+  loop to only see 13-day-old entries and sleep ~9 hours between each check.  A new
+  `_infer_cache_key()` helper reconstructs the key from the SHA-256 hash embedded in
+  the filename: for `labels`/`alt_labels`/`description` entries the key is rebuilt from
+  `uri`+`source` stored in the data; for `concept` entries the first three underscores
+  in the filename stem are replaced with colons.  Non-inferable entries (OFF/GPT caches
+  with `off:`/`gpt:` URIs) continue to be skipped to prevent spin-loops.  On a
+  successful refresh, the key is written back so future scans use the normal path.
 - **DBpedia disambiguation pages are now filtered at lookup time** —
   `http://dbpedia.org/ontology/DisambiguationPage` is added to `_DBPEDIA_BLOCKED_TYPES`
   so new lookups reject them immediately.  Stale cached disambiguation entries are also
