@@ -411,7 +411,7 @@ async def _fetch_labels_background() -> None:
 
     Delegates to :func:`_fetch_concept_labels` for each concept.  Results are
     rebuilt from the SKOS cache on every startup (expensive API calls only happen
-    on cache misses, which are then cached for 60 days).
+    on cache misses, which are then cached for 90 days).
     """
     total = len(vocabulary)
     for i, (concept_id, data) in enumerate(vocabulary.items(), 1):
@@ -425,15 +425,15 @@ def _cache_refresh_config() -> tuple[float, float]:
     """Read cache refresh settings from environment variables.
 
     ``TINGBOK_CACHE_MAX_AGE_DAYS`` — how old (in days) the oldest entry must be
-    before it is considered stale (default: 60).
+    before it is considered stale (default: 90).
 
     ``TINGBOK_CACHE_REFRESH_DIVISOR`` — controls sleep between refreshes;
-    ``sleep = (max_age - age) / divisor`` (default: 100).
+    ``sleep = (max_age - age) / divisor`` (default: 200).
     """
     import os  # noqa: PLC0415
 
-    max_age_days = float(os.environ.get("TINGBOK_CACHE_MAX_AGE_DAYS", "60"))
-    divisor = float(os.environ.get("TINGBOK_CACHE_REFRESH_DIVISOR", "100"))
+    max_age_days = float(os.environ.get("TINGBOK_CACHE_MAX_AGE_DAYS", "90"))
+    divisor = float(os.environ.get("TINGBOK_CACHE_REFRESH_DIVISOR", "200"))
     return max_age_days * 86400, divisor
 
 
