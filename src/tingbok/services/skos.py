@@ -414,9 +414,14 @@ def _infer_cache_key(cache_path: Path, data: dict) -> str | None:
 
 
 def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
-    """Return ``(path, timestamp)`` of the least-recently-used cache file in *cache_dir*.
+    """Return ``(path, timestamp)`` of the least-recently-*refreshed* cache file in *cache_dir*.
 
-    The timestamp is ``_last_accessed`` when present, falling back to ``_cached_at``.
+    The timestamp is ``_cached_at`` — the time the entry was last fetched from upstream.
+    ``_last_accessed`` is intentionally ignored here: it tracks user access for LRU
+    pruning purposes, but sorting by it would cause the refresh loop to spin on the same
+    entry forever (because ``_last_accessed`` is preserved across background refreshes
+    while ``_cached_at`` is updated, so the refreshed entry would always look "oldest").
+
     ``_not_found.json`` is skipped (it is a compound index, not a single entry).
 
     Entries with a ``_cache_key`` are always eligible.  Legacy entries that lack
@@ -442,7 +447,7 @@ def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
             # Legacy entry — only include it if we can infer the key at refresh time.
             if _infer_cache_key(cache_path, data) is None:
                 continue
-        ts = data.get("_last_accessed") or data.get("_cached_at", float("inf"))
+        ts = data.get("_cached_at", float("inf"))
         if ts < oldest_ts:
             oldest_ts = ts
             oldest_path = cache_path

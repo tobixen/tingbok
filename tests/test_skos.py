@@ -119,13 +119,25 @@ def test_save_to_cache_preserves_last_accessed(tmp_path: Path) -> None:
 
 
 def test_find_oldest_cache_entry_returns_oldest(tmp_path: Path) -> None:
-    """_find_oldest_cache_entry returns the path with the smallest last_accessed timestamp."""
+    """_find_oldest_cache_entry returns the path with the smallest _cached_at timestamp."""
     old = tmp_path / "old.json"
     recent = tmp_path / "recent.json"
     t_old = time.time() - 50 * 86400
     t_new = time.time() - 5 * 86400
-    _save_to_cache(old, {"uri": "http://example.org/old"}, last_accessed=t_old, cache_key="concept:wikidata:en:old")
-    _save_to_cache(recent, {"uri": "http://example.org/new"}, last_accessed=t_new, cache_key="concept:wikidata:en:new")
+    _save_to_cache(old, {"uri": "http://example.org/old"}, cache_key="concept:wikidata:en:old")
+    # Force the _cached_at to the desired old value by rewriting the file
+    with open(old) as f:
+        d = json.load(f)
+    d["_cached_at"] = t_old
+    with open(old, "w") as f:
+        json.dump(d, f)
+
+    _save_to_cache(recent, {"uri": "http://example.org/new"}, cache_key="concept:wikidata:en:new")
+    with open(recent) as f:
+        d = json.load(f)
+    d["_cached_at"] = t_new
+    with open(recent, "w") as f:
+        json.dump(d, f)
 
     result = _find_oldest_cache_entry(tmp_path)
     assert result is not None
@@ -138,23 +150,84 @@ def test_find_oldest_cache_entry_empty_dir(tmp_path: Path) -> None:
     assert _find_oldest_cache_entry(tmp_path) is None
 
 
-def test_find_oldest_prefers_last_accessed_over_cached_at(tmp_path: Path) -> None:
-    """cached_at is only used as fallback when _last_accessed is absent."""
-    f = tmp_path / "item.json"
-    # cached_at is old, but it has been accessed recently — has _cache_key so it's refreshable
-    _save_to_cache(
-        f, {"uri": "http://example.org/x"}, last_accessed=time.time() - 86400, cache_key="concept:wikidata:en:x"
+def test_find_oldest_uses_cached_at_not_last_accessed(tmp_path: Path) -> None:
+    """_find_oldest_cache_entry must sort by _cached_at, not _last_accessed.
+
+    Regression: the original implementation sorted by _last_accessed, which caused
+    _refresh_entry to permanently pick the same entry (because _last_accessed is
+    preserved across refreshes while _cached_at is updated).
+    """
+    # Entry A: cached long ago, but accessed recently by a user
+    entry_a = tmp_path / "a.json"
+    entry_a.write_text(
+        json.dumps(
+            {
+                "_cache_key": "concept:wikidata:en:a",
+                "_cached_at": time.time() - 60 * 86400,  # 60 days old — should be picked
+                "_last_accessed": time.time() - 1 * 86400,  # accessed 1 day ago
+            }
+        )
     )
-    # write a second file with no last_accessed but a much older cached_at — also refreshable
-    old_no_access = tmp_path / "no_access.json"
-    old_no_access.write_text(
-        json.dumps({"_cached_at": time.time() - 90 * 86400, "_cache_key": "concept:wikidata:en:old"})
+    # Entry B: cached recently, but not accessed by a user for a long time
+    entry_b = tmp_path / "b.json"
+    entry_b.write_text(
+        json.dumps(
+            {
+                "_cache_key": "concept:wikidata:en:b",
+                "_cached_at": time.time() - 1 * 86400,  # 1 day old
+                "_last_accessed": time.time() - 60 * 86400,  # not accessed for 60 days
+            }
+        )
     )
 
     result = _find_oldest_cache_entry(tmp_path)
     assert result is not None
-    path, _ = result
-    assert path == old_no_access  # the one without last_accessed (oldest fallback) wins
+    path, ts = result
+    assert path == entry_a, (
+        "_find_oldest_cache_entry must pick the entry with the oldest _cached_at, not the oldest _last_accessed"
+    )
+
+
+def test_find_oldest_after_refresh_picks_different_entry(tmp_path: Path) -> None:
+    """After refreshing an entry, _find_oldest_cache_entry must NOT return the same entry.
+
+    Regression: _refresh_entry preserves _last_accessed; if the function sorts by
+    _last_accessed the refreshed entry is still 'oldest' and gets picked every iteration,
+    meaning the loop never advances to other entries.
+    """
+    t_old = time.time() - 50 * 86400
+
+    # Two entries, both old by _cached_at
+    entry_a = tmp_path / "a.json"
+    entry_a.write_text(
+        json.dumps({"_cache_key": "concept:wikidata:en:a", "_cached_at": t_old, "_last_accessed": t_old})
+    )
+    entry_b = tmp_path / "b.json"
+    entry_b.write_text(
+        json.dumps({"_cache_key": "concept:wikidata:en:b", "_cached_at": t_old - 1, "_last_accessed": t_old - 1})
+    )
+
+    first = _find_oldest_cache_entry(tmp_path)
+    assert first is not None
+    first_path, _ = first
+
+    # Simulate what _refresh_entry does: update _cached_at to now, preserve _last_accessed
+    with open(first_path) as f:
+        d = json.load(f)
+    old_last_accessed = d.get("_last_accessed")
+    d["_cached_at"] = time.time()  # refreshed — brand new
+    if old_last_accessed is not None:
+        d["_last_accessed"] = old_last_accessed  # preserved
+    with open(first_path, "w") as f:
+        json.dump(d, f)
+
+    second = _find_oldest_cache_entry(tmp_path)
+    assert second is not None
+    second_path, _ = second
+    assert second_path != first_path, (
+        "After refreshing an entry its _cached_at is updated to now; "
+        "_find_oldest_cache_entry must pick a different (still-stale) entry next"
+    )
 
 
 def test_find_oldest_cache_entry_skips_non_refreshable_entries(tmp_path: Path) -> None:
