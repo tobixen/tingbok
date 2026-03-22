@@ -43,6 +43,7 @@ def normalise_uri(uri: str) -> str:
 def process_uris(
     uris: list[str],
     check_types: bool = False,
+    cache_dir: Path | None = None,
 ) -> tuple[list[str], list[tuple[str, str]]]:
     """Process a source_uris list: normalise, deduplicate, remove junk.
 
@@ -66,7 +67,7 @@ def process_uris(
             continue
 
         if check_types:
-            result = is_non_concept_uri(normed)
+            result = is_non_concept_uri(normed, cache_dir=cache_dir)
             if result is True:
                 removed.append((raw, "blocked type (person/place/disambiguation)"))
                 continue
@@ -81,6 +82,7 @@ def clean_vocabulary(
     vocab_path: Path,
     dry_run: bool = False,
     check_types: bool = False,
+    cache_dir: Path | None = None,
 ) -> dict[str, int]:
     """Clean *vocab_path* in-place.
 
@@ -111,7 +113,7 @@ def clean_vocabulary(
         # Normalise scalar string → single-element list (malformed YAML entry)
         uris: list[str] = [raw_uris] if isinstance(raw_uris, str) else list(raw_uris)
 
-        new_uris, removed = process_uris(uris, check_types=check_types)
+        new_uris, removed = process_uris(uris, check_types=check_types, cache_dir=cache_dir)
 
         # Count http→https normalisations
         for orig, new in zip(uris, [normalise_uri(u) for u in uris], strict=True):
@@ -148,7 +150,13 @@ def main() -> None:
     parser.add_argument(
         "--check-types",
         action="store_true",
-        help="Fetch RDF types from DBpedia/Wikidata (slow)",
+        help="Fetch RDF types from DBpedia/Wikidata (slow; cached in --cache-dir)",
+    )
+    parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=Path.home() / ".cache" / "tingbok" / "skos",
+        help="SKOS cache directory for type-check results (default: ~/.cache/tingbok/skos)",
     )
     args = parser.parse_args()
 
@@ -157,9 +165,10 @@ def main() -> None:
 
     print(f"Vocabulary: {args.vocab}")
     if args.check_types:
-        print("Type-checking enabled (fetching RDF types from DBpedia/Wikidata)\n")
+        print(f"Type-checking enabled — caching results in {args.cache_dir}\n")
 
-    report = clean_vocabulary(args.vocab, dry_run=args.dry_run, check_types=args.check_types)
+    cache_dir = args.cache_dir if args.check_types else None
+    report = clean_vocabulary(args.vocab, dry_run=args.dry_run, check_types=args.check_types, cache_dir=cache_dir)
 
     print("\nSummary:")
     action = "Would remove" if args.dry_run else "Removed"

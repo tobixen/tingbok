@@ -1443,3 +1443,59 @@ def test_is_non_concept_uri_unsupported_source_returns_none() -> None:
 
     assert is_non_concept_uri("https://aims.fao.org/aos/agrovoc/c_12345") is None
     assert is_non_concept_uri("off:en:some-category") is None
+
+
+def test_is_non_concept_uri_stores_result_in_cache(tmp_path: Path) -> None:
+    """A definitive True/False result should be written to the SKOS cache."""
+    from tingbok.services.skos import _get_cache_path, is_non_concept_uri
+
+    uri = "https://dbpedia.org/resource/Bread"
+    response_data = _dbpedia_data_response("Bread", ["http://dbpedia.org/ontology/Food"])
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result = is_non_concept_uri(uri, cache_dir=tmp_path)
+
+    assert result is False
+
+    import hashlib
+
+    cache_key = f"type_check:{hashlib.md5(uri.encode()).hexdigest()[:16]}"  # noqa: S324
+    cache_path = _get_cache_path(tmp_path, cache_key)
+    assert cache_path.exists(), "Result should be stored in cache"
+
+
+def test_is_non_concept_uri_uses_cache_on_hit(tmp_path: Path) -> None:
+    """A cached result should be returned without making any network call."""
+    from tingbok.services.skos import _get_cache_path, _save_to_cache, is_non_concept_uri
+
+    uri = "https://dbpedia.org/resource/Bread"
+
+    import hashlib
+
+    cache_key = f"type_check:{hashlib.md5(uri.encode()).hexdigest()[:16]}"  # noqa: S324
+    cache_path = _get_cache_path(tmp_path, cache_key)
+    _save_to_cache(cache_path, {"uri": uri, "is_non_concept": False}, cache_key=cache_key)
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        result = is_non_concept_uri(uri, cache_dir=tmp_path)
+        mock_sess.assert_not_called()
+
+    assert result is False
+
+
+def test_is_non_concept_uri_does_not_cache_network_errors(tmp_path: Path) -> None:
+    """None (network error) should not be written to the cache."""
+    import niquests
+
+    from tingbok.services.skos import is_non_concept_uri
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.side_effect = niquests.exceptions.RequestException("timeout")
+        result = is_non_concept_uri("https://dbpedia.org/resource/Bread", cache_dir=tmp_path)
+
+    assert result is None
+    assert list(tmp_path.rglob("*.json")) == [], "Nothing should be cached on network error"

@@ -1894,7 +1894,7 @@ def _fetch_wikidata_entity_by_qid(qid: str) -> dict | None:
     return (data.get("entities") or {}).get(qid)
 
 
-def is_non_concept_uri(uri: str) -> bool | None:
+def is_non_concept_uri(uri: str, cache_dir: Path | None = None) -> bool | None:
     """Determine whether *uri* refers to a non-concept entity.
 
     This is the single authoritative implementation.  It covers:
@@ -1905,6 +1905,11 @@ def is_non_concept_uri(uri: str) -> bool | None:
     * Wikidata persons, geographic places, disambiguation/list pages (P31 and
       P625 claims fetched from the Wikibase Action API).
 
+    When *cache_dir* is provided, results are read from and written to the
+    standard SKOS cache so that repeated calls (e.g. re-running the cleanup
+    script) avoid redundant network requests.  Network errors (``None``) are
+    never cached.
+
     Returns:
         ``True``  — definitely not a usable concept.
         ``False`` — appears to be a valid concept.
@@ -1914,20 +1919,37 @@ def is_non_concept_uri(uri: str) -> bool | None:
     if is_junk_uri(uri):
         return True
 
+    # Cache key shared by both DBpedia and Wikidata type checks
+    cache_path: Path | None = None
+    if cache_dir is not None:
+        cache_key = f"type_check:{hashlib.md5(uri.encode()).hexdigest()[:16]}"  # noqa: S324
+        cache_path = _get_cache_path(cache_dir, cache_key)
+        cached = _load_from_cache(cache_path)
+        if cached is not None and "is_non_concept" in cached:
+            return bool(cached["is_non_concept"])
+
+    result: bool | None = None
+
     if "dbpedia.org" in uri:
         types = _fetch_dbpedia_types(uri)
         if types is None:
             return None  # network error — do not remove
-        return bool(types & _DBPEDIA_BLOCKED_TYPES)
+        result = bool(types & _DBPEDIA_BLOCKED_TYPES)
 
-    if "wikidata.org" in uri:
+    elif "wikidata.org" in uri:
         qid = _extract_wikidata_qid(uri)
         if not qid:
             return None
         entity = _fetch_wikidata_entity_by_qid(qid)
         if entity is None:
             return None  # network error — do not remove
-        return _is_wikidata_non_concept(entity)
+        result = _is_wikidata_non_concept(entity)
 
-    # agrovoc, off, gpt, etc. — cannot determine from URI alone
-    return None
+    else:
+        # agrovoc, off, gpt, etc. — cannot determine from URI alone
+        return None
+
+    if cache_path is not None and result is not None:
+        _save_to_cache(cache_path, {"uri": uri, "is_non_concept": result}, cache_key=cache_key)
+
+    return result
