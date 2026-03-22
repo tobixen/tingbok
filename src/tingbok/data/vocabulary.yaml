@@ -396,7 +396,8 @@ concepts:
   registration-plate:
     prefLabel: "Registration plate"
     altLabel:
-      en: ["license plate", "number plate", "boat registration", "vehicle registration plate"]
+      en: ["license plate", "number plate", "boat registration", "vehicle registration
+          plate"]
       nb: ["registreringsskilt", "nummerskilt"]
     broader: documents
 
@@ -411,10 +412,10 @@ concepts:
   food/roes:
     broader: food
     sources:
-      - https://www.wikidata.org/wiki/Q12366140
-      - https://aims.fao.org/aos/agrovoc/c_6634
+    - https://www.wikidata.org/wiki/Q12366140
+    - https://aims.fao.org/aos/agrovoc/c_6634
     narrower:
-      - caviar
+    - caviar
 
   food/caviar:
     broader: food/roes
@@ -687,8 +688,8 @@ concepts:
     altLabel:
       en: ["spice", "spices", "herbs", "seasonings"]
     broader:
-      - food
-      - food/conditment
+    - food
+    - food/conditment
     narrower:
     - bouillon
     - salt
@@ -721,7 +722,7 @@ concepts:
     altLabel:
       en: ["black pepper", "peppercorns"]
     broader:
-      - food/spices
+    - food/spices
 
     source_uris:
     - https://dbpedia.org/resource/Pepper
@@ -1509,8 +1510,6 @@ concepts:
     prefLabel: "Cleaning tools"
     broader: tools
 
-    source_uris:
-    - https://dbpedia.org/resource/List_of_cleaning_tools
   tools/bike:
     prefLabel: "Bike tools"
     altLabel:
@@ -1646,8 +1645,6 @@ concepts:
     prefLabel: "Sail repair"
     broader: boat-equipment/rigging
 
-    source_uris:
-    - https://dbpedia.org/resource/List_of_The_Grim_Adventures_of_Billy_&_Mandy_episodes
   shackle:
     prefLabel: "Shackle"
     altLabel:
@@ -1882,8 +1879,6 @@ concepts:
     prefLabel: "Sanding disc"
     broader: sandpaper
 
-    source_uris:
-    - https://dbpedia.org/resource/List_of_minor_planet_discoverers
   composite-material:
     prefLabel: "Composite material"
     altLabel:
@@ -2072,8 +2067,7 @@ concepts:
   clothing/underwear:
     prefLabel: "Underwear"
     broader: clothing
-    source_uris:
-      https://www.wikidata.org/wiki/Q198763
+    source_uris: https://www.wikidata.org/wiki/Q198763
 
   clothing/workwear:
     prefLabel: "Workwear"
@@ -2209,7 +2203,7 @@ concepts:
     prefLabel: "Writing supplies"
     broader: office
     excluded_sources:
-      - dbpedia
+    - dbpedia
 
   office/paper:
     prefLabel: "Paper products"
@@ -2376,8 +2370,6 @@ concepts:
     prefLabel: "Bike clamp"
     broader: tools/bike
 
-    source_uris:
-    - https://dbpedia.org/resource/List_of_coalition_military_operations_of_the_Iraq_War
   bike_hardware:
     prefLabel: "Bike hardware"
     broader: tools/bike
@@ -2546,8 +2538,6 @@ concepts:
     prefLabel: "Smart home sensor"
     broader: electronics
 
-    source_uris:
-    - https://dbpedia.org/resource/List_of_The_Grim_Adventures_of_Billy_&_Mandy_episodes
   smart_sensor:
     prefLabel: "Smart sensor"
     broader: electronics
@@ -2573,8 +2563,6 @@ concepts:
     prefLabel: "Sail tool"
     broader: tools
 
-    source_uris:
-    - https://dbpedia.org/resource/List_of_Walt_Disney_Animation_Studios_short_films
   sanding_accessory:
     prefLabel: "Sanding accessory"
     broader: tools

@@ -11,6 +11,21 @@
     ],
     "name": "Whale Service Kit AK1550 for Gulper 220 pump (diaphragm, valves, gaskets)"
   },
+  "0481093": {
+    "categories": [
+      "clothing"
+    ],
+    "name": "МЪЖКИ КАРГО ПАНТ men's cargo trousers (Lidl 2026-03-04)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 9.99,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20000646": {
     "categories": [
       "jam"
@@ -536,9 +551,9 @@
   },
   "4056489080510": {
     "categories": [
-      "food/dairy/milk"
+      "fresh-milk"
     ],
-    "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk (Lidl 2026-03-04)",
+    "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -595,14 +610,22 @@
   },
   "4056489104230": {
     "categories": [
-      "food/nuts/cashews"
+      "cashews"
     ],
+    "name": "Alesto КАШУ СЪС СОЛ cashews roasted & salted",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-03-11",
         "price": 2.55,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -700,9 +723,9 @@
   },
   "4056489474340": {
     "categories": [
-      "food/meat/cured-meat"
+      "dried-meat"
     ],
-    "name": "Бабек слайс",
+    "name": "Родна стряха БАБЕК СЛАЙС Babek sliced",
     "prices": [
       {
         "currency": "EUR",
@@ -724,6 +747,13 @@
         "price": 2.65,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.65,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
     "quantity": "150g",
@@ -738,14 +768,22 @@
   },
   "4056489682677": {
     "categories": [
-      "food/nuts/pecans"
+      "pecans"
     ],
+    "name": "Alesto ОРЕХИ ПЕКАН pecan nuts natural",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-03-11",
         "price": 5.11,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.11,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -762,12 +800,9 @@
   "4056489693307": {
     "brand": "Pilos/Lidl",
     "categories": [
-      "Meat",
-      "Sausages",
-      "Cured meats",
-      "Dry sausages"
+      "dried-meat"
     ],
-    "name": "Ловджийска Луканка",
+    "name": "Pilos ЛОВДЖИЙСКА ЛУКАНКА hunter's lukanka",
     "prices": [
       {
         "currency": "EUR",
@@ -781,6 +816,13 @@
         "date": "2026-03-15",
         "price": 2.04,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.04,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -797,15 +839,22 @@
   },
   "4056489693901": {
     "categories": [
-      "food/salads"
+      "salad"
     ],
-    "name": "Салата С Патладжан И Майонеза",
+    "name": "Chef Select САЛАТА С ПАТЛАДЖАН И МАЙОНЕЗА eggplant salad with mayo",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-03-20",
         "price": 1.79,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.79,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -815,6 +864,22 @@
         "last_seen": "2026-03-20",
         "name": "САЛАТА ПАТЛ. И МАЙОН",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489751533": {
+    "categories": [
+      "personal-care",
+      "toothpaste"
+    ],
+    "name": "ГЕЛ ЗА ЗЪБИ toothpaste gel (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.76,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -844,9 +909,9 @@
   "4056489941200": {
     "brand": "Pilos",
     "categories": [
-      "food/dairy/yogurt"
+      "yogurt"
     ],
-    "name": "Pilos КИСЕЛО МЛЯКО 3.6% yogurt (Lidl 2026-03-04)",
+    "name": "Pilos КИСЕЛО МЛЯКО 3.6% yogurt (семейна опаковка)",
     "prices": [
       {
         "currency": "EUR",
@@ -1169,6 +1234,21 @@
       "personal-care"
     ],
     "name": "Deliplus deodorant spray \"Máxima Protección\" green tea 24h (Spanish)"
+  },
+  "8594026574840": {
+    "categories": [
+      "dental-floss"
+    ],
+    "name": "КОНЕЦ С ВОСЪК waxed dental floss (ERA HOME, Bulgarian)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "8690105000115": {
     "categories": [
