@@ -81,6 +81,18 @@ def _is_dbpedia_disambiguation_uri(uri: str) -> bool:
     return "_(disambiguation)" in local
 
 
+def is_junk_uri(uri: str) -> bool:
+    """Return True if *uri* is a known non-concept by URI pattern alone.
+
+    Covers DBpedia list articles (``List_of_*``, ``Lists_of_*``) and
+    disambiguation pages (``*_(disambiguation)*``).  No network calls are made.
+
+    This is the authoritative, upgradeable definition — the cleanup script
+    and internal cache-eviction code both call this function.
+    """
+    return _is_dbpedia_list_uri(uri) or _is_dbpedia_disambiguation_uri(uri)
+
+
 #: RDF type URIs that identify DBpedia results as persons or geographical places.
 #: Results containing any of these types are silently rejected — they are never
 #: useful as product/category concepts.
@@ -565,9 +577,7 @@ def lookup_concept(label: str, lang: str, source: str, cache_dir: Path) -> dict 
     if cached is not None and cached.get("uri"):
         # Evict stale DBpedia results that are list/disambiguation articles
         # (cached before these filters were added)
-        if source == "dbpedia" and (
-            _is_dbpedia_list_uri(cached["uri"]) or _is_dbpedia_disambiguation_uri(cached["uri"])
-        ):
+        if source == "dbpedia" and is_junk_uri(cached["uri"]):
             logger.debug("Evicting stale DBpedia junk-URI cache entry for '%s'", label)
             try:
                 cache_path.unlink()
@@ -1335,7 +1345,7 @@ def _lookup_dbpedia(label: str, lang: str) -> tuple[dict | None, bool]:
         return res[0] if isinstance(res, list) and res else (res if isinstance(res, str) else "")
 
     results: list[dict] = [
-        r for r in data.get("docs", []) if not _is_dbpedia_list_uri(_result_uri(r)) and not _is_dbpedia_non_concept(r)
+        r for r in data.get("docs", []) if not is_junk_uri(_result_uri(r)) and not _is_dbpedia_non_concept(r)
     ]
     if not results:
         return None, False
@@ -1375,7 +1385,7 @@ def _lookup_dbpedia(label: str, lang: str) -> tuple[dict | None, bool]:
 
     # Fetch broader from the DBpedia data endpoint (skos:broader); skip list articles
     broader_raw = _get_broader_dbpedia(uri, lang)
-    broader = [b for b in broader_raw if not _is_dbpedia_list_uri(b.get("uri", ""))]
+    broader = [b for b in broader_raw if not is_junk_uri(b.get("uri", ""))]
 
     return {
         "uri": uri,
@@ -1826,3 +1836,98 @@ def _get_agrovoc_alt_labels(uri: str, languages: list[str]) -> dict[str, list[st
                 if lang in languages and value:
                     alts.setdefault(lang, []).append(value)
     return alts
+
+
+# ---------------------------------------------------------------------------
+# Public URI classification API
+# ---------------------------------------------------------------------------
+
+
+def _fetch_dbpedia_types(uri: str) -> set[str] | None:
+    """Fetch the rdf:type URIs for *uri* from the DBpedia data endpoint.
+
+    Returns the set of type URI strings, or ``None`` on network/parse error.
+    """
+    local = uri.rsplit("/", 1)[-1]
+    data_uri = f"https://dbpedia.org/data/{local}.json"
+    try:
+        with niquests.Session() as session:
+            response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
+            response.raise_for_status()
+    except niquests.exceptions.RequestException as e:
+        logger.debug("DBpedia type fetch failed for %s: %s", uri, e)
+        return None
+    data = _parse_json(response, uri)
+    if data is None:
+        return None
+    # The data endpoint key uses http://; try both variants for safety.
+    resource_key = f"http://dbpedia.org/resource/{local}"
+    resource_data = data.get(resource_key) or data.get(f"https://dbpedia.org/resource/{local}") or {}
+    type_entries = resource_data.get("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", [])
+    return {e["value"] for e in type_entries if isinstance(e, dict) and e.get("type") == "uri"}
+
+
+def _extract_wikidata_qid(uri: str) -> str | None:
+    """Extract the Q-identifier from a Wikidata entity URI (e.g. ``Q12345``)."""
+    m = re.search(r"[/:]([QP]\d+)$", uri)
+    return m.group(1) if m else None
+
+
+def _fetch_wikidata_entity_by_qid(qid: str) -> dict | None:
+    """Fetch Wikidata entity claims for *qid* via the Wikibase Action API.
+
+    Returns the entity dict (with a ``"claims"`` key) or ``None`` on error.
+    """
+    url = "https://www.wikidata.org/w/api.php"
+    params: dict = {"action": "wbgetentities", "ids": qid, "props": "claims", "format": "json"}
+    headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+    try:
+        with niquests.Session() as session:
+            response = session.get(url, params=params, headers=headers, timeout=DEFAULT_TIMEOUT)
+            response.raise_for_status()
+    except niquests.exceptions.RequestException as e:
+        logger.debug("Wikidata entity fetch failed for %s: %s", qid, e)
+        return None
+    data = _parse_json(response, qid)
+    if data is None:
+        return None
+    return (data.get("entities") or {}).get(qid)
+
+
+def is_non_concept_uri(uri: str) -> bool | None:
+    """Determine whether *uri* refers to a non-concept entity.
+
+    This is the single authoritative implementation.  It covers:
+
+    * DBpedia list articles and disambiguation pages (URI pattern, no network).
+    * DBpedia persons, geographic places, and Wikimedia meta-pages (RDF types
+      fetched from the DBpedia data endpoint).
+    * Wikidata persons, geographic places, disambiguation/list pages (P31 and
+      P625 claims fetched from the Wikibase Action API).
+
+    Returns:
+        ``True``  — definitely not a usable concept.
+        ``False`` — appears to be a valid concept.
+        ``None``  — could not determine (unsupported source or transient network error).
+    """
+    # Fast pattern check — no network needed
+    if is_junk_uri(uri):
+        return True
+
+    if "dbpedia.org" in uri:
+        types = _fetch_dbpedia_types(uri)
+        if types is None:
+            return None  # network error — do not remove
+        return bool(types & _DBPEDIA_BLOCKED_TYPES)
+
+    if "wikidata.org" in uri:
+        qid = _extract_wikidata_qid(uri)
+        if not qid:
+            return None
+        entity = _fetch_wikidata_entity_by_qid(qid)
+        if entity is None:
+            return None  # network error — do not remove
+        return _is_wikidata_non_concept(entity)
+
+    # agrovoc, off, gpt, etc. — cannot determine from URI alone
+    return None

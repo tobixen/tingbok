@@ -28,11 +28,10 @@ import json
 import sys
 from pathlib import Path
 
+# Allow running directly from the repo root without an editable install.
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-def _is_junk_dbpedia_uri(uri: str) -> bool:
-    """Return True if *uri* is a list article or disambiguation page."""
-    local = uri.rsplit("/", 1)[-1]
-    return local.startswith("List_of_") or local.startswith("Lists_of_") or "_(disambiguation)" in local
+from tingbok.services.skos import is_junk_uri
 
 
 def scan_skos_cache(cache_dir: Path, dry_run: bool) -> tuple[int, int]:
@@ -63,7 +62,7 @@ def scan_skos_cache(cache_dir: Path, dry_run: bool) -> tuple[int, int]:
         uri: str = data.get("uri", "")
         pref_label: str = data.get("prefLabel", "")
 
-        if uri and _is_junk_dbpedia_uri(uri):
+        if uri and is_junk_uri(uri):
             label_part = cache_key.split(":", 3)[-1]
             action = "WOULD DELETE" if dry_run else "DELETE"
             print(f"  {action}: {label_part!r} → {uri}")
@@ -101,8 +100,10 @@ def scan_vocabulary(vocab_path: Path, dry_run: bool) -> int:
     for concept_id, data in (doc.get("concepts") or {}).items():
         if not data:
             continue
-        for uri in data.get("source_uris") or []:
-            if uri.startswith(("http://dbpedia.org/", "https://dbpedia.org/")) and _is_junk_dbpedia_uri(uri):
+        raw_uris = data.get("source_uris") or []
+        uris_list = [raw_uris] if isinstance(raw_uris, str) else list(raw_uris)
+        for uri in uris_list:
+            if is_junk_uri(uri):
                 print(f"  VOCAB BAD URI: {concept_id}: {uri}")
                 found += 1
     return found

@@ -1330,3 +1330,116 @@ def test_lookup_concept_evicts_stale_dbpedia_disambiguation_cache(tmp_path: Path
 
     assert result is None
     assert not cache_path.exists()  # evicted
+
+
+# ---------------------------------------------------------------------------
+# is_junk_uri  (public, pattern-only)
+# ---------------------------------------------------------------------------
+
+
+def test_is_junk_uri_list_article() -> None:
+    from tingbok.services.skos import is_junk_uri
+
+    assert is_junk_uri("https://dbpedia.org/resource/List_of_cleaning_tools")
+    assert is_junk_uri("https://dbpedia.org/resource/Lists_of_animals")
+
+
+def test_is_junk_uri_disambiguation() -> None:
+    from tingbok.services.skos import is_junk_uri
+
+    assert is_junk_uri("https://dbpedia.org/resource/Nail_(disambiguation)")
+
+
+def test_is_junk_uri_normal_concept() -> None:
+    from tingbok.services.skos import is_junk_uri
+
+    assert not is_junk_uri("https://dbpedia.org/resource/Food")
+    assert not is_junk_uri("https://www.wikidata.org/entity/Q2095")
+    assert not is_junk_uri("off:en:some-category")
+
+
+# ---------------------------------------------------------------------------
+# is_non_concept_uri  (public, may fetch from network)
+# ---------------------------------------------------------------------------
+
+
+def _dbpedia_data_response(local: str, types: list[str]) -> dict:
+    """Build a minimal DBpedia data-endpoint JSON response."""
+    resource_key = f"http://dbpedia.org/resource/{local}"
+    type_entries = [{"type": "uri", "value": t} for t in types]
+    return {resource_key: {"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": type_entries}}
+
+
+def test_is_non_concept_uri_junk_pattern_no_network() -> None:
+    """is_non_concept_uri returns True for junk URI patterns without network calls."""
+    from tingbok.services.skos import is_non_concept_uri
+
+    # No patching — the function must not make any network calls for these
+    assert is_non_concept_uri("https://dbpedia.org/resource/List_of_foods") is True
+    assert is_non_concept_uri("https://dbpedia.org/resource/Nail_(disambiguation)") is True
+
+
+def test_is_non_concept_uri_dbpedia_person_blocked() -> None:
+    from tingbok.services.skos import is_non_concept_uri
+
+    response_data = _dbpedia_data_response("Martin", ["http://dbpedia.org/ontology/Person"])
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result = is_non_concept_uri("https://dbpedia.org/resource/Martin")
+
+    assert result is True
+
+
+def test_is_non_concept_uri_dbpedia_valid_concept() -> None:
+    from tingbok.services.skos import is_non_concept_uri
+
+    response_data = _dbpedia_data_response("Bread", ["http://dbpedia.org/ontology/Food"])
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.return_value = response_data
+        result = is_non_concept_uri("https://dbpedia.org/resource/Bread")
+
+    assert result is False
+
+
+def test_is_non_concept_uri_dbpedia_network_error_returns_none() -> None:
+    import niquests
+
+    from tingbok.services.skos import is_non_concept_uri
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.side_effect = niquests.exceptions.RequestException("timeout")
+        result = is_non_concept_uri("https://dbpedia.org/resource/Bread")
+
+    assert result is None
+
+
+def test_is_non_concept_uri_wikidata_disambiguation_blocked() -> None:
+    from tingbok.services.skos import is_non_concept_uri
+
+    fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q4167410"}}}}]}}
+    with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
+        result = is_non_concept_uri("https://www.wikidata.org/entity/Q99999")
+
+    assert result is True
+
+
+def test_is_non_concept_uri_wikidata_valid_concept() -> None:
+    from tingbok.services.skos import is_non_concept_uri
+
+    fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q2095"}}}}]}}
+    with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
+        result = is_non_concept_uri("https://www.wikidata.org/entity/Q7802")
+
+    assert result is False
+
+
+def test_is_non_concept_uri_unsupported_source_returns_none() -> None:
+    from tingbok.services.skos import is_non_concept_uri
+
+    assert is_non_concept_uri("https://aims.fao.org/aos/agrovoc/c_12345") is None
+    assert is_non_concept_uri("off:en:some-category") is None
