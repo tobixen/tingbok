@@ -319,12 +319,63 @@ def _save_to_cache(
         logger.warning("Cache write failed for %s: %s", cache_path, e)
 
 
+def _infer_cache_key(cache_path: Path, data: dict) -> str | None:
+    """Infer the cache key for legacy entries written before ``_cache_key`` was stored.
+
+    Uses two strategies:
+
+    * **labels / alt_labels / description** — reconstructs the key from the ``uri``
+      and ``source`` fields in *data* (both are always stored) and verifies with the
+      embedded SHA-256 hash in the filename.
+    * **concept** — replaces the first three underscores in the filename stem with
+      colons (reversing the safe-key encoding for the three ``concept:src:lang:label``
+      separators) and verifies with the embedded hash.
+
+    Returns ``None`` when the key cannot be reliably inferred (e.g. entries with
+    ``off:`` or ``gpt:`` URIs whose keys were never stored in the file).
+    """
+    # Extract the 16-char SHA-256 prefix that _get_cache_path embeds in the filename.
+    stem = cache_path.stem  # e.g. "concept_agrovoc_en_lentils_35e5ed0dc7b6ae8c"
+    parts = stem.rsplit("_", 1)
+    if len(parts) != 2 or len(parts[1]) != 16:  # noqa: PLR2004
+        return None
+    name_part, file_hash = parts
+
+    # Strategy 1: labels / alt_labels / description — key is {prefix}:{source}:{uri_hash}
+    uri: str = data.get("uri", "")
+    source: str = data.get("source", "")
+    if uri.startswith(("http://", "https://")) and source:
+        uri_hash = hashlib.md5(uri.encode()).hexdigest()[:16]  # noqa: S324
+        for prefix in ("labels", "alt_labels", "description"):
+            candidate = f"{prefix}:{source}:{uri_hash}"
+            if hashlib.sha256(candidate.encode()).hexdigest()[:16] == file_hash:
+                return candidate
+
+    # Strategy 2: concept — key is concept:{source}:{lang}:{label}
+    # The safe-key encoding replaces every non-alphanumeric char with "_", so the
+    # three ":" separators all became "_".  Replacing the first three "_" with ":"
+    # recovers the original key for any label that doesn't itself start with a
+    # non-alphanumeric character (the common case).
+    candidate = name_part.replace("_", ":", 3)
+    if hashlib.sha256(candidate.encode()).hexdigest()[:16] == file_hash:
+        return candidate
+
+    return None
+
+
 def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
     """Return ``(path, timestamp)`` of the least-recently-used cache file in *cache_dir*.
 
     The timestamp is ``_last_accessed`` when present, falling back to ``_cached_at``.
     ``_not_found.json`` is skipped (it is a compound index, not a single entry).
-    Returns ``None`` when the directory is empty or contains no readable entries.
+
+    Entries with a ``_cache_key`` are always eligible.  Legacy entries that lack
+    ``_cache_key`` are included when :func:`_infer_cache_key` can reconstruct their key
+    (covering SKOS entries written before the field was added).  Entries whose key
+    cannot be inferred — e.g. OFF / GPT concept caches with non-HTTP URIs — are
+    skipped so the refresh loop never spins on them.
+
+    Returns ``None`` when the directory is empty or contains no eligible entries.
     """
     oldest_path: Path | None = None
     oldest_ts: float = float("inf")
@@ -338,7 +389,9 @@ def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
         except (json.JSONDecodeError, OSError):
             continue
         if not data.get("_cache_key"):
-            continue
+            # Legacy entry — only include it if we can infer the key at refresh time.
+            if _infer_cache_key(cache_path, data) is None:
+                continue
         ts = data.get("_last_accessed") or data.get("_cached_at", float("inf"))
         if ts < oldest_ts:
             oldest_ts = ts
@@ -369,8 +422,11 @@ def _refresh_entry(cache_path: Path, cache_dir: Path) -> bool:
 
     cache_key: str | None = data.get("_cache_key")
     if not cache_key:
-        logger.debug("Refresh skipped — no _cache_key in %s", cache_path)
-        return False
+        cache_key = _infer_cache_key(cache_path, data)
+        if not cache_key:
+            logger.debug("Refresh skipped — cannot infer cache key from %s", cache_path.name)
+            return False
+        logger.debug("Inferred cache key for legacy entry %s: %s", cache_path.name, cache_key)
 
     last_accessed: float | None = data.get("_last_accessed")
 

@@ -12,8 +12,10 @@ from tingbok.services.skos import (
     _add_to_not_found_cache,
     _find_oldest_cache_entry,
     _get_cache_path,
+    _infer_cache_key,
     _is_in_not_found_cache,
     _load_from_cache,
+    _refresh_entry,
     _save_to_cache,
     build_hierarchy_paths,
     cache_stats,
@@ -155,29 +157,120 @@ def test_find_oldest_prefers_last_accessed_over_cached_at(tmp_path: Path) -> Non
     assert path == old_no_access  # the one without last_accessed (oldest fallback) wins
 
 
-def test_find_oldest_cache_entry_skips_entries_without_cache_key(tmp_path: Path) -> None:
-    """Entries without _cache_key (non-refreshable, e.g. OFF concept caches) must be skipped.
+def test_find_oldest_cache_entry_skips_non_refreshable_entries(tmp_path: Path) -> None:
+    """Entries that cannot be refreshed (e.g. OFF concept caches with off: URIs) must be skipped.
 
     Without this, a non-refreshable entry that is older than max_age would cause the
     cache_refresh_loop to spin in a tight loop, since _refresh_entry returns False and
     _find_oldest_cache_entry keeps returning the same un-refreshable entry.
     """
-    # Entry WITHOUT _cache_key — simulates an OFF concept cache file
-    no_key = tmp_path / "no_key.json"
+    # Entry WITHOUT _cache_key and non-HTTP URI — simulates an OFF concept cache file
+    no_key = tmp_path / "off_en_food_1234567890abcdef.json"
     no_key.write_text(json.dumps({"uri": "off:en:food", "_cached_at": 1.0}))  # very old
 
     # Entry WITH _cache_key — a normal refreshable SKOS entry (recent)
     t_recent = time.time() - 86400
     _save_to_cache(
         tmp_path / "with_key.json",
-        {"uri": "http://example.org/food", "_cache_key": "concept:wikidata:en:food"},
+        {"uri": "http://example.org/food"},
         last_accessed=t_recent,
+        cache_key="concept:wikidata:en:food",
     )
 
     result = _find_oldest_cache_entry(tmp_path)
     assert result is not None
     path, _ = result
-    assert path != no_key, "_find_oldest_cache_entry must skip entries without _cache_key"
+    assert path != no_key, "_find_oldest_cache_entry must skip non-refreshable entries"
+
+
+def test_find_oldest_includes_legacy_http_entries(tmp_path: Path) -> None:
+    """Legacy entries (no _cache_key) with an inferable key should be included in the scan.
+
+    This covers the real-world case where cache files were written before _cache_key was
+    added: they have proper HTTP URIs, all the data needed to refresh is present, and
+    _infer_cache_key can reconstruct the key from the filename.
+    """
+    key = "concept:agrovoc:en:lentils"
+    cache_path = _get_cache_path(tmp_path, key)
+    t_old = time.time() - 55 * 86400
+    # Write without _cache_key — simulates a legacy entry
+    legacy = {"uri": "http://aims.fao.org/agrovoc/c_4260", "source": "agrovoc", "_cached_at": t_old}
+    with open(cache_path, "w") as f:
+        json.dump(legacy, f)
+
+    result = _find_oldest_cache_entry(tmp_path)
+    assert result is not None
+    path, ts = result
+    assert path == cache_path, "Legacy HTTP entry with inferable key must be included"
+    assert abs(ts - t_old) < 1
+
+
+def test_infer_cache_key_concept(tmp_path: Path) -> None:
+    """_infer_cache_key reconstructs the key for a legacy concept entry."""
+    import hashlib
+
+    key = "concept:agrovoc:en:lentils"
+    cache_path = _get_cache_path(tmp_path, key)
+    data = {"uri": "http://aims.fao.org/agrovoc/c_4260", "source": "agrovoc", "_cached_at": 1.0}
+    with open(cache_path, "w") as f:
+        json.dump(data, f)
+
+    assert _infer_cache_key(cache_path, data) == key
+
+
+def test_infer_cache_key_labels(tmp_path: Path) -> None:
+    """_infer_cache_key reconstructs the key for a legacy labels entry."""
+    import hashlib
+
+    uri = "http://aims.fao.org/agrovoc/c_4260"
+    source = "agrovoc"
+    uri_hash = hashlib.md5(uri.encode()).hexdigest()[:16]  # noqa: S324
+    key = f"labels:{source}:{uri_hash}"
+    cache_path = _get_cache_path(tmp_path, key)
+    data = {"uri": uri, "source": source, "labels": {"en": "Lentil"}, "_cached_at": 1.0}
+    with open(cache_path, "w") as f:
+        json.dump(data, f)
+
+    assert _infer_cache_key(cache_path, data) == key
+
+
+def test_infer_cache_key_off_returns_none(tmp_path: Path) -> None:
+    """_infer_cache_key returns None for non-HTTP entries (e.g. OFF concepts)."""
+    cache_file = tmp_path / "off_en_food_1234567890abcdef.json"
+    data = {"uri": "off:en:food", "_cached_at": 1.0}
+    with open(cache_file, "w") as f:
+        json.dump(data, f)
+
+    assert _infer_cache_key(cache_file, data) is None
+
+
+def test_refresh_entry_legacy_concept(tmp_path: Path) -> None:
+    """_refresh_entry can refresh a legacy concept entry that lacks _cache_key."""
+    key = "concept:agrovoc:en:lentils"
+    cache_path = _get_cache_path(tmp_path, key)
+    t_old = time.time() - 55 * 86400
+    legacy_data = {
+        "uri": "http://aims.fao.org/agrovoc/c_4260",
+        "source": "agrovoc",
+        "prefLabel": "Lentil",
+        "_cached_at": t_old,
+    }
+    with open(cache_path, "w") as f:
+        json.dump(legacy_data, f)
+
+    refreshed = {
+        "uri": "http://aims.fao.org/agrovoc/c_4260",
+        "prefLabel": "Lentil",
+        "source": "agrovoc",
+        "broader": [],
+    }
+    with patch("tingbok.services.skos._upstream_lookup", return_value=(refreshed, False)):
+        result = _refresh_entry(cache_path, tmp_path)
+
+    assert result is True
+    with open(cache_path) as f:
+        saved = json.load(f)
+    assert saved.get("_cache_key") == key, "_refresh_entry must backfill _cache_key for legacy entries"
 
 
 def test_not_found_cache_add_and_check(tmp_path: Path) -> None:
