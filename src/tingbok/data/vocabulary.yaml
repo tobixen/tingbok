@@ -106,7 +106,6 @@ concepts:
     uri: "https://dbpedia.org/resource/Tool"
     source_uris:
     - "https://dbpedia.org/resource/Tool"
-    - https://www.wikidata.org/entity/Q37013115
     - gpt:1167
     excluded_sources:
     - agrovoc
