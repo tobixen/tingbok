@@ -560,6 +560,127 @@ def test_hierarchy_dead_end_broader_discards_branch(tmp_path: Path) -> None:
     assert not any("property" in p for p in paths)
 
 
+@pytest.mark.parametrize(
+    "dead_end_label",
+    [
+        # BFO (Basic Formal Ontology) and Wikidata top-level ontology terms
+        "entity",
+        "abstract entity",
+        "object",
+        "individual item",
+        "concrete object",
+        "physical object",
+        "perceptible physical object",
+        "material entity",
+        "independent continuant",
+        "continuant",
+        # Linguistics terms — wrong domain due to Wikidata label collision:
+        # Wikidata Q103940464 "continuant" is phonological (continuant consonant),
+        # not the BFO continuant, so it has broader "phone" → "linguistic unit" etc.
+        "phone",
+        "linguistic unit",
+        "emic unit",
+        "constituent",
+        # Generic/structural terms too abstract for any product taxonomy
+        "part",
+        "component",
+        "substance",
+        "material",
+        # Physics / chemistry meta-terms
+        "matter",
+        "common matter",
+        "baryonic matter",
+        "ordinary matter",
+        "chemical entity",
+        "chemical substance",
+        # Measurement / mathematical meta-terms
+        "unit",
+        "unit of measurement",
+        "measure",
+        "time interval",
+        "interval",
+        "domain",
+        # Other abstract result/output chains that dead-end at "entity"
+        "result",
+        "output",
+        "natural object",
+        "natural physical object",
+        "natural material",
+        "biological material",
+        "organic matter",
+        "biodegradable material",
+    ],
+)
+def test_hierarchy_dead_end_abstract_wikidata_terms(tmp_path: Path, dead_end_label: str) -> None:
+    """BFO, linguistics, and other abstract Wikidata ontology terms must be dead-ends.
+
+    These labels appear as broader concepts when Wikidata/DBpedia ontology chains are
+    traversed from concrete food/product concepts.  None of them are useful in a product
+    taxonomy and some (e.g. 'continuant', 'phone') are the result of Wikidata label
+    collisions between unrelated concepts.
+    """
+    concept = {
+        "uri": "http://www.wikidata.org/entity/Q_test",
+        "prefLabel": "test food product",
+        "source": "wikidata",
+        "broader": [{"uri": "http://www.wikidata.org/entity/Q_dead", "label": dead_end_label}],
+    }
+    _write_concept_cache(tmp_path, "test food product", "en", "wikidata", concept)
+
+    paths, found, uri_map = build_hierarchy_paths("test food product", "en", "wikidata", tmp_path)
+    assert found is True
+    assert not any(dead_end_label.replace(" ", "_") in p for p in paths), (
+        f"Dead-end label '{dead_end_label}' leaked into broader paths: {paths}"
+    )
+
+
+def test_hierarchy_continuant_phone_linguistic_unit_chain_blocked(tmp_path: Path) -> None:
+    """Regression: the Wikidata 'continuant' label-collision chain must be fully blocked.
+
+    Wikidata Q103940464 is labelled 'continuant' but represents a *phonological* concept
+    (a type of consonant), not the BFO continuant.  Its broader is 'phone' → 'linguistic unit'
+    → 'unit' etc.  This chain leaked into food/oil broader paths.  All of these must be
+    dead-ends so that a food concept with broader 'independent continuant' → 'continuant'
+    never surfaces phone/linguistic_unit in its hierarchy paths.
+    """
+    # Reproduce the exact Wikidata chain from the production cache:
+    # cooking_oil → ingredient → component → material entity → independent continuant
+    #   → continuant (phonological) → phone → linguistic unit → unit → ...
+    for label, broader_label in [
+        ("independent continuant", "continuant"),
+        ("continuant", "phone"),
+        ("phone", "linguistic unit"),
+        ("linguistic unit", "unit"),
+        ("unit", "abstract entity"),
+        ("abstract entity", "entity"),
+    ]:
+        _write_concept_cache(
+            tmp_path,
+            label,
+            "en",
+            "wikidata",
+            {
+                "uri": f"http://www.wikidata.org/entity/Q_{label.replace(' ', '_')}",
+                "prefLabel": label,
+                "source": "wikidata",
+                "broader": [{"uri": "http://www.wikidata.org/entity/Q_x", "label": broader_label}],
+            },
+        )
+
+    food_ingredient = {
+        "uri": "http://www.wikidata.org/entity/Q_food_ingredient",
+        "prefLabel": "food ingredient",
+        "source": "wikidata",
+        "broader": [{"uri": "http://www.wikidata.org/entity/Q_x", "label": "independent continuant"}],
+    }
+    _write_concept_cache(tmp_path, "food ingredient", "en", "wikidata", food_ingredient)
+
+    paths, found, _ = build_hierarchy_paths("food ingredient", "en", "wikidata", tmp_path)
+    assert found is True
+    for bad in ("phone", "linguistic_unit", "emic_unit", "continuant", "independent_continuant"):
+        assert not any(bad in p for p in paths), f"'{bad}' leaked into paths: {paths}"
+
+
 # ---------------------------------------------------------------------------
 # Unit tests for batch label fetching
 # ---------------------------------------------------------------------------

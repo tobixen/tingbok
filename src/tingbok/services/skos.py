@@ -240,6 +240,56 @@ _HIERARCHY_DEAD_ENDS: frozenset[str] = frozenset(
         # Wikipedia structural categories
         "categories",
         "main topic classifications",
+        # BFO (Basic Formal Ontology) and Wikidata top-level ontology terms.
+        # These appear when Wikidata's formal ontology chain is traversed upward
+        # from concrete food/product concepts via ingredient → component → … → entity.
+        "entity",
+        "abstract entity",
+        "object",
+        "individual item",
+        "concrete object",
+        "physical object",
+        "perceptible physical object",
+        "material entity",
+        "independent continuant",
+        # NOTE: Wikidata Q103940464 "continuant" is a *phonological* concept (a type of
+        # consonant), not the BFO continuant.  Its broader chain is:
+        #   continuant → phone → linguistic unit → unit → abstract entity → entity
+        # This causes the full linguistics subtree to leak into food product paths.
+        "continuant",
+        # Linguistics terms — wrong domain entirely, caused by the above label collision.
+        "phone",
+        "linguistic unit",
+        "emic unit",
+        "constituent",
+        # Generic structural terms too abstract for any product taxonomy
+        "part",
+        "component",
+        "substance",
+        "material",
+        # Physics / chemistry meta-terms
+        "matter",
+        "common matter",
+        "baryonic matter",
+        "ordinary matter",
+        "chemical entity",
+        "chemical substance",
+        # Measurement / mathematical meta-terms
+        "unit",
+        "unit of measurement",
+        "measure",
+        "time interval",
+        "interval",
+        "domain",
+        # Abstract result/output chains — all eventually reach "entity"
+        "result",
+        "output",
+        "natural object",
+        "natural physical object",
+        "natural material",
+        "biological material",
+        "organic matter",
+        "biodegradable material",
     }
 )
 
