@@ -10,6 +10,24 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Fixed
 
+- **DBpedia disambiguation pages are now filtered at lookup time** —
+  `http://dbpedia.org/ontology/DisambiguationPage` is added to `_DBPEDIA_BLOCKED_TYPES`
+  so new lookups reject them immediately.  Stale cached disambiguation entries are also
+  evicted on the next cache hit.
+- **Four bug fixes**:
+  - `--version` flag added to the CLI argparser.
+  - Norwegian label lookup cache: cached SKOS labels fetched for one language variant
+    (e.g. `no`) are now returned when the same concept is queried under a related
+    variant (e.g. `nb`), avoiding unnecessary upstream round-trips.
+  - OFF missing categories: `_parse_off` now falls back to non-English category tags
+    (e.g. `de:`) when no `en:`-prefixed tags are present; fixes German Lidl products
+    that returned empty category lists.
+  - Cache refresh loop spin: `_find_oldest_cache_entry` skips entries without
+    `_cache_key` (e.g. OFF concept caches), preventing an infinite spin when such an
+    entry is past `max_age`.
+- **Maintenance scripts read cache dir from env/config** — `clean_vocabulary.py` and
+  `clean_skos_cache.py` now resolve the default cache directory from `TINGBOK_CACHE_DIR`
+  or `/etc/tingbok/tingbok.conf` before falling back to `~/.cache/tingbok`.
 - **EAN category strings are now normalised against the vocabulary** — after an
   EAN/barcode lookup the raw category strings returned by upstream sources
   (Open Food Facts, UPCitemdb, Open Library, nb.no) are matched
@@ -40,6 +58,37 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Added
 
+- **Scandinavian language fallback for SKOS label lookup** — when a concept lookup
+  fails for the primary language (e.g. `nb`), related Scandinavian variants
+  (`no`, `da`, `nn`, `sv`) are tried before giving up.  Fallback chains are symmetric
+  and the fallback language is also used for `build_hierarchy_paths` so paths are
+  consistently derived.
+- **SIGUSR1 toggles DEBUG logging at runtime** — send `kill -USR1 <pid>` to switch
+  the tingbok logger between INFO and DEBUG without restarting the service.  The
+  tingbok logger now also has its own `StreamHandler` so INFO+ application messages
+  are visible in the systemd journal (previously silenced by uvicorn's root-logger
+  configuration).
+- **Auto-commit writable data files to git (event-driven, debounced)** — new
+  `TINGBOK_DATA_DIR` env var points to a stable, git-tracked location for
+  `vocabulary.yaml` and `ean-db.json`.  When set, `PUT /api/ean/{ean}` and
+  `PUT /api/vocabulary/{concept_id}` schedule a debounced git commit (default 10 s)
+  after each write; on graceful shutdown any pending changes are committed immediately.
+  The remote IP is included in the commit message for traceability.
+- **`scripts/clean_skos_cache.py`** — maintenance script that removes junk entries
+  (list articles, disambiguation pages) from the SKOS cache and reports bad
+  `source_uris` in `vocabulary.yaml`.
+- **`scripts/clean_vocabulary.py`** — normalises `http→https`, removes duplicates and
+  junk URIs from `source_uris` in `vocabulary.yaml`.  `--check-types` also removes
+  person/place/disambiguation URIs by fetching RDF type information from DBpedia and
+  Wikidata.
+- **`tingbok.services.skos.is_junk_uri(uri)`** — public pattern-only check (no network)
+  for list articles and disambiguation pages.  Replaces the two private pattern helpers
+  that were previously duplicated in internal callers.
+- **`tingbok.services.skos.is_non_concept_uri(uri, cache_dir=None)`** — public full
+  check including network fetches from DBpedia and Wikidata; returns `None` on network
+  error so callers never silently drop URIs they could not verify.  When `cache_dir` is
+  provided, results are stored in the SKOS cache (keyed `type_check:{uri_hash}`) so
+  re-running maintenance scripts does not re-fetch types that were already resolved.
 - **`PUT /api/vocabulary/{concept_id}` endpoint** — creates or updates a
   vocabulary concept and persists changes to `vocabulary.yaml`.  All body
   fields (`prefLabel`, `labels`, `altLabel`, `add_source_uris`,
@@ -60,6 +109,11 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   Explicit `_root.narrower` (which defines top-level ordering) is preserved as-is.
 
 ### Changed
+
+- **Default SKOS cache TTL raised from 60 to 90 days; refresh divisor from 100 to
+  200** — the background cache refresh loop now wakes up less frequently; both values
+  remain configurable via `TINGBOK_CACHE_MAX_AGE_DAYS` and
+  `TINGBOK_CACHE_REFRESH_DIVISOR` environment variables.
 
 - **`/health` now exposes uptime and vocabulary enrichment progress** — the response
   includes `uptime_seconds`, `vocabulary_concepts`, and `vocabulary_concepts_enriched`
