@@ -7,6 +7,7 @@ import os
 import shutil
 import signal
 import subprocess
+import sys
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -661,9 +662,13 @@ async def health(request: Request):
             "ean_db": str(EAN_OBSERVATIONS_PATH),
             "skos_cache": str(SKOS_CACHE_DIR),
             "ean_cache": str(EAN_CACHE_DIR),
+            "module": str(Path(__file__)),
+            "executable": sys.executable,
             **({"data_dir": str(_DATA_BASE)} if _DATA_BASE else {}),
         }
         result.cache_oldest_entry_age_days = _oldest_cache_entry_age_days(SKOS_CACHE_DIR, EAN_CACHE_DIR)
+        if skos_service._next_refresh_at is not None:
+            result.cache_next_refresh_in_seconds = max(0.0, skos_service._next_refresh_at - time.time())
     return result
 
 

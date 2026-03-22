@@ -43,6 +43,11 @@ async def test_health_localhost_exposes_paths():
     assert "ean_cache" in paths
     # cache_oldest_entry_age_days is present for localhost (may be None if cache is empty)
     assert "cache_oldest_entry_age_days" in data
+    # module and executable paths are included
+    assert "module" in paths
+    assert "executable" in paths
+    # cache_next_refresh_in_seconds is present (may be None if cache is empty)
+    assert "cache_next_refresh_in_seconds" in data
 
 
 @pytest.mark.anyio

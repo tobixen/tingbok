@@ -38,6 +38,9 @@ CACHE_TTL_SECONDS = 60 * 60 * 24 * 60  # 60 days — matches inventory-md
 TRANSIENT_TTL_SECONDS = 60 * 60 * 4  # 4 hours — short TTL for transient failures
 DEFAULT_TIMEOUT = 10.0
 
+#: Timestamp (epoch seconds) of the next scheduled cache refresh; ``None`` until the loop starts.
+_next_refresh_at: float | None = None
+
 #: Minimum similarity (0–100) for an unmatched DBpedia/Wikidata fallback result to be accepted.
 _LOOKUP_SIMILARITY_THRESHOLD = 60
 
@@ -565,6 +568,8 @@ async def cache_refresh_loop(
     """
     import asyncio  # noqa: PLC0415
 
+    global _next_refresh_at  # noqa: PLW0603
+
     logger.info(
         "Cache refresh loop started (max_age=%.0fd, divisor=%.0f)",
         max_age_seconds / 86400,
@@ -573,6 +578,7 @@ async def cache_refresh_loop(
     while True:
         oldest = _find_oldest_cache_entry(cache_dir)
         if oldest is None:
+            _next_refresh_at = time.time() + 3600
             await asyncio.sleep(3600)
             continue
 
@@ -580,6 +586,7 @@ async def cache_refresh_loop(
         age = time.time() - oldest_ts
         sleep_secs = max(0.0, (max_age_seconds - age) / divisor)
 
+        _next_refresh_at = time.time() + sleep_secs
         if sleep_secs > 0:
             logger.debug(
                 "Oldest cache entry is %.1fd old; sleeping %.0fs before refresh",

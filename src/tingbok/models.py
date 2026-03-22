@@ -184,5 +184,7 @@ class HealthResponse(BaseModel):
     vocabulary_concepts_enriched: int | None = None
     #: Age in days of the oldest entry in the SKOS/EAN cache (localhost only).
     cache_oldest_entry_age_days: float | None = None
+    #: Seconds until the next scheduled cache refresh (localhost only; 0 means in progress).
+    cache_next_refresh_in_seconds: float | None = None
     #: File paths (localhost clients only).
     paths: dict[str, str] | None = None
