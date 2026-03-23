@@ -280,8 +280,6 @@ def test_find_oldest_includes_legacy_http_entries(tmp_path: Path) -> None:
 
 def test_infer_cache_key_concept(tmp_path: Path) -> None:
     """_infer_cache_key reconstructs the key for a legacy concept entry."""
-    import hashlib
-
     key = "concept:agrovoc:en:lentils"
     cache_path = _get_cache_path(tmp_path, key)
     data = {"uri": "http://aims.fao.org/agrovoc/c_4260", "source": "agrovoc", "_cached_at": 1.0}
@@ -1060,8 +1058,20 @@ def test_uri_to_source(uri: str, expected: str | None) -> None:
 
 
 def test_get_description_returns_none_when_not_cached(tmp_path: Path) -> None:
-    """get_description returns None when no cache file exists."""
-    result = get_description("http://dbpedia.org/resource/Food", "dbpedia", "en", tmp_path)
+    """get_description returns None when no cache file exists and upstream has no description."""
+    uri = "http://dbpedia.org/resource/Food"
+    fake_response = {uri: {}}  # no rdfs:comment, no dbo:description
+
+    mock_resp = type(
+        "R", (), {"raise_for_status": lambda self: None, "json": lambda self: fake_response, "status_code": 200}
+    )()
+
+    with patch("niquests.Session") as mock_session_cls:
+        mock_session_cls.return_value.__enter__ = lambda s: mock_session_cls.return_value
+        mock_session_cls.return_value.__exit__ = lambda s, *a: None
+        mock_session_cls.return_value.get.return_value = mock_resp
+        result = get_description(uri, "dbpedia", "en", tmp_path)
+
     assert result is None
 
 
@@ -1137,6 +1147,30 @@ def test_get_description_wikidata_fetches_from_api(tmp_path: Path) -> None:
         result = get_description(uri, "wikidata", "en", tmp_path)
 
     assert result == "any nutritional substance consumed to provide energy"
+
+
+def test_get_description_dbpedia_falls_back_to_dbo_description(tmp_path: Path) -> None:
+    """get_description falls back to dbo:description when rdfs:comment is absent (e.g. DBpedia Tool)."""
+    uri = "http://dbpedia.org/resource/Tool"
+    fake_response = {
+        uri: {
+            "http://dbpedia.org/ontology/description": [
+                {"lang": "en", "value": "physical item that can be used to achieve a goal", "type": "literal"},
+            ],
+        }
+    }
+
+    mock_resp = type(
+        "R", (), {"raise_for_status": lambda self: None, "json": lambda self: fake_response, "status_code": 200}
+    )()
+
+    with patch("niquests.Session") as mock_session_cls:
+        mock_session_cls.return_value.__enter__ = lambda s: mock_session_cls.return_value
+        mock_session_cls.return_value.__exit__ = lambda s, *a: None
+        mock_session_cls.return_value.get.return_value = mock_resp
+        result = get_description(uri, "dbpedia", "en", tmp_path)
+
+    assert result == "physical item that can be used to achieve a goal"
 
 
 def test_get_description_unsupported_source_returns_none(tmp_path: Path) -> None:

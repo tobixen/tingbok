@@ -1089,11 +1089,15 @@ def _get_dbpedia_description(uri: str, lang: str) -> str | None:
         return None
 
     resource_data = data.get(uri, {})
-    for entry in resource_data.get("http://www.w3.org/2000/01/rdf-schema#comment", []):
-        if entry.get("lang") == lang:
-            value = entry.get("value", "")
-            if value:
-                return value
+    for predicate in (
+        "http://www.w3.org/2000/01/rdf-schema#comment",
+        "http://dbpedia.org/ontology/description",
+    ):
+        for entry in resource_data.get(predicate, []):
+            if entry.get("lang") == lang:
+                value = entry.get("value", "")
+                if value:
+                    return value
     return None
 
 
