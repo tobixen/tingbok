@@ -1043,6 +1043,13 @@
     ],
     "name": "WD-40 multi-purpose lubricant 100ml"
   },
+  "5056170301978": {
+    "name": "DentaGlo Kids Toothbrushes 5-pack",
+    "categories": [
+      "toothbrush"
+    ],
+    "quantity": "5pcs"
+  },
   "5201031250739": {
     "categories": [
       "vinegar"
@@ -1077,6 +1084,19 @@
       "utility-blade"
     ],
     "name": "MacFer L-100 utility knife blades 18mm (10pcs, SK4 steel, Art. 027.0071,"
+  },
+  "5708146602045": {
+    "name": "Scanlegio barnetannbørste med krokodill",
+    "categories": [
+      "toothbrush"
+    ]
+  },
+  "5708146602373": {
+    "name": "Scanlegio barnetannstikkere 25pcs giraffmotiv (4+ år)",
+    "categories": [
+      "dental-floss"
+    ],
+    "quantity": "25pcs"
   },
   "5709404112603": {
     "categories": [
@@ -1205,6 +1225,13 @@
     ],
     "name": "Coop Extra Kaviar cod roe spread tubes (190g)"
   },
+  "7350018834870": {
+    "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter)",
+    "categories": [
+      "electrolytes"
+    ],
+    "quantity": "10pcs"
+  },
   "7393173096165": {
     "categories": [
       "screw"
@@ -1278,6 +1305,13 @@
     ],
     "name": "Colgate bamboo charcoal toothbrush",
     "source": "manual"
+  },
+  "8718951386495": {
+    "name": "Colgate Extra Clean toothbrushes Duo Pack medium",
+    "categories": [
+      "toothbrush"
+    ],
+    "quantity": "2pcs"
   },
   "9002539214888": {
     "categories": [
