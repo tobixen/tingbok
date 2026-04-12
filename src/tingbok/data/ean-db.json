@@ -26,6 +26,30 @@
       }
     ]
   },
+  "0635346370120": {
+    "name": "ClinicCare Concentrated Cleansing Foam",
+    "categories": [
+      "personal-care/skincare/cleanser"
+    ]
+  },
+  "0635346370540": {
+    "name": "ClinicCare X3MEGF Pure Liquid",
+    "categories": [
+      "personal-care/skincare"
+    ]
+  },
+  "0635346370557": {
+    "name": "ClinicCare X3MEGF Pure Essence serum",
+    "categories": [
+      "personal-care/skincare/serum"
+    ]
+  },
+  "0635346370564": {
+    "name": "ClinicCare X3M EGF Pure Serum",
+    "categories": [
+      "personal-care/skincare/serum"
+    ]
+  },
   "20000646": {
     "categories": [
       "jam"
@@ -326,6 +350,19 @@
     ],
     "source": "manual"
   },
+  "3253581345177": {
+    "name": "L'Occitane Fleurs de Cerisier Cherry Blossom Bath & Shower Gel",
+    "categories": [
+      "personal-care/shower-gel"
+    ]
+  },
+  "3574661317212": {
+    "name": "oo Liners 20 SuperThin",
+    "categories": [
+      "personal-care/feminine-hygiene"
+    ],
+    "quantity": "20pcs"
+  },
   "3583787174722": {
     "categories": [
       "lubricant",
@@ -427,6 +464,12 @@
       }
     ]
   },
+  "4001499930799": {
+    "name": "Frosch wie Gallseife Seifenstück vegan stain remover",
+    "categories": [
+      "cleaning/soap"
+    ]
+  },
   "4004764390564": {
     "categories": [
       "marker"
@@ -474,6 +517,12 @@
     "name": "P&G body wash/shampoo 360ml",
     "quantity": "360ml",
     "source": "manual"
+  },
+  "4029125060993": {
+    "name": "Nüda lice treatment Pohl Boskamp",
+    "categories": [
+      "personal-care/lice-treatment"
+    ]
   },
   "4031396000592": {
     "brand": "YACHTICON",
@@ -1029,6 +1078,27 @@
     "quantity": "1L",
     "source": "manual"
   },
+  "4620009352854": {
+    "name": "GlavBanya essential oils set 3x17ml pine, mint, eucalyptus",
+    "categories": [
+      "personal-care/aromatherapy"
+    ],
+    "quantity": "3x17ml"
+  },
+  "4627090993140": {
+    "name": "Cafe Mimi Shower Gel black currant and cranberry extracts",
+    "categories": [
+      "personal-care/shower-gel"
+    ],
+    "quantity": "100ml"
+  },
+  "4680018108132": {
+    "name": "Banika bath salt 200g eucalyptus oil",
+    "categories": [
+      "personal-care/bath"
+    ],
+    "quantity": "200g"
+  },
   "5000204890785": {
     "brand": "Unknown",
     "categories": [
@@ -1036,6 +1106,13 @@
     ],
     "name": "Glade Air Freshener \"Woodland Grove\" (green can, pine scent)",
     "source": "manual"
+  },
+  "5012251008648": {
+    "name": "Deep Cleansing Nose Pore Strips 6pcs witch hazel",
+    "categories": [
+      "personal-care/skincare"
+    ],
+    "quantity": "6pcs"
   },
   "5032227340015": {
     "categories": [
@@ -1049,6 +1126,25 @@
       "toothbrush"
     ],
     "quantity": "5pcs"
+  },
+  "5056170328920": {
+    "name": "Bamboo Toothbrushes 3-pack eco soft bristles",
+    "categories": [
+      "personal-care/dental"
+    ],
+    "quantity": "3pcs"
+  },
+  "5060120173751": {
+    "name": "XHC Papaya Shampoo & Conditioner Bar no plastic waste",
+    "categories": [
+      "personal-care/hair"
+    ]
+  },
+  "5060503767393": {
+    "name": "Dark brown/black eyeliner pencil",
+    "categories": [
+      "cosmetics/makeup"
+    ]
   },
   "5201031250739": {
     "categories": [
@@ -1079,11 +1175,39 @@
     ],
     "name": "ΟΙΝΟΠΝΕΥΜΑ ΚΑΘΑΡΟΝ rubbing alcohol 95° (Greek, ΒΙΚΤΩΡ ΑΒΕΕ, Samos)"
   },
+  "5391520950285": {
+    "name": "Paranit lice shampoo 200ml",
+    "categories": [
+      "personal-care/lice-treatment"
+    ],
+    "quantity": "200ml"
+  },
   "5606026027714": {
     "categories": [
       "utility-blade"
     ],
     "name": "MacFer L-100 utility knife blades 18mm (10pcs, SK4 steel, Art. 027.0071,"
+  },
+  "5701013102723": {
+    "name": "DKS Impulsiv Nailpolish Remover 100ml acetone-free",
+    "categories": [
+      "personal-care/nail"
+    ],
+    "quantity": "100ml"
+  },
+  "5701390210240": {
+    "name": "JYSK Soap Confetti heart 30g",
+    "categories": [
+      "personal-care/soap"
+    ],
+    "quantity": "30g"
+  },
+  "5703147691272": {
+    "name": "Vichy Multimask 3-pack",
+    "categories": [
+      "personal-care/skincare/mask"
+    ],
+    "quantity": "3pcs"
   },
   "5708146602045": {
     "name": "Scanlegio barnetannbørste med krokodill",
@@ -1103,6 +1227,13 @@
       "pool-chlorine"
     ],
     "name": "Matas Tør-Klor (dry chlorine for pool disinfection, 1kg, with cyanuric acid UV stabilizer)"
+  },
+  "5745001088057": {
+    "name": "Paris Cherry Blossom hand soap 90g vegan",
+    "categories": [
+      "personal-care/soap"
+    ],
+    "quantity": "90g"
   },
   "5901098167109": {
     "categories": [
@@ -1186,6 +1317,20 @@
     ],
     "name": "WEMA FL-2 flange for fuel sender (prod.nr 8018-00)"
   },
+  "7032069712702": {
+    "name": "Libresse Wings Ultra+ 14pcs",
+    "categories": [
+      "personal-care/feminine-hygiene"
+    ],
+    "quantity": "14pcs"
+  },
+  "7046110066416": {
+    "name": "Define Healthy Scalp & Hair Shampoo 250ml",
+    "categories": [
+      "personal-care/hair/shampoo"
+    ],
+    "quantity": "250ml"
+  },
   "7070893159096": {
     "categories": [
       "cockpit-lamp"
@@ -1198,6 +1343,39 @@
     ],
     "name": "Kjell & Company CR2032 Lithium 3V coin cells (10 pack)"
   },
+  "7310572300310": {
+    "name": "RFSU Private Area Soft Balance 2in1 Intimate Cream",
+    "categories": [
+      "personal-care/intimate"
+    ]
+  },
+  "7310610012267": {
+    "name": "Bliw Tindved Dusjgelé 250ml",
+    "categories": [
+      "personal-care/shower-gel"
+    ],
+    "quantity": "250ml"
+  },
+  "7310790088212": {
+    "name": "Libresse FreshProtect bind",
+    "categories": [
+      "personal-care/feminine-hygiene"
+    ]
+  },
+  "7312669995478": {
+    "name": "ELW Conditioning Balsam med aprikosolje 50ml",
+    "categories": [
+      "personal-care/hair"
+    ],
+    "quantity": "50ml"
+  },
+  "7319470816107": {
+    "name": "Nivea Men Dry Impact 72h roll-on",
+    "categories": [
+      "personal-care/deodorant"
+    ],
+    "quantity": "50ml"
+  },
   "7330571258344": {
     "categories": [
       "corner-bracket"
@@ -1209,6 +1387,12 @@
       "vase"
     ],
     "name": "ICA Decanter Capas 1.5L clear (plastic, used as a flower vase)"
+  },
+  "7332551627096": {
+    "name": "Vidi Barn dry disposable wipes non-woven",
+    "categories": [
+      "baby/wipes"
+    ]
   },
   "7340011453437": {
     "brand": "Coop",
@@ -1231,6 +1415,13 @@
       "electrolytes"
     ],
     "quantity": "10pcs"
+  },
+  "7392871550450": {
+    "name": "ImseVimse Citrus Stain Remover Soap 230g organic",
+    "categories": [
+      "cleaning/soap"
+    ],
+    "quantity": "230g"
   },
   "7393173096165": {
     "categories": [
@@ -1284,11 +1475,24 @@
     "name": "Çaykur Rize Turist Çayı Turkish black tea",
     "quantity": "1000g"
   },
+  "8697439056726": {
+    "name": "Elegance Turkish Jasmine/Yasemin bar soap 250g",
+    "categories": [
+      "personal-care/soap"
+    ],
+    "quantity": "250g"
+  },
   "8697664908052,": {
     "categories": [
       "cable-tie"
     ],
     "name": "TORK Cable Ties 150x2.5mm 100pcs Made in Turkey, halogen free)"
+  },
+  "8714100716564": {
+    "name": "Camay Romance Forever shower gel",
+    "categories": [
+      "personal-care/shower-gel"
+    ]
   },
   "8714789732671": {
     "brand": "Colgate",
@@ -1312,6 +1516,20 @@
       "toothbrush"
     ],
     "quantity": "2pcs"
+  },
+  "8886467000560": {
+    "name": "Lux Soft Touch bar soap 80g French Rose & Almond Oil",
+    "categories": [
+      "personal-care/soap"
+    ],
+    "quantity": "80g"
+  },
+  "9000101627220": {
+    "name": "Fa Men Pure Control Hemp Inspired Scent 72h roll-on",
+    "categories": [
+      "personal-care/deodorant"
+    ],
+    "quantity": "50ml"
   },
   "9002539214888": {
     "categories": [
