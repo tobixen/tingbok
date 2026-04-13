@@ -488,6 +488,13 @@
     ],
     "name": "Meister power coupling connector (7422020-Kupplung, black, German)"
   },
+  "4005808909018": {
+    "name": "Nivea Antiperspirant Powder Effect 48h roll-on",
+    "categories": [
+      "personal-care/deodorant"
+    ],
+    "quantity": "50ml"
+  },
   "4008153752353": {
     "brand": "UNITEC",
     "categories": [
@@ -1388,6 +1395,13 @@
     ],
     "name": "ICA Decanter Capas 1.5L clear (plastic, used as a flower vase)"
   },
+  "7332531074803": {
+    "name": "Schwarzkopf Gliss Supreme Length 200ml",
+    "categories": [
+      "personal-care/hair"
+    ],
+    "quantity": "200ml"
+  },
   "7332551627096": {
     "name": "Vidi Barn dry disposable wipes non-woven",
     "categories": [
@@ -1516,6 +1530,13 @@
       "toothbrush"
     ],
     "quantity": "2pcs"
+  },
+  "8719874194471": {
+    "name": "Sence 6 Disposable Razors",
+    "categories": [
+      "personal-care/shaving"
+    ],
+    "quantity": "6pcs"
   },
   "8886467000560": {
     "name": "Lux Soft Touch bar soap 80g French Rose & Almond Oil",
