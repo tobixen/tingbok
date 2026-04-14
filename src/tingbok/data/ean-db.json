@@ -1121,6 +1121,33 @@
     ],
     "quantity": "6pcs"
   },
+  "5017689075910": {
+    "name": "TRS Green Lentils 2kg",
+    "categories": [
+      "food/legumes/lentils"
+    ],
+    "quantity": "2kg"
+  },
+  "5017689389178": {
+    "name": "TRS Red Cow Peas 2kg",
+    "categories": [
+      "food/legumes"
+    ],
+    "quantity": "2kg"
+  },
+  "5017689763336": {
+    "name": "TRS Sesame Seeds Hulled",
+    "categories": [
+      "food/seeds/sesame"
+    ]
+  },
+  "5018605000535": {
+    "name": "Dark Red Kidney Beans 2kg",
+    "categories": [
+      "food/legumes/beans"
+    ],
+    "quantity": "2kg"
+  },
   "5032227340015": {
     "categories": [
       "lubricant"
@@ -1202,6 +1229,20 @@
     ],
     "quantity": "100ml"
   },
+  "5701259100187": {
+    "name": "Dansukker produkt 1kg",
+    "categories": [
+      "food/sugar"
+    ],
+    "quantity": "1kg"
+  },
+  "5701259100781": {
+    "name": "Dan Sukker Melis 500g",
+    "categories": [
+      "food/sugar"
+    ],
+    "quantity": "500g"
+  },
   "5701390210240": {
     "name": "JYSK Soap Confetti heart 30g",
     "categories": [
@@ -1215,6 +1256,13 @@
       "personal-care/skincare/mask"
     ],
     "quantity": "3pcs"
+  },
+  "5706920117105": {
+    "name": "Sushi Ris 900g",
+    "categories": [
+      "food/rice"
+    ],
+    "quantity": "900g"
   },
   "5708146602045": {
     "name": "Scanlegio barnetannbørste med krokodill",
@@ -1318,11 +1366,24 @@
     ],
     "name": "MARITIM VHF antenna adapter (prod.nr 9551-26, stainless)"
   },
+  "7020650112000": {
+    "name": "Norgesmøllene Hvetemel 2kg",
+    "categories": [
+      "food/flour"
+    ],
+    "quantity": "2kg"
+  },
   "7025921630108": {
     "categories": [
       "flange"
     ],
     "name": "WEMA FL-2 flange for fuel sender (prod.nr 8018-00)"
+  },
+  "7029121011811": {
+    "name": "Helios Økologiske Hirseflak",
+    "categories": [
+      "food/cereal/millet"
+    ]
   },
   "7032069712702": {
     "name": "Libresse Wings Ultra+ 14pcs",
@@ -1331,12 +1392,31 @@
     ],
     "quantity": "14pcs"
   },
+  "7032069724750": {
+    "name": "REMA Boil-in-Bag Middagsris Thai White Rice 1kg",
+    "categories": [
+      "food/rice"
+    ],
+    "quantity": "1kg"
+  },
+  "7039010562096": {
+    "name": "Toro Meksikansk Gryte med ris, bønner og paprika",
+    "categories": [
+      "food/ready-meal"
+    ]
+  },
   "7046110066416": {
     "name": "Define Healthy Scalp & Hair Shampoo 250ml",
     "categories": [
       "personal-care/hair/shampoo"
     ],
     "quantity": "250ml"
+  },
+  "7059330072679": {
+    "name": "Praana Brown Lentils (Noramix)",
+    "categories": [
+      "food/legumes/lentils"
+    ]
   },
   "7070893159096": {
     "categories": [
@@ -1349,6 +1429,12 @@
       "battery"
     ],
     "name": "Kjell & Company CR2032 Lithium 3V coin cells (10 pack)"
+  },
+  "7310340114026": {
+    "name": "Dansukker Pärlsocker (perlesukker)",
+    "categories": [
+      "food/sugar"
+    ]
   },
   "7310572300310": {
     "name": "RFSU Private Area Soft Balance 2in1 Intimate Cream",
@@ -1368,6 +1454,13 @@
     "categories": [
       "personal-care/feminine-hygiene"
     ]
+  },
+  "7311041020401": {
+    "name": "Eldorado Mørk Sirup 500g",
+    "categories": [
+      "food/syrup"
+    ],
+    "quantity": "500g"
   },
   "7312669995478": {
     "name": "ELW Conditioning Balsam med aprikosolje 50ml",
@@ -1417,11 +1510,32 @@
     "quantity": "750ml",
     "source": "manual"
   },
+  "7340191102170": {
+    "name": "Coop Mandler 500g",
+    "categories": [
+      "food/nuts/almonds"
+    ],
+    "quantity": "500g"
+  },
   "7340191137097": {
     "categories": [
       "spread"
     ],
     "name": "Coop Extra Kaviar cod roe spread tubes (190g)"
+  },
+  "7340191144774": {
+    "name": "Coop Fusilli Durumsorte 500g",
+    "categories": [
+      "food/pasta"
+    ],
+    "quantity": "500g"
+  },
+  "7340191167919": {
+    "name": "Coop Strøkavring 400g",
+    "categories": [
+      "food/breadcrumbs"
+    ],
+    "quantity": "400g"
   },
   "7350018834870": {
     "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter)",
