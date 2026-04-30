@@ -379,7 +379,7 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Book
-    - https://www.wikidata.org/entity/Q4943275
+    - https://www.wikidata.org/entity/Q571
     - gpt:784
     - off:en:books
   documents:
@@ -2869,7 +2869,7 @@ concepts:
   # Maps Norwegian category labels to English parent categories
   # =============================================================================
 
-  bad:
+  bathroom:
     prefLabel: "Bathroom"
     labels:
       nb: "Bad"
@@ -2878,21 +2878,21 @@ concepts:
     source_uris:
     - https://dbpedia.org/resource/Bathroom
     - https://www.wikidata.org/entity/Q190771
-  hage:
+  garden:
     prefLabel: "Garden"
     broader: outdoor
 
     source_uris:
     - https://dbpedia.org/resource/Garden
     - https://www.wikidata.org/entity/Q1107656
-  kjøkken:
+  kitchen:
     prefLabel: "Kitchen"
     broader: household
 
     source_uris:
     - https://dbpedia.org/resource/Kitchen
     - https://www.wikidata.org/entity/Q43164
-  kunst:
+  art:
     prefLabel: "Art"
     labels:
       nb: "Kunst"
@@ -2901,7 +2901,7 @@ concepts:
     source_uris:
     - https://dbpedia.org/resource/Art
     - https://www.wikidata.org/entity/Q735
-  møbler:
+  furniture:
     prefLabel: "Furniture"
     labels:
       nb: "Møbler"
@@ -2912,7 +2912,7 @@ concepts:
     - https://www.wikidata.org/entity/Q14745
     - https://aims.fao.org/aos/agrovoc/c_3152
     - gpt:436
-  oppbevaring:
+  storage:
     prefLabel: "Storage"
     labels:
       nb: "Oppbevaring"
@@ -2923,35 +2923,35 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_7427
     excluded_sources:
     - dbpedia
-  plastboks:
+  plastic-storage-box:
     prefLabel: "Plastic storage box"
     labels:
       nb: "Plastboks"
       en: "Plastic storage box"
-    broader: oppbevaring
+    broader: storage
 
     source_uris:
     - https://dbpedia.org/resource/Midfielder
-  bananeske:
+  banana-box:
     prefLabel: "Banana box"
     labels:
       nb: "Bananeske"
-    broader: oppbevaring
+    broader: storage
 
     source_uris:
     - https://dbpedia.org/resource/Banana_box
     - https://www.wikidata.org/entity/Q806102
-  pose:
+  bag:
     prefLabel: "Bag"
     labels:
       nb: "Pose"
       en: "Bag"
-    broader: oppbevaring
+    broader: storage
 
     source_uris:
     - https://dbpedia.org/resource/Bag
     - https://www.wikidata.org/entity/Q1323314
-  babyutstyr:
+  baby-equipment:
     prefLabel: "Baby equipment"
     labels:
       nb: "Babyutstyr"
@@ -2960,7 +2960,7 @@ concepts:
 
     excluded_sources:
     - dbpedia
-  belysning:
+  lighting:
     prefLabel: "Lighting"
     broader: household
 
@@ -2969,7 +2969,7 @@ concepts:
     - https://www.wikidata.org/entity/Q210064
     - https://aims.fao.org/aos/agrovoc/c_4326
     - gpt:594
-  hobby:
+  hobbies:
     prefLabel: "Hobbies & Crafts"
     labels:
       nb: "Hobby"
@@ -2977,7 +2977,7 @@ concepts:
 
     excluded_sources:
     - dbpedia
-  sko:
+  shoes:
     prefLabel: "Shoes"
     labels:
       nb: "Sko"
@@ -2987,7 +2987,7 @@ concepts:
     - https://dbpedia.org/resource/Shoe
     - https://www.wikidata.org/entity/Q22676
     - gpt:187
-  dyr:
+  animals:
     prefLabel: "Animals"
     labels:
       nb: "Dyr"
