@@ -26,6 +26,18 @@
       }
     ]
   },
+  "0737425462006": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "ECCO Shoe Refresher (holder fottøy luktfritt), 60ml"
+  },
+  "0825840789799": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "ECCO Nubuck & Suede Conditioner Daily Care, sort, 100ml"
+  },
   "20000646": {
     "categories": [
       "jam"
@@ -471,6 +483,12 @@
       }
     ]
   },
+  "4002092305595": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Collonil Clean + Care kondisjonerende renseskum, 200ml"
+  },
   "4004764390564": {
     "categories": [
       "marker"
@@ -600,6 +618,12 @@
       }
     ],
     "source": "manual"
+  },
+  "4053201013610": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Bama Fargefornyer Nøytral, semsket og nubuck, 75ml"
   },
   "4056489056010": {
     "categories": [
@@ -1109,6 +1133,18 @@
     "quantity": "1L",
     "source": "manual"
   },
+  "4601240000155": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Dividik Klassik sko-svamp, glatt skinn, sort, 50 gangers bruk"
+  },
+  "4607131420293": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Salton sko-svamp, glatt skinn, fargeløs (UTLØPT 06/2016)"
+  },
   "5000204890785": {
     "brand": "Unknown",
     "categories": [
@@ -1122,6 +1158,12 @@
       "lubricant"
     ],
     "name": "WD-40 multi-purpose lubricant 100ml"
+  },
+  "5056170301978": {
+    "categories": [
+      "helse/tannpleie"
+    ],
+    "name": "DentaGlo Kids Toothbrushes 5-pack (Gem Imports)"
   },
   "5201031250739": {
     "categories": [
@@ -1169,6 +1211,18 @@
       "utility-blade"
     ],
     "name": "MacFer L-100 utility knife blades 18mm (10pcs, SK4 steel, Art. 027.0071,"
+  },
+  "5708146602045": {
+    "categories": [
+      "helse/tannpleie"
+    ],
+    "name": "Scanlegio barnetannbørste med krokodille"
+  },
+  "5708146602373": {
+    "categories": [
+      "helse/tannpleie"
+    ],
+    "name": "Scanlegio barnetannstikkere 25stk giraffmotiv (4+ år)"
   },
   "5709404112603": {
     "categories": [
@@ -1258,11 +1312,41 @@
     ],
     "name": "MARITIM VHF antenna adapter (prod.nr 9551-26, stainless)"
   },
+  "7022810464905": {
+    "categories": [
+      "verktøy/brann"
+    ],
+    "name": "Peislighter rett tennrør (Europris art 46490, kjøpt 2026-04-08)",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": null,
+        "price": 30.0,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "7025921630108": {
     "categories": [
       "flange"
     ],
     "name": "WEMA FL-2 flange for fuel sender (prod.nr 8018-00)"
+  },
+  "7040110310807": {
+    "categories": [
+      "mat/baking"
+    ],
+    "name": "Freia Bakekakao 250g Regia (MENY Alna, kjøpt 2026-04-11)",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": null,
+        "price": 89.0,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "7070893159096": {
     "categories": [
@@ -1275,6 +1359,12 @@
       "battery"
     ],
     "name": "Kjell & Company CR2032 Lithium 3V coin cells (10 pack)"
+  },
+  "7311020031322": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Boston Raingard Allover impregnerings-spray"
   },
   "7330571258344": {
     "categories": [
@@ -1302,6 +1392,12 @@
       "spread"
     ],
     "name": "Coop Extra Kaviar cod roe spread tubes (190g)"
+  },
+  "7350018834870": {
+    "categories": [
+      "helse"
+    ],
+    "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter, 10 stk)"
   },
   "7393173096165": {
     "categories": [
@@ -1361,6 +1457,18 @@
     ],
     "name": "Ülker Kakaolu Bisküvi Turkish cocoa biscuits"
   },
+  "8690757001980": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Silver Express Instant Shine Sponge, nøytral/fargeløs, 6ml"
+  },
+  "8690757162025": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Silver Premium Self Shine Shoe Cream, sort"
+  },
   "8697664908052,": {
     "categories": [
       "cable-tie"
@@ -1382,6 +1490,12 @@
     ],
     "name": "Colgate bamboo charcoal toothbrush",
     "source": "manual"
+  },
+  "8718951386495": {
+    "categories": [
+      "helse/tannpleie"
+    ],
+    "name": "Colgate Extra Clean tannbørster Duo Pack medium (MFG 16/01/2023)"
   },
   "9002539214888": {
     "categories": [
