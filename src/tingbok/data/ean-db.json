@@ -145,10 +145,9 @@
   },
   "20163822": {
     "categories": [
-      "instant-foods",
-      "potatoes-instant"
+      "food/potatoes/instant"
     ],
-    "name": "КАРТОФЕНО ПЮРЕ potato puree 12x200g portions",
+    "name": "Lidl Instant Mashed Potatoes / Kartoffelpüree (330g, 3×110g)",
     "prices": [
       {
         "currency": "EUR",
@@ -242,6 +241,21 @@
         "price": 1.38,
         "shop": null,
         "unit": "piece"
+      }
+    ]
+  },
+  "20402433": {
+    "categories": [
+      "chicken"
+    ],
+    "name": "Пилко ЕООД Прясно пилешко бонфиле fresh chicken boneless fillet",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.34,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -350,6 +364,36 @@
     "name": "DECATHLON repair kit for bike tubes (model 8563766)",
     "quantity": "model 8563766",
     "source": "manual"
+  },
+  "3800047336011": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "Antares Universal paint brush 30mm (Code 3601)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "3800047336028": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "Antares Universal paint brush 40mm (Code 3602)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.92,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "3800052253181": {
     "categories": [
@@ -465,6 +509,21 @@
       "personal-care"
     ],
     "name": "Speick vegan deodorant 40ml (German)"
+  },
+  "4013307315001": {
+    "categories": [
+      "spatula"
+    ],
+    "name": "Ciret ШПАКЛА ЗА ТАПЕТИ 28cm wallpaper spatula (Art.Nr 95 88 00 10)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.58,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "4015600734138": {
     "brand": "P&G",
@@ -684,6 +743,12 @@
       }
     ]
   },
+  "4056489119791": {
+    "categories": [
+      "food/dried-fruit/raisins"
+    ],
+    "name": "Alesto Jumbo Raisins (Lidl, carefully selected)"
+  },
   "4056489150510": {
     "categories": [
       "spice"
@@ -794,6 +859,21 @@
         "last_seen": "2026-03-11",
         "name": "ОРЕХИ ПЕКАН",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489693048": {
+    "categories": [
+      "dried-meat"
+    ],
+    "name": "Родна стряха ЛУКАНКА ПАНАГЮРСКА Lukanka from Panagyurishte",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.03,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1059,12 +1139,24 @@
     "quantity": "30m",
     "source": "manual"
   },
+  "5201340002388": {
+    "categories": [
+      "food/seafood/squid"
+    ],
+    "name": "Konva Θράψαλο καθαρισμένο (cleaned squid, Greek)"
+  },
   "5201502117219": {
     "categories": [
       "beans"
     ],
     "name": "Agrino ΡΕΒΙΘΙΑ ΧΟΝΔΡΑ Greek chickpeas (from Mexico)",
     "quantity": "500g"
+  },
+  "5202336082537": {
+    "categories": [
+      "food"
+    ],
+    "name": "Unknown product (black package, contents unclear)"
   },
   "5207032200554": {
     "categories": [
@@ -1126,6 +1218,12 @@
     "name": "Welding electrodes Ø3.25mm 1kg (electrodi.net / Ihtiman)",
     "quantity": "1kg",
     "source": "manual"
+  },
+  "5941341041572": {
+    "categories": [
+      "food/beans"
+    ],
+    "name": "SADU Fasole cu Ciolan (beans with pork knuckle, Romanian, rusty tin)"
   },
   "5949065025434": {
     "brand": "Unknown",
@@ -1256,6 +1354,12 @@
     ],
     "name": "Çaykur Rize Turist Çayı Turkish black tea",
     "quantity": "1000g"
+  },
+  "8690504011507": {
+    "categories": [
+      "biscuits"
+    ],
+    "name": "Ülker Kakaolu Bisküvi Turkish cocoa biscuits"
   },
   "8697664908052,": {
     "categories": [
