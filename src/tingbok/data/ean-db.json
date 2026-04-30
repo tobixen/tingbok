@@ -1693,5 +1693,13 @@
       "personal-care/grooming"
     ],
     "quantity": "1pcs"
+  },
+  "7040110310807": {
+    "name": "Freia Bakekakao Regia",
+    "brand": "Freia",
+    "categories": [
+      "food/baking"
+    ],
+    "quantity": "250g"
   }
 }
