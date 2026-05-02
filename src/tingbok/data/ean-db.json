@@ -138,6 +138,36 @@
       }
     ]
   },
+  "20051389": {
+    "categories": [
+      "food/mayonnaise"
+    ],
+    "name": "Kania Майонеза 80%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.79,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
+  "20087036": {
+    "categories": [
+      "food/canned-meat"
+    ],
+    "name": "Pikok пork knuckle",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.55,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
   "20144173": {
     "brand": "W5 (Lidl)",
     "categories": [
@@ -318,6 +348,21 @@
       }
     ]
   },
+  "20379582": {
+    "categories": [
+      "food/sausage"
+    ],
+    "name": "Baroni Луканка",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.4,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
   "20400569": {
     "categories": [
       "lentils"
@@ -344,6 +389,21 @@
         "date": null,
         "price": 4.34,
         "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "20420635": {
+    "categories": [
+      "food/bouillon"
+    ],
+    "name": "Kania пилешки бульон",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 1.02,
+        "shop": "Lidl Варна",
         "unit": "pcs"
       }
     ]
@@ -879,9 +939,9 @@
   },
   "4056489080510": {
     "categories": [
-      "fresh-milk"
+      "food/fresh-milk"
     ],
-    "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk",
+    "name": "Pilos Прясно мляко 3%",
     "prices": [
       {
         "currency": "EUR",
@@ -923,6 +983,13 @@
         "date": "2026-03-11",
         "price": 1.43,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 1.43,
+        "shop": "Lidl Варна",
         "unit": "pcs"
       }
     ],
@@ -1012,6 +1079,21 @@
       }
     ]
   },
+  "4056489108375": {
+    "categories": [
+      "food/butter"
+    ],
+    "name": "Pilos Немско масло 82%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.49,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489119791": {
     "categories": [
       "food/dried-fruit/raisins"
@@ -1049,17 +1131,47 @@
       }
     ]
   },
+  "4056489195917": {
+    "categories": [
+      "food/oats"
+    ],
+    "name": "Crownfield Fine Oat Flakes",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 0.97,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489352501": {
     "categories": [
       "jam"
     ],
     "name": "Lidl Мус от сливи plum mousse"
   },
+  "4056489443346": {
+    "categories": [
+      "food/deli"
+    ],
+    "name": "Lidl Delikatess Fleischsalat",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.55,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489474340": {
     "categories": [
-      "dried-meat"
+      "food/deli"
     ],
-    "name": "Родна стряха БАБЕК СЛАЙС Babek sliced",
+    "name": "Бабек слайс",
     "prices": [
       {
         "currency": "EUR",
@@ -1087,6 +1199,13 @@
         "date": null,
         "price": 2.65,
         "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 3.32,
+        "shop": "Lidl Варна",
         "unit": "pcs"
       }
     ],
@@ -1133,15 +1252,22 @@
   },
   "4056489693048": {
     "categories": [
-      "dried-meat"
+      "food/sausage"
     ],
-    "name": "Родна стряха ЛУКАНКА ПАНАГЮРСКА Lukanka from Panagyurishte",
+    "name": "Панагюрска луканка",
     "prices": [
       {
         "currency": "EUR",
         "date": null,
         "price": 4.03,
         "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 3.99,
+        "shop": "Lidl Варна",
         "unit": "pcs"
       }
     ]
@@ -1975,6 +2101,21 @@
       "chocolate"
     ],
     "name": "Freia Melkesjokolade Salt Lakris (EXPIRED - use soon!)"
+  },
+  "8007270150154": {
+    "categories": [
+      "food/olive-oil"
+    ],
+    "name": "Costa dOro olive oil",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 5.62,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
   },
   "8024827060988": {
     "categories": [
