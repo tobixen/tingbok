@@ -27,28 +27,28 @@
     ]
   },
   "0635346370120": {
-    "name": "ClinicCare Concentrated Cleansing Foam",
     "categories": [
       "personal-care/skincare/cleanser"
-    ]
+    ],
+    "name": "ClinicCare Concentrated Cleansing Foam"
   },
   "0635346370540": {
-    "name": "ClinicCare X3MEGF Pure Liquid",
     "categories": [
       "personal-care/skincare"
-    ]
+    ],
+    "name": "ClinicCare X3MEGF Pure Liquid"
   },
   "0635346370557": {
-    "name": "ClinicCare X3MEGF Pure Essence serum",
     "categories": [
       "personal-care/skincare/serum"
-    ]
+    ],
+    "name": "ClinicCare X3MEGF Pure Essence serum"
   },
   "0635346370564": {
-    "name": "ClinicCare X3M EGF Pure Serum",
     "categories": [
       "personal-care/skincare/serum"
-    ]
+    ],
+    "name": "ClinicCare X3M EGF Pure Serum"
   },
   "0737425462006": {
     "categories": [
@@ -179,9 +179,24 @@
     ],
     "source": "manual"
   },
+  "20163419": {
+    "categories": [
+      "tomato-passata"
+    ],
+    "name": "Baresa ПАСИРАНИ ДОМАТИ tomato passata",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.12,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20163822": {
     "categories": [
-      "food/potatoes/instant"
+      "potatoes-instant"
     ],
     "name": "Lidl Instant Mashed Potatoes / Kartoffelpüree (330g, 3×110g)",
     "prices": [
@@ -214,6 +229,21 @@
         "last_seen": "2026-03-11",
         "name": "СПАНАК 500 Г ПЛИК",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "20285685": {
+    "categories": [
+      "tomato-paste"
+    ],
+    "name": "Baresa ДОМАТЕНО ПЮРЕ 2-КОНЦ double-concentrated tomato paste",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -323,12 +353,42 @@
       }
     ]
   },
+  "20561338": {
+    "categories": [
+      "coconut-milk"
+    ],
+    "name": "Freshona КОКОСОВО МЛЯКО ЛАЙТ light coconut milk",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.53,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20621414": {
     "categories": [
       "pesto"
     ],
     "name": "Deluxe Гурме Песто Маслини olive pesto",
     "quantity": "190g"
+  },
+  "20679071": {
+    "categories": [
+      "pasta"
+    ],
+    "name": "Combino СПАГЕТИ С ЯЙЦА spaghetti with eggs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "20710118": {
     "categories": [
@@ -360,6 +420,21 @@
     ],
     "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
   },
+  "20962876": {
+    "categories": [
+      "red-beans"
+    ],
+    "name": "Campo Largo КАМПОЛАРГО БОБ КИДНИ red kidney beans",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.78,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "2640660003584": {
     "brand": "Bella Bulgaria",
     "categories": [
@@ -376,17 +451,32 @@
     ],
     "source": "manual"
   },
-  "3253581345177": {
-    "name": "L'Occitane Fleurs de Cerisier Cherry Blossom Bath & Shower Gel",
+  "3200106407018": {
     "categories": [
-      "personal-care/shower-gel"
+      "beans"
+    ],
+    "name": "Крина KRINA БОБ ТРАПЕЗЕН table beans (white, origin: Egypt)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.3,
+        "shop": null,
+        "unit": "pcs"
+      }
     ]
   },
+  "3253581345177": {
+    "categories": [
+      "personal-care/shower-gel"
+    ],
+    "name": "L'Occitane Fleurs de Cerisier Cherry Blossom Bath & Shower Gel"
+  },
   "3574661317212": {
-    "name": "oo Liners 20 SuperThin",
     "categories": [
       "personal-care/feminine-hygiene"
     ],
+    "name": "oo Liners 20 SuperThin",
     "quantity": "20pcs"
   },
   "3583787174722": {
@@ -475,6 +565,21 @@
     ],
     "quantity": "1kg"
   },
+  "3800106400080": {
+    "categories": [
+      "rice"
+    ],
+    "name": "Крина KRINA БЪЛГАРСКИ ОРИЗ Bulgarian rice",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.53,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800106401018": {
     "categories": [
       "beans"
@@ -505,6 +610,21 @@
       }
     ]
   },
+  "3800106403531": {
+    "categories": [
+      "rice"
+    ],
+    "name": "Крина ОРИЗ БАЛАНС parboiled rice",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.5,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800232441247": {
     "categories": [
       "honey"
@@ -521,10 +641,10 @@
     ]
   },
   "4001499930799": {
-    "name": "Frosch wie Gallseife Seifenstück vegan stain remover",
     "categories": [
       "cleaning/soap"
-    ]
+    ],
+    "name": "Frosch wie Gallseife Seifenstück vegan stain remover"
   },
   "4002092305595": {
     "categories": [
@@ -551,10 +671,10 @@
     "name": "Meister power coupling connector (7422020-Kupplung, black, German)"
   },
   "4005808909018": {
-    "name": "Nivea Antiperspirant Powder Effect 48h roll-on",
     "categories": [
       "personal-care/deodorant"
     ],
+    "name": "Nivea Antiperspirant Powder Effect 48h roll-on",
     "quantity": "50ml"
   },
   "4008153752353": {
@@ -603,10 +723,10 @@
     "source": "manual"
   },
   "4029125060993": {
-    "name": "Nüda lice treatment Pohl Boskamp",
     "categories": [
       "personal-care/lice-treatment"
-    ]
+    ],
+    "name": "Nüda lice treatment Pohl Boskamp"
   },
   "4031396000592": {
     "brand": "YACHTICON",
@@ -1168,6 +1288,21 @@
     ],
     "name": "Lindemann EK30262 brass chrome 2-pole connector 3A 12V"
   },
+  "4335619073920": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "ПЕСТО ТРАПАНЕЗЕ Trapanese pesto",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.55,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4335619100947": {
     "categories": [
       "chocolate"
@@ -1202,24 +1337,24 @@
     "name": "Salton sko-svamp, glatt skinn, fargeløs (UTLØPT 06/2016)"
   },
   "4620009352854": {
-    "name": "GlavBanya essential oils set 3x17ml pine, mint, eucalyptus",
     "categories": [
       "personal-care/aromatherapy"
     ],
+    "name": "GlavBanya essential oils set 3x17ml pine, mint, eucalyptus",
     "quantity": "3x17ml"
   },
   "4627090993140": {
-    "name": "Cafe Mimi Shower Gel black currant and cranberry extracts",
     "categories": [
       "personal-care/shower-gel"
     ],
+    "name": "Cafe Mimi Shower Gel black currant and cranberry extracts",
     "quantity": "100ml"
   },
   "4680018108132": {
-    "name": "Banika bath salt 200g eucalyptus oil",
     "categories": [
       "personal-care/bath"
     ],
+    "name": "Banika bath salt 200g eucalyptus oil",
     "quantity": "200g"
   },
   "5000204890785": {
@@ -1231,37 +1366,37 @@
     "source": "manual"
   },
   "5012251008648": {
-    "name": "Deep Cleansing Nose Pore Strips 6pcs witch hazel",
     "categories": [
       "personal-care/skincare"
     ],
+    "name": "Deep Cleansing Nose Pore Strips 6pcs witch hazel",
     "quantity": "6pcs"
   },
   "5017689075910": {
-    "name": "TRS Green Lentils 2kg",
     "categories": [
       "food/legumes/lentils"
     ],
+    "name": "TRS Green Lentils 2kg",
     "quantity": "2kg"
   },
   "5017689389178": {
-    "name": "TRS Red Cow Peas 2kg",
     "categories": [
       "food/legumes"
     ],
+    "name": "TRS Red Cow Peas 2kg",
     "quantity": "2kg"
   },
   "5017689763336": {
-    "name": "TRS Sesame Seeds Hulled",
     "categories": [
       "food/seeds/sesame"
-    ]
+    ],
+    "name": "TRS Sesame Seeds Hulled"
   },
   "5018605000535": {
-    "name": "Dark Red Kidney Beans 2kg",
     "categories": [
       "food/legumes/beans"
     ],
+    "name": "Dark Red Kidney Beans 2kg",
     "quantity": "2kg"
   },
   "5032227340015": {
@@ -1271,30 +1406,30 @@
     "name": "WD-40 multi-purpose lubricant 100ml"
   },
   "5056170301978": {
-    "name": "DentaGlo Kids Toothbrushes 5-pack",
     "categories": [
       "toothbrush"
     ],
+    "name": "DentaGlo Kids Toothbrushes 5-pack",
     "quantity": "5pcs"
   },
   "5056170328920": {
-    "name": "Bamboo Toothbrushes 3-pack eco soft bristles",
     "categories": [
       "personal-care/dental"
     ],
+    "name": "Bamboo Toothbrushes 3-pack eco soft bristles",
     "quantity": "3pcs"
   },
   "5060120173751": {
-    "name": "XHC Papaya Shampoo & Conditioner Bar no plastic waste",
     "categories": [
       "personal-care/hair"
-    ]
+    ],
+    "name": "XHC Papaya Shampoo & Conditioner Bar no plastic waste"
   },
   "5060503767393": {
-    "name": "Dark brown/black eyeliner pencil",
     "categories": [
       "cosmetics/makeup"
-    ]
+    ],
+    "name": "Dark brown/black eyeliner pencil"
   },
   "5201031250739": {
     "categories": [
@@ -1338,10 +1473,10 @@
     "name": "ΟΙΝΟΠΝΕΥΜΑ ΚΑΘΑΡΟΝ rubbing alcohol 95° (Greek, ΒΙΚΤΩΡ ΑΒΕΕ, Samos)"
   },
   "5391520950285": {
-    "name": "Paranit lice shampoo 200ml",
     "categories": [
       "personal-care/lice-treatment"
     ],
+    "name": "Paranit lice shampoo 200ml",
     "quantity": "200ml"
   },
   "5606026027714": {
@@ -1351,58 +1486,58 @@
     "name": "MacFer L-100 utility knife blades 18mm (10pcs, SK4 steel, Art. 027.0071,"
   },
   "5701013102723": {
-    "name": "DKS Impulsiv Nailpolish Remover 100ml acetone-free",
     "categories": [
       "personal-care/nail"
     ],
+    "name": "DKS Impulsiv Nailpolish Remover 100ml acetone-free",
     "quantity": "100ml"
   },
   "5701259100187": {
-    "name": "Dansukker produkt 1kg",
     "categories": [
       "food/sugar"
     ],
+    "name": "Dansukker produkt 1kg",
     "quantity": "1kg"
   },
   "5701259100781": {
-    "name": "Dan Sukker Melis 500g",
     "categories": [
       "food/sugar"
     ],
+    "name": "Dan Sukker Melis 500g",
     "quantity": "500g"
   },
   "5701390210240": {
-    "name": "JYSK Soap Confetti heart 30g",
     "categories": [
       "personal-care/soap"
     ],
+    "name": "JYSK Soap Confetti heart 30g",
     "quantity": "30g"
   },
   "5703147691272": {
-    "name": "Vichy Multimask 3-pack",
     "categories": [
       "personal-care/skincare/mask"
     ],
+    "name": "Vichy Multimask 3-pack",
     "quantity": "3pcs"
   },
   "5706920117105": {
-    "name": "Sushi Ris 900g",
     "categories": [
       "food/rice"
     ],
+    "name": "Sushi Ris 900g",
     "quantity": "900g"
   },
   "5708146602045": {
-    "name": "Scanlegio barnetannbørste med krokodill",
     "categories": [
       "toothbrush"
-    ]
+    ],
+    "name": "Scanlegio barnetannbørste med krokodill"
   },
   "5708146602373": {
-    "name": "Scanlegio barnetannstikkere 25pcs giraffmotiv (4+ år)",
     "categories": [
       "dental-floss"
     ],
+    "name": "Scanlegio barnetannstikkere 25pcs giraffmotiv (4+ år)",
     "quantity": "25pcs"
   },
   "5709404112603": {
@@ -1412,10 +1547,10 @@
     "name": "Matas Tør-Klor (dry chlorine for pool disinfection, 1kg, with cyanuric acid UV stabilizer)"
   },
   "5745001088057": {
-    "name": "Paris Cherry Blossom hand soap 90g vegan",
     "categories": [
       "personal-care/soap"
     ],
+    "name": "Paris Cherry Blossom hand soap 90g vegan",
     "quantity": "90g"
   },
   "5901098167109": {
@@ -1501,19 +1636,18 @@
     "name": "MARITIM VHF antenna adapter (prod.nr 9551-26, stainless)"
   },
   "7020650112000": {
-    "name": "Norgesmøllene Hvetemel 2kg",
     "categories": [
       "food/flour"
     ],
+    "name": "Norgesmøllene Hvetemel 2kg",
     "quantity": "2kg"
   },
   "7022810464905": {
-    "name": "Peislighter rett tennrør",
     "brand": "Europris",
     "categories": [
       "tools/fire"
     ],
-    "quantity": "1pcs",
+    "name": "Peislighter rett tennrør",
     "prices": [
       {
         "currency": "NOK",
@@ -1522,7 +1656,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "1pcs"
   },
   "7025921630108": {
     "categories": [
@@ -1531,38 +1666,37 @@
     "name": "WEMA FL-2 flange for fuel sender (prod.nr 8018-00)"
   },
   "7029121011811": {
-    "name": "Helios Økologiske Hirseflak",
     "categories": [
       "food/cereal/millet"
-    ]
+    ],
+    "name": "Helios Økologiske Hirseflak"
   },
   "7032069712702": {
-    "name": "Libresse Wings Ultra+ 14pcs",
     "categories": [
       "personal-care/feminine-hygiene"
     ],
+    "name": "Libresse Wings Ultra+ 14pcs",
     "quantity": "14pcs"
   },
   "7032069724750": {
-    "name": "REMA Boil-in-Bag Middagsris Thai White Rice 1kg",
     "categories": [
       "food/rice"
     ],
+    "name": "REMA Boil-in-Bag Middagsris Thai White Rice 1kg",
     "quantity": "1kg"
   },
   "7039010562096": {
-    "name": "Toro Meksikansk Gryte med ris, bønner og paprika",
     "categories": [
       "food/ready-meal"
-    ]
+    ],
+    "name": "Toro Meksikansk Gryte med ris, bønner og paprika"
   },
   "7040110310807": {
-    "name": "Freia Bakekakao Regia",
     "brand": "Freia",
     "categories": [
       "food/baking"
     ],
-    "quantity": "250g",
+    "name": "Freia Bakekakao Regia",
     "prices": [
       {
         "currency": "NOK",
@@ -1571,20 +1705,21 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "250g"
   },
   "7046110066416": {
-    "name": "Define Healthy Scalp & Hair Shampoo 250ml",
     "categories": [
       "personal-care/hair/shampoo"
     ],
+    "name": "Define Healthy Scalp & Hair Shampoo 250ml",
     "quantity": "250ml"
   },
   "7059330072679": {
-    "name": "Praana Brown Lentils (Noramix)",
     "categories": [
       "food/legumes/lentils"
-    ]
+    ],
+    "name": "Praana Brown Lentils (Noramix)"
   },
   "7070893159096": {
     "categories": [
@@ -1599,29 +1734,29 @@
     "name": "Kjell & Company CR2032 Lithium 3V coin cells (10 pack)"
   },
   "7310340114026": {
-    "name": "Dansukker Pärlsocker (perlesukker)",
     "categories": [
       "food/sugar"
-    ]
+    ],
+    "name": "Dansukker Pärlsocker (perlesukker)"
   },
   "7310572300310": {
-    "name": "RFSU Private Area Soft Balance 2in1 Intimate Cream",
     "categories": [
       "personal-care/intimate"
-    ]
+    ],
+    "name": "RFSU Private Area Soft Balance 2in1 Intimate Cream"
   },
   "7310610012267": {
-    "name": "Bliw Tindved Dusjgelé 250ml",
     "categories": [
       "personal-care/shower-gel"
     ],
+    "name": "Bliw Tindved Dusjgelé 250ml",
     "quantity": "250ml"
   },
   "7310790088212": {
-    "name": "Libresse FreshProtect bind",
     "categories": [
       "personal-care/feminine-hygiene"
-    ]
+    ],
+    "name": "Libresse FreshProtect bind"
   },
   "7311020031322": {
     "categories": [
@@ -1630,24 +1765,24 @@
     "name": "Boston Raingard Allover impregnerings-spray"
   },
   "7311041020401": {
-    "name": "Eldorado Mørk Sirup 500g",
     "categories": [
       "food/syrup"
     ],
+    "name": "Eldorado Mørk Sirup 500g",
     "quantity": "500g"
   },
   "7312669995478": {
-    "name": "ELW Conditioning Balsam med aprikosolje 50ml",
     "categories": [
       "personal-care/hair"
     ],
+    "name": "ELW Conditioning Balsam med aprikosolje 50ml",
     "quantity": "50ml"
   },
   "7319470816107": {
-    "name": "Nivea Men Dry Impact 72h roll-on",
     "categories": [
       "personal-care/deodorant"
     ],
+    "name": "Nivea Men Dry Impact 72h roll-on",
     "quantity": "50ml"
   },
   "7330571258344": {
@@ -1663,17 +1798,17 @@
     "name": "ICA Decanter Capas 1.5L clear (plastic, used as a flower vase)"
   },
   "7332531074803": {
-    "name": "Schwarzkopf Gliss Supreme Length 200ml",
     "categories": [
       "personal-care/hair"
     ],
+    "name": "Schwarzkopf Gliss Supreme Length 200ml",
     "quantity": "200ml"
   },
   "7332551627096": {
-    "name": "Vidi Barn dry disposable wipes non-woven",
     "categories": [
       "baby/wipes"
-    ]
+    ],
+    "name": "Vidi Barn dry disposable wipes non-woven"
   },
   "7340011453437": {
     "brand": "Coop",
@@ -1685,10 +1820,10 @@
     "source": "manual"
   },
   "7340191102170": {
-    "name": "Coop Mandler 500g",
     "categories": [
       "food/nuts/almonds"
     ],
+    "name": "Coop Mandler 500g",
     "quantity": "500g"
   },
   "7340191137097": {
@@ -1698,37 +1833,37 @@
     "name": "Coop Extra Kaviar cod roe spread tubes (190g)"
   },
   "7340191144774": {
-    "name": "Coop Fusilli Durumsorte 500g",
     "categories": [
       "food/pasta"
     ],
+    "name": "Coop Fusilli Durumsorte 500g",
     "quantity": "500g"
   },
   "7340191167919": {
-    "name": "Coop Strøkavring 400g",
     "categories": [
       "food/breadcrumbs"
     ],
+    "name": "Coop Strøkavring 400g",
     "quantity": "400g"
   },
   "7350018834870": {
-    "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter)",
     "categories": [
       "electrolytes"
     ],
+    "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter)",
     "quantity": "10pcs"
   },
   "7350074024499": {
-    "name": "Beard Master skjeggstylingpakke",
     "categories": [
       "personal-care/shaving/beard"
-    ]
+    ],
+    "name": "Beard Master skjeggstylingpakke"
   },
   "7392871550450": {
-    "name": "ImseVimse Citrus Stain Remover Soap 230g organic",
     "categories": [
       "cleaning/soap"
     ],
+    "name": "ImseVimse Citrus Stain Remover Soap 230g organic",
     "quantity": "230g"
   },
   "7393173096165": {
@@ -1802,10 +1937,10 @@
     "name": "Silver Premium Self Shine Shoe Cream, sort"
   },
   "8697439056726": {
-    "name": "Elegance Turkish Jasmine/Yasemin bar soap 250g",
     "categories": [
       "personal-care/soap"
     ],
+    "name": "Elegance Turkish Jasmine/Yasemin bar soap 250g",
     "quantity": "250g"
   },
   "8697664908052,": {
@@ -1815,10 +1950,10 @@
     "name": "TORK Cable Ties 150x2.5mm 100pcs Made in Turkey, halogen free)"
   },
   "8714100716564": {
-    "name": "Camay Romance Forever shower gel",
     "categories": [
       "personal-care/shower-gel"
-    ]
+    ],
+    "name": "Camay Romance Forever shower gel"
   },
   "8714789732671": {
     "brand": "Colgate",
@@ -1837,39 +1972,39 @@
     "source": "manual"
   },
   "8718951386495": {
-    "name": "Colgate Extra Clean toothbrushes Duo Pack medium",
     "categories": [
       "toothbrush"
     ],
+    "name": "Colgate Extra Clean toothbrushes Duo Pack medium",
     "quantity": "2pcs"
   },
   "8719874194471": {
-    "name": "Sence 6 Disposable Razors",
     "categories": [
       "personal-care/shaving"
     ],
+    "name": "Sence 6 Disposable Razors",
     "quantity": "6pcs"
   },
   "8721098347236": {
-    "name": "McGregor Body Groomer",
     "brand": "McGregor",
     "categories": [
       "personal-care/grooming"
     ],
+    "name": "McGregor Body Groomer",
     "quantity": "1pcs"
   },
   "8886467000560": {
-    "name": "Lux Soft Touch bar soap 80g French Rose & Almond Oil",
     "categories": [
       "personal-care/soap"
     ],
+    "name": "Lux Soft Touch bar soap 80g French Rose & Almond Oil",
     "quantity": "80g"
   },
   "9000101627220": {
-    "name": "Fa Men Pure Control Hemp Inspired Scent 72h roll-on",
     "categories": [
       "personal-care/deodorant"
     ],
+    "name": "Fa Men Pure Control Hemp Inspired Scent 72h roll-on",
     "quantity": "50ml"
   },
   "9002539214888": {
