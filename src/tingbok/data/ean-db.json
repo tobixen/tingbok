@@ -50,6 +50,18 @@
       "personal-care/skincare/serum"
     ]
   },
+  "0737425462006": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "ECCO Shoe Refresher (holder fottøy luktfritt), 60ml"
+  },
+  "0825840789799": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "ECCO Nubuck & Suede Conditioner Daily Care, sort, 100ml"
+  },
   "20000646": {
     "categories": [
       "jam"
@@ -169,10 +181,9 @@
   },
   "20163822": {
     "categories": [
-      "instant-foods",
-      "potatoes-instant"
+      "food/potatoes/instant"
     ],
-    "name": "КАРТОФЕНО ПЮРЕ potato puree 12x200g portions",
+    "name": "Lidl Instant Mashed Potatoes / Kartoffelpüree (330g, 3×110g)",
     "prices": [
       {
         "currency": "EUR",
@@ -266,6 +277,21 @@
         "price": 1.38,
         "shop": null,
         "unit": "piece"
+      }
+    ]
+  },
+  "20402433": {
+    "categories": [
+      "chicken"
+    ],
+    "name": "Пилко ЕООД Прясно пилешко бонфиле fresh chicken boneless fillet",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.34,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -388,6 +414,36 @@
     "quantity": "model 8563766",
     "source": "manual"
   },
+  "3800047336011": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "Antares Universal paint brush 30mm (Code 3601)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "3800047336028": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "Antares Universal paint brush 40mm (Code 3602)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.92,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800052253181": {
     "categories": [
       "beer"
@@ -470,6 +526,12 @@
       "cleaning/soap"
     ]
   },
+  "4002092305595": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Collonil Clean + Care kondisjonerende renseskum, 200ml"
+  },
   "4004764390564": {
     "categories": [
       "marker"
@@ -515,6 +577,21 @@
       "personal-care"
     ],
     "name": "Speick vegan deodorant 40ml (German)"
+  },
+  "4013307315001": {
+    "categories": [
+      "spatula"
+    ],
+    "name": "Ciret ШПАКЛА ЗА ТАПЕТИ 28cm wallpaper spatula (Art.Nr 95 88 00 10)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.58,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "4015600734138": {
     "brand": "P&G",
@@ -597,6 +674,12 @@
       }
     ],
     "source": "manual"
+  },
+  "4053201013610": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Bama Fargefornyer Nøytral, semsket og nubuck, 75ml"
   },
   "4056489056010": {
     "categories": [
@@ -740,6 +823,12 @@
       }
     ]
   },
+  "4056489119791": {
+    "categories": [
+      "food/dried-fruit/raisins"
+    ],
+    "name": "Alesto Jumbo Raisins (Lidl, carefully selected)"
+  },
   "4056489150510": {
     "categories": [
       "spice"
@@ -850,6 +939,21 @@
         "last_seen": "2026-03-11",
         "name": "ОРЕХИ ПЕКАН",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489693048": {
+    "categories": [
+      "dried-meat"
+    ],
+    "name": "Родна стряха ЛУКАНКА ПАНАГЮРСКА Lukanka from Panagyurishte",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.03,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1085,6 +1189,18 @@
     "quantity": "1L",
     "source": "manual"
   },
+  "4601240000155": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Dividik Klassik sko-svamp, glatt skinn, sort, 50 gangers bruk"
+  },
+  "4607131420293": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Salton sko-svamp, glatt skinn, fargeløs (UTLØPT 06/2016)"
+  },
   "4620009352854": {
     "name": "GlavBanya essential oils set 3x17ml pine, mint, eucalyptus",
     "categories": [
@@ -1196,12 +1312,24 @@
     "quantity": "30m",
     "source": "manual"
   },
+  "5201340002388": {
+    "categories": [
+      "food/seafood/squid"
+    ],
+    "name": "Konva Θράψαλο καθαρισμένο (cleaned squid, Greek)"
+  },
   "5201502117219": {
     "categories": [
       "beans"
     ],
     "name": "Agrino ΡΕΒΙΘΙΑ ΧΟΝΔΡΑ Greek chickpeas (from Mexico)",
     "quantity": "500g"
+  },
+  "5202336082537": {
+    "categories": [
+      "food"
+    ],
+    "name": "Unknown product (black package, contents unclear)"
   },
   "5207032200554": {
     "categories": [
@@ -1333,6 +1461,12 @@
     "quantity": "1kg",
     "source": "manual"
   },
+  "5941341041572": {
+    "categories": [
+      "food/beans"
+    ],
+    "name": "SADU Fasole cu Ciolan (beans with pork knuckle, Romanian, rusty tin)"
+  },
   "5949065025434": {
     "brand": "Unknown",
     "categories": [
@@ -1373,6 +1507,23 @@
     ],
     "quantity": "2kg"
   },
+  "7022810464905": {
+    "name": "Peislighter rett tennrør",
+    "brand": "Europris",
+    "categories": [
+      "tools/fire"
+    ],
+    "quantity": "1pcs",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": null,
+        "price": 30.0,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "7025921630108": {
     "categories": [
       "flange"
@@ -1403,6 +1554,23 @@
     "name": "Toro Meksikansk Gryte med ris, bønner og paprika",
     "categories": [
       "food/ready-meal"
+    ]
+  },
+  "7040110310807": {
+    "name": "Freia Bakekakao Regia",
+    "brand": "Freia",
+    "categories": [
+      "food/baking"
+    ],
+    "quantity": "250g",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": null,
+        "price": 89.0,
+        "shop": null,
+        "unit": "pcs"
+      }
     ]
   },
   "7046110066416": {
@@ -1454,6 +1622,12 @@
     "categories": [
       "personal-care/feminine-hygiene"
     ]
+  },
+  "7311020031322": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Boston Raingard Allover impregnerings-spray"
   },
   "7311041020401": {
     "name": "Eldorado Mørk Sirup 500g",
@@ -1609,6 +1783,24 @@
     "name": "Çaykur Rize Turist Çayı Turkish black tea",
     "quantity": "1000g"
   },
+  "8690504011507": {
+    "categories": [
+      "biscuits"
+    ],
+    "name": "Ülker Kakaolu Bisküvi Turkish cocoa biscuits"
+  },
+  "8690757001980": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Silver Express Instant Shine Sponge, nøytral/fargeløs, 6ml"
+  },
+  "8690757162025": {
+    "categories": [
+      "sko/pleie"
+    ],
+    "name": "Silver Premium Self Shine Shoe Cream, sort"
+  },
   "8697439056726": {
     "name": "Elegance Turkish Jasmine/Yasemin bar soap 250g",
     "categories": [
@@ -1658,6 +1850,14 @@
     ],
     "quantity": "6pcs"
   },
+  "8721098347236": {
+    "name": "McGregor Body Groomer",
+    "brand": "McGregor",
+    "categories": [
+      "personal-care/grooming"
+    ],
+    "quantity": "1pcs"
+  },
   "8886467000560": {
     "name": "Lux Soft Touch bar soap 80g French Rose & Almond Oil",
     "categories": [
@@ -1677,29 +1877,5 @@
       "tools"
     ],
     "name": "Telescoping handle for paint roller, Schuller Eh'klar Art.Nr. 214888 (rollers in epoxy storage)"
-  },
-  "7022810464905": {
-    "name": "Peislighter rett tennrør",
-    "brand": "Europris",
-    "categories": [
-      "tools/fire"
-    ],
-    "quantity": "1pcs"
-  },
-  "8721098347236": {
-    "name": "McGregor Body Groomer",
-    "brand": "McGregor",
-    "categories": [
-      "personal-care/grooming"
-    ],
-    "quantity": "1pcs"
-  },
-  "7040110310807": {
-    "name": "Freia Bakekakao Regia",
-    "brand": "Freia",
-    "categories": [
-      "food/baking"
-    ],
-    "quantity": "250g"
   }
 }
