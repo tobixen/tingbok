@@ -295,6 +295,29 @@
     ],
     "source": "manual"
   },
+  "20379575": {
+    "categories": [
+      "food/sausage"
+    ],
+    "name": "Луканка салам кръгла",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 4.49,
+        "shop": "Lidl Варна",
+        "unit": "kg"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-02",
+        "last_seen": "2026-05-02",
+        "name": "ЛУКАНК.САЛАМ КР.ПАР",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
   "20400569": {
     "categories": [
       "lentils"
@@ -432,6 +455,29 @@
         "price": 1.78,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "2420520002823": {
+    "categories": [
+      "food/deli"
+    ],
+    "name": "Кайсерован врат нарязан",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.99,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-02",
+        "last_seen": "2026-05-02",
+        "name": "КАЙСЕРОВАН ВРАТ,НАР.",
+        "shop": "Lidl Bulgaria"
       }
     ]
   },
@@ -637,6 +683,29 @@
         "price": 3.67,
         "shop": null,
         "unit": "piece"
+      }
+    ]
+  },
+  "3800501165027": {
+    "categories": [
+      "food/cured-meat"
+    ],
+    "name": "Сушеница",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 1.52,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-02",
+        "last_seen": "2026-05-02",
+        "name": "СУШЕНИЦА",
+        "shop": "Lidl Bulgaria"
       }
     ]
   },
@@ -1312,6 +1381,29 @@
     "receipt_names": [
       {
         "name": "МЛЕЧ.ШОКОЛ.С КАШУ"
+      }
+    ]
+  },
+  "4335619252042": {
+    "categories": [
+      "household/toilet-paper"
+    ],
+    "name": "Тоалетна хартия 4 пласта",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 4.49,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-02",
+        "last_seen": "2026-05-02",
+        "name": "ТОАЛЕТНА ХАРТИЯ 4 ПЛ",
+        "shop": "Lidl Bulgaria"
       }
     ]
   },
