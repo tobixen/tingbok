@@ -845,6 +845,96 @@ async def test_lookup_by_fetched_label(client):
 
 
 @pytest.mark.anyio
+async def test_lookup_by_plural_singular_variant(client):
+    """Singular/plural variants of a label resolve to the vocabulary concept.
+
+    'book' (singular) should find the 'books' concept (prefLabel 'Books') without
+    falling through to external SKOS sources.  Likewise, a plural query for a
+    concept stored under its singular form should also match.
+    """
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                response = await client.get("/api/lookup/book")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "books"
+
+
+@pytest.mark.anyio
+async def test_lookup_separator_variant_dash_to_underscore(client):
+    """Dash-separated query resolves to underscore-keyed vocabulary concept.
+
+    'toilet-paper' should find the 'toilet_paper' concept without falling
+    through to external SKOS sources.
+    """
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                response = await client.get("/api/lookup/toilet-paper")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "toilet_paper"
+
+
+@pytest.mark.anyio
+async def test_lookup_separator_variant_underscore_to_dash(client):
+    """Underscore-separated query resolves to dash-keyed vocabulary concept.
+
+    'soy_sauce' should find the 'soy-sauce' concept without falling
+    through to external SKOS sources.
+    """
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                response = await client.get("/api/lookup/soy_sauce")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "soy-sauce"
+
+
+@pytest.mark.anyio
+async def test_lookup_separator_variant_space_to_underscore(client):
+    """Space-separated query resolves to underscore-keyed vocabulary concept.
+
+    'toilet paper' should find the 'toilet_paper' concept without falling
+    through to external SKOS sources.
+    """
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=None):
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                response = await client.get("/api/lookup/toilet paper")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "toilet_paper"
+
+
+@pytest.mark.anyio
+async def test_lookup_external_sources_use_space_normalized_label(client):
+    """External SKOS sources are queried with space-normalized label.
+
+    When the query uses underscores or dashes (e.g. 'olive_oil'), the external
+    SKOS sources should be queried with spaces ('olive oil') since those sources
+    use natural-language labels.
+    """
+
+    queried_labels: list[str] = []
+
+    def recording_lookup(label, lang, source, cache_dir):
+        queried_labels.append(label)
+        return None
+
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=recording_lookup):
+        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                await client.get("/api/lookup/olive_oil")
+    # Should have queried with spaces, not underscores
+    assert any(" " in lbl for lbl in queried_labels), (
+        f"Expected SKOS sources to be queried with space-normalized label; got {queried_labels}"
+    )
+
+
+@pytest.mark.anyio
 async def test_lookup_falls_back_to_skos(client):
     """Label not in vocabulary triggers SKOS lookup across all sources, merged."""
     from unittest.mock import patch

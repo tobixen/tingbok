@@ -808,6 +808,17 @@ def _vocabulary_concept_from_data(concept_id: str, data: dict[str, Any]) -> Voca
     )
 
 
+def _separator_variants(label: str) -> list[str]:
+    """Return separator variants of *label* with spaces, underscores, and dashes substituted.
+
+    Normalises to spaces first, then generates underscore and dash forms.
+    The original label is excluded from the result.
+    """
+    spaced = label.replace("_", " ").replace("-", " ")
+    candidates = [spaced, spaced.replace(" ", "_"), spaced.replace(" ", "-")]
+    return [v for v in dict.fromkeys(candidates) if v != label]
+
+
 def _best_vocabulary_anchored_path(paths: list[str], vocab: dict) -> str:
     """Pick the path whose longest prefix segment is present in the vocabulary.
 
@@ -1001,6 +1012,14 @@ async def lookup_concept(
     if data is not None:
         return _vocabulary_concept_from_data(label, data)
 
+    # 1b. Try separator variants (underscore ↔ dash ↔ space) as concept IDs.
+    #     The vocabulary uses both styles (e.g. "toilet_paper" and "soy-sauce"), so
+    #     a query like "toilet-paper" should find "toilet_paper" and vice versa.
+    for _variant in _separator_variants(label):
+        data = vocabulary.get(_variant)
+        if data is not None:
+            return _vocabulary_concept_from_data(_variant, data)
+
     # 1.5. Language-specific path alias match (e.g. "klær/vinter" → clothing/thermal
     #      when lang=nb).  Checked before generic label matching so that a foreign-
     #      language path never accidentally hits an English concept with the same text.
@@ -1042,6 +1061,19 @@ async def lookup_concept(
             if lbl.lower() == label_lower:
                 return _vocabulary_concept_from_data(concept_id, vdata)
 
+    # 2b. Try singular/plural variants of the query label (e.g. "book" → "books",
+    #     "tools" → "tool").  Only checks prefLabel and static altLabels since
+    #     runtime-fetched labels are populated from exact lookups and don't need
+    #     inflection matching.
+    _variants = {v.lower() for v in skos_service._label_variations(label_lower)} - {label_lower}
+    for variant in _variants:
+        for concept_id, vdata in vocabulary.items():
+            if vdata.get("prefLabel", "").lower() == variant:
+                return _vocabulary_concept_from_data(concept_id, vdata)
+            for alts in (vdata.get("altLabel") or {}).values():
+                if variant in [a.lower() for a in alts]:
+                    return _vocabulary_concept_from_data(concept_id, vdata)
+
     # 2.5. Check reverse label cache populated by previous successful SKOS lookups.
     #      This allows e.g. "skrivemaskin?lang=nb" to find a concept previously
     #      resolved via "typewriter?lang=en" without re-querying all SKOS sources.
@@ -1063,15 +1095,19 @@ async def lookup_concept(
     skos_sources = ("agrovoc", "dbpedia", "wikidata")
     fetch_languages = _DEFAULT_FETCH_LANGUAGES
 
+    # External sources index natural-language labels with spaces, not underscores or dashes.
+    # Normalise the lookup label so "olive_oil" queries as "olive oil".
+    lookup_label = label.replace("_", " ").replace("-", " ")
+
     async def _fetch_source(source: str) -> tuple[dict | None, list[str], list[str]]:
         """Return (concept, paths, source_uris) for one source; never raises."""
         try:
             found_lang = lang
-            concept = await asyncio.to_thread(skos_service.lookup_concept, label, lang, source, SKOS_CACHE_DIR)
+            concept = await asyncio.to_thread(skos_service.lookup_concept, lookup_label, lang, source, SKOS_CACHE_DIR)
             if not concept:
                 for fallback_lang in _LANGUAGE_FALLBACKS.get(lang, []):
                     concept = await asyncio.to_thread(
-                        skos_service.lookup_concept, label, fallback_lang, source, SKOS_CACHE_DIR
+                        skos_service.lookup_concept, lookup_label, fallback_lang, source, SKOS_CACHE_DIR
                     )
                     if concept:
                         found_lang = fallback_lang
@@ -1080,11 +1116,11 @@ async def lookup_concept(
                 return None, [], []
             uri = concept.get("uri") or ""
             paths, found, _ = await asyncio.to_thread(
-                skos_service.build_hierarchy_paths, label, found_lang, source, SKOS_CACHE_DIR
+                skos_service.build_hierarchy_paths, lookup_label, found_lang, source, SKOS_CACHE_DIR
             )
             return concept, (paths if found else []), ([uri] if uri else [])
         except Exception as exc:
-            logger.debug("Lookup failed for '%s' via %s: %s", label, source, exc)
+            logger.debug("Lookup failed for '%s' via %s: %s", lookup_label, source, exc)
             return None, [], []
 
     results = await asyncio.gather(*(_fetch_source(s) for s in skos_sources))
@@ -1143,7 +1179,7 @@ async def lookup_concept(
             wikipedia_url = concept.get("wikipediaUrl")
 
     # Also query GPT (local taxonomy, no network) — provides product hierarchy paths
-    gpt_concept = await asyncio.to_thread(gpt_service.lookup_concept, label, lang, _CACHE_BASE)
+    gpt_concept = await asyncio.to_thread(gpt_service.lookup_concept, lookup_label, lang, _CACHE_BASE)
     if gpt_concept:
         gpt_uri = gpt_concept.get("uri", "")
         if gpt_uri and gpt_uri not in source_uris:
@@ -1157,7 +1193,7 @@ async def lookup_concept(
 
     # Also query OFF (local food taxonomy, no network) — URI and multilingual labels only;
     # hierarchy path building from OFF is deferred to future work since AGROVOC covers food.
-    off_concept = await asyncio.to_thread(off_service.lookup_concept, label, lang, SKOS_CACHE_DIR)
+    off_concept = await asyncio.to_thread(off_service.lookup_concept, lookup_label, lang, SKOS_CACHE_DIR)
     if off_concept:
         off_uri = off_concept.get("uri", "")
         if off_uri and off_uri not in source_uris:
@@ -1190,7 +1226,7 @@ async def lookup_concept(
     if all_paths:
         concept_id = _best_vocabulary_anchored_path(all_paths, vocabulary)
     if concept_id is None:
-        concept_id = label_lower.replace(" ", "_")
+        concept_id = lookup_label.lower().replace(" ", "_")
 
     # Build broader from ALL paths so every hierarchy link is preserved
     # (one concept, multiple paths — each path contributes its direct parent)
