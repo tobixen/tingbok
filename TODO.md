@@ -17,3 +17,9 @@ Either the category source "is it a thing?" filtering does not work, or the filt
 
 It also gives https://dbpedia.org/page/Teddy_Stadium - again, https://dbpedia.org/page/Teddy_bear is the correct.  Teddy Stadium has attributes like dbp:tenants `georss:point` `geo:geometry` `geo:lat` `geo:long`, `dbo:buildingStartDate`, I think any dbpedia article with any of those attributes should be disqualified as it's most likely not a thing one would have in a domestic inventory.
 
+## EAN pattern matching
+
+Sometimes the EAN itself cannot be looked up, but the first digits can still tell a lot of information.  Add some logic here.
+
+The barcode lookup script in ~/inventory-md/scripts should be updated to use tingbok
+
