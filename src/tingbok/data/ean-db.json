@@ -140,9 +140,9 @@
   },
   "20051389": {
     "categories": [
-      "food/mayonnaise"
+      "mayonnaise"
     ],
-    "name": "Kania Майонеза 80%",
+    "name": "Kania МАЙОНЕЗА 80% mayonnaise 80%",
     "prices": [
       {
         "currency": "EUR",
@@ -150,20 +150,36 @@
         "price": 2.79,
         "shop": "Lidl Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.79,
+        "shop": null,
+        "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "500ml"
   },
   "20087036": {
     "categories": [
-      "food/canned-meat"
+      "canning",
+      "meat"
     ],
-    "name": "Pikok пork knuckle",
+    "name": "Pikok СВ. МЕСО С ДЖОЛАН pork knuckle with pork meat",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 2.55,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -262,6 +278,21 @@
       }
     ]
   },
+  "20242275": {
+    "categories": [
+      "asparagus"
+    ],
+    "name": "ЗЕЛЕНИ АСПЕРЖИ 500Г green asparagus",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.49,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20285685": {
     "categories": [
       "tomato-paste"
@@ -327,15 +358,22 @@
   },
   "20379575": {
     "categories": [
-      "food/sausage"
+      "sausage"
     ],
-    "name": "Луканка салам кръгла",
+    "name": "ЛУКАНК.САЛАМ КР.ПАР round lukanka salami (sliced, from deli counter)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 4.49,
         "shop": "Lidl Варна",
+        "unit": "kg"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.49,
+        "shop": null,
         "unit": "kg"
       }
     ],
@@ -350,15 +388,22 @@
   },
   "20379582": {
     "categories": [
-      "food/sausage"
+      "sausage"
     ],
-    "name": "Baroni Луканка",
+    "name": "Baroni ЛУКАНКА lukanka",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 2.4,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.4,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -395,15 +440,22 @@
   },
   "20420635": {
     "categories": [
-      "food/bouillon"
+      "bouillon"
     ],
-    "name": "Kania пилешки бульон",
+    "name": "Kania БУЛЬОН ПИЛЕШКИ chicken bouillon cubes (12×10g)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 1.02,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.02,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -520,15 +572,22 @@
   },
   "2420520002823": {
     "categories": [
-      "food/deli"
+      "deli"
     ],
-    "name": "Кайсерован врат нарязан",
+    "name": "КАЙСЕРОВАН ВРАТ,НАР. kaiservrat neck sliced",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 2.99,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.99,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -748,15 +807,22 @@
   },
   "3800501165027": {
     "categories": [
-      "food/cured-meat"
+      "cured-meat"
     ],
-    "name": "Сушеница",
+    "name": "СУШЕНИЦА dried/cured pork sausage (Малджански ЕТ)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 1.52,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.52,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1081,15 +1147,22 @@
   },
   "4056489108375": {
     "categories": [
-      "food/butter"
+      "butter"
     ],
-    "name": "Pilos Немско масло 82%",
+    "name": "Pilos НЕМСКО МАСЛО 250G German-style butter 82%",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 2.49,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.49,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -1133,15 +1206,22 @@
   },
   "4056489195917": {
     "categories": [
-      "food/oats"
+      "oats"
     ],
-    "name": "Crownfield Fine Oat Flakes",
+    "name": "Crownfield ОВЕСЕНИ ЯДКИ ФИНИ Fine Oat Flakes (Jemné ovesné vločky)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 0.97,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.97,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -1154,9 +1234,9 @@
   },
   "4056489443346": {
     "categories": [
-      "food/deli"
+      "deli"
     ],
-    "name": "Lidl Delikatess Fleischsalat",
+    "name": "Lidl chef select НЕМ.ДЕЛИКАТЕС.САЛАТА Delikatess Fleischsalat",
     "prices": [
       {
         "currency": "EUR",
@@ -1164,14 +1244,21 @@
         "price": 2.55,
         "shop": "Lidl Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
   "4056489474340": {
     "categories": [
-      "food/deli"
+      "deli"
     ],
-    "name": "Бабек слайс",
+    "name": "Родна стряха БАБЕК СЛАЙС Babek sliced",
     "prices": [
       {
         "currency": "EUR",
@@ -1206,6 +1293,13 @@
         "date": "2026-05-02",
         "price": 3.32,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.32,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1252,9 +1346,9 @@
   },
   "4056489693048": {
     "categories": [
-      "food/sausage"
+      "sausage"
     ],
-    "name": "Панагюрска луканка",
+    "name": "Родна стряха ПАНАГЮРСКА ЛУКАНКА Panagyur-style lukanka",
     "prices": [
       {
         "currency": "EUR",
@@ -1268,6 +1362,13 @@
         "date": "2026-05-02",
         "price": 3.99,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.99,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -1512,15 +1613,22 @@
   },
   "4335619252042": {
     "categories": [
-      "household/toilet-paper"
+      "toilet-paper"
     ],
-    "name": "Тоалетна хартия 4 пласта",
+    "name": "ТОАЛЕТНА ХАРТИЯ 4 ПЛ toilet paper 4-ply (Lidl 2026-05-02)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 4.49,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.49,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -2104,15 +2212,22 @@
   },
   "8007270150154": {
     "categories": [
-      "food/olive-oil"
+      "olive-oil"
     ],
-    "name": "Costa dOro olive oil",
+    "name": "Costa d'Oro COSTA D'ORO МАСЛ.МАС extra virgin olive oil",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-02",
         "price": 5.62,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.62,
+        "shop": null,
         "unit": "pcs"
       }
     ]
