@@ -315,6 +315,29 @@
     "name": "Tastino Wheat & Rye rusks (4x11 slices)",
     "quantity": "360g"
   },
+  "20305864": {
+    "categories": [
+      "food/vegetables/tomatoes"
+    ],
+    "name": "Lidl Cherry tomatoes 500g",
+    "prices": [
+      {
+        "currency": "BGN",
+        "date": "2026-05-04",
+        "price": 2.99,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-04",
+        "last_seen": "2026-05-04",
+        "name": "ДОМАТИ, ЧЕРИ 500Г",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "20349714": {
     "categories": [
       "kitchen",
