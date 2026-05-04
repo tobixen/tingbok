@@ -714,6 +714,29 @@
       }
     ]
   },
+  "3800061609764": {
+    "categories": [
+      "food/snacks/biscuits"
+    ],
+    "name": "Престиж ТУНКВАНИ БИСКВИТИ dipped biscuits strawberry",
+    "prices": [
+      {
+        "currency": "BGN",
+        "date": "2026-05-04",
+        "price": 1.49,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-04",
+        "last_seen": "2026-05-04",
+        "name": "ТУНКВАНИ БИСКВИТИ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "3800106400011": {
     "categories": [
       "rice"
@@ -1313,6 +1336,29 @@
       }
     ]
   },
+  "4056489586043": {
+    "categories": [
+      "food/meat/canned"
+    ],
+    "name": "Lidl СВИНСКО МЕСО ХХЛ pork meat XXL tin",
+    "prices": [
+      {
+        "currency": "BGN",
+        "date": "2026-05-04",
+        "price": 2.55,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-04",
+        "last_seen": "2026-05-04",
+        "name": "СВИНСКО МЕСО ХХL",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489682677": {
     "categories": [
       "pecans"
@@ -1346,7 +1392,7 @@
   },
   "4056489693048": {
     "categories": [
-      "sausage"
+      "food/meat/cured"
     ],
     "name": "Родна стряха ПАНАГЮРСКА ЛУКАНКА Panagyur-style lukanka",
     "prices": [
@@ -1370,6 +1416,22 @@
         "price": 3.99,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "BGN",
+        "date": "2026-05-04",
+        "price": 3.99,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "150g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-04",
+        "last_seen": "2026-05-04",
+        "name": "ПАНАГЮРСКА ЛУКАНКА",
+        "shop": "Lidl Varna"
       }
     ]
   },
