@@ -1030,7 +1030,7 @@
     "categories": [
       "food/fresh-milk"
     ],
-    "name": "Pilos Прясно мляко 3%",
+    "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -1080,13 +1080,20 @@
         "price": 1.43,
         "shop": "Lidl Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "BGN",
+        "date": "2026-05-04",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-03-11",
+        "last_seen": "2026-05-04",
         "name": "ПРЯСНО МЛЯКО 3%",
         "shop": "Lidl Varna"
       }
