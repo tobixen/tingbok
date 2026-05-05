@@ -197,7 +197,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "300g"
   },
   "20144173": {
     "brand": "W5 (Lidl)",
@@ -253,7 +254,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "500g"
   },
   "20163822": {
     "categories": [
@@ -268,7 +270,8 @@
         "shop": null,
         "unit": "piece"
       }
-    ]
+    ],
+    "quantity": "330g"
   },
   "20239060": {
     "categories": [
@@ -306,7 +309,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "500g"
   },
   "20285685": {
     "categories": [
@@ -351,6 +355,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "500g",
     "receipt_names": [
       {
         "first_seen": "2026-05-04",
@@ -422,6 +427,7 @@
         "unit": "kg"
       }
     ],
+    "quantity": "282g",
     "receipt_names": [
       {
         "first_seen": "2026-05-02",
@@ -503,7 +509,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "120g"
   },
   "20425562": {
     "categories": [
@@ -613,7 +620,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "500g"
   },
   "2420520002823": {
     "categories": [
@@ -818,7 +826,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "1kg"
   },
   "3800106401018": {
     "categories": [
@@ -863,7 +872,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "800g"
   },
   "3800232441247": {
     "categories": [
@@ -1080,7 +1090,7 @@
   },
   "4056489080510": {
     "categories": [
-      "food/fresh-milk"
+      "fresh-milk"
     ],
     "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk",
     "prices": [
@@ -1247,7 +1257,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "250g"
   },
   "4056489119791": {
     "categories": [
@@ -1306,7 +1317,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "500g"
   },
   "4056489352501": {
     "categories": [
@@ -1459,7 +1471,7 @@
   },
   "4056489693048": {
     "categories": [
-      "food/meat/cured"
+      "sausage"
     ],
     "name": "Родна стряха ПАНАГЮРСКА ЛУКАНКА Panagyur-style lukanka",
     "prices": [
@@ -2359,7 +2371,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "750ml"
   },
   "8024827060988": {
     "categories": [
@@ -2399,7 +2412,8 @@
     "categories": [
       "biscuits"
     ],
-    "name": "Ülker Kakaolu Bisküvi Turkish cocoa biscuits"
+    "name": "Ülker Kakaolu Bisküvi Turkish cocoa biscuits",
+    "quantity": "450g"
   },
   "8690757001980": {
     "categories": [
