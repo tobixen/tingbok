@@ -11,9 +11,24 @@
     ],
     "name": "Whale Service Kit AK1550 for Gulper 220 pump (diaphragm, valves, gaskets)"
   },
+  "03608418831680": {
+    "categories": [
+      "clothing/t-shirt"
+    ],
+    "name": "Decathlon grey T-shirt (men's round-neck fitness, Regular fit, size L, made in Egypt, bought 2025-07-24)",
+    "prices": [
+      {
+        "currency": "BGN",
+        "date": null,
+        "price": 16.99,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "0481093": {
     "categories": [
-      "clothing"
+      "clothing/trouser"
     ],
     "name": "МЪЖКИ КАРГО ПАНТ men's cargo trousers (Lidl 2026-03-04)",
     "prices": [
@@ -317,15 +332,22 @@
   },
   "20305864": {
     "categories": [
-      "food/vegetables/tomatoes"
+      "tomatoes"
     ],
-    "name": "Lidl Cherry tomatoes 500g",
+    "name": "ДОМАТИ ЧЕРИ 500Г cherry tomatoes",
     "prices": [
       {
         "currency": "BGN",
         "date": "2026-05-04",
         "price": 2.99,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.99,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -739,7 +761,7 @@
   },
   "3800061609764": {
     "categories": [
-      "food/snacks/biscuits"
+      "biscuits"
     ],
     "name": "Престиж ТУНКВАНИ БИСКВИТИ dipped biscuits strawberry",
     "prices": [
@@ -748,6 +770,13 @@
         "date": "2026-05-04",
         "price": 1.49,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.49,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1368,15 +1397,23 @@
   },
   "4056489586043": {
     "categories": [
-      "food/meat/canned"
+      "canning",
+      "meat"
     ],
-    "name": "Lidl СВИНСКО МЕСО ХХЛ pork meat XXL tin",
+    "name": "СВИНСКО МЕСО ХХЛ pork meat XXL tin",
     "prices": [
       {
         "currency": "BGN",
         "date": "2026-05-04",
         "price": 2.55,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
         "unit": "pcs"
       }
     ],
