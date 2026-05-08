@@ -148,6 +148,24 @@ class VocabularyConcept(BaseModel):
     path_aliases: dict[str, list[str]] = {}
 
 
+class VocabularyResolveRequest(BaseModel):
+    """Body for ``POST /api/vocabulary/resolve``."""
+
+    #: Category labels or concept IDs as they appear in the inventory.
+    labels: list[str]
+    #: Primary language of the inventory (affects label resolution order).
+    lang: str = "en"
+
+
+class VocabularyResolveResponse(BaseModel):
+    """Response from ``POST /api/vocabulary/resolve``."""
+
+    #: Concept ID → concept, covering all requested labels plus their ancestors.
+    concepts: dict[str, "VocabularyConcept"]
+    #: Labels from the request that could not be matched to any concept.
+    unresolved: list[str] = []
+
+
 class VocabularyConceptUpdateRequest(BaseModel):
     """Body for ``PUT /api/vocabulary/{concept_id}`` — partial concept update.
 

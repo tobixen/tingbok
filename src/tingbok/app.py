@@ -21,7 +21,13 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi_mcp import FastApiMCP
 
 from tingbok import __version__
-from tingbok.models import HealthResponse, VocabularyConcept, VocabularyConceptUpdateRequest
+from tingbok.models import (
+    HealthResponse,
+    VocabularyConcept,
+    VocabularyConceptUpdateRequest,
+    VocabularyResolveRequest,
+    VocabularyResolveResponse,
+)
 from tingbok.routers import ean, skos
 from tingbok.services import ean as ean_service
 from tingbok.services import gpt as gpt_service
@@ -991,6 +997,138 @@ async def put_vocabulary_concept(
     return _vocabulary_concept_from_data(concept_id, data)
 
 
+def _lookup_in_vocabulary(label: str, lang: str) -> VocabularyConcept | None:
+    """Look up a label in the loaded vocabulary (no SKOS network calls).
+
+    Checks concept IDs, prefLabels, altLabels, path aliases, and separator
+    variants.  Returns a VocabularyConcept on hit, None on miss.
+    """
+    label_lower = label.lower()
+    _nb_langs = {"nb", "no", "nn"}
+
+    def _alias_lang_matches(alias_lang: str, req_lang: str) -> bool:
+        return alias_lang == req_lang or (alias_lang in _nb_langs and req_lang in _nb_langs)
+
+    # 1. Direct concept ID or separator variants
+    data = vocabulary.get(label)
+    if data is not None:
+        return _vocabulary_concept_from_data(label, data)
+    for variant in _separator_variants(label):
+        data = vocabulary.get(variant)
+        if data is not None:
+            return _vocabulary_concept_from_data(variant, data)
+
+    # 2. Language path alias (e.g. "klær/vinter" → clothing/thermal when lang=nb)
+    if "/" in label:
+        for concept_id, vdata in vocabulary.items():
+            for alias_lang, aliases in (vdata.get("path_aliases") or {}).items():
+                if _alias_lang_matches(alias_lang, lang):
+                    if label_lower in [a.lower() for a in aliases]:
+                        return _vocabulary_concept_from_data(concept_id, vdata)
+
+    # 3. prefLabel / altLabel / runtime-fetched labels
+    for concept_id, vdata in vocabulary.items():
+        if vdata.get("prefLabel", "").lower() == label_lower:
+            return _vocabulary_concept_from_data(concept_id, vdata)
+        for alts in (vdata.get("altLabel") or {}).values():
+            if label_lower in [a.lower() for a in alts]:
+                return _vocabulary_concept_from_data(concept_id, vdata)
+        for alts in (_fetched_alt_labels.get(concept_id) or {}).values():
+            if label_lower in [a.lower() for a in alts]:
+                return _vocabulary_concept_from_data(concept_id, vdata)
+        for lbl in (_fetched_labels.get(concept_id) or {}).values():
+            if lbl.lower() == label_lower:
+                return _vocabulary_concept_from_data(concept_id, vdata)
+
+    # 4. Singular/plural variants
+    for variant in {v.lower() for v in skos_service._label_variations(label_lower)} - {label_lower}:
+        for concept_id, vdata in vocabulary.items():
+            if vdata.get("prefLabel", "").lower() == variant:
+                return _vocabulary_concept_from_data(concept_id, vdata)
+            for alts in (vdata.get("altLabel") or {}).values():
+                if variant in [a.lower() for a in alts]:
+                    return _vocabulary_concept_from_data(concept_id, vdata)
+
+    # 5. Reverse label cache from previous SKOS lookups
+    cached = _skos_label_cache.get((label_lower, lang))
+    if cached is not None:
+        c_id, c_labels, c_alts, c_uris, c_broader, c_desc, c_wiki = cached
+        return VocabularyConcept(
+            id=c_id,
+            prefLabel=c_labels.get(lang, label),
+            source_uris=c_uris,
+            broader=c_broader,
+            labels=c_labels,
+            altLabel=c_alts,
+            description=c_desc,
+            wikipediaUrl=c_wiki,
+        )
+
+    return None
+
+
+def _collect_with_ancestors(
+    concept_id: str,
+    result: dict[str, VocabularyConcept],
+    _visiting: frozenset[str] | None = None,
+) -> None:
+    """Add concept_id and all its vocabulary ancestors to result, avoiding cycles."""
+    if concept_id in result:
+        return
+    visiting = _visiting or frozenset()
+    if concept_id in visiting:
+        return
+
+    data = vocabulary.get(concept_id)
+    if data is None:
+        return
+    result[concept_id] = _vocabulary_concept_from_data(concept_id, data)
+
+    broader = data.get("broader", [])
+    if isinstance(broader, str):
+        broader = [broader]
+    for parent_id in broader:
+        _collect_with_ancestors(parent_id, result, visiting | {concept_id})
+
+
+@app.post("/api/vocabulary/resolve", response_model=VocabularyResolveResponse)
+async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyResolveResponse:
+    """Resolve a list of category labels to a tailored vocabulary.
+
+    For each label the inventory uses, returns the matching concept plus all
+    ancestor concepts needed to render a complete category tree.  Concepts not
+    found in the vocabulary are returned as minimal stubs with
+    ``source="inventory"`` so the client can still represent them in the tree.
+
+    This is the preferred alternative to ``GET /api/vocabulary`` for clients
+    that only need a subset of the vocabulary: one round-trip, no local
+    hierarchy-building needed, and every concept carries its canonical URI.
+    """
+    lang = request.lang
+    concepts: dict[str, VocabularyConcept] = {}
+    unresolved: list[str] = []
+
+    for label in request.labels:
+        concept = _lookup_in_vocabulary(label, lang)
+        if concept is None:
+            unresolved.append(label)
+            # Return a minimal stub so the client can still record the label
+            stub_id = label
+            concepts[stub_id] = VocabularyConcept(
+                id=stub_id,
+                prefLabel=label,
+                broader=[],
+                narrower=[],
+                uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{stub_id}",
+                source_uris=[],
+                labels={lang: label},
+            )
+        else:
+            _collect_with_ancestors(concept.id, concepts)
+
+    return VocabularyResolveResponse(concepts=concepts, unresolved=unresolved)
+
+
 @app.get("/api/lookup/{label:path}")
 async def lookup_concept(
     label: str,
@@ -1007,89 +1145,10 @@ async def lookup_concept(
     """
     from fastapi import HTTPException
 
-    # 1. Exact concept-ID match in vocabulary
-    data = vocabulary.get(label)
-    if data is not None:
-        return _vocabulary_concept_from_data(label, data)
-
-    # 1b. Try separator variants (underscore ↔ dash ↔ space) as concept IDs.
-    #     The vocabulary uses both styles (e.g. "toilet_paper" and "soy-sauce"), so
-    #     a query like "toilet-paper" should find "toilet_paper" and vice versa.
-    for _variant in _separator_variants(label):
-        data = vocabulary.get(_variant)
-        if data is not None:
-            return _vocabulary_concept_from_data(_variant, data)
-
-    # 1.5. Language-specific path alias match (e.g. "klær/vinter" → clothing/thermal
-    #      when lang=nb).  Checked before generic label matching so that a foreign-
-    #      language path never accidentally hits an English concept with the same text.
-    #      Both "no" and "nb" are treated as equivalent (both refer to Norwegian Bokmål).
-    label_lower = label.lower()
-    _nb_langs = {"nb", "no", "nn"}
-
-    def _alias_lang_matches(alias_lang: str, req_lang: str) -> bool:
-        if alias_lang == req_lang:
-            return True
-        # Treat nb/no/nn as the same group
-        return alias_lang in _nb_langs and req_lang in _nb_langs
-
-    if "/" in label:  # only full-path labels can be path aliases
-        for concept_id, vdata in vocabulary.items():
-            for alias_lang, aliases in (vdata.get("path_aliases") or {}).items():
-                if _alias_lang_matches(alias_lang, lang):
-                    if label_lower in [a.lower() for a in aliases]:
-                        return _vocabulary_concept_from_data(concept_id, vdata)
-
-    # 2. Match by prefLabel, altLabel, or runtime-fetched labels/altLabels
-    #    in vocabulary (case-insensitive).
-    #    This also catches e.g. "spices" → food/spices when Wikidata has returned
-    #    "Spices" as an altLabel for that concept at runtime, even though it is not
-    #    listed in vocabulary.yaml.
-    for concept_id, vdata in vocabulary.items():
-        if vdata.get("prefLabel", "").lower() == label_lower:
-            return _vocabulary_concept_from_data(concept_id, vdata)
-        # Static altLabels from vocabulary.yaml
-        for alts in (vdata.get("altLabel") or {}).values():
-            if label_lower in [a.lower() for a in alts]:
-                return _vocabulary_concept_from_data(concept_id, vdata)
-        # Runtime-fetched altLabels from external sources (Wikidata, DBpedia, …)
-        for alts in (_fetched_alt_labels.get(concept_id) or {}).values():
-            if label_lower in [a.lower() for a in alts]:
-                return _vocabulary_concept_from_data(concept_id, vdata)
-        # Runtime-fetched translated prefLabels from external sources
-        for lbl in (_fetched_labels.get(concept_id) or {}).values():
-            if lbl.lower() == label_lower:
-                return _vocabulary_concept_from_data(concept_id, vdata)
-
-    # 2b. Try singular/plural variants of the query label (e.g. "book" → "books",
-    #     "tools" → "tool").  Only checks prefLabel and static altLabels since
-    #     runtime-fetched labels are populated from exact lookups and don't need
-    #     inflection matching.
-    _variants = {v.lower() for v in skos_service._label_variations(label_lower)} - {label_lower}
-    for variant in _variants:
-        for concept_id, vdata in vocabulary.items():
-            if vdata.get("prefLabel", "").lower() == variant:
-                return _vocabulary_concept_from_data(concept_id, vdata)
-            for alts in (vdata.get("altLabel") or {}).values():
-                if variant in [a.lower() for a in alts]:
-                    return _vocabulary_concept_from_data(concept_id, vdata)
-
-    # 2.5. Check reverse label cache populated by previous successful SKOS lookups.
-    #      This allows e.g. "skrivemaskin?lang=nb" to find a concept previously
-    #      resolved via "typewriter?lang=en" without re-querying all SKOS sources.
-    cached_entry = _skos_label_cache.get((label_lower, lang))
-    if cached_entry is not None:
-        c_id, c_labels, c_alts, c_uris, c_broader, c_desc, c_wiki = cached_entry
-        return VocabularyConcept(
-            id=c_id,
-            prefLabel=c_labels.get(lang, label),
-            source_uris=c_uris,
-            broader=c_broader,
-            labels=c_labels,
-            altLabel=c_alts,
-            description=c_desc,
-            wikipediaUrl=c_wiki,
-        )
+    # Steps 1–2.5: vocabulary-only lookup (no SKOS network calls)
+    vocab_hit = _lookup_in_vocabulary(label, lang)
+    if vocab_hit is not None:
+        return vocab_hit
 
     # 3. Query all SKOS sources in parallel, merge results
     skos_sources = ("agrovoc", "dbpedia", "wikidata")

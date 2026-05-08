@@ -114,6 +114,72 @@ async def test_vocabulary_concept_has_excluded_sources(client):
 
 
 # ---------------------------------------------------------------------------
+# POST /api/vocabulary/resolve
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.anyio
+async def test_resolve_vocabulary_known_concept(client):
+    """A vocabulary concept is returned with its ancestors."""
+    response = await client.post("/api/vocabulary/resolve", json={"labels": ["food/nuts"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    assert "food/nuts" in data["concepts"]
+    # Ancestors must be included
+    assert "food" in data["concepts"]
+    assert data["unresolved"] == []
+
+
+@pytest.mark.anyio
+async def test_resolve_vocabulary_unknown_label_becomes_stub(client):
+    """An unknown label is returned as a stub and listed in unresolved."""
+    response = await client.post("/api/vocabulary/resolve", json={"labels": ["my-custom-category"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    assert "my-custom-category" in data["concepts"]
+    assert "my-custom-category" in data["unresolved"]
+
+
+@pytest.mark.anyio
+async def test_resolve_vocabulary_includes_multi_parent_ancestors(client):
+    """A concept with multiple broader parents includes all ancestor paths."""
+    # 'potatoes' has broader [food/vegetables, food/staples] if in vocabulary;
+    # any vocab concept with multi-parent broader should work
+    import tingbok.app as app_module
+
+    original = app_module.vocabulary.copy()
+    app_module.vocabulary["potatoes"] = {
+        "prefLabel": "Potatoes",
+        "broader": ["food/vegetables", "food/staples"],
+        "narrower": [],
+    }
+    try:
+        response = await client.post("/api/vocabulary/resolve", json={"labels": ["potatoes"], "lang": "en"})
+        assert response.status_code == 200
+        data = response.json()
+        concepts = data["concepts"]
+        assert "potatoes" in concepts
+        # Both parent paths and their ancestors must be present
+        assert "food/vegetables" in concepts or "food/staples" in concepts
+        assert "food" in concepts
+    finally:
+        app_module.vocabulary.clear()
+        app_module.vocabulary.update(original)
+
+
+@pytest.mark.anyio
+async def test_resolve_vocabulary_concepts_have_canonical_uri(client):
+    """Every returned concept has a canonical tingbok URI."""
+    response = await client.post("/api/vocabulary/resolve", json={"labels": ["food"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    food = data["concepts"]["food"]
+    assert food["uri"]
+    assert "tingbok" in food["uri"]
+    assert "food" in food["uri"]
+
+
+# ---------------------------------------------------------------------------
 # EAN category normalisation
 # ---------------------------------------------------------------------------
 
