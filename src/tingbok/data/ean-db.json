@@ -586,6 +586,30 @@
     "name": "Deluxe Гурме Песто Маслини olive pesto",
     "quantity": "190g"
   },
+  "20671525": {
+    "categories": [
+      "food/meat/canned-meat"
+    ],
+    "name": "Pikok ШУНКА В КОНСЕРВА Premium Praga ham in can",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 2.55,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "300g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "ШУНКА В КОНСЕРВА",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
   "20679071": {
     "categories": [
       "pasta"
@@ -1701,6 +1725,30 @@
       }
     ],
     "source": "manual"
+  },
+  "4056489942542": {
+    "categories": [
+      "food/meat/cured-meat"
+    ],
+    "name": "Pikok БОЛЯРСКИ ПРЪЧИЦИ Boliyarski meat sticks",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 3.06,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "170g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "БОЛЯРСКИ ПРЪЧИЦИ",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
   },
   "4056489942597": {
     "brand": "Lidl",
