@@ -157,7 +157,7 @@
     "categories": [
       "mayonnaise"
     ],
-    "name": "Kania МАЙОНЕЗА 80% mayonnaise 80%",
+    "name": "Kania Mayonnaise 80%",
     "prices": [
       {
         "currency": "EUR",
@@ -172,9 +172,24 @@
         "price": 2.79,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 2.79,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
       }
     ],
-    "quantity": "500ml"
+    "quantity": "500ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "МАЙОНЕЗА 80%",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
   },
   "20087036": {
     "categories": [
@@ -269,7 +284,7 @@
     "categories": [
       "tomato-passata"
     ],
-    "name": "Baresa ПАСИРАНИ ДОМАТИ tomato passata",
+    "name": "Baresa Tomato Passata",
     "prices": [
       {
         "currency": "EUR",
@@ -277,9 +292,24 @@
         "price": 1.12,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 1.22,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
       }
     ],
-    "quantity": "500g"
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "ПАСИРАНИ ДОМАТИ 10,5",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
   },
   "20163822": {
     "categories": [
@@ -340,7 +370,7 @@
     "categories": [
       "tomato-paste"
     ],
-    "name": "Baresa ДОМАТЕНО ПЮРЕ 2-КОНЦ double-concentrated tomato paste",
+    "name": "Baresa Double-concentrated Tomato Paste",
     "prices": [
       {
         "currency": "EUR",
@@ -348,6 +378,21 @@
         "price": 0.86,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 0.86,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "ДОМАТЕНО ПЮРЕ 2-КОНЦ",
+        "shop": "Lidl Bulgaria"
       }
     ]
   },
