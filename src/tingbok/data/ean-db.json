@@ -208,6 +208,30 @@
     "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)",
     "source": "manual"
   },
+  "20149291": {
+    "categories": [
+      "food/meat/sausage"
+    ],
+    "name": "Pikok КАБАНОСИ СВ. pork cabanossi",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 4.09,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "400g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "КАБАНОСИ СВ.",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
   "20163402": {
     "brand": "Combino",
     "categories": [
