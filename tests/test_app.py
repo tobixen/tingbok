@@ -179,6 +179,81 @@ async def test_resolve_vocabulary_concepts_have_canonical_uri(client):
     assert "food" in food["uri"]
 
 
+@pytest.mark.anyio
+async def test_resolve_cooking_oil_has_oil_as_ancestor(client):
+    """resolve should return 'cooking-oil' as a SKOS-resolved concept with 'oil' as ancestor.
+
+    'cooking-oil' is not in the local vocabulary, so the endpoint falls back to SKOS sources.
+    The Wikidata hierarchy for cooking oil passes through Q42962 (Oil), which maps to the
+    vocabulary concept 'oil' via URI bridging — so 'oil' must appear in the response concepts.
+    """
+    response = await client.post("/api/vocabulary/resolve", json={"labels": ["cooking-oil"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    assert "oil" in data["concepts"], "Expected 'oil' in concepts, got: " + str(list(data["concepts"].keys()))
+    assert "cooking-oil" not in data["unresolved"], "'cooking-oil' should resolve via SKOS, not be a stub"
+    assert "cooking-oil" in data["concepts"], "Expected 'cooking-oil' concept (input label as concept ID)"
+
+
+@pytest.mark.anyio
+async def test_resolve_olive_oil_has_oil_as_ancestor(client):
+    """resolve should return 'olive-oil' with 'oil' as an ancestor.
+
+    This verifies that olive-oil is in the vocabulary and properly wired
+    under 'oil', so inventory shopping-list matching for 'cooking-oil' finds
+    olive oil stock.
+    """
+    response = await client.post("/api/vocabulary/resolve", json={"labels": ["olive-oil"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    concepts = data["concepts"]
+    assert "olive-oil" in concepts, "Expected 'olive-oil' in concepts"
+    assert "olive-oil" not in data["unresolved"], "'olive-oil' should not be a stub"
+    assert "oil" in concepts, "Expected ancestor 'oil' to be included"
+
+
+@pytest.mark.anyio
+async def test_resolve_sunflower_oil_has_oil_as_ancestor(client):
+    """resolve should return 'sunflower-oil' with 'oil' as an ancestor."""
+    response = await client.post("/api/vocabulary/resolve", json={"labels": ["sunflower-oil"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    concepts = data["concepts"]
+    assert "sunflower-oil" in concepts
+    assert "sunflower-oil" not in data["unresolved"]
+    assert "oil" in concepts
+
+
+@pytest.mark.anyio
+async def test_resolve_batch_cooking_oil_matches_olive_and_sunflower(client):
+    """Batch resolve: olive-oil and sunflower-oil should have cooking-oil as ancestor.
+
+    When all three labels are resolved together, URI bridging should add 'cooking-oil'
+    to olive-oil's and sunflower-oil's broader lists (because all three share the
+    Wikidata cooking-oil URI Q427457 in their SKOS hierarchy paths).  This is what
+    makes the inventory shopping list work: wanted 'cooking-oil' finds olive/sunflower oil stock.
+    """
+    response = await client.post(
+        "/api/vocabulary/resolve",
+        json={"labels": ["cooking-oil", "olive-oil", "sunflower-oil"], "lang": "en"},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    concepts = data["concepts"]
+
+    assert "cooking-oil" in concepts, "cooking-oil must be a concept"
+    assert "olive-oil" in concepts, "olive-oil must be a concept"
+    assert "sunflower-oil" in concepts, "sunflower-oil must be a concept"
+
+    olive_broader = concepts["olive-oil"].get("broader", [])
+    sunflower_broader = concepts["sunflower-oil"].get("broader", [])
+
+    assert "cooking-oil" in olive_broader, f"Expected 'cooking-oil' in olive-oil.broader, got: {olive_broader}"
+    assert "cooking-oil" in sunflower_broader, (
+        f"Expected 'cooking-oil' in sunflower-oil.broader, got: {sunflower_broader}"
+    )
+
+
 # ---------------------------------------------------------------------------
 # EAN category normalisation
 # ---------------------------------------------------------------------------

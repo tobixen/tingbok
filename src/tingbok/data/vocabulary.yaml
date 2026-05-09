@@ -1180,8 +1180,6 @@ concepts:
   # Condiments
   oil:
     prefLabel: "Oil"
-    altLabel:
-      en: ["cooking oil"]
     broader: food/condiments
 
     source_uris:

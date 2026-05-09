@@ -76,6 +76,12 @@ _GIT_DEBOUNCE_SECONDS: float = float(os.environ.get("TINGBOK_GIT_DEBOUNCE_SECOND
 
 vocabulary: dict[str, Any] = {}
 
+#: Reverse map from normalised source URI to vocabulary concept_id.
+#: Rebuilt whenever *vocabulary* is reloaded.  Used for cross-taxonomy URI bridging
+#: so that SKOS hierarchy paths whose segments carry Wikidata URIs matching a known
+#: vocabulary concept can be linked to that concept.
+_vocab_uri_index: dict[str, str] = {}
+
 #: EAN observations loaded from ean-db.json (written by PUT /api/ean/{ean}).
 ean_observations: dict[str, Any] = {}
 
@@ -472,6 +478,8 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
         logger.info("Bootstrapped vocabulary.yaml to %s", VOCABULARY_PATH)
 
     vocabulary = _load_vocabulary()
+    global _vocab_uri_index  # noqa: PLW0603
+    _vocab_uri_index = _build_vocab_uri_index(vocabulary)
     ean_observations = ean_service.load_ean_observations(EAN_OBSERVATIONS_PATH)
     skos_service.load_agrovoc_background(SKOS_CACHE_DIR)
     global _startup_time  # noqa: PLW0603
@@ -684,6 +692,17 @@ def _normalise_uri(uri: str) -> str:
         # All major LOD hubs serve over HTTPS; normalise unconditionally.
         return "https://" + uri[7:]
     return uri
+
+
+def _build_vocab_uri_index(vocab: dict[str, Any]) -> dict[str, str]:
+    """Build a reverse map from normalised source URI to vocabulary concept_id."""
+    idx: dict[str, str] = {}
+    for concept_id, vdata in vocab.items():
+        for uri in vdata.get("source_uris") or []:
+            n = _normalise_uri(uri)
+            if n and n not in idx:
+                idx[n] = concept_id
+    return idx
 
 
 def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:
@@ -979,13 +998,14 @@ async def put_vocabulary_concept(
     Changes are persisted to ``vocabulary.yaml`` and immediately reflected in
     the in-memory vocabulary so subsequent GET requests see the updated data.
     """
-    global vocabulary, _category_index  # noqa: PLW0603
+    global vocabulary, _category_index, _vocab_uri_index  # noqa: PLW0603
 
     await asyncio.to_thread(_write_vocabulary_concept_update, concept_id, body, VOCABULARY_PATH)
     _schedule_git_commit(ip=request.client.host if request.client else None)
 
     # Reload so path-inference and narrower computation are consistent.
     vocabulary = _load_vocabulary()
+    _vocab_uri_index = _build_vocab_uri_index(vocabulary)
     _category_index = None
 
     data = vocabulary.get(concept_id)
@@ -1026,18 +1046,19 @@ def _lookup_in_vocabulary(label: str, lang: str) -> VocabularyConcept | None:
                     if label_lower in [a.lower() for a in aliases]:
                         return _vocabulary_concept_from_data(concept_id, vdata)
 
-    # 3. prefLabel / altLabel / runtime-fetched labels
+    # 3. prefLabel / altLabel / runtime-fetched labels (check all separator variants)
+    label_variants = {label_lower} | {v.lower() for v in _separator_variants(label)}
     for concept_id, vdata in vocabulary.items():
-        if vdata.get("prefLabel", "").lower() == label_lower:
+        if vdata.get("prefLabel", "").lower() in label_variants:
             return _vocabulary_concept_from_data(concept_id, vdata)
         for alts in (vdata.get("altLabel") or {}).values():
-            if label_lower in [a.lower() for a in alts]:
+            if any(a.lower() in label_variants for a in alts):
                 return _vocabulary_concept_from_data(concept_id, vdata)
         for alts in (_fetched_alt_labels.get(concept_id) or {}).values():
-            if label_lower in [a.lower() for a in alts]:
+            if any(a.lower() in label_variants for a in alts):
                 return _vocabulary_concept_from_data(concept_id, vdata)
         for lbl in (_fetched_labels.get(concept_id) or {}).values():
-            if lbl.lower() == label_lower:
+            if lbl.lower() in label_variants:
                 return _vocabulary_concept_from_data(concept_id, vdata)
 
     # 4. Singular/plural variants
@@ -1105,28 +1126,150 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
     hierarchy-building needed, and every concept carries its canonical URI.
     """
     lang = request.lang
+    skos_sources = ("agrovoc", "dbpedia", "wikidata")
+
+    # Phase 1: resolve all labels.  Vocabulary hits are resolved directly; unknown
+    # labels are looked up in all SKOS sources in parallel so hierarchy paths and
+    # source URIs are available for the bridging step below.
+    vocab_hits: dict[str, VocabularyConcept] = {}
+    skos_labels: list[str] = []
+
+    for label in request.labels:
+        hit = _lookup_in_vocabulary(label, lang)
+        if hit is not None:
+            vocab_hits[label] = hit
+        else:
+            skos_labels.append(label)
+
+    # Fetch SKOS data for all unresolved labels in parallel
+    async def _fetch_all_sources(label: str) -> tuple[str, list[tuple], dict[str, str]]:
+        """Return (label, per_source_results, combined_uri_map) for one label."""
+        lookup_label = label.replace("_", " ").replace("-", " ")
+        per_source = await asyncio.gather(*(_fetch_one_skos_source(lookup_label, s, lang) for s in skos_sources))
+        uri_map: dict[str, str] = {}
+        for _, _, _, m in per_source:
+            uri_map.update(m)
+        return label, list(per_source), uri_map
+
+    skos_fetches = await asyncio.gather(*(_fetch_all_sources(lbl) for lbl in skos_labels))
+
+    # Phase 2: build per-label URI → input_label index so descendants can reference
+    # sibling labels resolved in the same batch by their input label (not SKOS concept_id).
+    # Start from the static vocabulary index and overlay batch-level entries.
+    local_uri_to_label: dict[str, str] = dict(_vocab_uri_index)
+
+    for label, per_source, _ in skos_fetches:
+        for _, _, uris, _ in per_source:
+            for uri in uris:
+                n = _normalise_uri(uri)
+                if n and n not in local_uri_to_label:
+                    local_uri_to_label[n] = label  # input label as concept ID
+
+    # Phase 3: build VocabularyConcept for each SKOS-resolved label and assemble response
     concepts: dict[str, VocabularyConcept] = {}
     unresolved: list[str] = []
 
-    for label in request.labels:
-        concept = _lookup_in_vocabulary(label, lang)
-        if concept is None:
+    # Add vocabulary hits (with full ancestor chain)
+    for _label, hit in vocab_hits.items():
+        _collect_with_ancestors(hit.id, concepts)
+
+    for label, per_source, uri_map in skos_fetches:
+        lookup_label = label.replace("_", " ").replace("-", " ")
+        merged_labels: dict[str, str] = {}
+        source_uris: list[str] = []
+        all_paths: list[str] = []
+
+        for _, (concept, paths, uris, _) in zip(skos_sources, per_source, strict=False):
+            if concept is None:
+                continue
+            for uri in uris:
+                uri = _normalise_uri(uri)
+                if uri and uri not in source_uris:
+                    source_uris.append(uri)
+            for p in paths:
+                if p not in all_paths:
+                    all_paths.append(p)
+            if lang not in merged_labels:
+                pref_label_val = concept.get("prefLabel", label)
+                merged_labels[lang] = pref_label_val
+
+        if not source_uris and not all_paths:
             unresolved.append(label)
-            # Return a minimal stub so the client can still record the label
-            stub_id = label
-            concepts[stub_id] = VocabularyConcept(
-                id=stub_id,
+            concepts[label] = VocabularyConcept(
+                id=label,
                 prefLabel=label,
                 broader=[],
                 narrower=[],
-                uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{stub_id}",
+                uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{label}",
                 source_uris=[],
                 labels={lang: label},
             )
-        else:
-            _collect_with_ancestors(concept.id, concepts)
+            continue
+
+        # Build broader from SKOS paths
+        broader: list[str] = []
+        for p in all_paths:
+            parent = "/".join(p.split("/")[:-1])
+            if parent and parent not in broader:
+                broader.append(parent)
+
+        # URI bridging: add vocabulary concept IDs (or sibling batch labels) whose
+        # Wikidata URI matches a path segment in this concept's SKOS hierarchy.
+        # This lets clients walk to vocabulary ancestors and to sibling batch labels.
+        for _path_seg, seg_uri in uri_map.items():
+            bridged = local_uri_to_label.get(_normalise_uri(seg_uri))
+            if bridged and bridged != label and bridged not in broader:
+                broader.append(bridged)
+
+        # Use INPUT LABEL as concept ID (not the SKOS-derived vocabulary-anchored path)
+        # so that resolve_category() on the client side finds concepts by their raw label.
+        pref_label_str = merged_labels.get(lang, lookup_label)
+        resolved_concept = VocabularyConcept(
+            id=label,
+            prefLabel=pref_label_str,
+            broader=broader,
+            narrower=[],
+            uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{label}",
+            source_uris=source_uris,
+            labels=merged_labels,
+        )
+        concepts[label] = resolved_concept
+
+        # Also pull in vocabulary ancestors for any vocabulary concept IDs in broader
+        for parent_id in broader:
+            if parent_id in vocabulary:
+                _collect_with_ancestors(parent_id, concepts)
 
     return VocabularyResolveResponse(concepts=concepts, unresolved=unresolved)
+
+
+async def _fetch_one_skos_source(
+    lookup_label: str,
+    source: str,
+    lang: str,
+) -> tuple[dict | None, list[str], list[str], dict[str, str]]:
+    """Fetch concept from one SKOS source.  Returns (concept, paths, source_uris, uri_map).  Never raises."""
+    try:
+        found_lang = lang
+        concept = await asyncio.to_thread(skos_service.lookup_concept, lookup_label, lang, source, SKOS_CACHE_DIR)
+        if not concept:
+            for fallback_lang in _LANGUAGE_FALLBACKS.get(lang, []):
+                concept = await asyncio.to_thread(
+                    skos_service.lookup_concept, lookup_label, fallback_lang, source, SKOS_CACHE_DIR
+                )
+                if concept:
+                    found_lang = fallback_lang
+                    break
+        if not concept:
+            return None, [], [], {}
+        uri = concept.get("uri") or ""
+        paths, found, uri_map = await asyncio.to_thread(
+            skos_service.build_hierarchy_paths, lookup_label, found_lang, source, SKOS_CACHE_DIR
+        )
+        return concept, (paths if found else []), ([uri] if uri else []), (uri_map if found else {})
+    except Exception as exc:
+        logger.debug("Lookup failed for '%s' via %s: %s", lookup_label, source, exc)
+        return None, [], [], {}
 
 
 @app.get("/api/lookup/{label:path}")
@@ -1158,31 +1301,7 @@ async def lookup_concept(
     # Normalise the lookup label so "olive_oil" queries as "olive oil".
     lookup_label = label.replace("_", " ").replace("-", " ")
 
-    async def _fetch_source(source: str) -> tuple[dict | None, list[str], list[str]]:
-        """Return (concept, paths, source_uris) for one source; never raises."""
-        try:
-            found_lang = lang
-            concept = await asyncio.to_thread(skos_service.lookup_concept, lookup_label, lang, source, SKOS_CACHE_DIR)
-            if not concept:
-                for fallback_lang in _LANGUAGE_FALLBACKS.get(lang, []):
-                    concept = await asyncio.to_thread(
-                        skos_service.lookup_concept, lookup_label, fallback_lang, source, SKOS_CACHE_DIR
-                    )
-                    if concept:
-                        found_lang = fallback_lang
-                        break
-            if not concept:
-                return None, [], []
-            uri = concept.get("uri") or ""
-            paths, found, _ = await asyncio.to_thread(
-                skos_service.build_hierarchy_paths, lookup_label, found_lang, source, SKOS_CACHE_DIR
-            )
-            return concept, (paths if found else []), ([uri] if uri else [])
-        except Exception as exc:
-            logger.debug("Lookup failed for '%s' via %s: %s", lookup_label, source, exc)
-            return None, [], []
-
-    results = await asyncio.gather(*(_fetch_source(s) for s in skos_sources))
+    results = await asyncio.gather(*(_fetch_one_skos_source(lookup_label, s, lang) for s in skos_sources))
 
     # Merge across sources
     merged_labels: dict[str, str] = {}
@@ -1193,8 +1312,9 @@ async def lookup_concept(
     concept_id: str | None = None
     pref_label: str = label
     all_paths: list[str] = []  # every path from every source, for multi-path broader
+    combined_uri_map: dict[str, str] = {}  # path_segment → URI across all sources
 
-    for source, (concept, paths, uris) in zip(skos_sources, results, strict=False):
+    for source, (concept, paths, uris, uri_map) in zip(skos_sources, results, strict=False):
         if concept is None:
             continue
 
@@ -1208,6 +1328,8 @@ async def lookup_concept(
         for p in paths:
             if p not in all_paths:
                 all_paths.append(p)
+
+        combined_uri_map.update(uri_map)
 
         # Collect prefLabel (en wins if available)
         if lang not in merged_labels:
@@ -1274,7 +1396,7 @@ async def lookup_concept(
     # top-level roots, record a warning so the operator can add excluded_sources entries.
     warn_roots: dict[str, str] = {}
     warn_paths: dict[str, list[str]] = {}
-    for src, (_, src_paths, _) in zip(skos_sources, results, strict=False):
+    for src, (_, src_paths, _, _) in zip(skos_sources, results, strict=False):
         if src_paths:
             warn_roots[src] = src_paths[0].split("/")[0]
             warn_paths[src] = src_paths
@@ -1295,6 +1417,15 @@ async def lookup_concept(
         if parent and parent not in broader_set:
             broader_set.append(parent)
     broader = broader_set if broader_set else (["/".join(concept_id.split("/")[:-1])] if "/" in concept_id else [])
+
+    # Add vocabulary concept IDs for any path segment whose URI matches a known vocabulary concept.
+    # This bridges cross-taxonomy paths (e.g. Wikidata's primary_commodity/raw_material/oil
+    # carries Q42962, which maps to vocabulary concept "oil") so that clients can walk the
+    # ancestry chain using only short vocabulary IDs.
+    for _path_seg, seg_uri in combined_uri_map.items():
+        vocab_cid = _vocab_uri_index.get(_normalise_uri(seg_uri))
+        if vocab_cid and vocab_cid != concept_id and vocab_cid not in broader:
+            broader.append(vocab_cid)
     best_description = max(descriptions, key=len) if descriptions else None
 
     # Populate reverse label cache so future non-English lookups can find this concept

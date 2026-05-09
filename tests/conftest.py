@@ -31,6 +31,7 @@ def _load_vocabulary():
     """
     if not app_module.vocabulary:
         app_module.vocabulary = app_module._load_vocabulary()
+    app_module._vocab_uri_index = app_module._build_vocab_uri_index(app_module.vocabulary)
     app_module._concepts_fetched.update(app_module.vocabulary.keys())
 
 
