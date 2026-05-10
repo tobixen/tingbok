@@ -1837,6 +1837,30 @@
     ],
     "source": "manual"
   },
+  "4250153632306": {
+    "categories": [
+      "precision-scale"
+    ],
+    "name": "BL scale Digital Pocket Scale EasyCal",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-04",
+        "price": 20.5,
+        "shop": "Growshop Mania",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "1000g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-04",
+        "last_seen": "2026-05-04",
+        "name": "BL – Дигитална тъчскрийн везна 0,1 – 1000g",
+        "shop": "Growshop Mania"
+      }
+    ]
+  },
   "4250206204146": {
     "categories": [
       "electrical-connector"
