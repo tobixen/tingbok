@@ -373,6 +373,21 @@
     ],
     "quantity": "500g"
   },
+  "20267605": {
+    "categories": [
+      "cashews"
+    ],
+    "name": "Alesto КАШУ СУРОВО raw cashews",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.57,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20285685": {
     "categories": [
       "tomato-paste"
@@ -830,6 +845,21 @@
     "name": "DECATHLON repair kit for bike tubes (model 8563766)",
     "quantity": "model 8563766",
     "source": "manual"
+  },
+  "3800012140940": {
+    "categories": [
+      "spread"
+    ],
+    "name": "Seltse ЛЮТЕНИЦА ФИН. traditional lyutenitsa (pepper-tomato spread)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.04,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "3800047336011": {
     "categories": [
@@ -1436,6 +1466,21 @@
     ],
     "name": "Lidl Мус от сливи plum mousse"
   },
+  "4056489358848": {
+    "categories": [
+      "ketchup"
+    ],
+    "name": "Kania КЕТЧУП 78% ДОМАТ.ПЮР ketchup",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.42,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489443346": {
     "categories": [
       "deli"
@@ -1733,6 +1778,21 @@
       }
     ]
   },
+  "4056489941026": {
+    "categories": [
+      "nuts"
+    ],
+    "name": "Alesto ЯДКИ СМЕС mixed nuts classic",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.2,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489941200": {
     "brand": "Pilos",
     "categories": [
@@ -1786,6 +1846,21 @@
       }
     ],
     "source": "manual"
+  },
+  "4056489941279": {
+    "categories": [
+      "fresh-milk"
+    ],
+    "name": "Pilos ПРЯСНО МЛЯКО 3% 2Л fresh milk 2L",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.19,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "4056489942542": {
     "categories": [
