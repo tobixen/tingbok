@@ -153,6 +153,22 @@
       }
     ]
   },
+  "20046248": {
+    "categories": [
+      "canning",
+      "sardines"
+    ],
+    "name": "Nixe САРДИНИ sardines in tomato sauce",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.95,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20051389": {
     "categories": [
       "mayonnaise"
@@ -469,6 +485,21 @@
         "price": 0.52,
         "shop": null,
         "unit": "pack"
+      }
+    ]
+  },
+  "20349721": {
+    "categories": [
+      "kitchen-paper"
+    ],
+    "name": "КУХНЕНСКИ РОЛКИ 3ПЛ. kitchen rolls 3-ply (Lidl, added 2026-05-11)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.11,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1562,6 +1593,22 @@
       }
     ]
   },
+  "4056489500124": {
+    "categories": [
+      "canning",
+      "corn"
+    ],
+    "name": "Freshona МЛАДА ЦАРЕВИЦА sweet corn",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.12,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489586043": {
     "categories": [
       "canning",
@@ -1862,9 +1909,9 @@
   },
   "4056489941279": {
     "categories": [
-      "food/dairy/milk"
+      "fresh-milk"
     ],
-    "name": "Pilos Прясно краве мляко 3% 2Л",
+    "name": "Pilos ПРЯСНО МЛЯКО 3% 2Л fresh milk 2L",
     "prices": [
       {
         "currency": "EUR",
@@ -2282,6 +2329,21 @@
     "name": "Paris Cherry Blossom hand soap 90g vegan",
     "quantity": "90g"
   },
+  "5900951311505": {
+    "categories": [
+      "chocolate"
+    ],
+    "name": "Snickers",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.89,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "5901098167109": {
     "categories": [
       "measuring-jug"
@@ -2302,7 +2364,16 @@
     "categories": [
       "chocolate"
     ],
-    "name": "Millano Milk Chocolate with Peanuts",
+    "name": "Millano МЛЕЧ.ШОКОЛАД ФЪСЪЦИ milk chocolate with peanuts",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.02,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ],
     "quantity": "100g",
     "receipt_names": [
       {
