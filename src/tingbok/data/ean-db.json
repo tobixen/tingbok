@@ -633,7 +633,8 @@
   },
   "20671525": {
     "categories": [
-      "food/meat/canned-meat"
+      "canning",
+      "ham"
     ],
     "name": "Pikok ШУНКА В КОНСЕРВА Premium Praga ham in can",
     "prices": [
@@ -642,6 +643,13 @@
         "date": "2026-05-08",
         "price": 2.55,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1028,13 +1036,13 @@
   },
   "4004764390564": {
     "categories": [
-      "marker"
+      "permanent_marker"
     ],
     "name": "edding permanent marker (black, 1.5-3mm,"
   },
   "4004764390571": {
     "categories": [
-      "marker"
+      "permanent_marker"
     ],
     "name": "edding 300 permanent marker (red, 1.5-3mm, refillable,"
   },
@@ -1054,7 +1062,7 @@
   "4008153752353": {
     "brand": "UNITEC",
     "categories": [
-      "tools"
+      "tool/physical_tool/fastener/strap"
     ],
     "name": "Ratchet tie down + hook, orange, 225 daN, UNITEC model 75235",
     "quantity": "225 daN",
@@ -1896,7 +1904,7 @@
   },
   "4335619252042": {
     "categories": [
-      "toilet-paper"
+      "toilet_paper"
     ],
     "name": "ТОАЛЕТНА ХАРТИЯ 4 ПЛ toilet paper 4-ply (Lidl 2026-05-02)",
     "prices": [
@@ -2192,7 +2200,7 @@
   },
   "5906741601299": {
     "categories": [
-      "marker"
+      "pencil"
     ],
     "name": "Richmann C0129 carpenter's pencil (red,"
   },
@@ -2642,7 +2650,7 @@
   },
   "9002539214888": {
     "categories": [
-      "tools"
+      "paint_roller"
     ],
     "name": "Telescoping handle for paint roller, Schuller Eh'klar Art.Nr. 214888 (rollers in epoxy storage)"
   }
