@@ -157,7 +157,7 @@
     "categories": [
       "mayonnaise"
     ],
-    "name": "Kania Mayonnaise 80%",
+    "name": "Kania МАЙОНЕЗА 80% mayonnaise 80%",
     "prices": [
       {
         "currency": "EUR",
@@ -181,7 +181,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "500ml",
+    "quantity": "472g",
     "receipt_names": [
       {
         "first_seen": "2026-05-08",
@@ -284,7 +284,7 @@
     "categories": [
       "tomato-passata"
     ],
-    "name": "Baresa Tomato Passata",
+    "name": "Baresa ПАСИРАНИ ДОМАТИ 10,5 tomato passata",
     "prices": [
       {
         "currency": "EUR",
@@ -298,6 +298,13 @@
         "date": "2026-05-08",
         "price": 1.22,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.22,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -783,7 +790,8 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "500g"
   },
   "3253581345177": {
     "categories": [
@@ -990,7 +998,7 @@
         "unit": "piece"
       }
     ],
-    "quantity": "500g"
+    "quantity": "900g"
   },
   "3800501165027": {
     "categories": [
