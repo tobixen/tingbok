@@ -179,6 +179,55 @@ async def test_resolve_vocabulary_concepts_have_canonical_uri(client):
     assert "food" in food["uri"]
 
 
+# ---------------------------------------------------------------------------
+# Wikidata mock helpers for SKOS/URI-bridging tests
+# These avoid live HTTP calls that get rate-limited (429) in CI.
+# URI constants reflect real Wikidata entity IDs.
+# ---------------------------------------------------------------------------
+_WD_OIL_URI = "https://www.wikidata.org/entity/Q42962"
+_WD_COOKING_OIL_URI = "https://www.wikidata.org/entity/Q427457"
+_WD_OLIVE_OIL_URI = "https://www.wikidata.org/entity/Q37493"
+_WD_SUNFLOWER_OIL_URI = "https://www.wikidata.org/entity/Q192664"
+
+_SKOS_MOCK_CONCEPTS = {
+    "cooking oil": {"uri": _WD_COOKING_OIL_URI, "prefLabel": "cooking oil", "source": "wikidata"},
+    "olive oil": {"uri": _WD_OLIVE_OIL_URI, "prefLabel": "olive oil", "source": "wikidata"},
+    "sunflower oil": {"uri": _WD_SUNFLOWER_OIL_URI, "prefLabel": "sunflower oil", "source": "wikidata"},
+}
+
+_SKOS_MOCK_PATHS: dict[str, tuple[list[str], bool, dict[str, str]]] = {
+    "cooking oil": (
+        ["food/condiments/oil/cooking oil"],
+        True,
+        {"cooking oil": _WD_COOKING_OIL_URI, "oil": _WD_OIL_URI},
+    ),
+    "olive oil": (
+        ["food/condiments/oil/cooking oil/olive oil"],
+        True,
+        {"olive oil": _WD_OLIVE_OIL_URI, "cooking oil": _WD_COOKING_OIL_URI, "oil": _WD_OIL_URI},
+    ),
+    "sunflower oil": (
+        ["food/condiments/oil/cooking oil/sunflower oil"],
+        True,
+        {"sunflower oil": _WD_SUNFLOWER_OIL_URI, "cooking oil": _WD_COOKING_OIL_URI, "oil": _WD_OIL_URI},
+    ),
+}
+
+
+def _skos_lookup_mock(label: str, lang: str, source: str, cache_dir: object) -> dict | None:
+    if source != "wikidata":
+        return None
+    return _SKOS_MOCK_CONCEPTS.get(label.lower())
+
+
+def _skos_hierarchy_mock(
+    label: str, lang: str, source: str, cache_dir: object, **_kwargs: object
+) -> tuple[list[str], bool, dict[str, str]]:
+    if source != "wikidata":
+        return [], False, {}
+    return _SKOS_MOCK_PATHS.get(label.lower(), ([], False, {}))
+
+
 @pytest.mark.anyio
 async def test_resolve_cooking_oil_has_oil_as_ancestor(client):
     """resolve should return 'cooking-oil' as a SKOS-resolved concept with 'oil' as ancestor.
@@ -187,7 +236,9 @@ async def test_resolve_cooking_oil_has_oil_as_ancestor(client):
     The Wikidata hierarchy for cooking oil passes through Q42962 (Oil), which maps to the
     vocabulary concept 'oil' via URI bridging — so 'oil' must appear in the response concepts.
     """
-    response = await client.post("/api/vocabulary/resolve", json={"labels": ["cooking-oil"], "lang": "en"})
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=_skos_lookup_mock):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_skos_hierarchy_mock):
+            response = await client.post("/api/vocabulary/resolve", json={"labels": ["cooking-oil"], "lang": "en"})
     assert response.status_code == 200
     data = response.json()
     assert "oil" in data["concepts"], "Expected 'oil' in concepts, got: " + str(list(data["concepts"].keys()))
@@ -203,7 +254,9 @@ async def test_resolve_olive_oil_has_oil_as_ancestor(client):
     under 'oil', so inventory shopping-list matching for 'cooking-oil' finds
     olive oil stock.
     """
-    response = await client.post("/api/vocabulary/resolve", json={"labels": ["olive-oil"], "lang": "en"})
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=_skos_lookup_mock):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_skos_hierarchy_mock):
+            response = await client.post("/api/vocabulary/resolve", json={"labels": ["olive-oil"], "lang": "en"})
     assert response.status_code == 200
     data = response.json()
     concepts = data["concepts"]
@@ -215,7 +268,9 @@ async def test_resolve_olive_oil_has_oil_as_ancestor(client):
 @pytest.mark.anyio
 async def test_resolve_sunflower_oil_has_oil_as_ancestor(client):
     """resolve should return 'sunflower-oil' with 'oil' as an ancestor."""
-    response = await client.post("/api/vocabulary/resolve", json={"labels": ["sunflower-oil"], "lang": "en"})
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=_skos_lookup_mock):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_skos_hierarchy_mock):
+            response = await client.post("/api/vocabulary/resolve", json={"labels": ["sunflower-oil"], "lang": "en"})
     assert response.status_code == 200
     data = response.json()
     concepts = data["concepts"]
@@ -233,10 +288,12 @@ async def test_resolve_batch_cooking_oil_matches_olive_and_sunflower(client):
     Wikidata cooking-oil URI Q427457 in their SKOS hierarchy paths).  This is what
     makes the inventory shopping list work: wanted 'cooking-oil' finds olive/sunflower oil stock.
     """
-    response = await client.post(
-        "/api/vocabulary/resolve",
-        json={"labels": ["cooking-oil", "olive-oil", "sunflower-oil"], "lang": "en"},
-    )
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=_skos_lookup_mock):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_skos_hierarchy_mock):
+            response = await client.post(
+                "/api/vocabulary/resolve",
+                json={"labels": ["cooking-oil", "olive-oil", "sunflower-oil"], "lang": "en"},
+            )
     assert response.status_code == 200
     data = response.json()
     concepts = data["concepts"]
