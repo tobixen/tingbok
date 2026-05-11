@@ -155,10 +155,9 @@
   },
   "20046248": {
     "categories": [
-      "canning",
-      "sardines"
+      "food/fish/sardines"
     ],
-    "name": "Nixe САРДИНИ sardines in tomato sauce",
+    "name": "Nixe Sardines in tomato sauce",
     "prices": [
       {
         "currency": "EUR",
@@ -166,6 +165,22 @@
         "price": 0.95,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 0.95,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "125g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "САРДИНИСКОСТИКОЖА ДО",
+        "shop": "Lidl"
       }
     ]
   },
@@ -391,9 +406,9 @@
   },
   "20267605": {
     "categories": [
-      "cashews"
+      "food/nuts/cashews"
     ],
-    "name": "Alesto КАШУ СУРОВО raw cashews",
+    "name": "Alesto Cashew Nuts",
     "prices": [
       {
         "currency": "EUR",
@@ -401,6 +416,22 @@
         "price": 3.57,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 3.57,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "200g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "КАШУ СУРОВО",
+        "shop": "Lidl"
       }
     ]
   },
@@ -490,9 +521,9 @@
   },
   "20349721": {
     "categories": [
-      "kitchen-paper"
+      "household/kitchen-paper"
     ],
-    "name": "КУХНЕНСКИ РОЛКИ 3ПЛ. kitchen rolls 3-ply (Lidl, added 2026-05-11)",
+    "name": "Кухненски ролки 3-пластови",
     "prices": [
       {
         "currency": "EUR",
@@ -500,6 +531,21 @@
         "price": 1.11,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 1.11,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "КУХНЕНСКИ РОЛКИ 3ПЛ.",
+        "shop": "Lidl"
       }
     ]
   },
@@ -879,9 +925,9 @@
   },
   "3800012140940": {
     "categories": [
-      "spread"
+      "food/spreads"
     ],
-    "name": "Seltse ЛЮТЕНИЦА ФИН. traditional lyutenitsa (pepper-tomato spread)",
+    "name": "Seltse Традиционна лютеница",
     "prices": [
       {
         "currency": "EUR",
@@ -889,6 +935,22 @@
         "price": 2.04,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "580g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "SELTSE ЛЮТЕНИЦА ФИН.",
+        "shop": "Lidl"
       }
     ]
   },
@@ -1499,9 +1561,9 @@
   },
   "4056489358848": {
     "categories": [
-      "ketchup"
+      "food/condiments/ketchup"
     ],
-    "name": "Kania КЕТЧУП 78% ДОМАТ.ПЮР ketchup",
+    "name": "Kania Jemný kečup",
     "prices": [
       {
         "currency": "EUR",
@@ -1509,6 +1571,22 @@
         "price": 1.42,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 1.42,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "560g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "КЕТЧУП,78% ДОМАТ.ПЮР",
+        "shop": "Lidl"
       }
     ]
   },
@@ -1595,10 +1673,9 @@
   },
   "4056489500124": {
     "categories": [
-      "canning",
-      "corn"
+      "food/vegetables/corn"
     ],
-    "name": "Freshona МЛАДА ЦАРЕВИЦА sweet corn",
+    "name": "Freshona Сладка царевица",
     "prices": [
       {
         "currency": "EUR",
@@ -1606,6 +1683,22 @@
         "price": 1.12,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 1.12,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "340g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "МЛАДА ЦАРЕВИЦА",
+        "shop": "Lidl"
       }
     ]
   },
@@ -1827,9 +1920,9 @@
   },
   "4056489941026": {
     "categories": [
-      "nuts"
+      "food/nuts"
     ],
-    "name": "Alesto ЯДКИ СМЕС mixed nuts classic",
+    "name": "Alesto Микс класик",
     "prices": [
       {
         "currency": "EUR",
@@ -1837,6 +1930,22 @@
         "price": 2.2,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 2.2,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "200g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "ALESTO ЯДКИ СМЕС",
+        "shop": "Lidl"
       }
     ]
   },
@@ -2331,7 +2440,7 @@
   },
   "5900951311505": {
     "categories": [
-      "chocolate"
+      "food/confectionery/chocolate-bars"
     ],
     "name": "Snickers",
     "prices": [
@@ -2341,6 +2450,22 @@
         "price": 0.89,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 0.89,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "50g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "SNICKERS",
+        "shop": "Lidl"
       }
     ]
   },
@@ -2362,9 +2487,9 @@
   },
   "5905858676245": {
     "categories": [
-      "chocolate"
+      "food/confectionery/chocolate"
     ],
-    "name": "Millano МЛЕЧ.ШОКОЛАД ФЪСЪЦИ milk chocolate with peanuts",
+    "name": "Millano Milk Chocolate with Peanuts",
     "prices": [
       {
         "currency": "EUR",
@@ -2372,12 +2497,25 @@
         "price": 1.02,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 1.02,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "100g",
     "receipt_names": [
       {
         "name": "МЛЕЧ.ШОКОЛАД ФЪСЪЦИ"
+      },
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "МЛЕЧ.ШОКОЛАД ФЪСЪЦИ",
+        "shop": "Lidl"
       }
     ]
   },
