@@ -1796,9 +1796,9 @@
   "4056489941200": {
     "brand": "Pilos",
     "categories": [
-      "yogurt"
+      "food/dairy/yogurt"
     ],
-    "name": "Pilos КИСЕЛО МЛЯКО 3.6% yogurt (семейна опаковка)",
+    "name": "Кисело мляко 3.6%",
     "prices": [
       {
         "currency": "EUR",
@@ -1834,6 +1834,13 @@
         "price": 1.53,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 1.53,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "1kg",
@@ -1843,15 +1850,21 @@
         "last_seen": "2026-03-11",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "КИСЕЛО МЛЯКО 3,6%",
+        "shop": "Lidl"
       }
     ],
     "source": "manual"
   },
   "4056489941279": {
     "categories": [
-      "fresh-milk"
+      "food/dairy/milk"
     ],
-    "name": "Pilos ПРЯСНО МЛЯКО 3% 2Л fresh milk 2L",
+    "name": "Pilos Прясно краве мляко 3% 2Л",
     "prices": [
       {
         "currency": "EUR",
@@ -1859,6 +1872,22 @@
         "price": 2.19,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 2.19,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "2l",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "ПРЯСНО МЛЯКО 3% 2Л",
+        "shop": "Lidl"
       }
     ]
   },
