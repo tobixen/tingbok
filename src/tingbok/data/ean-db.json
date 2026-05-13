@@ -155,9 +155,10 @@
   },
   "20046248": {
     "categories": [
-      "food/fish/sardines"
+      "canning",
+      "sardines"
     ],
-    "name": "Nixe Sardines in tomato sauce",
+    "name": "Nixe САРДИНИ sardines in tomato sauce",
     "prices": [
       {
         "currency": "EUR",
@@ -521,9 +522,9 @@
   },
   "20349721": {
     "categories": [
-      "household/kitchen-paper"
+      "kitchen-paper"
     ],
-    "name": "Кухненски ролки 3-пластови",
+    "name": "КУХНЕНСКИ РОЛКИ 3ПЛ. kitchen rolls 3-ply (Lidl, added 2026-05-11)",
     "prices": [
       {
         "currency": "EUR",
@@ -1673,9 +1674,10 @@
   },
   "4056489500124": {
     "categories": [
-      "food/vegetables/corn"
+      "canning",
+      "corn"
     ],
-    "name": "Freshona Сладка царевица",
+    "name": "Freshona МЛАДА ЦАРЕВИЦА sweet corn",
     "prices": [
       {
         "currency": "EUR",
@@ -1920,9 +1922,9 @@
   },
   "4056489941026": {
     "categories": [
-      "food/nuts"
+      "nuts"
     ],
-    "name": "Alesto Микс класик",
+    "name": "Alesto ЯДКИ СМЕС mixed nuts classic",
     "prices": [
       {
         "currency": "EUR",
@@ -2487,9 +2489,9 @@
   },
   "5905858676245": {
     "categories": [
-      "food/confectionery/chocolate"
+      "chocolate"
     ],
-    "name": "Millano Milk Chocolate with Peanuts",
+    "name": "Millano МЛЕЧ.ШОКОЛАД ФЪСЪЦИ milk chocolate with peanuts",
     "prices": [
       {
         "currency": "EUR",
