@@ -705,6 +705,28 @@ def _build_vocab_uri_index(vocab: dict[str, Any]) -> dict[str, str]:
     return idx
 
 
+def _concept_id_from_path_seg(path_seg: str) -> str | None:
+    """Derive a concept ID from a uri_map path-segment key if its root is a vocabulary concept.
+
+    uri_map keys from skos_service.build_hierarchy_paths are full path prefixes built with
+    _normalize_label (underscores), e.g. "food/condiments/oil/cooking_oil".  The last
+    component is the concept's own normalised label; converting underscores to hyphens yields
+    the concept ID ("cooking-oil").
+
+    Returns None when the path root is not a vocabulary concept (filters out Wikidata
+    encyclopedic paths like "juridical_person/..." and "primary_commodity/..." that
+    produce spurious ancestors).
+    """
+    parts = path_seg.split("/")
+    root = parts[0]
+    if root not in vocabulary:
+        return None
+    last = parts[-1]
+    if not last:
+        return None
+    return last.replace("_", "-").replace(" ", "-").lower()
+
+
 def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:
     """Build the full source_uris list for a concept.
 
@@ -1214,10 +1236,14 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
                 broader.append(parent)
 
         # URI bridging: add vocabulary concept IDs (or sibling batch labels) whose
-        # Wikidata URI matches a path segment in this concept's SKOS hierarchy.
-        # This lets clients walk to vocabulary ancestors and to sibling batch labels.
+        # URI matches a path segment in this concept's SKOS hierarchy.
+        # Falls back to normalising the last path-segment label when the URI is not
+        # in the vocabulary index, so SKOS-known ancestors (e.g. "cooking-oil") are
+        # included even when they are absent from vocabulary.yaml.
         for _path_seg, seg_uri in uri_map.items():
             bridged = local_uri_to_label.get(_normalise_uri(seg_uri))
+            if not bridged:
+                bridged = _concept_id_from_path_seg(_path_seg)
             if bridged and bridged != label and bridged not in broader:
                 broader.append(bridged)
 
@@ -1235,9 +1261,37 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
         )
         concepts[label] = resolved_concept
 
-        # Also pull in vocabulary ancestors for any vocabulary concept IDs in broader
+        # Pull in vocabulary ancestors for any vocabulary concept IDs in broader.
+        # Also create minimal stubs for derived (path-segment-normalised) concept IDs
+        # so that JS clients can resolve them in the offline category browser.
         for parent_id in broader:
             if parent_id in vocabulary:
+                _collect_with_ancestors(parent_id, concepts)
+        for path_seg, seg_uri in uri_map.items():
+            if _vocab_uri_index.get(_normalise_uri(seg_uri)):
+                continue  # vocabulary concept — already handled above
+            derived_id = _concept_id_from_path_seg(path_seg)
+            if not derived_id or derived_id == label or derived_id in concepts:
+                continue
+            parent_path = "/".join(path_seg.split("/")[:-1])
+            parent_id: str | None = None
+            if parent_path:
+                parent_uri = uri_map.get(parent_path)
+                if parent_uri:
+                    parent_id = _vocab_uri_index.get(_normalise_uri(parent_uri))
+                if not parent_id and parent_path:
+                    parent_id = _concept_id_from_path_seg(parent_path)
+            raw_label = path_seg.split("/")[-1].replace("_", " ").replace("-", " ")
+            concepts[derived_id] = VocabularyConcept(
+                id=derived_id,
+                prefLabel=raw_label.title(),
+                broader=[parent_id] if parent_id else [],
+                narrower=[],
+                uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{derived_id}",
+                source_uris=[seg_uri] if seg_uri else [],
+                labels={},
+            )
+            if parent_id and parent_id in vocabulary:
                 _collect_with_ancestors(parent_id, concepts)
 
     return VocabularyResolveResponse(concepts=concepts, unresolved=unresolved)
@@ -1418,12 +1472,15 @@ async def lookup_concept(
             broader_set.append(parent)
     broader = broader_set if broader_set else (["/".join(concept_id.split("/")[:-1])] if "/" in concept_id else [])
 
-    # Add vocabulary concept IDs for any path segment whose URI matches a known vocabulary concept.
-    # This bridges cross-taxonomy paths (e.g. Wikidata's primary_commodity/raw_material/oil
-    # carries Q42962, which maps to vocabulary concept "oil") so that clients can walk the
-    # ancestry chain using only short vocabulary IDs.
+    # Add vocabulary concept IDs for any path segment whose URI matches a known vocabulary
+    # concept.  Falls back to normalising the last path-segment label when the URI is not
+    # in the vocabulary index, so SKOS-known ancestors (e.g. "cooking-oil") are included
+    # even when absent from vocabulary.yaml.  Vocabulary-root filtering (root in vocabulary)
+    # prevents spurious ancestors from Wikidata encyclopedic paths.
     for _path_seg, seg_uri in combined_uri_map.items():
         vocab_cid = _vocab_uri_index.get(_normalise_uri(seg_uri))
+        if not vocab_cid:
+            vocab_cid = _concept_id_from_path_seg(_path_seg)
         if vocab_cid and vocab_cid != concept_id and vocab_cid not in broader:
             broader.append(vocab_cid)
     best_description = max(descriptions, key=len) if descriptions else None

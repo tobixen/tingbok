@@ -196,20 +196,33 @@ _SKOS_MOCK_CONCEPTS = {
 }
 
 _SKOS_MOCK_PATHS: dict[str, tuple[list[str], bool, dict[str, str]]] = {
+    # Keys are full path prefixes built with underscores, as skos_service._normalize_label
+    # produces (spaces → underscores).  This matches real build_hierarchy_paths output.
     "cooking oil": (
-        ["food/condiments/oil/cooking oil"],
+        ["food/condiments/oil/cooking_oil"],
         True,
-        {"cooking oil": _WD_COOKING_OIL_URI, "oil": _WD_OIL_URI},
+        {
+            "food/condiments/oil": _WD_OIL_URI,
+            "food/condiments/oil/cooking_oil": _WD_COOKING_OIL_URI,
+        },
     ),
     "olive oil": (
-        ["food/condiments/oil/cooking oil/olive oil"],
+        ["food/condiments/oil/cooking_oil/olive_oil"],
         True,
-        {"olive oil": _WD_OLIVE_OIL_URI, "cooking oil": _WD_COOKING_OIL_URI, "oil": _WD_OIL_URI},
+        {
+            "food/condiments/oil": _WD_OIL_URI,
+            "food/condiments/oil/cooking_oil": _WD_COOKING_OIL_URI,
+            "food/condiments/oil/cooking_oil/olive_oil": _WD_OLIVE_OIL_URI,
+        },
     ),
     "sunflower oil": (
-        ["food/condiments/oil/cooking oil/sunflower oil"],
+        ["food/condiments/oil/cooking_oil/sunflower_oil"],
         True,
-        {"sunflower oil": _WD_SUNFLOWER_OIL_URI, "cooking oil": _WD_COOKING_OIL_URI, "oil": _WD_OIL_URI},
+        {
+            "food/condiments/oil": _WD_OIL_URI,
+            "food/condiments/oil/cooking_oil": _WD_COOKING_OIL_URI,
+            "food/condiments/oil/cooking_oil/sunflower_oil": _WD_SUNFLOWER_OIL_URI,
+        },
     ),
 }
 
@@ -277,6 +290,45 @@ async def test_resolve_sunflower_oil_has_oil_as_ancestor(client):
     assert "sunflower-oil" in concepts
     assert "sunflower-oil" not in data["unresolved"]
     assert "oil" in concepts
+
+
+@pytest.mark.anyio
+async def test_resolve_single_olive_oil_has_cooking_oil_as_ancestor(client):
+    """Single-label resolve of olive-oil must include cooking-oil in broader.
+
+    This is the core offline-search requirement: without cooking-oil in the batch,
+    the vocabulary URI index (Q427457 → cooking-oil) must still bridge the path
+    segment to the vocabulary concept so the JS category browser and shopping-list
+    generator work without a network round-trip.
+    """
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=_skos_lookup_mock):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_skos_hierarchy_mock):
+            response = await client.post("/api/vocabulary/resolve", json={"labels": ["olive-oil"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    concepts = data["concepts"]
+    assert "olive-oil" in concepts
+    olive_broader = concepts["olive-oil"].get("broader", [])
+    assert "cooking-oil" in olive_broader, (
+        f"Expected 'cooking-oil' in olive-oil.broader even without cooking-oil in batch, got: {olive_broader}"
+    )
+    assert "cooking-oil" in concepts, "cooking-oil ancestor must be included in response concepts"
+
+
+@pytest.mark.anyio
+async def test_resolve_single_sunflower_oil_has_cooking_oil_as_ancestor(client):
+    """Single-label resolve of sunflower-oil must include cooking-oil in broader."""
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=_skos_lookup_mock):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_skos_hierarchy_mock):
+            response = await client.post("/api/vocabulary/resolve", json={"labels": ["sunflower-oil"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    concepts = data["concepts"]
+    assert "sunflower-oil" in concepts
+    sunflower_broader = concepts["sunflower-oil"].get("broader", [])
+    assert "cooking-oil" in sunflower_broader, (
+        f"Expected 'cooking-oil' in sunflower-oil.broader even without cooking-oil in batch, got: {sunflower_broader}"
+    )
 
 
 @pytest.mark.anyio
