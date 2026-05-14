@@ -2102,6 +2102,17 @@ concepts:
     - https://www.wikidata.org/entity/Q123152059
     - gpt:167
 
+  handbag:
+    prefLabel: "Handbag"
+    altLabel:
+      nb: ["handveske", "veske", "håndveske", "clutch", "pung", "skinnveske"]
+      en: ["purse", "clutch", "tote bag"]
+    broader: clothing/accessories
+    source_uris:
+    - https://dbpedia.org/resource/Handbag
+    - https://www.wikidata.org/entity/Q467505
+    - gpt:6704
+
   # Clothing/fashion mappings
   hat:
     prefLabel: "Hat"
@@ -2935,11 +2946,23 @@ concepts:
     prefLabel: "Banana box"
     labels:
       nb: "Bananeske"
+    altLabel:
+      nb: ["bananeske", "bananekasse"]
+      en: ["banana crate", "moving box"]
     broader: storage
 
     source_uris:
     - https://dbpedia.org/resource/Banana_box
     - https://www.wikidata.org/entity/Q806102
+
+  plastic-box:
+    prefLabel: "Plastic box"
+    altLabel:
+      nb: ["plastboks", "plastikboks", "plastikasse"]
+      en: ["plastic storage box", "storage box", "plastic container"]
+    broader: storage
+    source_uris:
+    - https://www.wikidata.org/entity/Q188075
   bag:
     prefLabel: "Bag"
     labels:
@@ -2950,11 +2973,27 @@ concepts:
     source_uris:
     - https://dbpedia.org/resource/Bag
     - https://www.wikidata.org/entity/Q1323314
+
+  suitcase:
+    prefLabel: "Suitcase"
+    altLabel:
+      nb: ["koffert", "reisekoffert"]
+      en: ["luggage", "travel bag"]
+      de: ["Koffer"]
+    broader: storage
+    source_uris:
+    - https://dbpedia.org/resource/Suitcase
+    - https://www.wikidata.org/entity/Q200814
+    - gpt:6705
+
   baby-equipment:
     prefLabel: "Baby equipment"
     labels:
       nb: "Babyutstyr"
       en: "Baby equipment"
+    altLabel:
+      nb: ["babyutstyr", "babyprodukter", "babytilbehør"]
+      en: ["infant equipment", "baby gear"]
     broader: household
 
     excluded_sources:
