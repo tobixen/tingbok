@@ -54,13 +54,14 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
     if not body.categories and body.name is None:
         raise HTTPException(status_code=422, detail="At least one of 'categories' or 'name' must be provided")
 
+    canonical_categories = _app._normalize_ean_categories(body.categories)
     prices_raw = [p.model_dump() for p in body.prices]
     receipt_names_raw = [r.model_dump() for r in body.receipt_names]
     await asyncio.to_thread(
         ean_service.save_ean_observation,
         _app.EAN_OBSERVATIONS_PATH,
         ean,
-        body.categories,
+        canonical_categories,
         body.name,
         body.quantity,
         prices_raw,
@@ -69,7 +70,7 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
     # Update in-memory observations so subsequent GETs reflect the change immediately
     entry = _app.ean_observations.setdefault(ean, {})
     if body.categories:
-        entry["categories"] = body.categories
+        entry["categories"] = canonical_categories
     if body.name is not None:
         entry["name"] = body.name
     if body.quantity is not None:

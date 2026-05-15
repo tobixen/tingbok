@@ -1,7 +1,7 @@
 {
   "00501163": {
     "categories": [
-      "spice"
+      "food/spices"
     ],
     "name": "Hacendado Paella con azafrán (saffron) spice packets (4g each)"
   },
@@ -250,7 +250,7 @@
   "20144173": {
     "brand": "W5 (Lidl)",
     "categories": [
-      "cleaning"
+      "tools/cleaning"
     ],
     "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)",
     "source": "manual"
@@ -645,7 +645,7 @@
   },
   "20402433": {
     "categories": [
-      "chicken"
+      "food/meat/chicken"
     ],
     "name": "Пилко ЕООД Прясно пилешко бонфиле fresh chicken boneless fillet",
     "prices": [
@@ -857,7 +857,7 @@
   "2640660003584": {
     "brand": "Bella Bulgaria",
     "categories": [
-      "Meat",
+      "meat",
       "Salami"
     ],
     "name": "Bella Bulgaria Луканков салам",
@@ -1245,7 +1245,7 @@
   "4031396000592": {
     "brand": "YACHTICON",
     "categories": [
-      "cleaning"
+      "tools/cleaning"
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml",
     "quantity": "500ml",
@@ -1263,7 +1263,7 @@
   "4032526845427": {
     "brand": "suki",
     "categories": [
-      "Hardware",
+      "hardware",
       "Rope"
     ],
     "name": "Rope/cord spool",
@@ -1502,7 +1502,7 @@
   },
   "4056489150510": {
     "categories": [
-      "spice"
+      "food/spices"
     ],
     "name": "Kania ИНДИЙСКО ОРЕХЧЕ ЦЯЛО = Whole nutmeg",
     "prices": [
@@ -1922,7 +1922,7 @@
   },
   "4056489941026": {
     "categories": [
-      "nuts"
+      "food/nuts"
     ],
     "name": "Alesto ЯДКИ СМЕС mixed nuts classic",
     "prices": [
@@ -2076,8 +2076,8 @@
   "4056489942597": {
     "brand": "Lidl",
     "categories": [
-      "Meat",
-      "Sausage"
+      "meat",
+      "sausage"
     ],
     "name": "Пресен суджук от конско месо",
     "prices": [
@@ -2103,8 +2103,8 @@
   "4056489947882": {
     "brand": "Pilos",
     "categories": [
-      "Dairy",
-      "Milk"
+      "food/dairy",
+      "milk"
     ],
     "name": "Прясно мляко 3.7%",
     "quantity": "1 л",
@@ -2634,7 +2634,7 @@
   "7040110310807": {
     "brand": "Freia",
     "categories": [
-      "mat/baking"
+      "food/baking"
     ],
     "name": "Freia Bakekakao 250g Regia (MENY Alna, kjøpt 2026-04-11)",
     "prices": [
@@ -2753,7 +2753,7 @@
   "7340011453437": {
     "brand": "Coop",
     "categories": [
-      "cleaning"
+      "tools/cleaning"
     ],
     "name": "Änglamark window cleaner 750ml (Coop)",
     "quantity": "750ml",
@@ -2788,7 +2788,7 @@
   },
   "7350018834870": {
     "categories": [
-      "helse"
+      "medical"
     ],
     "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter, 10 stk)",
     "quantity": "10pcs"

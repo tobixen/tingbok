@@ -428,6 +428,61 @@ def test_normalize_ean_categories_case_insensitive() -> None:
     assert cats == ["food/dairy"]
 
 
+def test_normalize_ean_categories_norwegian_path() -> None:
+    """Norwegian-translated path segments are resolved to canonical concept IDs.
+
+    'mat' is the nb altLabel for 'food'; 'food/baking' is a vocabulary concept,
+    so 'mat/baking' should resolve to 'food/baking'.
+    """
+    import tingbok.app as app_module
+
+    cats = app_module._normalize_ean_categories(["mat/baking"])
+    assert cats == ["food/baking"]
+
+
+def test_normalize_ean_categories_norwegian_path_partial() -> None:
+    """A translated path whose canonical form is not in the vocabulary is kept as-is.
+
+    'verktøy' is the nb altLabel for 'tools', but 'tools/brann' is not a
+    vocabulary concept.  Partial translation would produce a mixed-language
+    string ('tools/brann'), which is worse than the original — so we keep it
+    unchanged and leave fixing to the inventory source.
+    """
+    import tingbok.app as app_module
+
+    cats = app_module._normalize_ean_categories(["verktøy/brann"])
+    assert cats == ["verktøy/brann"]
+
+
+@pytest.mark.anyio
+async def test_put_ean_observation_canonicalizes_categories(tmp_path: Path, client) -> None:
+    """PUT /api/ean/{ean} stores categories in canonical form, not raw client form.
+
+    When a client sends a Norwegian-translated category path like 'mat/baking',
+    it must be resolved to the canonical vocabulary ID ('food/baking') before
+    persisting to ean-db.json so that data from different inventory sources stays
+    consistent.
+    """
+    from unittest.mock import patch
+
+    import tingbok.app as _app
+
+    obs_path = tmp_path / "ean-db.json"
+    upstream = {"ean": "9999999999999", "name": "Test product", "source": "upcitemdb", "categories": []}
+    with patch.object(_app, "EAN_OBSERVATIONS_PATH", obs_path):
+        with patch.object(_app, "ean_observations", {}):
+            with patch("tingbok.services.ean.lookup_product", return_value=upstream):
+                response = await client.put(
+                    "/api/ean/9999999999999",
+                    json={"categories": ["mat/baking"], "name": "Test product"},
+                )
+    assert response.status_code == 200
+    import json
+
+    saved = json.loads(obs_path.read_text())
+    assert saved["9999999999999"]["categories"] == ["food/baking"]
+
+
 @pytest.mark.anyio
 async def test_ean_lookup_normalizes_categories(client) -> None:
     """GET /api/ean/{ean} normalizes categories against the vocabulary."""
@@ -1318,6 +1373,19 @@ async def test_lookup_path_alias_wrong_language_not_found(client):
             with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
                 response = await client.get("/api/lookup/klær/vinter", params={"lang": "en"})
     assert response.status_code == 404
+
+
+@pytest.mark.anyio
+async def test_lookup_translated_root_segment(client):
+    """A path whose root is an altLabel for a vocabulary root resolves to the canonical concept.
+
+    'mat' is the nb altLabel of 'food'; 'food/baking' is a vocabulary concept,
+    so GET /api/lookup/mat/baking resolves to concept ID 'food/baking' without
+    external SKOS lookups.
+    """
+    response = await client.get("/api/lookup/mat/baking", params={"lang": "no"})
+    assert response.status_code == 200
+    assert response.json()["id"] == "food/baking"
 
 
 @pytest.mark.anyio

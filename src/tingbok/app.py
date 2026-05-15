@@ -617,9 +617,11 @@ _category_index: dict[str, str] | None = None
 def _build_category_index() -> dict[str, str]:
     """Build a case-insensitive label → concept_id lookup from the loaded vocabulary.
 
-    Covers prefLabels, static altLabels, and the final path segment of each
-    concept ID (e.g. "caviar" → "food/caviar").  Concept IDs themselves are
-    also included as exact matches.
+    Covers prefLabels, static altLabels, the final path segment of each concept
+    ID (e.g. "caviar" → "food/caviar"), and translated-root paths: for every
+    path concept like ``food/baking``, altLabels of the root concept (e.g. "mat"
+    for "food") are combined with the rest of the path to add entries such as
+    "mat/baking" → "food/baking".
     """
     index: dict[str, str] = {}
     for concept_id, data in vocabulary.items():
@@ -638,6 +640,20 @@ def _build_category_index() -> dict[str, str]:
         for alts in (data.get("altLabel") or {}).values():
             for alt in alts:
                 index.setdefault(alt.lower(), concept_id)
+
+    # Second pass: add translated-root path entries for path-style concept IDs.
+    # E.g. "mat" is the nb altLabel of "food", so index "mat/baking" → "food/baking".
+    for concept_id, data in vocabulary.items():
+        if data is None or "/" not in concept_id:
+            continue
+        root, rest = concept_id.split("/", 1)
+        root_data = vocabulary.get(root)
+        if root_data is None:
+            continue
+        for alts in (root_data.get("altLabel") or {}).values():
+            for alt in alts:
+                index.setdefault(f"{alt.lower()}/{rest}", concept_id)
+
     return index
 
 
@@ -1067,6 +1083,23 @@ def _lookup_in_vocabulary(label: str, lang: str) -> VocabularyConcept | None:
                 if _alias_lang_matches(alias_lang, lang):
                     if label_lower in [a.lower() for a in aliases]:
                         return _vocabulary_concept_from_data(concept_id, vdata)
+
+    # 2b. Translated root segment (e.g. "mat/baking" → food/baking because "mat" is
+    #     the nb altLabel of "food").  Tries to find a root concept whose altLabel
+    #     matches the first path segment, then looks up the reconstructed canonical path.
+    if "/" in label:
+        root, rest = label.split("/", 1)
+        root_lower = root.lower()
+        for root_id, root_vdata in vocabulary.items():
+            if "/" in root_id or root_vdata is None:
+                continue
+            for alts in (root_vdata.get("altLabel") or {}).values():
+                if root_lower in [a.lower() for a in alts]:
+                    candidate = root_id + "/" + rest
+                    cand_data = vocabulary.get(candidate)
+                    if cand_data is not None:
+                        return _vocabulary_concept_from_data(candidate, cand_data)
+                    break  # root matched but candidate path not in vocabulary
 
     # 3. prefLabel / altLabel / runtime-fetched labels (check all separator variants)
     label_variants = {label_lower} | {v.lower() for v in _separator_variants(label)}
