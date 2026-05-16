@@ -86,9 +86,10 @@
   },
   "20003937": {
     "categories": [
+      "canning",
       "bolognese"
     ],
-    "name": "Combino СОС БОЛОНЕЗЕ Bolognese sauce",
+    "name": "Combino СОС БОЛОНЕЗЕ bolognese sauce",
     "prices": [
       {
         "currency": "EUR",
@@ -103,6 +104,13 @@
         "price": 1.02,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.04,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
     "quantity": "400g",
@@ -112,6 +120,37 @@
         "last_seen": "2026-01-24",
         "name": "СОС БОЛОНЕЗЕ",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "20004132": {
+    "categories": [
+      "canning",
+      "chopped-tomatoes"
+    ],
+    "name": "Baresa НАРЯЗАНИ ДОМАТИ chopped tomatoes",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "20010447": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "ITALIAMO ПРОШУТО КРУДО prosciutto crudo",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -150,6 +189,22 @@
         "last_seen": "2026-03-04",
         "name": "СМЕТАНА 30 %",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "20041663": {
+    "categories": [
+      "canning",
+      "sardines"
+    ],
+    "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.75,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -250,7 +305,7 @@
   "20144173": {
     "brand": "W5 (Lidl)",
     "categories": [
-      "tools/cleaning"
+      "cleaning"
     ],
     "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)",
     "source": "manual"
@@ -389,6 +444,22 @@
       }
     ]
   },
+  "20240899": {
+    "categories": [
+      "canning",
+      "pork"
+    ],
+    "name": "Pikok СВ. ВА. В СОБСТ. СОС pork in own juice (vepřové maso ve vlastní šťávě)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20242275": {
     "categories": [
       "asparagus"
@@ -404,6 +475,21 @@
       }
     ],
     "quantity": "500g"
+  },
+  "20247751": {
+    "categories": [
+      "peaches"
+    ],
+    "name": "ПРАСКОВИ 500 ГР. peaches (variety Astoria, Spain)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.49,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "20267605": {
     "categories": [
@@ -501,6 +587,21 @@
         "last_seen": "2026-05-04",
         "name": "ДОМАТИ, ЧЕРИ 500Г",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "20305871": {
+    "categories": [
+      "salad"
+    ],
+    "name": "ГРАДИНСКА САЛАТА lamb's lettuce / corn salad",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.19,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1245,7 +1346,7 @@
   "4031396000592": {
     "brand": "YACHTICON",
     "categories": [
-      "tools/cleaning"
+      "cleaning"
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml",
     "quantity": "500ml",
@@ -1862,7 +1963,7 @@
   "4056489693307": {
     "brand": "Pilos/Lidl",
     "categories": [
-      "dried-meat"
+      "cured-meat"
     ],
     "name": "Pilos ЛОВДЖИЙСКА ЛУКАНКА hunter's lukanka",
     "prices": [
@@ -1970,7 +2071,7 @@
   },
   "4056489941026": {
     "categories": [
-      "food/nuts"
+      "nuts"
     ],
     "name": "Alesto ЯДКИ СМЕС mixed nuts classic",
     "prices": [
@@ -2094,6 +2195,21 @@
         "last_seen": "2026-05-11",
         "name": "ПРЯСНО МЛЯКО 3% 2Л",
         "shop": "Lidl"
+      }
+    ]
+  },
+  "4056489941361": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "Родна стряха ЛУКАНКОВ САЛАМ lukanka salam",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.62,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -2592,6 +2708,21 @@
       }
     ]
   },
+  "5905858676276": {
+    "categories": [
+      "chocolate"
+    ],
+    "name": "Millano ШОКОЛАД С ПЪЛН КАРАМ milk chocolate with caramel filling",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.02,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "5906741601299": {
     "categories": [
       "pencil"
@@ -2824,7 +2955,7 @@
   "7340011453437": {
     "brand": "Coop",
     "categories": [
-      "tools/cleaning"
+      "cleaning"
     ],
     "name": "Änglamark window cleaner 750ml (Coop)",
     "quantity": "750ml",
