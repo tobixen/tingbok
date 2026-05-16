@@ -240,7 +240,7 @@
       "canning",
       "sardines"
     ],
-    "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil 90g",
+    "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil",
     "prices": [
       {
         "currency": "EUR",
@@ -257,6 +257,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "90g",
     "receipt_names": [
       {
         "first_seen": "2026-05-16",
@@ -507,7 +508,7 @@
       "canning",
       "pork"
     ],
-    "name": "Pikok vepřové maso ve vlastní šťávě pork in own juice 300g",
+    "name": "Pikok СВ. ВА. В СОБСТ. СОС pork in own juice (vepřové maso ve vlastní šťávě)",
     "prices": [
       {
         "currency": "EUR",
@@ -524,6 +525,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "300g",
     "receipt_names": [
       {
         "first_seen": "2026-05-16",
@@ -562,13 +564,14 @@
         "shop": null,
         "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "500g"
   },
   "20267605": {
     "categories": [
-      "food/nuts/cashews"
+      "cashews"
     ],
-    "name": "Alesto Cashew Nuts",
+    "name": "Alesto КАШУ СУРОВО raw cashews",
     "prices": [
       {
         "currency": "EUR",
@@ -1115,9 +1118,9 @@
   },
   "3800012140940": {
     "categories": [
-      "food/spreads"
+      "spread"
     ],
-    "name": "Seltse Традиционна лютеница",
+    "name": "Seltse ЛЮТЕНИЦА ФИН. traditional lyutenitsa (pepper-tomato spread)",
     "prices": [
       {
         "currency": "EUR",
@@ -1751,9 +1754,9 @@
   },
   "4056489358848": {
     "categories": [
-      "food/condiments/ketchup"
+      "ketchup"
     ],
-    "name": "Kania Jemný kečup",
+    "name": "Kania КЕТЧУП 78% ДОМАТ.ПЮР ketchup",
     "prices": [
       {
         "currency": "EUR",
@@ -2204,9 +2207,9 @@
   "4056489941200": {
     "brand": "Pilos",
     "categories": [
-      "food/dairy/yogurt"
+      "yogurt"
     ],
-    "name": "Pilos КИСЕЛО МЛЯКО 3.6% yogurt 1kg",
+    "name": "Pilos КИСЕЛО МЛЯКО 3,6% yogurt 3.6% 1kg",
     "prices": [
       {
         "currency": "EUR",
@@ -2285,7 +2288,7 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Pilos ПРЯСНО МЛЯКО 3% 2L fresh milk",
+    "name": "Pilos ПРЯСНО МЛЯКО 3% 2Л fresh milk 2L",
     "prices": [
       {
         "currency": "EUR",
@@ -2329,7 +2332,7 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "Родна стряха ЛУКАНКОВ САЛАМ lukanka salam 300g",
+    "name": "Родна стряха ЛУКАНКОВ САЛАМ lukanka salam",
     "prices": [
       {
         "currency": "EUR",
@@ -2346,6 +2349,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "300g",
     "receipt_names": [
       {
         "first_seen": "2026-05-16",
@@ -2671,7 +2675,7 @@
   },
   "5201502117219": {
     "categories": [
-      "beans"
+      "chickpeas"
     ],
     "name": "Agrino ΡΕΒΙΘΙΑ ΧΟΝΔΡΑ Greek chickpeas (from Mexico)",
     "quantity": "500g"
@@ -2854,7 +2858,7 @@
     "categories": [
       "chocolate"
     ],
-    "name": "Millano ШОКОЛАД С ПЪЛН КАРАМ chocolate caramel 100g",
+    "name": "Millano ШОКОЛАД С ПЪЛН КАРАМ milk chocolate with caramel filling",
     "prices": [
       {
         "currency": "EUR",
@@ -2871,6 +2875,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "100g",
     "receipt_names": [
       {
         "first_seen": "2026-05-16",
