@@ -1134,12 +1134,40 @@ concepts:
       en: ["bean"]
       bg: ["боб", "фасул"]
     broader: food/legumes
+    narrower:
+    - common-beans
 
     source_uris:
     - https://dbpedia.org/resource/Bean
     - https://www.wikidata.org/entity/Q3637169
     - https://aims.fao.org/aos/agrovoc/c_331566
     - gpt:6577
+  common-beans:
+    prefLabel: "Common beans"
+    altLabel:
+      en: ["Phaseolus vulgaris", "French bean", "string bean", "snap bean"]
+      bg: ["градински боб"]
+    broader: beans
+    narrower:
+    - red-beans
+
+    source_uris:
+    - https://dbpedia.org/resource/Phaseolus_vulgaris
+    - https://www.wikidata.org/entity/Q165437
+    - https://aims.fao.org/aos/agrovoc/c_5765
+    - off:en:common-beans
+  red-beans:
+    prefLabel: "Red beans"
+    altLabel:
+      en: ["kidney beans", "red kidney beans", "dark red kidney beans"]
+      bg: ["червен боб", "боб кидни", "червен боб кидни"]
+    broader: common-beans
+
+    source_uris:
+    - https://dbpedia.org/resource/Kidney_bean
+    - https://www.wikidata.org/entity/Q1066672
+    - https://aims.fao.org/aos/agrovoc/c_34724
+    - off:en:red-beans
   lentils:
     prefLabel: "Lentils"
     altLabel:
