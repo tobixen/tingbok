@@ -89,7 +89,7 @@
       "canning",
       "bolognese"
     ],
-    "name": "Combino СОС БОЛОНЕЗЕ bolognese sauce",
+    "name": "Combino СОС БОЛОНЕЗЕ bolognese sauce 400g",
     "prices": [
       {
         "currency": "EUR",
@@ -111,6 +111,13 @@
         "price": 2.04,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 2.04,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "400g",
@@ -120,6 +127,12 @@
         "last_seen": "2026-01-24",
         "name": "СОС БОЛОНЕЗЕ",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "СОС БОЛОНЕЗЕ",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -128,7 +141,7 @@
       "canning",
       "chopped-tomatoes"
     ],
-    "name": "Baresa НАРЯЗАНИ ДОМАТИ chopped tomatoes",
+    "name": "Baresa НАРЯЗАНИ ДОМАТИ chopped tomatoes 400g",
     "prices": [
       {
         "currency": "EUR",
@@ -136,6 +149,21 @@
         "price": 0.86,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 0.86,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "НАРЯЗАНИ ДОМАТИ",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -143,7 +171,7 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "ITALIAMO ПРОШУТО КРУДО prosciutto crudo",
+    "name": "ITALIAMO ПРОШУТО КРУДО prosciutto crudo 100g",
     "prices": [
       {
         "currency": "EUR",
@@ -151,6 +179,21 @@
         "price": 2.55,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 2.55,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ПРОШУТО КРУДО",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -197,7 +240,7 @@
       "canning",
       "sardines"
     ],
-    "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil",
+    "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil 90g",
     "prices": [
       {
         "currency": "EUR",
@@ -205,6 +248,21 @@
         "price": 0.75,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 0.75,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "САРДИНИ В СЛ.МАСЛО",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -449,7 +507,7 @@
       "canning",
       "pork"
     ],
-    "name": "Pikok СВ. ВА. В СОБСТ. СОС pork in own juice (vepřové maso ve vlastní šťávě)",
+    "name": "Pikok vepřové maso ve vlastní šťávě pork in own juice 300g",
     "prices": [
       {
         "currency": "EUR",
@@ -457,6 +515,21 @@
         "price": 2.55,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 2.55,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "СВ. ВА. В СОБСТ. СОС",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -594,7 +667,7 @@
     "categories": [
       "salad"
     ],
-    "name": "ГРАДИНСКА САЛАТА lamb's lettuce / corn salad",
+    "name": "Polnicek ГРАДИНСКА САЛАТА lambs lettuce 125g",
     "prices": [
       {
         "currency": "EUR",
@@ -602,6 +675,21 @@
         "price": 1.19,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 1.19,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ГРАДИНСКА САЛАТА",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -1965,7 +2053,7 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "Pilos ЛОВДЖИЙСКА ЛУКАНКА hunter's lukanka",
+    "name": "Pilos ЛОВДЖИЙСКА ЛУКАНКА hunters lukanka 150g",
     "prices": [
       {
         "currency": "EUR",
@@ -1987,6 +2075,13 @@
         "price": 2.04,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 2.04,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "150g",
@@ -1996,6 +2091,12 @@
         "last_seen": "2026-03-15",
         "name": "ЛОВДЖИЙСКА ЛУКАНКА",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ЛОВДЖИЙСКА ЛУКАНКА",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ],
     "source": "manual"
@@ -2105,7 +2206,7 @@
     "categories": [
       "food/dairy/yogurt"
     ],
-    "name": "Кисело мляко 3.6%",
+    "name": "Pilos КИСЕЛО МЛЯКО 3.6% yogurt 1kg",
     "prices": [
       {
         "currency": "EUR",
@@ -2148,6 +2249,13 @@
         "price": 1.53,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 1.53,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "1kg",
@@ -2163,6 +2271,12 @@
         "last_seen": "2026-05-11",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl"
+      },
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "КИСЕЛО МЛЯКО 3,6%",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ],
     "source": "manual"
@@ -2171,7 +2285,7 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Pilos ПРЯСНО МЛЯКО 3% 2Л fresh milk 2L",
+    "name": "Pilos ПРЯСНО МЛЯКО 3% 2L fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -2186,6 +2300,13 @@
         "price": 2.19,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 2.19,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "2l",
@@ -2195,6 +2316,12 @@
         "last_seen": "2026-05-11",
         "name": "ПРЯСНО МЛЯКО 3% 2Л",
         "shop": "Lidl"
+      },
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ПРЯСНО МЛЯКО 3% 2Л",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2202,7 +2329,7 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "Родна стряха ЛУКАНКОВ САЛАМ lukanka salam",
+    "name": "Родна стряха ЛУКАНКОВ САЛАМ lukanka salam 300g",
     "prices": [
       {
         "currency": "EUR",
@@ -2210,6 +2337,21 @@
         "price": 5.62,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 5.62,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ЛУКАНКОВ САЛАМ",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2712,7 +2854,7 @@
     "categories": [
       "chocolate"
     ],
-    "name": "Millano ШОКОЛАД С ПЪЛН КАРАМ milk chocolate with caramel filling",
+    "name": "Millano ШОКОЛАД С ПЪЛН КАРАМ chocolate caramel 100g",
     "prices": [
       {
         "currency": "EUR",
@@ -2720,6 +2862,21 @@
         "price": 1.02,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 1.02,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ШОКОЛАД С ПЪЛН КАРАМ",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
