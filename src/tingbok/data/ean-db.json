@@ -1766,6 +1766,54 @@
       }
     ]
   },
+  "4056489692294": {
+    "categories": [
+      "food/spices"
+    ],
+    "name": "Lidl BG МАГДАНОЗ dried parsley",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 0.2,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "10g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "МАГДАНОЗ 10G",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "4056489692317": {
+    "categories": [
+      "food/spices"
+    ],
+    "name": "Lidl BG ДЕВЕСИЛ dried lovage",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 0.51,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "18g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ДЕВЕСИЛ 18G",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489693048": {
     "categories": [
       "sausage"
@@ -2169,6 +2217,29 @@
     "receipt_names": [
       {
         "name": "МЛЕЧ.ШОКОЛ.С КАШУ"
+      }
+    ]
+  },
+  "4335619113473": {
+    "categories": [
+      "food/spices"
+    ],
+    "name": "ЧЕРВЕН ПИПЕР СЛАДЪК sweet ground paprika",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 1.89,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ЧЕРВЕН ПИПЕР СЛАДЪК",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
       }
     ]
   },
