@@ -482,7 +482,7 @@ concepts:
     - bread
     - noodles
     - flour
-    - food/grains/oats
+    - oats
     - buckwheat
 
     source_uris:
@@ -832,6 +832,8 @@ concepts:
     altLabel:
       bg: ["мляко"]
     broader: food/dairy
+    narrower:
+    - whole-milk
 
     source_uris:
     - https://dbpedia.org/resource/Milk
@@ -839,6 +841,17 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_4826
     - gpt:418
     - off:en:milks
+  whole-milk:
+    prefLabel: "Whole milk"
+    altLabel:
+      en: ["full-fat milk", "full fat milk", "fresh milk", "pasteurised milk"]
+      bg: ["прясно мляко", "пълномаслено мляко"]
+    broader: milk
+
+    source_uris:
+    - https://dbpedia.org/resource/Whole_milk
+    - https://www.wikidata.org/entity/Q3827861
+    - off:en:whole-milks
   cheese:
     prefLabel: "Cheese"
     altLabel:
@@ -956,6 +969,31 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_9471
     - gpt:4684
     - off:en:buckwheat
+  oats:
+    prefLabel: "Oats"
+    altLabel:
+      en: ["oat flakes", "porridge oats"]
+      bg: ["овес", "овесени ядки"]
+    broader: food/grains
+    narrower:
+    - rolled-oats
+
+    source_uris:
+    - https://dbpedia.org/resource/Oat
+    - https://www.wikidata.org/entity/Q128752
+    - https://aims.fao.org/aos/agrovoc/c_5404
+    - off:en:oats
+  rolled-oats:
+    prefLabel: "Rolled oats"
+    altLabel:
+      en: ["oat flakes", "porridge oats", "old fashioned oats"]
+      bg: ["овесени ядки", "пресовани овесени ядки"]
+    broader: oats
+
+    source_uris:
+    - https://dbpedia.org/resource/Rolled_oats
+    - https://www.wikidata.org/entity/Q3411967
+    - off:en:rolled-oats
 
   # Meat
   meat:
@@ -1150,6 +1188,7 @@ concepts:
     broader: beans
     narrower:
     - red-beans
+    - white-beans
 
     source_uris:
     - https://dbpedia.org/resource/Phaseolus_vulgaris
@@ -1168,6 +1207,28 @@ concepts:
     - https://www.wikidata.org/entity/Q1066672
     - https://aims.fao.org/aos/agrovoc/c_34724
     - off:en:red-beans
+  white-beans:
+    prefLabel: "White beans"
+    altLabel:
+      en: ["haricot beans", "navy beans", "cannellini beans"]
+      bg: ["бял боб", "трапезен боб"]
+    broader: common-beans
+    narrower:
+    - dried-haricot-beans
+
+    source_uris:
+    - https://dbpedia.org/resource/Haricot_bean
+    - https://www.wikidata.org/entity/Q1066638
+    - off:en:white-beans
+  dried-haricot-beans:
+    prefLabel: "Dried haricot beans"
+    altLabel:
+      en: ["dry white beans", "dried white beans"]
+      bg: ["сух бял боб", "сух трапезен боб"]
+    broader: white-beans
+
+    source_uris:
+    - off:en:dried-haricot-beans
   lentils:
     prefLabel: "Lentils"
     altLabel:
@@ -1363,11 +1424,23 @@ concepts:
       en: ["cashew"]
       bg: ["кашу"]
     broader: food/nuts
+    narrower:
+    - salted-cashews
 
     source_uris:
     - https://dbpedia.org/resource/Cashew
     - https://www.wikidata.org/entity/Q34007
     - https://aims.fao.org/aos/agrovoc/c_9647
+    - off:en:cashew-nuts
+  salted-cashews:
+    prefLabel: "Salted cashews"
+    altLabel:
+      en: ["roasted cashews", "roasted and salted cashews", "cashews roasted and salted"]
+      bg: ["кашу със сол", "печено кашу"]
+    broader: cashews
+
+    source_uris:
+    - off:en:salted-cashews
   peanuts:
     prefLabel: "Peanuts"
     altLabel:
@@ -1414,12 +1487,24 @@ concepts:
     altLabel:
       bg: ["шоколад"]
     broader: food/snacks
+    narrower:
+    - milk-chocolate
 
     source_uris:
     - https://dbpedia.org/resource/Chocolate
     - https://www.wikidata.org/entity/Q195
     - https://aims.fao.org/aos/agrovoc/c_1582
     - off:en:chocolates
+  milk-chocolate:
+    prefLabel: "Milk chocolate"
+    altLabel:
+      bg: ["млечен шоколад"]
+    broader: chocolate
+
+    source_uris:
+    - https://dbpedia.org/resource/Milk_chocolate
+    - https://www.wikidata.org/entity/Q178156
+    - off:en:milk-chocolates
 
   # Preserved
   canning:

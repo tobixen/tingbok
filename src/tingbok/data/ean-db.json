@@ -875,9 +875,9 @@
   },
   "20400569": {
     "categories": [
-      "lentils"
+      "rice"
     ],
-    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
+    "name": "KRINA ОРИЗ СРЕДНОЗЪРНЕСТ medium grain rice",
     "prices": [
       {
         "currency": "EUR",
@@ -1147,7 +1147,7 @@
   },
   "3200106407018": {
     "categories": [
-      "beans"
+      "dried-haricot-beans"
     ],
     "name": "Крина KRINA БОБ ТРАПЕЗЕН table beans (white, origin: Egypt)",
     "prices": [
@@ -1498,7 +1498,7 @@
   },
   "3800106401018": {
     "categories": [
-      "beans"
+      "dried-haricot-beans"
     ],
     "name": "KRINA БОБ ТРАПЕЗЕН white table beans (Egypt)",
     "prices": [
@@ -1513,9 +1513,9 @@
   },
   "3800106402053": {
     "categories": [
-      "rice"
+      "lentils"
     ],
-    "name": "KRINA ОРИЗ СРЕДНОЗЪРНЕСТ medium grain rice",
+    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
     "prices": [
       {
         "currency": "EUR",
@@ -1871,7 +1871,7 @@
   },
   "4056489080510": {
     "categories": [
-      "fresh-milk"
+      "whole-milk"
     ],
     "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk",
     "prices": [
@@ -1944,7 +1944,7 @@
   },
   "4056489104230": {
     "categories": [
-      "cashews"
+      "salted-cashews"
     ],
     "name": "Alesto КАШУ СЪС СОЛ cashews roasted & salted",
     "prices": [
@@ -1975,14 +1975,14 @@
   },
   "4056489105381": {
     "categories": [
-      "cashews"
+      "salted-cashews"
     ],
     "name": "Alesto Cashews roasted & salted XXL",
     "quantity": "250g"
   },
   "4056489108160": {
     "categories": [
-      "milk"
+      "whole-milk"
     ],
     "name": "Pilos МЛЯКО UHT 3.5% UHT whole milk (Lidl 2026-03-04)",
     "prices": [
@@ -2100,7 +2100,7 @@
   },
   "4056489195917": {
     "categories": [
-      "oats"
+      "rolled-oats"
     ],
     "name": "Crownfield ОВЕСЕНИ ЯДКИ ФИНИ Fine Oat Flakes (Jemné ovesné vločky)",
     "prices": [
@@ -2674,7 +2674,7 @@
   },
   "4056489941279": {
     "categories": [
-      "fresh-milk"
+      "whole-milk"
     ],
     "name": "Прясно краве мляко 3%",
     "prices": [
@@ -3319,7 +3319,7 @@
   },
   "5905858676245": {
     "categories": [
-      "chocolate"
+      "milk-chocolate"
     ],
     "name": "Millano МЛЕЧ.ШОКОЛАД ФЪСЪЦИ milk chocolate with peanuts",
     "prices": [
@@ -3712,7 +3712,7 @@
   },
   "7622210678546": {
     "categories": [
-      "chocolate"
+      "milk-chocolate"
     ],
     "name": "Freia Melkesjokolade Salt Lakris (EXPIRED - use soon!)"
   },
