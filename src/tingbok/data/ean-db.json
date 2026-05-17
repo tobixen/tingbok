@@ -481,7 +481,7 @@
   },
   "20163419": {
     "categories": [
-      "tomato-passata"
+      "passata"
     ],
     "name": "Baresa ПАСИРАНИ ДОМАТИ 10,5 tomato passata",
     "prices": [
@@ -519,7 +519,7 @@
   },
   "20163822": {
     "categories": [
-      "potatoes-instant"
+      "instant-mashed-potatoes"
     ],
     "name": "Lidl Instant Mashed Potatoes / Kartoffelpüree (330g, 3×110g)",
     "prices": [
@@ -853,7 +853,7 @@
   },
   "20379582": {
     "categories": [
-      "sausage"
+      "cured-sausage"
     ],
     "name": "Baroni ЛУКАНКА lukanka",
     "prices": [
@@ -1078,8 +1078,7 @@
   },
   "20856090": {
     "categories": [
-      "canning",
-      "maize"
+      "sweet-corn"
     ],
     "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
   },
@@ -2182,7 +2181,7 @@
   },
   "4056489474340": {
     "categories": [
-      "deli"
+      "sausage"
     ],
     "name": "Родна стряха БАБЕК СЛАЙС Babek sliced",
     "prices": [
@@ -2241,8 +2240,7 @@
   },
   "4056489500124": {
     "categories": [
-      "canning",
-      "corn"
+      "sweet-corn"
     ],
     "name": "Freshona МЛАДА ЦАРЕВИЦА sweet corn",
     "prices": [
@@ -3413,8 +3411,7 @@
   },
   "5997010314324": {
     "categories": [
-      "canning",
-      "tomatoes"
+      "passata"
     ],
     "name": "K Classic passierte Tomaten crushed (Kaufland)"
   },

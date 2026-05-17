@@ -562,6 +562,7 @@ concepts:
     - onions
     - garlic
     - tomatoes
+    - corn
     - food/vegetables/peppers
     - food/vegetables/carrots
     - food/vegetables/cabbage
@@ -893,6 +894,8 @@ concepts:
       en: ["smetana"]
       bg: ["сметана"]
     broader: food/dairy
+    narrower:
+    - whipping-cream
 
     source_uris:
     - https://dbpedia.org/resource/Cream
@@ -900,6 +903,17 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_1951
     - gpt:5786
     - off:en:creams
+  whipping-cream:
+    prefLabel: "Whipping cream"
+    altLabel:
+      en: ["whipped cream", "heavy cream", "double cream", "UHT cream"]
+      bg: ["сметана за разбиване", "течна сметана"]
+    broader: cream
+
+    source_uris:
+    - https://dbpedia.org/resource/Whipped_cream
+    - https://www.wikidata.org/entity/Q1312614
+    - off:en:whipping-creams
 
   # Grains
   pasta:
@@ -1024,11 +1038,24 @@ concepts:
       en: ["sausages"]
       bg: ["колбас"]
     broader: food/meat
+    narrower:
+    - cured-sausage
 
     source_uris:
     - https://dbpedia.org/resource/Sausage
     - https://www.wikidata.org/entity/Q131419
     - off:en:sausages
+  cured-sausage:
+    prefLabel: "Cured sausage"
+    altLabel:
+      en: ["cured sausages", "salami", "lukanka"]
+      bg: ["луканка", "салам"]
+    broader: sausage
+
+    source_uris:
+    - https://dbpedia.org/resource/Cured_meat
+    - https://www.wikidata.org/entity/Q23671
+    - off:en:cured-sausages
 
   # Seafood
   fish:
@@ -1074,6 +1101,8 @@ concepts:
     broader:
     - food/vegetables
     - food/staples
+    narrower:
+    - instant-mashed-potatoes
 
     source_uris:
     - https://dbpedia.org/resource/Potato
@@ -1081,6 +1110,17 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_13551
     - gpt:6586
     - off:en:potatoes
+  instant-mashed-potatoes:
+    prefLabel: "Instant mashed potatoes"
+    altLabel:
+      en: ["instant potatoes", "mashed potato powder", "dehydrated mashed potatoes"]
+      bg: ["картофено пюре на прах"]
+    broader: potatoes
+
+    source_uris:
+    - https://dbpedia.org/resource/Instant_mashed_potatoes
+    - https://www.wikidata.org/entity/Q1432106
+    - off:en:instant-mashed-potatoes
   onions:
     prefLabel: "Onions"
     altLabel:
@@ -1112,6 +1152,8 @@ concepts:
       en: ["tomato"]
       bg: ["домати"]
     broader: food/vegetables
+    narrower:
+    - passata
 
     source_uris:
     - https://dbpedia.org/resource/Tomato
@@ -1119,6 +1161,18 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_7805
     - gpt:6703
     - off:en:tomatoes
+  passata:
+    prefLabel: "Passata"
+    altLabel:
+      en: ["tomato passata", "strained tomatoes", "crushed tomatoes", "tomato puree", "sieved tomatoes"]
+      bg: ["пасирани домати", "доматено пюре"]
+      de: ["passierte Tomaten"]
+    broader: tomatoes
+
+    source_uris:
+    - https://dbpedia.org/resource/Tomato_purée
+    - https://www.wikidata.org/entity/Q3006352
+    - off:en:strained-tomatoes
   mushrooms:
     prefLabel: "Mushrooms"
     altLabel:
@@ -1131,6 +1185,31 @@ concepts:
     - https://www.wikidata.org/entity/Q22442668
     - gpt:6653
     - off:en:mushrooms
+  corn:
+    prefLabel: "Corn"
+    altLabel:
+      en: ["maize", "sweet corn", "sweetcorn"]
+      bg: ["царевица"]
+    broader: food/vegetables
+    narrower:
+    - sweet-corn
+
+    source_uris:
+    - https://dbpedia.org/resource/Maize
+    - https://www.wikidata.org/entity/Q11575
+    - https://aims.fao.org/aos/agrovoc/c_12332
+    - off:en:corn
+  sweet-corn:
+    prefLabel: "Sweet corn"
+    altLabel:
+      en: ["canned corn", "canned sweet corn", "canned maize"]
+      bg: ["млада царевица", "сладка царевица"]
+    broader: corn
+
+    source_uris:
+    - https://dbpedia.org/resource/Sweet_corn
+    - https://www.wikidata.org/entity/Q5678023
+    - off:en:canned-sweet-corn
   preserved-vegetables:
     prefLabel: "Preserved vegetables"
     broader: food/preserved
@@ -1412,6 +1491,7 @@ concepts:
     - peanuts
     - cashews
     - coconut
+    - pecans
 
     source_uris:
     - https://dbpedia.org/resource/Nut_(fruit)
@@ -1459,15 +1539,40 @@ concepts:
   coconut:
     prefLabel: "Coconut"
     altLabel:
-      en: ["coconuts", "coconut milk", "coconut cream"]
-      nb: ["kokosnøtt", "kokosmelk"]
+      en: ["coconuts"]
+      nb: ["kokosnøtt"]
     broader: food/nuts
+    narrower:
+    - coconut-milk
 
     source_uris:
     - https://dbpedia.org/resource/Coconut
     - https://www.wikidata.org/entity/Q34687
     - https://aims.fao.org/aos/agrovoc/c_1792
     - off:en:coconuts
+  coconut-milk:
+    prefLabel: "Coconut milk"
+    altLabel:
+      en: ["coconut cream", "coconut drink"]
+      nb: ["kokosmelk"]
+      bg: ["кокосово мляко"]
+    broader: coconut
+
+    source_uris:
+    - https://dbpedia.org/resource/Coconut_milk
+    - https://www.wikidata.org/entity/Q1093214
+    - off:en:coconut-milks-and-creams
+  pecans:
+    prefLabel: "Pecans"
+    altLabel:
+      en: ["pecan", "pecan nuts"]
+      bg: ["пекан"]
+    broader: food/nuts
+
+    source_uris:
+    - https://dbpedia.org/resource/Pecan
+    - https://www.wikidata.org/entity/Q131567
+    - off:en:pecan-nuts
 
   biscuits:
     prefLabel: "Biscuits"
