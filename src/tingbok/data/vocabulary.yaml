@@ -74,23 +74,6 @@ concepts:
       nl: "Voedsel"
       fi: "Ruoka"
       bg: "Храна"
-    narrower:
-    - food/beverages
-    - food/dairy
-    - food/grains
-    - food/meat
-    - food/seafood
-    - food/vegetables
-    - food/fruits
-    - food/legumes
-    - food/condiments
-    - food/snacks
-    - food/preserved
-    - food/baking
-    - food/spices
-    - food/staples
-    - food/roes
-
   tools:
     prefLabel: "Tools"
     altLabel:
@@ -138,11 +121,6 @@ concepts:
       ru: "Отдых и транспорт"
       uk: "Відпочинок і транспорт"
       bg: "Отдих и транспорт"
-    narrower:
-    - outdoor
-    - sports
-    - transport
-
     excluded_sources:
     - dbpedia
   transport:
@@ -150,10 +128,6 @@ concepts:
     labels:
       nb: "Transport"
     broader: recreation
-    narrower:
-    - automotive
-    - boat-equipment
-
     source_uris:
     - https://dbpedia.org/resource/Transport
     - https://www.wikidata.org/entity/Q7590
@@ -163,13 +137,6 @@ concepts:
     altLabel:
       en: ["electrical", "electric"]
       nb: ["elektronikk", "elektrisk"]
-    narrower:
-    - cables
-    - electronics/connectors
-    - electronics/power
-    - electronics/circuits
-    - electronics/components
-
     source_uris:
     - https://dbpedia.org/resource/Electronics
     - https://www.wikidata.org/entity/Q11650
@@ -184,8 +151,6 @@ concepts:
     prefLabel: "Connectors"
     altLabel:
       en: ["plugs", "jacks", "terminals"]
-    broader: electronics
-
     source_uris:
     - https://dbpedia.org/resource/Connector
     - https://www.wikidata.org/entity/Q137603006
@@ -193,8 +158,6 @@ concepts:
     prefLabel: "Power electronics"
     altLabel:
       en: ["power supplies", "batteries"]
-    broader: electronics
-
     source_uris:
     - https://dbpedia.org/resource/Power_electronics
     - https://www.wikidata.org/entity/Q593143
@@ -203,8 +166,6 @@ concepts:
     prefLabel: "Circuits"
     altLabel:
       en: ["circuit boards", "PCB"]
-    broader: electronics
-
     source_uris:
     - https://dbpedia.org/resource/Series_and_parallel_circuits
     - https://www.wikidata.org/entity/Q111377128
@@ -212,8 +173,6 @@ concepts:
     prefLabel: "Electronic components"
     altLabel:
       en: ["parts", "modules"]
-    broader: electronics
-
     source_uris:
     - https://dbpedia.org/resource/Electronic_component
     - https://www.wikidata.org/entity/Q5570655
@@ -339,14 +298,6 @@ concepts:
     altLabel:
       en: ["home", "domestic"]
       nb: ["husholdning", "hjem"]
-    narrower:
-    - household/cleaning
-    - household/storage
-    - personal-care
-    - office
-    - books
-    - documents
-
     source_uris:
     - https://dbpedia.org/resource/Household
     - https://www.wikidata.org/entity/Q259059
@@ -410,13 +361,9 @@ concepts:
   # =============================================================================
 
   food/roes:
-    broader: food
     sources:
     - https://www.wikidata.org/wiki/Q12366140
     - https://aims.fao.org/aos/agrovoc/c_6634
-    narrower:
-    - caviar
-
   food/caviar:
     broader: food/roes
 
@@ -424,12 +371,6 @@ concepts:
     prefLabel: "Staple foods"
     altLabel:
       en: ["staples", "basic foods"]
-    broader: food
-    narrower:
-    - potatoes
-    - rice
-    - pasta
-
     source_uris:
     - https://dbpedia.org/resource/Staple_food
     - https://www.wikidata.org/entity/Q1241622
@@ -439,14 +380,6 @@ concepts:
     prefLabel: "Beverages"
     altLabel:
       en: ["drinks"]
-    broader: food
-    narrower:
-    - alcohol
-    - coffee
-    - tea
-    - food/beverages/juice
-    - food/beverages/soft-drinks
-
     source_uris:
     - https://dbpedia.org/resource/Drink
     - https://www.wikidata.org/entity/Q50816708
@@ -457,14 +390,6 @@ concepts:
     prefLabel: "Dairy"
     altLabel:
       en: ["dairy products"]
-    broader: food
-    narrower:
-    - milk
-    - cheese
-    - yogurt
-    - butter
-    - cream
-
     source_uris:
     - https://dbpedia.org/resource/Dairy
     - https://www.wikidata.org/entity/Q637776
@@ -475,32 +400,12 @@ concepts:
     prefLabel: "Grains & cereals"
     altLabel:
       en: ["cereals", "grains"]
-    broader: food
-    narrower:
-    - pasta
-    - rice
-    - bread
-    - noodles
-    - flour
-    - oats
-    - buckwheat
-
     source_uris:
     - https://dbpedia.org/resource/Five_Grains
   food/meat:
     prefLabel: "Meat"
     altLabel:
       en: ["meats"]
-    broader: food
-    narrower:
-    - food/meat/pork
-    - food/meat/beef
-    - food/meat/chicken
-    - food/meat/lamb
-    - sausage
-    - ham
-    - food/meat/bacon
-
     source_uris:
     - https://dbpedia.org/resource/Meat
     - https://www.wikidata.org/entity/Q10990
@@ -509,8 +414,6 @@ concepts:
     - off:en:meats
   food/meat/pork:
     prefLabel: "Pork"
-    broader: food/meat
-
     source_uris:
     - https://dbpedia.org/resource/Pork
     - https://www.wikidata.org/entity/Q191768
@@ -520,8 +423,6 @@ concepts:
     prefLabel: "Chicken"
     altLabel:
       en: ["poultry"]
-    broader: food/meat
-
     source_uris:
     - https://dbpedia.org/resource/Chicken
     - https://www.wikidata.org/entity/Q780
@@ -530,12 +431,6 @@ concepts:
     prefLabel: "Seafood"
     altLabel:
       en: ["fish", "marine food"]
-    broader: food
-    narrower:
-    - fish
-    - food/seafood/shellfish
-    - food/seafood/canned-fish
-
     source_uris:
     - https://dbpedia.org/resource/Seafood
     - https://www.wikidata.org/entity/Q192935
@@ -545,8 +440,6 @@ concepts:
     prefLabel: "Canned fish"
     altLabel:
       en: ["tinned fish", "tuna", "sardines"]
-    broader: food/seafood
-
     source_uris:
     - https://dbpedia.org/resource/Canned_fish
     - https://www.wikidata.org/entity/Q5032629
@@ -556,18 +449,6 @@ concepts:
     prefLabel: "Vegetables"
     altLabel:
       en: ["veggies", "greens"]
-    broader: food
-    narrower:
-    - potatoes
-    - onions
-    - garlic
-    - tomatoes
-    - corn
-    - food/vegetables/peppers
-    - food/vegetables/carrots
-    - food/vegetables/cabbage
-    - mushrooms
-
     source_uris:
     - https://dbpedia.org/resource/Vegetable
     - https://www.wikidata.org/entity/Q1413783
@@ -578,13 +459,6 @@ concepts:
     prefLabel: "Fruits"
     altLabel:
       en: ["fruit"]
-    broader: food
-    narrower:
-    - bananas
-    - food/fruits/apples
-    - food/fruits/oranges
-    - food/fruits/berries
-
     source_uris:
     - https://dbpedia.org/resource/Fruit
     - https://www.wikidata.org/entity/Q3089329
@@ -594,14 +468,6 @@ concepts:
     prefLabel: "Legumes"
     altLabel:
       en: ["pulses", "beans and lentils"]
-    broader: food
-    narrower:
-    - beans
-    - lentils
-    - chickpeas
-    - food/legumes/peas
-    - soybeans
-
     source_uris:
     - https://dbpedia.org/resource/Legume
     - https://www.wikidata.org/entity/Q145909
@@ -611,19 +477,6 @@ concepts:
     prefLabel: "Condiments & sauces"
     altLabel:
       en: ["sauces", "condiment"]
-    broader: food
-    narrower:
-    - oil
-    - vinegar
-    - mayonnaise
-    - food/condiments/ketchup
-    - food/condiments/mustard
-    - food/condiments/soy-sauce
-    - pesto
-    - bolognese
-    - salt
-    - food/condiments/pepper
-
     source_uris:
     - https://dbpedia.org/resource/Condiment
     - gpt:427
@@ -631,14 +484,6 @@ concepts:
     prefLabel: "Snacks"
     altLabel:
       en: ["snack foods"]
-    broader: food
-    narrower:
-    - chips
-    - food/nuts
-    - biscuits
-    - chocolate
-    - food/snacks/crackers
-
     source_uris:
     - https://dbpedia.org/resource/Snack
     - https://www.wikidata.org/entity/Q60749309
@@ -648,14 +493,6 @@ concepts:
     prefLabel: "Preserved foods"
     altLabel:
       en: ["canned", "jarred", "preserves", "conserves"]
-    broader: food
-    narrower:
-    - canning
-    - jam
-    - food/preserved/pickles
-    - preserved-vegetables
-    - pate
-
     source_uris:
     - https://dbpedia.org/resource/Food_preservation
     - https://www.wikidata.org/entity/Q74112801
@@ -663,8 +500,6 @@ concepts:
     prefLabel: "Pickles"
     altLabel:
       en: ["pickled vegetables"]
-    broader: food/preserved
-
     source_uris:
     - https://dbpedia.org/resource/Pickles
     - https://www.wikidata.org/entity/Q29565778
@@ -674,12 +509,6 @@ concepts:
     prefLabel: "Baking"
     altLabel:
       en: ["baking supplies", "baking ingredients"]
-    broader: food
-    narrower:
-    - sugar
-    - food/baking/yeast
-    - food/baking/baking-powder
-
     source_uris:
     - https://dbpedia.org/resource/Baking
     - https://www.wikidata.org/entity/Q720398
@@ -691,17 +520,6 @@ concepts:
     broader:
     - food
     - food/conditment
-    narrower:
-    - bouillon
-    - salt
-    - food/spices/pepper
-    - food/spices/cinnamon
-    - food/spices/paprika
-    - food/spices/curry
-    - food/spices/thyme
-    - food/spices/oregano
-    - food/spices/basil
-
     source_uris:
     - https://dbpedia.org/resource/Spice
     - https://www.wikidata.org/entity/Q42527
@@ -710,11 +528,6 @@ concepts:
 
   food/spices/herb:
     prefLabel: "Herb"
-    broader: food/spices
-    narrower:
-    - food/spices/thyme
-    - food/spices/oregano
-    - food/spices/basil
     source_uris:
     - https://dbpedia.org/resource/Herb
 
@@ -722,9 +535,6 @@ concepts:
     prefLabel: "Pepper"
     altLabel:
       en: ["black pepper", "peppercorns"]
-    broader:
-    - food/spices
-
     source_uris:
     - https://dbpedia.org/resource/Pepper
     - https://www.wikidata.org/entity/Q22907699
@@ -735,16 +545,12 @@ concepts:
     prefLabel: "Curry"
     altLabel:
       en: ["curry powder", "curry paste"]
-    broader: food/spices
-
     source_uris:
     - https://dbpedia.org/resource/Curry
     - https://www.wikidata.org/entity/Q164606
     - off:en:curry-powder
   food/spices/thyme:
     prefLabel: "Thyme"
-    broader: food/spices
-
     source_uris:
     - https://dbpedia.org/resource/Thyme
     - https://www.wikidata.org/entity/Q3215980
@@ -833,9 +639,6 @@ concepts:
     altLabel:
       bg: ["мляко"]
     broader: food/dairy
-    narrower:
-    - whole-milk
-
     source_uris:
     - https://dbpedia.org/resource/Milk
     - https://www.wikidata.org/entity/Q8495
@@ -894,9 +697,6 @@ concepts:
       en: ["smetana"]
       bg: ["сметана"]
     broader: food/dairy
-    narrower:
-    - whipping-cream
-
     source_uris:
     - https://dbpedia.org/resource/Cream
     - https://www.wikidata.org/entity/Q13228
@@ -989,9 +789,6 @@ concepts:
       en: ["oat flakes", "porridge oats"]
       bg: ["овес", "овесени ядки"]
     broader: food/grains
-    narrower:
-    - rolled-oats
-
     source_uris:
     - https://dbpedia.org/resource/Oat
     - https://www.wikidata.org/entity/Q128752
@@ -1038,9 +835,6 @@ concepts:
       en: ["sausages"]
       bg: ["колбас"]
     broader: food/meat
-    narrower:
-    - cured-sausage
-
     source_uris:
     - https://dbpedia.org/resource/Sausage
     - https://www.wikidata.org/entity/Q131419
@@ -1101,9 +895,6 @@ concepts:
     broader:
     - food/vegetables
     - food/staples
-    narrower:
-    - instant-mashed-potatoes
-
     source_uris:
     - https://dbpedia.org/resource/Potato
     - https://www.wikidata.org/entity/Q16587531
@@ -1152,9 +943,6 @@ concepts:
       en: ["tomato"]
       bg: ["домати"]
     broader: food/vegetables
-    narrower:
-    - passata
-
     source_uris:
     - https://dbpedia.org/resource/Tomato
     - https://www.wikidata.org/entity/Q11898003
@@ -1164,7 +952,8 @@ concepts:
   passata:
     prefLabel: "Passata"
     altLabel:
-      en: ["tomato passata", "strained tomatoes", "crushed tomatoes", "tomato puree", "sieved tomatoes"]
+      en: ["tomato passata", "strained tomatoes", "crushed tomatoes", "tomato puree",
+        "sieved tomatoes"]
       bg: ["пасирани домати", "доматено пюре"]
       de: ["passierte Tomaten"]
     broader: tomatoes
@@ -1191,9 +980,6 @@ concepts:
       en: ["maize", "sweet corn", "sweetcorn"]
       bg: ["царевица"]
     broader: food/vegetables
-    narrower:
-    - sweet-corn
-
     source_uris:
     - https://dbpedia.org/resource/Maize
     - https://www.wikidata.org/entity/Q11575
@@ -1251,9 +1037,6 @@ concepts:
       en: ["bean"]
       bg: ["боб", "фасул"]
     broader: food/legumes
-    narrower:
-    - common-beans
-
     source_uris:
     - https://dbpedia.org/resource/Bean
     - https://www.wikidata.org/entity/Q3637169
@@ -1265,10 +1048,6 @@ concepts:
       en: ["Phaseolus vulgaris", "French bean", "string bean", "snap bean"]
       bg: ["градински боб"]
     broader: beans
-    narrower:
-    - red-beans
-    - white-beans
-
     source_uris:
     - https://dbpedia.org/resource/Phaseolus_vulgaris
     - https://www.wikidata.org/entity/Q165437
@@ -1292,9 +1071,6 @@ concepts:
       en: ["haricot beans", "navy beans", "cannellini beans"]
       bg: ["бял боб", "трапезен боб"]
     broader: common-beans
-    narrower:
-    - dried-haricot-beans
-
     source_uris:
     - https://dbpedia.org/resource/Haricot_bean
     - https://www.wikidata.org/entity/Q1066638
@@ -1487,12 +1263,6 @@ concepts:
       en: ["nut", "mixed nuts", "almonds"]
       nb: ["nøtter", "mandler"]
     broader: food/snacks
-    narrower:
-    - peanuts
-    - cashews
-    - coconut
-    - pecans
-
     source_uris:
     - https://dbpedia.org/resource/Nut_(fruit)
     - https://www.wikidata.org/entity/Q130392098
@@ -1504,9 +1274,6 @@ concepts:
       en: ["cashew"]
       bg: ["кашу"]
     broader: food/nuts
-    narrower:
-    - salted-cashews
-
     source_uris:
     - https://dbpedia.org/resource/Cashew
     - https://www.wikidata.org/entity/Q34007
@@ -1542,9 +1309,6 @@ concepts:
       en: ["coconuts"]
       nb: ["kokosnøtt"]
     broader: food/nuts
-    narrower:
-    - coconut-milk
-
     source_uris:
     - https://dbpedia.org/resource/Coconut
     - https://www.wikidata.org/entity/Q34687
@@ -1592,9 +1356,6 @@ concepts:
     altLabel:
       bg: ["шоколад"]
     broader: food/snacks
-    narrower:
-    - milk-chocolate
-
     source_uris:
     - https://dbpedia.org/resource/Chocolate
     - https://www.wikidata.org/entity/Q195
@@ -1702,37 +1463,27 @@ concepts:
 
   tools/hand:
     prefLabel: "Hand tools"
-    broader: tools
-
     source_uris:
     - https://dbpedia.org/resource/Hand_tool
     - https://www.wikidata.org/entity/Q50321273
     - https://aims.fao.org/aos/agrovoc/c_25785
   tools/power:
     prefLabel: "Power tools"
-    broader: tools
-
     source_uris:
     - https://dbpedia.org/resource/Power_tool
     - https://www.wikidata.org/entity/Q135080499
     - https://aims.fao.org/aos/agrovoc/c_25786
   tools/measuring:
     prefLabel: "Measuring tools"
-    broader: tools
-
     source_uris:
     - https://dbpedia.org/resource/Measuring_instrument
     - https://www.wikidata.org/entity/Q19036430
   tools/cleaning:
     prefLabel: "Cleaning tools"
-    broader: tools
-
   tools/bike:
     prefLabel: "Bike tools"
     altLabel:
       en: ["bicycle tools", "cycling tools"]
-    broader: tools
-
     source_uris:
     - https://dbpedia.org/resource/Shed
     - https://www.wikidata.org/entity/Q572809
@@ -1783,8 +1534,6 @@ concepts:
     prefLabel: "Safety equipment"
     altLabel:
       en: ["safety gear", "lifesaving"]
-    broader: boat-equipment
-
     source_uris:
     - https://dbpedia.org/resource/Personal_protective_equipment
     - https://www.wikidata.org/entity/Q7398610
@@ -1793,8 +1542,6 @@ concepts:
     prefLabel: "Navigation"
     altLabel:
       en: ["nav equipment"]
-    broader: boat-equipment
-
     source_uris:
     - https://dbpedia.org/resource/Navigation
     - https://www.wikidata.org/entity/Q102066
@@ -1803,24 +1550,18 @@ concepts:
     prefLabel: "Rigging"
     altLabel:
       en: ["standing rigging", "running rigging"]
-    broader: boat-equipment
-
     source_uris:
     - https://dbpedia.org/resource/Rigging
     - https://www.wikidata.org/entity/Q942890
     - https://aims.fao.org/aos/agrovoc/c_0c072dac
   boat-equipment/deck:
     prefLabel: "Deck hardware"
-    broader: boat-equipment
-
     source_uris:
     - https://dbpedia.org/resource/Video_game
   boat-equipment/engine:
     prefLabel: "Engine parts"
     altLabel:
       en: ["motor parts"]
-    broader: boat-equipment
-
     source_uris:
     - https://dbpedia.org/resource/Thomas_&_Friends
     - https://www.wikidata.org/entity/Q66150902
@@ -1944,15 +1685,11 @@ concepts:
     prefLabel: "Cleaning supplies"
     altLabel:
       nb: ["rengjøring"]
-    broader: household
-
     source_uris:
     - https://dbpedia.org/resource/City
     - https://www.wikidata.org/entity/Q1974312
   household/storage:
     prefLabel: "Storage"
-    broader: household
-
     source_uris:
     - https://www.wikidata.org/entity/Q9158768
     - https://aims.fao.org/aos/agrovoc/c_7427
@@ -2034,10 +1771,6 @@ concepts:
       da: "Isenkram"
       nl: "IJzerwaren"
       fi: "Rautakauppatavarat"
-    narrower:
-    - construction
-    - consumables
-
     source_uris:
     - gpt:632
     excluded_sources:
@@ -2176,33 +1909,22 @@ concepts:
     labels:
       nb: "Kjøretøy"
     broader: ["transport"]
-    narrower:
-    - automotive/accessories
-    - automotive/lighting
-    - automotive/maintenance
-
     source_uris:
     - https://dbpedia.org/resource/Automotive_industry
     - https://www.wikidata.org/entity/Q190117
     - gpt:5614
   automotive/accessories:
     prefLabel: "Automotive accessories"
-    broader: automotive
-
     source_uris:
     - https://dbpedia.org/resource/Automotive_aftermarket
     - https://www.wikidata.org/entity/Q94739045
   automotive/lighting:
     prefLabel: "Automotive lighting"
-    broader: automotive
-
     source_uris:
     - https://dbpedia.org/resource/Automotive_lighting
     - https://www.wikidata.org/entity/Q964912
   automotive/maintenance:
     prefLabel: "Automotive maintenance"
-    broader: automotive
-
     source_uris:
     - https://dbpedia.org/resource/Service_(motor_vehicle)
 
@@ -2225,26 +1947,17 @@ concepts:
       nl: "Outdooruitrusting"
       fi: "Retkeilyvarusteet"
     broader: recreation
-    narrower:
-    - camping
-    - outdoor/hiking
-    - outdoor/cooking
-
     source_uris:
     - https://www.wikidata.org/entity/Q116951676
     excluded_sources:
     - dbpedia
   outdoor/hiking:
     prefLabel: "Hiking equipment"
-    broader: outdoor
-
     source_uris:
     - https://dbpedia.org/resource/Hiking_equipment
     - https://www.wikidata.org/entity/Q16000111
   outdoor/cooking:
     prefLabel: "Outdoor cooking"
-    broader: outdoor
-
     source_uris:
     - https://dbpedia.org/resource/Outdoor_cooking
     - https://www.wikidata.org/entity/Q2920305
@@ -2283,21 +1996,16 @@ concepts:
 
   clothing/underwear:
     prefLabel: "Underwear"
-    broader: clothing
     source_uris: https://www.wikidata.org/wiki/Q198763
 
   clothing/workwear:
     prefLabel: "Workwear"
-    broader: clothing
-
     source_uris:
     - https://dbpedia.org/resource/Workwear
     - https://www.wikidata.org/entity/Q828980
     - https://aims.fao.org/aos/agrovoc/c_f089f400
   clothing/footwear:
     prefLabel: "Footwear"
-    broader: clothing
-
     source_uris:
     - https://dbpedia.org/resource/Footwear
     - https://www.wikidata.org/entity/Q161928
@@ -2307,14 +2015,11 @@ concepts:
     altLabel:
       en: ["Winter clothes"]
       nb: ["Vinterklær", "Varme klær"]
-    broader: clothing
     path_aliases:
       nb: ["klær/vinter", "klær/vinterklær"]
 
   clothing/accessories:
     prefLabel: "Clothing accessories"
-    broader: clothing
-
     source_uris:
     - https://dbpedia.org/resource/Che_Guevara_in_fashion
     - https://www.wikidata.org/entity/Q123152059
@@ -2353,12 +2058,6 @@ concepts:
       en: ["building", "building materials"]
       nb: ["bygg", "byggematerialer"]
     broader: hardware
-    narrower:
-    - fasteners
-    - construction/lumber
-    - plumbing
-    - construction/electrical
-
     source_uris:
     - https://dbpedia.org/resource/Construction
     - https://www.wikidata.org/entity/Q3875186
@@ -2368,7 +2067,6 @@ concepts:
     prefLabel: "Lumber"
     altLabel:
       en: ["wood", "timber"]
-    broader: construction
     uri: "https://dbpedia.org/resource/Lumber"
     source_uris:
     - "https://dbpedia.org/resource/Lumber"
@@ -2376,8 +2074,6 @@ concepts:
     - https://www.wikidata.org/entity/Q1370714
   construction/electrical:
     prefLabel: "Electrical"
-    broader: construction
-
     source_uris:
     - https://dbpedia.org/resource/Electricity
     - https://www.wikidata.org/entity/Q244404
@@ -2418,33 +2114,23 @@ concepts:
       nl: "Kantoorbenodigdheden"
       fi: "Toimistotarvikkeet"
     broader: household
-    narrower:
-    - office/writing
-    - office/paper
-    - office/storage
-
     source_uris:
     - https://dbpedia.org/resource/Office_supplies
     - https://www.wikidata.org/entity/Q15714692
     - gpt:922
   office/writing:
     prefLabel: "Writing supplies"
-    broader: office
     excluded_sources:
     - dbpedia
 
   office/paper:
     prefLabel: "Paper products"
-    broader: office
-
     source_uris:
     - https://dbpedia.org/resource/John_McNamara_(writer)
     - https://www.wikidata.org/entity/Q70940300
     - gpt:956
   office/storage:
     prefLabel: "Office storage"
-    broader: office
-
     source_uris:
     - https://dbpedia.org/resource/Computer_data_storage
 
@@ -2489,11 +2175,6 @@ concepts:
       en: ["athletics", "sport"]
       nb: ["idrett"]
     broader: recreation
-    narrower:
-    - sports/cycling
-    - sports/water-sports
-    - sports/ball-sports
-
     source_uris:
     - https://dbpedia.org/resource/Sport
     - https://www.wikidata.org/entity/Q123253374
@@ -2501,8 +2182,6 @@ concepts:
     - gpt:988
   sports/cycling:
     prefLabel: "Cycling"
-    broader: sports
-
     source_uris:
     - https://dbpedia.org/resource/Cycling
     - https://www.wikidata.org/entity/Q53121
@@ -2510,15 +2189,11 @@ concepts:
     - gpt:1025
   sports/water-sports:
     prefLabel: "Water sports"
-    broader: sports
-
     source_uris:
     - https://dbpedia.org/resource/Oman
     - https://www.wikidata.org/entity/Q104853375
   sports/ball-sports:
     prefLabel: "Ball sports"
-    broader: sports
-
     source_uris:
     - https://dbpedia.org/resource/Basketball
   games:
@@ -2552,11 +2227,6 @@ concepts:
       ru: "Здоровье и безопасность"
       uk: "Здоров'я та безпека"
       bg: "Здраве и безопасност"
-    narrower:
-    - first-aid
-    - medicine
-    - safety-equipment
-
     source_uris:
     - gpt:491
     excluded_sources:
@@ -2960,9 +2630,6 @@ concepts:
       en: ["screws", "bolts", "nails", "nut", "nuts", "washers"]
       nb: ["skruer", "bolter", "muttere", "spiker"]
     broader: construction
-    narrower:
-    - hardware/nut
-
     source_uris:
     - https://dbpedia.org/resource/Fastener
     - https://www.wikidata.org/entity/Q107380930
