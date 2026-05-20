@@ -337,6 +337,29 @@
       }
     ]
   },
+  "2007000369012": {
+    "categories": [
+      "gloves"
+    ],
+    "name": "Xema Black nitrile-dipped polyester work gloves size 10",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 0.92,
+        "shop": "Praktiker Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "STENSO РЪКАВИЦИ ПОЛИЕСТ. ХЕМА 10",
+        "shop": "Praktiker Варна"
+      }
+    ]
+  },
   "20087036": {
     "categories": [
       "canning",
@@ -1506,6 +1529,29 @@
       "sko/pleie"
     ],
     "name": "Bama Fargefornyer Nøytral, semsket og nubuck, 75ml"
+  },
+  "4054500440916": {
+    "categories": [
+      "gloves"
+    ],
+    "name": "Red Latex mechanics gloves",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 1.38,
+        "shop": "Praktiker Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "WURTH РЪКАВИЦИ МЕХАНИЦИ RED LATEX",
+        "shop": "Praktiker Варна"
+      }
+    ]
   },
   "4056489056010": {
     "categories": [
@@ -3363,5 +3409,28 @@
       "paint_roller"
     ],
     "name": "Telescoping handle for paint roller, Schuller Eh'klar Art.Nr. 214888 (rollers in epoxy storage)"
+  },
+  "9002588424934": {
+    "categories": [
+      "personal-protective-equipment"
+    ],
+    "name": "Clear View B503 transparent safety glasses",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 5.47,
+        "shop": "Praktiker Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "ЗАЩИТНИ ОЧИЛА CLEAR VIEW B503 ПРОЗ",
+        "shop": "Praktiker Варна"
+      }
+    ]
   }
 }
