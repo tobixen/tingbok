@@ -2455,6 +2455,29 @@
     ],
     "name": "Lindemann EK30262 brass chrome 2-pole connector 3A 12V"
   },
+  "4304493269903": {
+    "categories": [
+      "beverages/beer"
+    ],
+    "name": "Radler 2.5% beer",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 0.5,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "БИРА ГР. RADLER 2.5%",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4335619073920": {
     "categories": [
       "pesto"
