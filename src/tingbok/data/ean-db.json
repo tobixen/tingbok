@@ -384,6 +384,26 @@
     ],
     "quantity": "300g"
   },
+  "20112813": {
+    "name": "Heidelbeere & Cranberry & Johannisbeere",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 2.29,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "ДИРЕКТ.СОК КАС.БОРОВ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "20144173": {
     "brand": "W5 (Lidl)",
     "categories": [
@@ -993,6 +1013,26 @@
       }
     ]
   },
+  "20709426": {
+    "name": "Шпеков салам",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 4.34,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "ШПЕК CLEANLАBEL 220G",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "20710118": {
     "categories": [
       "lentils"
@@ -1174,13 +1214,20 @@
     "categories": [
       "paint-brush"
     ],
-    "name": "Antares Universal paint brush 30mm (Code 3601)",
+    "name": "Antares Universal paint brush 30mm",
     "prices": [
       {
         "currency": "EUR",
         "date": null,
         "price": 0.86,
         "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 0.69,
+        "shop": "Praktiker Варна",
         "unit": "pcs"
       }
     ]
@@ -1406,6 +1453,18 @@
     "name": "Nivea Antiperspirant Powder Effect 48h roll-on",
     "quantity": "50ml"
   },
+  "4008033481595": {
+    "name": "Probus Stainless Steel Soft Grip Scissors 21.5cm",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 3.06,
+        "shop": "Praktiker Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
   "4008153752353": {
     "brand": "UNITEC",
     "categories": [
@@ -1431,13 +1490,20 @@
     "categories": [
       "spatula"
     ],
-    "name": "Ciret ШПАКЛА ЗА ТАПЕТИ 28cm wallpaper spatula (Art.Nr 95 88 00 10)",
+    "name": "Ciret wallpaper spatula 28cm",
     "prices": [
       {
         "currency": "EUR",
         "date": null,
         "price": 1.58,
         "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 1.58,
+        "shop": "Praktiker Варна",
         "unit": "pcs"
       }
     ]
@@ -1737,6 +1803,26 @@
       "food/dried-fruit/raisins"
     ],
     "name": "Alesto Jumbo Raisins (Lidl, carefully selected)"
+  },
+  "4056489129950": {
+    "name": "Feiner Weißkrautsalat",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 1.78,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "САЛАТА ЗЕЛЕ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
   },
   "4056489150510": {
     "categories": [
@@ -2056,7 +2142,7 @@
     "categories": [
       "sausage"
     ],
-    "name": "Родна стряха ПАНАГЮРСКА ЛУКАНКА Panagyur-style lukanka",
+    "name": "Lukanka From Panagyurishte",
     "prices": [
       {
         "currency": "EUR",
@@ -2085,6 +2171,13 @@
         "price": 3.99,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 3.99,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "150g",
@@ -2094,6 +2187,12 @@
         "last_seen": "2026-05-04",
         "name": "ПАНАГЮРСКА ЛУКАНКА",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "ПАНАГЮРСКА ЛУКАНКА",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2334,7 +2433,7 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Pilos ПРЯСНО МЛЯКО 3% 2Л fresh milk 2L",
+    "name": "Прясно краве мляко 3%",
     "prices": [
       {
         "currency": "EUR",
@@ -2356,6 +2455,13 @@
         "price": 2.19,
         "shop": "Lidl Варна бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 2.19,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "2l",
@@ -2371,6 +2477,12 @@
         "last_seen": "2026-05-16",
         "name": "ПРЯСНО МЛЯКО 3% 2Л",
         "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "ПРЯСНО МЛЯКО 3% 2Л",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2500,6 +2612,26 @@
       "electrical-connector"
     ],
     "name": "Lindemann EK30262 brass chrome 2-pole connector 3A 12V"
+  },
+  "4304493266490": {
+    "name": "100% сок от портокал с парченца плод",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 3.06,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "СОК ОТ ПОРТОКАЛ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
   },
   "4304493269903": {
     "categories": [
@@ -2653,6 +2785,18 @@
     ],
     "name": "Glade Air Freshener \"Woodland Grove\" (green can, pine scent)",
     "source": "manual"
+  },
+  "5000213101872": {
+    "name": "Guinness Draught Stout",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 2.52,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ]
   },
   "5012251008648": {
     "categories": [
