@@ -385,13 +385,23 @@
     "quantity": "300g"
   },
   "20112813": {
-    "name": "Heidelbeere & Cranberry & Johannisbeere",
+    "categories": [
+      "fruit-juice"
+    ],
+    "name": "Solevita ДИРЕКТ.СОК КАС.БОРОВ direct juice blueberry-cranberry-blackcurrant",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-20",
         "price": 2.29,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.29,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1014,13 +1024,23 @@
     ]
   },
   "20709426": {
-    "name": "Шпеков салам",
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "Pikok ШПЕК CLEANLАBEL 220G speck (25% discount coupon applied)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-20",
         "price": 4.34,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.34,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1212,9 +1232,9 @@
   },
   "3800047336011": {
     "categories": [
-      "paint-brush"
+      "brush"
     ],
-    "name": "Antares Universal paint brush 30mm",
+    "name": "Antares UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 MM universal paint brush 30mm (Code 3601)",
     "prices": [
       {
         "currency": "EUR",
@@ -1228,6 +1248,13 @@
         "date": "2026-05-20",
         "price": 0.69,
         "shop": "Praktiker Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.69,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -1454,13 +1481,23 @@
     "quantity": "50ml"
   },
   "4008033481595": {
-    "name": "Probus Stainless Steel Soft Grip Scissors 21.5cm",
+    "categories": [
+      "scissors"
+    ],
+    "name": "Probus НОЖИЦА С ОМЕКОТЕНА ДРЪЖКА NIROSTA Stainless Steel Soft Grip Scissors 21.5cm",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-20",
         "price": 3.06,
         "shop": "Praktiker Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.06,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -2140,9 +2177,9 @@
   },
   "4056489693048": {
     "categories": [
-      "sausage"
+      "cured-meat"
     ],
-    "name": "Lukanka From Panagyurishte",
+    "name": "Rodna Stryaha ПАНАГЮРСКА ЛУКАНКА Panagyurska lukanka",
     "prices": [
       {
         "currency": "EUR",
@@ -2614,13 +2651,23 @@
     "name": "Lindemann EK30262 brass chrome 2-pole connector 3A 12V"
   },
   "4304493266490": {
-    "name": "100% сок от портокал с парченца плод",
+    "categories": [
+      "orange-juice"
+    ],
+    "name": "Solevita СОК ОТ ПОРТОКАЛ 100% orange juice with fruit pieces",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-20",
         "price": 3.06,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.06,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -3556,15 +3603,22 @@
   },
   "9002588424934": {
     "categories": [
-      "personal-protective-equipment"
+      "safety-glasses"
     ],
-    "name": "Clear View B503 transparent safety glasses",
+    "name": "Schuller Eh'klar ЗАЩИТНИ ОЧИЛА CLEAR VIEW B503 ПРОЗ transparent safety glasses (Art.Nr 42493)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-20",
         "price": 5.47,
         "shop": "Praktiker Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.47,
+        "shop": null,
         "unit": "pcs"
       }
     ],
