@@ -1397,6 +1397,30 @@
     ],
     "quantity": "800g"
   },
+  "3800207742782": {
+    "categories": [
+      "food/nuts/cashews"
+    ],
+    "name": "Кашу Родея Печено",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 1.59,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "КАШУ РОДЕЯ 500ГР",
+        "shop": "Bulmag"
+      }
+    ]
+  },
   "3800232441247": {
     "categories": [
       "honey"
@@ -2951,6 +2975,30 @@
       "chemicals"
     ],
     "name": "ΟΙΝΟΠΝΕΥΜΑ ΚΑΘΑΡΟΝ rubbing alcohol 95° (Greek, ΒΙΚΤΩΡ ΑΒΕΕ, Samos)"
+  },
+  "5240056578008": {
+    "categories": [
+      "hygiene/liquid-soap"
+    ],
+    "name": "Моята Причина Вера течен сапун",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 1.55,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "ТЕЧЕН САПУН МОЯТА ПРИЧИНА НИЕ ВЕРА 600МЛ",
+        "shop": "Bulmag"
+      }
+    ]
   },
   "5391520950285": {
     "categories": [
