@@ -1278,6 +1278,29 @@
       }
     ]
   },
+  "3800038902942": {
+    "categories": [
+      "health/personal-care/toothpaste"
+    ],
+    "name": "Pomorin Since 1954 Anti-Periodontal Toothpaste",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 1.65,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "ПАСТА ПОМОРИН АНТИ-РАКЛОНЕ 100МЛ",
+        "shop": "Bulmag"
+      }
+    ]
+  },
   "3800047336011": {
     "categories": [
       "brush"
@@ -1319,6 +1342,31 @@
         "price": 0.92,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "3800052219118": {
+    "categories": [
+      "food/beverages",
+      "alcohol",
+      "beers"
+    ],
+    "name": "Astika бира",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 0.9,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "БИРА АСТИКА КЕН 0.5Л",
+        "shop": "Bulmag"
       }
     ]
   },
@@ -1364,6 +1412,31 @@
         "last_seen": "2026-05-04",
         "name": "ТУНКВАНИ БИСКВИТИ",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "3800069005506": {
+    "categories": [
+      "food/beverages",
+      "alcohol",
+      "beers"
+    ],
+    "name": "Шуменско Специално (Бомбичка)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 1.36,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "БИРА ШУМЕНСКО 0.33Л/БУТИЛКА",
+        "shop": "Bulmag"
       }
     ]
   },
@@ -1512,6 +1585,30 @@
         "last_seen": "2026-05-02",
         "name": "СУШЕНИЦА",
         "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "3858890178678": {
+    "categories": [
+      "food/condiments",
+      "mayonnaises"
+    ],
+    "name": "Mayonnaise, Delicatess",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 2.43,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "МАЙОНЕЗА ТОМИ 280Г",
+        "shop": "Bulmag"
       }
     ]
   },
