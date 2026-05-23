@@ -1254,6 +1254,30 @@
       }
     ]
   },
+  "3800021492457": {
+    "categories": [
+      "food/cured-meat"
+    ],
+    "name": "Луканка Тракийска ХХЛ Еко Мес",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 5.39,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "550g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "ЛУКАНКА ТРАКИЙСКА ХХЛ ЕКО МЕС 550ГР",
+        "shop": "Bulmag"
+      }
+    ]
+  },
   "3800047336011": {
     "categories": [
       "brush"
@@ -3572,6 +3596,30 @@
       "buoy-holder"
     ],
     "name": "Hesteskobøye holder 15100-02 (horseshoe buoy holder,"
+  },
+  "8445291136359": {
+    "categories": [
+      "food/condiments/tartar-sauce"
+    ],
+    "name": "Thomy Tartar Sauce",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 2.48,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "220g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "СОС ТНОИ ТАРТАР 220Г",
+        "shop": "Bulmag"
+      }
+    ]
   },
   "8480000400691": {
     "categories": [
