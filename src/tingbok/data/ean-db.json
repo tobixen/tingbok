@@ -1201,15 +1201,22 @@
   },
   "3800002300613": {
     "categories": [
-      "hygiene/liquid-soap"
+      "liquid-soap"
     ],
-    "name": "Родея Кери течен сапун",
+    "name": "ТЕЧЕН САПУН РОДЕЯ КЕРИ Rodea Keri liquid soap 500ml",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 8.99,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 8.99,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1256,15 +1263,22 @@
   },
   "3800021492457": {
     "categories": [
-      "food/cured-meat"
+      "cured-meat"
     ],
-    "name": "Луканка Тракийска ХХЛ Еко Мес",
+    "name": "ЛУКАНКА ТРАКИЙСКА ХХЛ ЕКО МЕС Trakiyska lukanke XXL Eko Mes 550g",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 5.39,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.39,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1280,9 +1294,9 @@
   },
   "3800038902942": {
     "categories": [
-      "health/personal-care/toothpaste"
+      "toothpaste"
     ],
-    "name": "Pomorin Since 1954 Anti-Periodontal Toothpaste",
+    "name": "ПАСТА ПОМОРИН АНТИ-РАКЛОНЕ Pomorin Since 1954 Anti-Periodontal toothpaste 100ml",
     "prices": [
       {
         "currency": "EUR",
@@ -1347,17 +1361,22 @@
   },
   "3800052219118": {
     "categories": [
-      "food/beverages",
-      "alcohol",
-      "beers"
+      "beer"
     ],
-    "name": "Astika бира",
+    "name": "БИРА АСТИКА КЕН Astika beer can 500ml",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 0.9,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.9,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1417,17 +1436,22 @@
   },
   "3800069005506": {
     "categories": [
-      "food/beverages",
-      "alcohol",
-      "beers"
+      "beer"
     ],
-    "name": "Шуменско Специално (Бомбичка)",
+    "name": "БИРА ШУМЕНСКО СПЕЦИАЛНО Shumensko Специално 330ml bottle",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 1.36,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.36,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1520,15 +1544,22 @@
   },
   "3800207742782": {
     "categories": [
-      "food/nuts/cashews"
+      "cashews"
     ],
-    "name": "Кашу Родея Печено",
+    "name": "КАШУ РОДЕЯ ПЕЧЕНО Rodea roasted & salted cashews 500g",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 1.59,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.59,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1590,16 +1621,22 @@
   },
   "3858890178678": {
     "categories": [
-      "food/condiments",
-      "mayonnaises"
+      "mayonnaise"
     ],
-    "name": "Mayonnaise, Delicatess",
+    "name": "МАЙОНЕЗА ТОМИ Thomy Mayonnaise Delicatess 263g",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 2.43,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.43,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -3123,15 +3160,22 @@
   },
   "5240056578008": {
     "categories": [
-      "hygiene/liquid-soap"
+      "liquid-soap"
     ],
-    "name": "Моята Причина Вера течен сапун",
+    "name": "ТЕЧЕН САПУН МОЯТА ПРИЧИНА НИЕ ВЕРА Моята Причина \"Vera\" liquid soap 500ml",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 1.55,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.55,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -3637,15 +3681,22 @@
   },
   "7610196002608": {
     "categories": [
-      "hygiene/dental-floss"
+      "dental-floss"
     ],
-    "name": "TRISA dental floss 40m waxed mint",
+    "name": "КОНЦИ ЗА ЗЪБИ ТРИСA TRISA dental floss 40m (waxed, mint, made in Italy)",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 2.89,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.89,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -3696,15 +3747,22 @@
   },
   "8445291136359": {
     "categories": [
-      "food/condiments/tartar-sauce"
+      "tartar-sauce"
     ],
-    "name": "Thomy Tartar Sauce",
+    "name": "СОС ТНОИ ТАРТАР Thomy Tartar Sauce 220g",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 2.48,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.48,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -3838,15 +3896,22 @@
   },
   "9001414403044": {
     "categories": [
-      "food/spices/turmeric"
+      "turmeric"
     ],
-    "name": "Котани Куркума смляна 20g",
+    "name": "КУРКУМА КОТАНИ 20ГР Kotani Curcuma gemahlen (ground turmeric) 20g",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 1.01,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.01,
+        "shop": null,
         "unit": "pcs"
       }
     ],
