@@ -1199,6 +1199,30 @@
     "quantity": "model 8563766",
     "source": "manual"
   },
+  "3800002300613": {
+    "categories": [
+      "hygiene/liquid-soap"
+    ],
+    "name": "Родея Кери течен сапун",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 8.99,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "ТЕЧЕН САПУН РОДЕЯ (КЕРИ) 500МЛ",
+        "shop": "Bulmag"
+      }
+    ]
+  },
   "3800012140940": {
     "categories": [
       "spread"
@@ -3490,6 +3514,30 @@
     ],
     "name": "Clas Ohlson crosshead screws 4.2x16mm PZ-2 DIN 7982 EXTREME (11.1412-3)"
   },
+  "7610196002608": {
+    "categories": [
+      "hygiene/dental-floss"
+    ],
+    "name": "TRISA dental floss 40m waxed mint",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 2.89,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "40m",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "КОНЦИ ЗА ЗЪБИ ТРИСA 40Л",
+        "shop": "Bulmag"
+      }
+    ]
+  },
   "7622210678546": {
     "categories": [
       "chocolate"
@@ -3642,6 +3690,30 @@
     ],
     "name": "Fa Men Pure Control Hemp Inspired Scent 72h roll-on",
     "quantity": "50ml"
+  },
+  "9001414403044": {
+    "categories": [
+      "food/spices/turmeric"
+    ],
+    "name": "Котани Куркума смляна 20g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 1.01,
+        "shop": "Bulmag",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "20g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "КУРКУМА КОТАНИ 20ГР",
+        "shop": "Bulmag"
+      }
+    ]
   },
   "9002539214888": {
     "categories": [
