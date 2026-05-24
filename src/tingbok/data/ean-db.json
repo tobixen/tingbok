@@ -405,6 +405,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-05-20",
@@ -1044,6 +1045,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "220g",
     "receipt_names": [
       {
         "first_seen": "2026-05-20",
@@ -1305,6 +1307,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "100ml",
     "receipt_names": [
       {
         "first_seen": "2026-05-23",
@@ -1379,6 +1382,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "500ml",
     "receipt_names": [
       {
         "first_seen": "2026-05-23",
@@ -1639,6 +1643,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "263g",
     "receipt_names": [
       {
         "first_seen": "2026-05-23",
@@ -2674,7 +2679,7 @@
     "categories": [
       "whole-milk"
     ],
-    "name": "Прясно краве мляко 3%",
+    "name": "Pilos ПРЯСНО МЛЯКО 3% 2Л fresh milk 2L",
     "prices": [
       {
         "currency": "EUR",
