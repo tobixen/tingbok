@@ -721,6 +721,44 @@ def _build_vocab_uri_index(vocab: dict[str, Any]) -> dict[str, str]:
     return idx
 
 
+def _build_broader_from_paths(
+    all_paths: list[str],
+    uri_map: dict[str, str],
+    uri_index: dict[str, str],
+    self_ids: set[str],
+    fallback_concept_id: str | None = None,
+) -> list[str]:
+    """Build a broader list from SKOS hierarchy paths and URI map.
+
+    Args:
+        all_paths: Hierarchy paths from build_hierarchy_paths (combined across sources).
+        uri_map: Maps path-segment keys to source URIs (combined across sources).
+        uri_index: Maps normalised source URIs to concept IDs for bridging.
+        self_ids: Concept IDs to exclude — prevents self-referential broader entries.
+        fallback_concept_id: When all_paths is empty and this has a "/", its parent
+            path is used as the sole broader entry.
+    """
+    broader: list[str] = []
+    for p in all_paths:
+        parent = "/".join(p.split("/")[:-1])
+        if parent and parent not in broader:
+            broader.append(parent)
+
+    if not broader and fallback_concept_id and "/" in fallback_concept_id:
+        parent = "/".join(fallback_concept_id.split("/")[:-1])
+        if parent:
+            broader.append(parent)
+
+    for _path_seg, seg_uri in uri_map.items():
+        bridged = uri_index.get(_normalise_uri(seg_uri))
+        if not bridged:
+            bridged = _concept_id_from_path_seg(_path_seg)
+        if bridged and bridged not in self_ids and bridged not in broader:
+            broader.append(bridged)
+
+    return broader
+
+
 def _concept_id_from_path_seg(path_seg: str) -> str | None:
     """Derive a concept ID from a uri_map path-segment key if its root is a vocabulary concept.
 
@@ -1261,24 +1299,8 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
             )
             continue
 
-        # Build broader from SKOS paths
-        broader: list[str] = []
-        for p in all_paths:
-            parent = "/".join(p.split("/")[:-1])
-            if parent and parent not in broader:
-                broader.append(parent)
-
-        # URI bridging: add vocabulary concept IDs (or sibling batch labels) whose
-        # URI matches a path segment in this concept's SKOS hierarchy.
-        # Falls back to normalising the last path-segment label when the URI is not
-        # in the vocabulary index, so SKOS-known ancestors (e.g. "cooking-oil") are
-        # included even when they are absent from vocabulary.yaml.
-        for _path_seg, seg_uri in uri_map.items():
-            bridged = local_uri_to_label.get(_normalise_uri(seg_uri))
-            if not bridged:
-                bridged = _concept_id_from_path_seg(_path_seg)
-            if bridged and bridged != label and bridged not in broader:
-                broader.append(bridged)
+        # Build broader from SKOS paths and URI bridging.
+        broader = _build_broader_from_paths(all_paths, uri_map, local_uri_to_label, {label})
 
         # Use INPUT LABEL as concept ID (not the SKOS-derived vocabulary-anchored path)
         # so that resolve_category() on the client side finds concepts by their raw label.
@@ -1496,26 +1518,16 @@ async def lookup_concept(
     if concept_id is None:
         concept_id = lookup_label.lower().replace(" ", "_")
 
-    # Build broader from ALL paths so every hierarchy link is preserved
-    # (one concept, multiple paths — each path contributes its direct parent)
-    broader_set: list[str] = []
-    for p in all_paths:
-        parent = "/".join(p.split("/")[:-1])
-        if parent and parent not in broader_set:
-            broader_set.append(parent)
-    broader = broader_set if broader_set else (["/".join(concept_id.split("/")[:-1])] if "/" in concept_id else [])
-
-    # Add vocabulary concept IDs for any path segment whose URI matches a known vocabulary
-    # concept.  Falls back to normalising the last path-segment label when the URI is not
-    # in the vocabulary index, so SKOS-known ancestors (e.g. "cooking-oil") are included
-    # even when absent from vocabulary.yaml.  Vocabulary-root filtering (root in vocabulary)
-    # prevents spurious ancestors from Wikidata encyclopedic paths.
-    for _path_seg, seg_uri in combined_uri_map.items():
-        vocab_cid = _vocab_uri_index.get(_normalise_uri(seg_uri))
-        if not vocab_cid:
-            vocab_cid = _concept_id_from_path_seg(_path_seg)
-        if vocab_cid and vocab_cid != concept_id and vocab_cid not in broader:
-            broader.append(vocab_cid)
+    # Build broader from ALL paths and URI bridging.
+    # self_ids excludes both the full concept_id path and its normalised last segment
+    # (e.g. "food/spices/cumin" and "cumin") so neither appears as its own ancestor.
+    _concept_seg = concept_id.split("/")[-1].replace("_", "-").replace(" ", "-").lower() if concept_id else None
+    _self_ids: set[str] = {concept_id} if concept_id else set()
+    if _concept_seg:
+        _self_ids.add(_concept_seg)
+    broader = _build_broader_from_paths(
+        all_paths, combined_uri_map, _vocab_uri_index, _self_ids, fallback_concept_id=concept_id
+    )
     best_description = max(descriptions, key=len) if descriptions else None
 
     # Populate reverse label cache so future non-English lookups can find this concept

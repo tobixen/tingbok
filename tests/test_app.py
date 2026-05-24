@@ -1269,6 +1269,45 @@ async def test_lookup_falls_back_to_skos(client):
 
 
 @pytest.mark.anyio
+async def test_lookup_concept_not_in_own_broader(client):
+    """The concept being looked up must not appear in its own broader list.
+
+    When build_hierarchy_paths returns 'food/spices/cumin', the URI bridging
+    step must not add 'cumin' to cumin's broader — even though
+    _concept_id_from_path_seg('food/spices/cumin') returns 'cumin' and
+    concept_id ('food/spices/cumin') != 'cumin'.
+    """
+    from unittest.mock import patch
+
+    fake_concept = {
+        "uri": "https://aims.fao.org/aos/agrovoc/c_12851",
+        "prefLabel": "Cumin",
+        "source": "agrovoc",
+    }
+    fake_paths = (
+        ["food/spices/cumin"],
+        True,
+        {
+            "food/spices": "https://aims.fao.org/aos/agrovoc/c_spices",
+            "food/spices/cumin": "https://aims.fao.org/aos/agrovoc/c_12851",
+        },
+    )
+
+    with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
+            with patch("tingbok.app.skos_service.get_labels", return_value={}):
+                with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                    with patch("tingbok.app.skos_service.get_description", return_value=None):
+                        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                                response = await client.get("/api/lookup/cumin")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "cumin" not in data["broader"], f"'cumin' must not appear in its own broader list, got: {data['broader']}"
+
+
+@pytest.mark.anyio
 async def test_lookup_merges_descriptions_from_all_sources(client):
     """The longest description across all sources is selected."""
     from unittest.mock import patch
