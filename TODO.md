@@ -1,13 +1,11 @@
 See also ~/inventory-md/docs/TODO-CATEGORIES.md
 
-## Cache refresher thread
+## Consistency
 
-~~I've tried to turn on debug logging, and I've tried monitoring the files under /var/cache/tingbok/skos and I think I may conclude: the cache refreshing system does not work.~~
-
-Fixed in c466310: legacy cache entries written before `_cache_key` was added (~7800 files,
-up to 55 days old) were silently skipped by `_find_oldest_cache_entry`, so the loop only
-saw 13-day-old entries and slept ~9 h between each check.  `_infer_cache_key()` now
-reconstructs the key from filename + content so all SKOS entries are eligible for refresh.
+* I think that a while ago, logic was added to make it possible to simplify vocabulary.yaml, lists of paths would obsolete the need of having lists of broader and narrower for every concept.  I.e., by listing `food/staples/potatoes` and `food/vegetables/potatoes` it should not be needed to list vegetables and staples as broader for potatoes, etc.  Look into this again and use it consistently in vocuabularay.yaml to keep it DRY.
+* Sometimes canonical IDs are given like a path with a slash, and sometimes they are given as a single word.  I'd like some consistency here too.  Perhaps it's good to keep slashes in canonical IDs in case the same word gets added for a different concept at some point in the future, but it's probably not needed with many parts in the canonical ID.  It could be `staples/potatoes` or `food//potatoes`, but not `food/staple/potatoes` maybe.  We'd also need some heuristics to relatively deterministicly find a canonical ID of a concept that isn't defined in vocabulary.yaml but decided from the sources.
+* Dashes vs underscores vs spaces in the canonical ID.  It seems to be a bit arbitrary now.  I think we should stick to dashes.
+* Plural vs singular.  We should have some consistency there, too.
 
 ## Data that should be filtered
 

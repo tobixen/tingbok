@@ -1575,10 +1575,12 @@ def test_lookup_wikidata_accepts_normal_concept(tmp_path: Path) -> None:
     search_response = {"search": [{"id": "Q7802", "label": "bread", "description": "food made from dough"}]}
     # P31 = Q2095 (food) — not in blocklist, no P625
     entity_response = _make_wikidata_entity_response("Q7802", p31_qids=["Q2095"], has_coordinate=False)
-    # Third response: label lookup for broader (empty)
-    broader_labels_response: dict = {"entities": {}}
+    # Third response: _batch_fetch_p279(["Q2095"]) — no blocked ancestors
+    p279_response: dict = {"entities": {}}
+    # Fourth response: _batch_fetch_p31(["Q2095"]) — no blocked ancestors
+    p31_response: dict = {"entities": {}}
 
-    responses = iter([search_response, entity_response, broader_labels_response])
+    responses = iter([search_response, entity_response, p279_response, p31_response])
 
     with patch("tingbok.services.skos.niquests.Session") as mock_sess:
         sess = mock_sess.return_value.__enter__.return_value
@@ -1868,3 +1870,43 @@ def test_is_non_concept_uri_does_not_cache_network_errors(tmp_path: Path) -> Non
 
     assert result is None
     assert list(tmp_path.rglob("*.json")) == [], "Nothing should be cached on network error"
+
+
+def test_lookup_wikidata_filters_political_state_via_p31_chain(tmp_path: Path) -> None:
+    """Wikidata Q7275 (state) must be rejected via its P31-of-P31 chain reaching Q33104129."""
+    from tingbok.services.skos import _lookup_wikidata
+
+    search_response = {
+        "search": [
+            {"id": "Q7275", "label": "state", "description": "organised community living under a system of government"}
+        ]
+    }
+    # P31 = Q211606 (social structure) — not in direct blocklist, no P625
+    entity_response = _make_wikidata_entity_response("Q7275", p31_qids=["Q211606"], has_coordinate=False)
+
+    responses = iter([search_response, entity_response])
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.side_effect = lambda: next(responses)
+        # P279 of Q211606 does not hit the ancestor list; P31 of Q211606 does
+        with patch("tingbok.services.skos._batch_fetch_p279", return_value=frozenset()):
+            with patch("tingbok.services.skos._batch_fetch_p31", return_value=frozenset({"Q33104129"})):
+                result, failed = _lookup_wikidata("state", "en")
+
+    assert not failed
+    assert result is None, "Political state entity must be filtered out via P31-of-P31 chain"
+
+
+def test_is_non_concept_uri_wikidata_political_state_blocked_via_p31_chain() -> None:
+    """is_non_concept_uri rejects entities whose P31's P31 is Q33104129 (sociological concept)."""
+    from tingbok.services.skos import is_non_concept_uri
+
+    fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q211606"}}}}]}}
+    with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
+        with patch("tingbok.services.skos._batch_fetch_p279", return_value=frozenset()):
+            with patch("tingbok.services.skos._batch_fetch_p31", return_value=frozenset({"Q33104129"})):
+                result = is_non_concept_uri("https://www.wikidata.org/entity/Q7275")
+
+    assert result is True
