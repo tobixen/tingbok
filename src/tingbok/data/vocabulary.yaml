@@ -1122,14 +1122,6 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_14477
 
   # Condiments
-  oil:
-    prefLabel: "Oil"
-    broader: food/condiments
-
-    source_uris:
-    - https://dbpedia.org/resource/Oil
-    - https://www.wikidata.org/entity/Q42962
-
   vinegar:
     prefLabel: "Vinegar"
     altLabel:
