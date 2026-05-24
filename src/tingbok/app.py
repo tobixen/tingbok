@@ -1325,6 +1325,9 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
         for path_seg, seg_uri in uri_map.items():
             if _vocab_uri_index.get(_normalise_uri(seg_uri)):
                 continue  # vocabulary concept — already handled above
+            already = local_uri_to_label.get(_normalise_uri(seg_uri))
+            if already and already in concepts:
+                continue  # same URI already bridges to a resolved concept in this batch
             derived_id = _concept_id_from_path_seg(path_seg)
             if not derived_id or derived_id == label or derived_id in concepts:
                 continue

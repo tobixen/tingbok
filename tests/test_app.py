@@ -332,6 +332,65 @@ async def test_resolve_single_sunflower_oil_has_cooking_oil_as_ancestor(client):
 
 
 @pytest.mark.anyio
+async def test_resolve_no_duplicate_stub_for_same_uri_different_path_segment(client):
+    """No duplicate stub when a path segment name differs from the resolved label but shares the same URI.
+
+    Reproduces: when 'cooking-oil' is in the batch (resolved to AGROVOC c_1853) and olive-oil's
+    SKOS hierarchy uses 'cooking_oils' (plural) as the path segment name for the same URI, the
+    stub creation loop must not produce a second 'cooking-oils' concept entry.
+    """
+    _COOKING_OIL_URI = "https://aims.fao.org/aos/agrovoc/c_1853"
+    _OLIVE_OIL_URI = "https://aims.fao.org/aos/agrovoc/c_14242"
+
+    mock_concepts = {
+        "cooking oil": {"uri": _COOKING_OIL_URI, "prefLabel": "Cooking Oils", "source": "agrovoc"},
+        "olive oil": {"uri": _OLIVE_OIL_URI, "prefLabel": "olive oil", "source": "agrovoc"},
+    }
+    mock_paths = {
+        "cooking oil": (
+            ["food/oils/cooking_oil"],
+            True,
+            {"food/oils/cooking_oil": _COOKING_OIL_URI},
+        ),
+        "olive oil": (
+            # Plural segment name (cooking_oils) vs input label (cooking-oil): same URI, different name
+            ["food/oils/cooking_oils/olive_oil"],
+            True,
+            {
+                "food/oils/cooking_oils": _COOKING_OIL_URI,
+                "food/oils/cooking_oils/olive_oil": _OLIVE_OIL_URI,
+            },
+        ),
+    }
+
+    def _lookup(label: str, lang: str, source: str, cache_dir: object) -> dict | None:
+        if source != "agrovoc":
+            return None
+        return mock_concepts.get(label.lower())
+
+    def _hierarchy(
+        label: str, lang: str, source: str, cache_dir: object, **_kw: object
+    ) -> tuple[list[str], bool, dict[str, str]]:
+        if source != "agrovoc":
+            return [], False, {}
+        return mock_paths.get(label.lower(), ([], False, {}))
+
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=_lookup):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_hierarchy):
+            response = await client.post(
+                "/api/vocabulary/resolve",
+                json={"labels": ["cooking-oil", "olive-oil"], "lang": "en"},
+            )
+    assert response.status_code == 200
+    data = response.json()
+    concepts = data["concepts"]
+    assert "cooking-oil" in concepts, "cooking-oil must be resolved"
+    assert "cooking-oils" not in concepts, (
+        f"'cooking-oils' must not appear as a duplicate stub; got: {list(concepts.keys())}"
+    )
+
+
+@pytest.mark.anyio
 async def test_resolve_batch_cooking_oil_matches_olive_and_sunflower(client):
     """Batch resolve: olive-oil and sunflower-oil should have cooking-oil as ancestor.
 
