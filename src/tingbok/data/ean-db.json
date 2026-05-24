@@ -482,7 +482,7 @@
   },
   "20163419": {
     "categories": [
-      "passata"
+      "tomato-passata"
     ],
     "name": "Baresa ПАСИРАНИ ДОМАТИ 10,5 tomato passata",
     "prices": [
@@ -520,7 +520,7 @@
   },
   "20163822": {
     "categories": [
-      "instant-mashed-potatoes"
+      "potatoes-instant"
     ],
     "name": "Lidl Instant Mashed Potatoes / Kartoffelpüree (330g, 3×110g)",
     "prices": [
@@ -876,14 +876,21 @@
   },
   "20400569": {
     "categories": [
-      "rice"
+      "lentils"
     ],
-    "name": "KRINA ОРИЗ СРЕДНОЗЪРНЕСТ medium grain rice",
+    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
     "prices": [
       {
         "currency": "EUR",
         "date": null,
         "price": 1.48,
+        "shop": null,
+        "unit": "piece"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.38,
         "shop": null,
         "unit": "piece"
       }
@@ -1080,7 +1087,8 @@
   },
   "20856090": {
     "categories": [
-      "sweet-corn"
+      "canning",
+      "corn"
     ],
     "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
   },
@@ -1148,7 +1156,7 @@
   },
   "3200106407018": {
     "categories": [
-      "dried-haricot-beans"
+      "beans"
     ],
     "name": "Крина KRINA БОБ ТРАПЕЗЕН table beans (white, origin: Egypt)",
     "prices": [
@@ -1501,7 +1509,7 @@
   },
   "3800106401018": {
     "categories": [
-      "dried-haricot-beans"
+      "beans"
     ],
     "name": "KRINA БОБ ТРАПЕЗЕН white table beans (Egypt)",
     "prices": [
@@ -1516,14 +1524,21 @@
   },
   "3800106402053": {
     "categories": [
-      "lentils"
+      "rice"
     ],
-    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
+    "name": "KRINA ОРИЗ СРЕДНОЗЪРНЕСТ medium grain rice",
     "prices": [
       {
         "currency": "EUR",
         "date": null,
         "price": 1.38,
+        "shop": null,
+        "unit": "piece"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.48,
         "shop": null,
         "unit": "piece"
       }
@@ -1986,9 +2001,9 @@
   },
   "4056489108160": {
     "categories": [
-      "whole-milk"
+      "milk"
     ],
-    "name": "Pilos МЛЯКО UHT 3.5% UHT whole milk (Lidl 2026-03-04)",
+    "name": "Pilos МЛЯКО UHT 3,5% UHT whole milk (added 2026-04-29)",
     "prices": [
       {
         "currency": "EUR",
@@ -2104,7 +2119,7 @@
   },
   "4056489195917": {
     "categories": [
-      "rolled-oats"
+      "oats"
     ],
     "name": "Crownfield ОВЕСЕНИ ЯДКИ ФИНИ Fine Oat Flakes (Jemné ovesné vločky)",
     "prices": [
@@ -2245,7 +2260,8 @@
   },
   "4056489500124": {
     "categories": [
-      "sweet-corn"
+      "canning",
+      "corn"
     ],
     "name": "Freshona МЛАДА ЦАРЕВИЦА sweet corn",
     "prices": [
@@ -2677,7 +2693,7 @@
   },
   "4056489941279": {
     "categories": [
-      "whole-milk"
+      "fresh-milk"
     ],
     "name": "Pilos ПРЯСНО МЛЯКО 3% 2Л fresh milk 2L",
     "prices": [
@@ -3322,7 +3338,7 @@
   },
   "5905858676245": {
     "categories": [
-      "milk-chocolate"
+      "chocolate"
     ],
     "name": "Millano МЛЕЧ.ШОКОЛАД ФЪСЪЦИ milk chocolate with peanuts",
     "prices": [
