@@ -418,7 +418,7 @@
   "20144173": {
     "brand": "W5 (Lidl)",
     "categories": [
-      "cleaning"
+      "tools/cleaning"
     ],
     "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)",
     "source": "manual"
@@ -560,7 +560,7 @@
   "20240899": {
     "categories": [
       "canning",
-      "pork"
+      "food/meat/pork"
     ],
     "name": "Pikok СВ. ВА. В СОБСТ. СОС pork in own juice (vepřové maso ve vlastní šťávě)",
     "prices": [
@@ -1773,7 +1773,7 @@
   "4031396000592": {
     "brand": "YACHTICON",
     "categories": [
-      "cleaning"
+      "tools/cleaning"
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml",
     "quantity": "500ml",
@@ -2566,7 +2566,7 @@
   },
   "4056489941026": {
     "categories": [
-      "nuts"
+      "food/nuts"
     ],
     "name": "Alesto ЯДКИ СМЕС mixed nuts classic",
     "prices": [
@@ -3616,7 +3616,7 @@
   "7340011453437": {
     "brand": "Coop",
     "categories": [
-      "cleaning"
+      "tools/cleaning"
     ],
     "name": "Änglamark window cleaner 750ml (Coop)",
     "quantity": "750ml",
