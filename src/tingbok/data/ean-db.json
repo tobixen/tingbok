@@ -1860,9 +1860,9 @@
   },
   "4054500440916": {
     "categories": [
-      "gloves"
+      "food/beverages/beer"
     ],
-    "name": "Red Latex mechanics gloves",
+    "name": "ST.BREW Craft Beer (black can, 500ml)",
     "prices": [
       {
         "currency": "EUR",
@@ -1870,14 +1870,28 @@
         "price": 1.38,
         "shop": "Praktiker Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-24",
+        "price": 1.02,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
+    "quantity": "500ml",
     "receipt_names": [
       {
         "first_seen": "2026-05-20",
         "last_seen": "2026-05-20",
         "name": "WURTH РЪКАВИЦИ МЕХАНИЦИ RED LATEX",
         "shop": "Praktiker Варна"
+      },
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "ST.BREW КРАФТ БИРА",
+        "shop": "Lidl Varna"
       }
     ]
   },
