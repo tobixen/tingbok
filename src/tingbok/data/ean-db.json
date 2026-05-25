@@ -2889,6 +2889,29 @@
     ],
     "name": "Lindemann EK30262 brass chrome 2-pole connector 3A 12V"
   },
+  "4304493257153": {
+    "categories": [
+      "food/beverages/beer"
+    ],
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-24",
+        "price": 0.4,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "БИРА 3 % КЕН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4304493266490": {
     "categories": [
       "orange-juice"
