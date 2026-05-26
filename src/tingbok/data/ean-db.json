@@ -4076,5 +4076,29 @@
         "shop": "Praktiker Варна"
       }
     ]
+  },
+  "9002588435206": {
+    "categories": [
+      "brush/paint"
+    ],
+    "name": "Schuller Eh'klar universal paint brush 30mm",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-26",
+        "price": 0.69,
+        "shop": "Praktiker Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "30mm",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-26",
+        "last_seen": "2026-05-26",
+        "name": "UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 ММ",
+        "shop": "Praktiker Варна"
+      }
+    ]
   }
 }
