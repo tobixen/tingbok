@@ -948,6 +948,21 @@
     "name": "Italiamo Pesto Trapanese (tomato, almonds)",
     "quantity": "180g"
   },
+  "20508098": {
+    "categories": [
+      "salad"
+    ],
+    "name": "Lidl ИТАЛИАН.САЛАТА 125Г Italian salad mix 125g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.76,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20529772": {
     "categories": [
       "honey"
@@ -1298,6 +1313,21 @@
         "last_seen": "2026-05-23",
         "name": "ЛУКАНКА ТРАКИЙСКА ХХЛ ЕКО МЕС 550ГР",
         "shop": "Bulmag"
+      }
+    ]
+  },
+  "3800022404124": {
+    "categories": [
+      "beer"
+    ],
+    "name": "ARIANA LAGERBIER 4,5% Ariana lager beer 500ml",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.72,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1895,6 +1925,12 @@
       }
     ]
   },
+  "4054500440923": {
+    "categories": [
+      "beer"
+    ],
+    "name": "Lidl craft beer (red/orange can, unidentified — not on receipt)"
+  },
   "4056489056010": {
     "categories": [
       "beans"
@@ -1904,9 +1940,9 @@
   },
   "4056489080510": {
     "categories": [
-      "whole-milk"
+      "fresh-milk"
     ],
-    "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk",
+    "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk 1l",
     "prices": [
       {
         "currency": "EUR",
@@ -2891,14 +2927,22 @@
   },
   "4304493257153": {
     "categories": [
-      "food/beverages/beer"
+      "beer"
     ],
+    "name": "Deep БИРА 3% КЕН beer 3% can 500ml",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-24",
         "price": 0.4,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.4,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -2944,15 +2988,22 @@
   },
   "4304493269903": {
     "categories": [
-      "beverages/beer"
+      "beer"
     ],
-    "name": "Radler 2.5% beer",
+    "name": "БИРА ГР. RADLER 2,5% Grapefruit Radler 2.5% 500ml",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-20",
         "price": 0.5,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.5,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -3096,13 +3147,23 @@
     "source": "manual"
   },
   "5000213101872": {
-    "name": "Guinness Draught Stout",
+    "categories": [
+      "beer"
+    ],
+    "name": "Guinness БИРА 4,2% Draught Stout 440ml can",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-20",
         "price": 2.52,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.52,
+        "shop": null,
         "unit": "pcs"
       }
     ]
