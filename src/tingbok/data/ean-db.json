@@ -1797,6 +1797,13 @@
         "price": 1.58,
         "shop": "Praktiker Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-26",
+        "price": 1.58,
+        "shop": "Praktiker Варна",
+        "unit": "pcs"
       }
     ]
   },
