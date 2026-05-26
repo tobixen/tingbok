@@ -1359,7 +1359,7 @@
     "categories": [
       "brush"
     ],
-    "name": "Antares UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 MM universal paint brush 30mm (Code 3601)",
+    "name": "Antares universal paint brush 30mm",
     "prices": [
       {
         "currency": "EUR",
@@ -1381,6 +1381,21 @@
         "price": 0.69,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-26",
+        "price": 0.69,
+        "shop": "Praktiker Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-26",
+        "last_seen": "2026-05-26",
+        "name": "UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 ММ",
+        "shop": "Praktiker Варна"
       }
     ]
   },
@@ -4086,14 +4101,21 @@
   },
   "9002588435206": {
     "categories": [
-      "brush/paint"
+      "measuring-tool"
     ],
-    "name": "Schuller Eh'klar universal paint brush 30mm",
+    "name": "Schuller Eh'klar combination angle square with 3 edges",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-26",
         "price": 0.69,
+        "shop": "Praktiker Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-26",
+        "price": 2.7,
         "shop": "Praktiker Варна",
         "unit": "pcs"
       }
@@ -4104,6 +4126,12 @@
         "first_seen": "2026-05-26",
         "last_seen": "2026-05-26",
         "name": "UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 ММ",
+        "shop": "Praktiker Варна"
+      },
+      {
+        "first_seen": "2026-05-26",
+        "last_seen": "2026-05-26",
+        "name": "ВЪГЪЛ КОМБИНИРАН С 3 РЪБА",
         "shop": "Praktiker Варна"
       }
     ]
