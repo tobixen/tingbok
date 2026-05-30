@@ -524,6 +524,7 @@ concepts:
     - https://dbpedia.org/resource/Spice
     - https://www.wikidata.org/entity/Q42527
     - https://aims.fao.org/aos/agrovoc/c_7042
+    - https://aims.fao.org/aos/agrovoc/c_15685
     - gpt:455
 
   food/spices/herb:

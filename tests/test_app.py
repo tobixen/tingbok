@@ -391,6 +391,61 @@ async def test_resolve_no_duplicate_stub_for_same_uri_different_path_segment(cli
 
 
 @pytest.mark.anyio
+async def test_resolve_no_stub_for_unmapped_uri_that_matches_vocab_concept(client):
+    """When a path segment's URI is not in vocab but should map to a vocabulary concept,
+    the segment's derived stub must not appear as a disconnected duplicate.
+
+    Reproduces: AGROVOC has two 'Spices' concepts — c_7042 (food/condiment, mapped in vocab
+    as food/spices) and c_15685 (plant-product spices, not in vocab).  When cumin's AGROVOC
+    path uses c_15685, a stub 'spices' was created that is disconnected from 'food/spices'.
+    Adding c_15685 to food/spices source_uris fixes both the stub and the broader bridging.
+    """
+    _AGROVOC_SPICES_CROP_URI = "https://aims.fao.org/aos/agrovoc/c_15685"
+    _AGROVOC_CUMIN_URI = "https://aims.fao.org/aos/agrovoc/c_10205"
+
+    mock_concepts_local = {
+        "cumin": {"uri": _AGROVOC_CUMIN_URI, "prefLabel": "Cumin", "source": "agrovoc"},
+    }
+    mock_paths_local = {
+        "cumin": (
+            ["food/plant_products/spices/cumin"],
+            True,
+            {
+                "food/plant_products/spices": _AGROVOC_SPICES_CROP_URI,
+                "food/plant_products/spices/cumin": _AGROVOC_CUMIN_URI,
+            },
+        ),
+    }
+
+    def _lookup(label: str, lang: str, source: str, cache_dir: object) -> dict | None:
+        if source != "agrovoc":
+            return None
+        return mock_concepts_local.get(label.lower())
+
+    def _hierarchy(
+        label: str, lang: str, source: str, cache_dir: object, **_kw: object
+    ) -> tuple[list[str], bool, dict[str, str]]:
+        if source != "agrovoc":
+            return [], False, {}
+        return mock_paths_local.get(label.lower(), ([], False, {}))
+
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=_lookup):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_hierarchy):
+            response = await client.post(
+                "/api/vocabulary/resolve",
+                json={"labels": ["cumin"], "lang": "en"},
+            )
+    assert response.status_code == 200
+    data = response.json()
+    concepts = data["concepts"]
+    assert "cumin" in concepts, "cumin must be resolved"
+    assert "food/spices" in concepts, f"'food/spices' vocabulary concept must be included; got: {list(concepts.keys())}"
+    assert "spices" not in concepts, (
+        f"'spices' stub must not appear as a disconnected duplicate of food/spices; got: {list(concepts.keys())}"
+    )
+
+
+@pytest.mark.anyio
 async def test_resolve_batch_cooking_oil_matches_olive_and_sunflower(client):
     """Batch resolve: olive-oil and sunflower-oil should have cooking-oil as ancestor.
 
