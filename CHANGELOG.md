@@ -10,6 +10,14 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Fixed
 
+- **Singular and plural labels now resolve to the same concept** —
+  `GET /api/lookup/fruit-juice` and `/api/lookup/fruit-juices` returned different
+  concepts: the singular matched the `fruit juice` altLabel of the `juice` concept,
+  while the plural fell through to a network SKOS lookup.  The singular/plural step in
+  `_lookup_in_vocabulary` now generates number variations of every separator form
+  (so `fruit-juices` is tried as `fruit juice`) and — like the exact-match step —
+  also consults the runtime-enriched label caches (`_fetched_labels` /
+  `_fetched_alt_labels`), where altLabels such as `fruit juice` live.
 - **Cache refresh loop now handles legacy entries written before `_cache_key` was added** —
   ~7 800 SKOS cache files (up to 55 days old) were silently skipped by
   `_find_oldest_cache_entry` because they lacked the `_cache_key` field, causing the

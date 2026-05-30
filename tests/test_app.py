@@ -1858,3 +1858,42 @@ def test_git_commit_data_handles_missing_files(tmp_path: Path) -> None:
 
     # Should not raise even though ean-db.json and vocabulary.yaml don't exist
     _git_commit_data(tmp_path, frozenset())
+
+
+@pytest.fixture
+def _temp_juice_altlabel():
+    """Register 'fruit juice' as an enriched altLabel on the local ``juice`` concept.
+
+    Mirrors the live server, where the English altLabel is added at runtime via
+    background SKOS enrichment (``_fetched_alt_labels``) rather than living in
+    the static vocabulary.  Restored after the test.
+    """
+    import tingbok.app as app_module
+
+    original = app_module._fetched_alt_labels.get("juice")
+    app_module._fetched_alt_labels["juice"] = {"en": ["fruit juice"]}
+    try:
+        yield
+    finally:
+        if original is None:
+            app_module._fetched_alt_labels.pop("juice", None)
+        else:
+            app_module._fetched_alt_labels["juice"] = original
+
+
+@pytest.mark.usefixtures("_temp_juice_altlabel")
+def test_singular_and_plural_resolve_to_same_concept() -> None:
+    """``fruit-juice`` and ``fruit-juices`` must resolve to the same concept.
+
+    Both are separator/number variants of the ``juice`` concept's ``fruit juice``
+    altLabel, so neither should fall through to a network SKOS lookup.
+    """
+    from tingbok.app import _lookup_in_vocabulary
+
+    singular = _lookup_in_vocabulary("fruit-juice", "en")
+    plural = _lookup_in_vocabulary("fruit-juices", "en")
+
+    assert singular is not None, "singular 'fruit-juice' should resolve to a vocabulary concept"
+    assert plural is not None, "plural 'fruit-juices' should resolve to a vocabulary concept"
+    assert singular.id == "juice"
+    assert plural.id == singular.id, f"plural resolved to {plural.id!r}, singular to {singular.id!r}"
