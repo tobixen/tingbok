@@ -128,6 +128,12 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Changed
 
+- **Singular/plural inflection consolidated into `tingbok.text.number_variations`** —
+  the AGROVOC/SKOS, OFF and GPT lookups previously each carried their own copy of the
+  heuristic (one of which mis-handled e-ending nouns, turning `juices` into `juic`
+  instead of `juice`).  They now share one implementation owned by tingbok, so OFF and
+  GPT label lookups also benefit from the corrected rules.
+
 - **Default SKOS cache TTL raised from 60 to 90 days; refresh divisor from 100 to
   200** — the background cache refresh loop now wakes up less frequently; both values
   remain configurable via `TINGBOK_CACHE_MAX_AGE_DAYS` and

@@ -15,6 +15,8 @@ from pathlib import Path
 
 import niquests
 
+from tingbok.text import number_variations
+
 logger = logging.getLogger(__name__)
 
 
@@ -1279,34 +1281,14 @@ def get_agrovoc_store(cache_dir: Path) -> object | None:  # noqa: ARG001
 
 
 def _label_variations(label: str) -> list[str]:
-    """Generate singular/plural label variations for AGROVOC SKOS-XL lookup.
+    """Singular/plural label variations for AGROVOC SKOS-XL lookup.
 
-    Mirrors the same logic used in inventory-md's ``_lookup_agrovoc_oxigraph``.
+    Wraps the shared :func:`tingbok.text.number_variations` and pairs each
+    lowercase variant with its title-case form, because SKOS-XL ``literalForm``
+    matching in the SPARQL query is case-sensitive.
     """
-    base = label.lower()
-    variations = [base]
-
-    if base.endswith("y") and len(base) > 2 and base[-2] not in "aeiou":
-        variations.append(base[:-1] + "ies")  # berry -> berries
-    elif base.endswith(("s", "x", "z", "ch", "sh", "o")):
-        variations.append(base + "es")  # potato -> potatoes
-    else:
-        variations.append(base + "s")  # tool -> tools
-    if base.endswith("o"):
-        variations.append(base + "s")  # photo -> photos
-
-    if base.endswith("ies") and len(base) > 3:
-        variations.append(base[:-3] + "y")  # berries -> berry
-    elif base.endswith("oes") and len(base) > 3:
-        variations.append(base[:-2])  # potatoes -> potato
-    elif base.endswith("es") and len(base) > 2:
-        variations.append(base[:-2])  # brushes -> brush
-    elif base.endswith("s") and len(base) > 1:
-        variations.append(base[:-1])  # tools -> tool
-
-    # Add title-case variants; deduplicate while preserving order
-    with_title = []
-    for v in variations:
+    with_title: list[str] = []
+    for v in number_variations(label):
         with_title.append(v)
         with_title.append(v.title())
     return list(dict.fromkeys(with_title))

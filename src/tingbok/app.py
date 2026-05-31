@@ -33,6 +33,7 @@ from tingbok.services import ean as ean_service
 from tingbok.services import gpt as gpt_service
 from tingbok.services import off as off_service
 from tingbok.services import skos as skos_service
+from tingbok.text import number_variations
 
 logger = logging.getLogger(__name__)
 
@@ -1159,11 +1160,9 @@ def _lookup_in_vocabulary(label: str, lang: str) -> VocabularyConcept | None:
     #    singular "fruit-juice" is), and — like step 3 — matches them against
     #    prefLabels, altLabels, and the runtime-enriched label caches, where
     #    altLabels such as "fruit juice" typically live.  Reuses ``label_variants``
-    #    (separators) and ``off._generate_variations`` (number) so the inflection
+    #    (separators) and ``text.number_variations`` (number) so the inflection
     #    rules live in one place.
-    number_variants = {
-        v.lower() for base in label_variants for v in off_service._generate_variations(base)
-    } - label_variants
+    number_variants = {v for base in label_variants for v in number_variations(base)} - label_variants
     if number_variants:
         for concept_id, vdata in vocabulary.items():
             if vdata.get("prefLabel", "").lower() in number_variants:

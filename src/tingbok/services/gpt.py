@@ -28,6 +28,8 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
+from tingbok.text import number_variations
+
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
@@ -185,18 +187,9 @@ def lookup_concept(label: str, lang: str, cache_dir: Path) -> dict | None:
 
     index = _parse_gpt_file(gpt_file)
 
-    # Try exact match, then simple plural/singular variants
-    key = label.lower()
-    label_candidates = [key]
-    if key.endswith("s"):
-        label_candidates.append(key[:-1])  # "pillows" → "pillow"
-        if key.endswith("es") and len(key) > 3:
-            label_candidates.append(key[:-2])  # "boxes" → "box"
-    else:
-        label_candidates.append(key + "s")  # "pillow" → "pillows"
-
+    # Try exact match, then singular/plural variants
     entry = None
-    for candidate in label_candidates:
+    for candidate in number_variations(label):
         entry = index.get(candidate)
         if entry is not None:
             break

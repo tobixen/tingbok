@@ -18,6 +18,8 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from tingbok.text import number_variations
+
 logger = logging.getLogger(__name__)
 
 #: Module-level cached taxonomy (None = not loaded yet).
@@ -86,39 +88,6 @@ def _build_label_index(taxonomy: object) -> dict[str, str]:
 
     _label_index = index
     return _label_index
-
-
-def _generate_variations(label: str) -> list[str]:
-    """Generate singular/plural variations of *label* (lowercase).
-
-    Mirrors ``_generate_variations`` in inventory-md's ``off.py``.
-    """
-    variations: list[str] = []
-
-    # Plural → singular
-    if label.endswith("ies") and len(label) > 4:
-        variations.append(label[:-3] + "y")
-    elif label.endswith("oes") and len(label) > 4:
-        variations.append(label[:-2])
-    elif label.endswith("es") and len(label) > 3:
-        stem = label[:-2]
-        if stem.endswith(("s", "x", "z", "ch", "sh")):
-            variations.append(stem)
-        else:
-            variations.append(label[:-1])
-    elif label.endswith("s") and not label.endswith(("ss", "us", "is")):
-        variations.append(label[:-1])
-
-    # Singular → plural
-    if not label.endswith("s"):
-        if label.endswith("y") and len(label) > 2 and label[-2] not in "aeiou":
-            variations.append(label[:-1] + "ies")
-        elif label.endswith(("s", "x", "z", "ch", "sh", "o")):
-            variations.append(label + "es")
-        else:
-            variations.append(label + "s")
-
-    return variations
 
 
 def get_labels(uri: str, languages: list[str]) -> dict[str, str]:
@@ -233,7 +202,7 @@ def lookup_concept(label: str, lang: str = "en", cache_dir: Path | None = None) 
     node_id = index.get(label_lower)
 
     if node_id is None:
-        for var in _generate_variations(label_lower):
+        for var in number_variations(label_lower):
             node_id = index.get(var)
             if node_id is not None:
                 break
