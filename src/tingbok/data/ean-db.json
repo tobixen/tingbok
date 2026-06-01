@@ -4115,13 +4115,6 @@
       {
         "currency": "EUR",
         "date": "2026-05-26",
-        "price": 0.69,
-        "shop": "Praktiker Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-05-26",
         "price": 2.7,
         "shop": "Praktiker Варна",
         "unit": "pcs"
@@ -4129,12 +4122,6 @@
     ],
     "quantity": "30mm",
     "receipt_names": [
-      {
-        "first_seen": "2026-05-26",
-        "last_seen": "2026-05-26",
-        "name": "UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 ММ",
-        "shop": "Praktiker Варна"
-      },
       {
         "first_seen": "2026-05-26",
         "last_seen": "2026-05-26",
