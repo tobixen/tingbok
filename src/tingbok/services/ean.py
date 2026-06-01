@@ -372,6 +372,26 @@ def load_ean_observations(path: Path) -> dict[str, Any]:
         return {}
 
 
+def prune_superseded_null_prices(prices: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Remove null-date/null-shop price entries that are superseded by a richer entry.
+
+    An entry is superseded when another entry in the same list shares the same
+    (currency, price, unit) but has at least one of date or shop set.
+    """
+    dated_keys = {
+        (ep.get("currency"), ep.get("price"), ep.get("unit"))
+        for ep in prices
+        if ep.get("date") is not None or ep.get("shop") is not None
+    }
+    return [
+        p
+        for p in prices
+        if p.get("date") is not None
+        or p.get("shop") is not None
+        or (p.get("currency"), p.get("price"), p.get("unit")) not in dated_keys
+    ]
+
+
 def save_ean_observation(
     path: Path,
     ean: str,
@@ -400,7 +420,7 @@ def save_ean_observation(
             key = (p.get("date"), p.get("currency"), p.get("price"))
             if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in existing_prices):
                 existing_prices.append(p)
-        entry["prices"] = existing_prices
+        entry["prices"] = prune_superseded_null_prices(existing_prices)
     if receipt_names:
         existing_rn: list[dict[str, Any]] = entry.get("receipt_names", [])
         for rn in receipt_names:
@@ -453,7 +473,7 @@ def merge_observation(result: dict[str, Any], observation: dict[str, Any]) -> di
             key = (p.get("date"), p.get("currency"), p.get("price"))
             if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in existing_prices):
                 existing_prices.append(p)
-        merged["prices"] = existing_prices
+        merged["prices"] = prune_superseded_null_prices(existing_prices)
     obs_rn: list[dict[str, Any]] = observation.get("receipt_names") or []
     if obs_rn:
         existing_rn: list[dict[str, Any]] = list(merged.get("receipt_names") or [])

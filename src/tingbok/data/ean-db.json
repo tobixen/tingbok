@@ -100,20 +100,6 @@
       },
       {
         "currency": "EUR",
-        "date": null,
-        "price": 1.02,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.04,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-16",
         "price": 2.04,
         "shop": "Lidl Варна бул. Вл. Варненчик 257",
@@ -145,13 +131,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 0.86,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-16",
         "price": 0.86,
         "shop": "Lidl Варна бул. Вл. Варненчик 257",
@@ -173,13 +152,6 @@
     ],
     "name": "ITALIAMO ПРОШУТО КРУДО prosciutto crudo 100g",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.55,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-16",
@@ -216,13 +188,6 @@
         "price": 1.12,
         "shop": null,
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.12,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "200ml",
@@ -242,13 +207,6 @@
     ],
     "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.75,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-16",
@@ -274,13 +232,6 @@
     ],
     "name": "Nixe САРДИНИ sardines in tomato sauce",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.95,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-11",
@@ -310,13 +261,6 @@
         "date": "2026-05-02",
         "price": 2.79,
         "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.79,
-        "shop": null,
         "unit": "pcs"
       },
       {
@@ -373,13 +317,6 @@
         "price": 2.55,
         "shop": "Lidl Варна",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.55,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "300g"
@@ -395,13 +332,6 @@
         "date": "2026-05-20",
         "price": 2.29,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.29,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -460,13 +390,6 @@
         "price": 0.37,
         "shop": "Lidl Varna",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.37,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "500g",
@@ -498,13 +421,6 @@
         "date": "2026-05-08",
         "price": 1.22,
         "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.22,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -566,13 +482,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 2.55,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-16",
         "price": 2.55,
         "shop": "Lidl Варна бул. Вл. Варненчик 257",
@@ -629,13 +538,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 3.57,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-11",
         "price": 3.57,
         "shop": "Lidl Varna",
@@ -658,13 +560,6 @@
     ],
     "name": "Baresa Double-concentrated Tomato Paste",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.86,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-08",
@@ -728,13 +623,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 1.19,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-16",
         "price": 1.19,
         "shop": "Lidl Варна бул. Вл. Варненчик 257",
@@ -772,13 +660,6 @@
     ],
     "name": "КУХНЕНСКИ РОЛКИ 3ПЛ. kitchen rolls 3-ply (Lidl, added 2026-05-11)",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.11,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-11",
@@ -833,13 +714,6 @@
         "price": 4.49,
         "shop": "Lidl Варна",
         "unit": "kg"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 4.49,
-        "shop": null,
-        "unit": "kg"
       }
     ],
     "quantity": "282g",
@@ -863,13 +737,6 @@
         "date": "2026-05-02",
         "price": 2.4,
         "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.4,
-        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -922,13 +789,6 @@
         "date": "2026-05-02",
         "price": 1.02,
         "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.02,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1012,13 +872,6 @@
         "price": 2.55,
         "shop": "Lidl Варна",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.55,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "300g",
@@ -1057,13 +910,6 @@
         "date": "2026-05-20",
         "price": 4.34,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 4.34,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1134,13 +980,6 @@
         "date": "2026-05-02",
         "price": 2.99,
         "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.99,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1235,13 +1074,6 @@
         "price": 8.99,
         "shop": "Bulmag",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 8.99,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "500ml",
@@ -1260,13 +1092,6 @@
     ],
     "name": "Seltse ЛЮТЕНИЦА ФИН. traditional lyutenitsa (pepper-tomato spread)",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.04,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-11",
@@ -1296,13 +1121,6 @@
         "date": "2026-05-23",
         "price": 5.39,
         "shop": "Bulmag",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 5.39,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1377,13 +1195,6 @@
       },
       {
         "currency": "EUR",
-        "date": null,
-        "price": 0.69,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-26",
         "price": 0.69,
         "shop": "Praktiker Варна",
@@ -1425,13 +1236,6 @@
         "date": "2026-05-23",
         "price": 0.9,
         "shop": "Bulmag",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.9,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1501,13 +1305,6 @@
         "date": "2026-05-23",
         "price": 1.36,
         "shop": "Bulmag",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.36,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1617,13 +1414,6 @@
         "price": 1.59,
         "shop": "Bulmag",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.59,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "500g",
@@ -1664,13 +1454,6 @@
         "price": 1.52,
         "shop": "Lidl Варна",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.52,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -1693,13 +1476,6 @@
         "date": "2026-05-23",
         "price": 2.43,
         "shop": "Bulmag",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.43,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1762,13 +1538,6 @@
         "price": 3.06,
         "shop": "Praktiker Варна",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 3.06,
-        "shop": null,
-        "unit": "pcs"
       }
     ]
   },
@@ -1799,13 +1568,6 @@
     ],
     "name": "Ciret wallpaper spatula 28cm",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.58,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-20",
@@ -1883,13 +1645,6 @@
         "date": "2026-01-28",
         "price": 2.05,
         "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.05,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -1970,13 +1725,6 @@
       },
       {
         "currency": "EUR",
-        "date": null,
-        "price": 1.43,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-03-07",
         "price": 1.43,
         "shop": "Lidl Varna",
@@ -2026,13 +1774,6 @@
         "price": 2.55,
         "shop": "Lidl Varna",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.55,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "150g",
@@ -2071,13 +1812,6 @@
         "price": 1.43,
         "shop": null,
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.43,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "1l",
@@ -2101,13 +1835,6 @@
         "date": "2026-05-02",
         "price": 2.49,
         "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.49,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -2151,13 +1878,6 @@
         "price": 0.66,
         "shop": "Lidl Varna",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.66,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "9g",
@@ -2182,13 +1902,6 @@
         "price": 0.97,
         "shop": "Lidl Варна",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.97,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "500g"
@@ -2205,13 +1918,6 @@
     ],
     "name": "Kania КЕТЧУП 78% ДОМАТ.ПЮР ketchup",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.42,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-11",
@@ -2241,13 +1947,6 @@
         "date": "2026-05-02",
         "price": 2.55,
         "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.55,
-        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -2281,23 +1980,9 @@
       },
       {
         "currency": "EUR",
-        "date": null,
-        "price": 2.65,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-02",
         "price": 3.32,
         "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 3.32,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -2318,13 +2003,6 @@
     ],
     "name": "Freshona МЛАДА ЦАРЕВИЦА sweet corn",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.12,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-11",
@@ -2385,13 +2063,6 @@
         "date": "2026-03-11",
         "price": 5.11,
         "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 5.11,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -2474,13 +2145,6 @@
         "unit": "pcs"
       },
       {
-        "currency": "EUR",
-        "date": null,
-        "price": 3.99,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
         "currency": "BGN",
         "date": "2026-05-04",
         "price": 3.99,
@@ -2534,13 +2198,6 @@
       },
       {
         "currency": "EUR",
-        "date": null,
-        "price": 2.04,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-16",
         "price": 2.04,
         "shop": "Lidl Варна бул. Вл. Варненчик 257",
@@ -2575,13 +2232,6 @@
         "date": "2026-03-20",
         "price": 1.79,
         "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.79,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -2641,13 +2291,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 2.2,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-11",
         "price": 2.2,
         "shop": "Lidl Varna",
@@ -2683,13 +2326,6 @@
         "date": "2026-03-04",
         "price": 1.53,
         "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.53,
-        "shop": null,
         "unit": "pcs"
       },
       {
@@ -2752,13 +2388,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 2.19,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-11",
         "price": 2.19,
         "shop": "Lidl Varna",
@@ -2807,13 +2436,6 @@
     ],
     "name": "Родна стряха ЛУКАНКОВ САЛАМ lukanka salam",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 5.62,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-16",
@@ -2940,13 +2562,6 @@
         "price": 0.4,
         "shop": "Lidl Varna",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.4,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "500ml",
@@ -2971,13 +2586,6 @@
         "price": 3.06,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 3.06,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -3000,13 +2608,6 @@
         "date": "2026-05-20",
         "price": 0.5,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.5,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -3081,13 +2682,6 @@
         "price": 4.49,
         "shop": "Lidl Варна",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 4.49,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -3160,13 +2754,6 @@
         "date": "2026-05-20",
         "price": 2.52,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.52,
-        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -3290,13 +2877,6 @@
         "price": 1.55,
         "shop": "Bulmag",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.55,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "500ml",
@@ -3398,13 +2978,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 0.89,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-11",
         "price": 0.89,
         "shop": "Lidl Varna",
@@ -3445,13 +3018,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 1.02,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-11",
         "price": 1.02,
         "shop": "Lidl Varna",
@@ -3477,13 +3043,6 @@
     ],
     "name": "Millano ШОКОЛАД С ПЪЛН КАРАМ milk chocolate with caramel filling",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.02,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-05-16",
@@ -3810,13 +3369,6 @@
         "price": 2.89,
         "shop": "Bulmag",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.89,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "40m",
@@ -3847,13 +3399,6 @@
         "price": 5.62,
         "shop": "Lidl Варна",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 5.62,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "750ml"
@@ -3875,13 +3420,6 @@
         "date": "2026-05-23",
         "price": 2.48,
         "shop": "Bulmag",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.48,
-        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -4025,13 +3563,6 @@
         "price": 1.01,
         "shop": "Bulmag",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.01,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "20g",
@@ -4061,13 +3592,6 @@
         "date": "2026-05-20",
         "price": 5.47,
         "shop": "Praktiker Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 5.47,
-        "shop": null,
         "unit": "pcs"
       }
     ],

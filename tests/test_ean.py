@@ -524,6 +524,66 @@ class TestEanObservations:
         data = ean_service.load_ean_observations(path)
         assert len(data["111"]["prices"]) == 1
 
+    def test_null_price_not_added_when_dated_entry_exists(self, tmp_path: Path) -> None:
+        """Null-date/shop price entry is skipped if a dated entry with same price/currency/unit exists."""
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        dated = {"date": "2026-01-01", "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": "Shop A"}
+        null_entry = {"date": None, "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": None}
+        ean_service.save_ean_observation(path, "111", [], None, prices=[dated])
+        ean_service.save_ean_observation(path, "111", [], None, prices=[null_entry])
+        data = ean_service.load_ean_observations(path)
+        assert len(data["111"]["prices"]) == 1
+        assert data["111"]["prices"][0]["date"] == "2026-01-01"
+
+    def test_null_price_pruned_when_dated_entry_added(self, tmp_path: Path) -> None:
+        """When a dated entry arrives for an existing null-date entry, the null entry is removed."""
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        null_entry = {"date": None, "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": None}
+        dated = {"date": "2026-01-01", "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": "Shop A"}
+        ean_service.save_ean_observation(path, "111", [], None, prices=[null_entry])
+        ean_service.save_ean_observation(path, "111", [], None, prices=[dated])
+        data = ean_service.load_ean_observations(path)
+        assert len(data["111"]["prices"]) == 1
+        assert data["111"]["prices"][0]["date"] == "2026-01-01"
+
+    def test_null_price_kept_when_no_dated_counterpart(self, tmp_path: Path) -> None:
+        """Null-date/shop price entry is kept when no dated entry with same price/currency/unit exists."""
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        null_entry = {"date": None, "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": None}
+        ean_service.save_ean_observation(path, "111", [], None, prices=[null_entry])
+        data = ean_service.load_ean_observations(path)
+        assert len(data["111"]["prices"]) == 1
+
+    def test_merge_observation_null_price_not_added_when_superseded(self) -> None:
+        """merge_observation skips null-date/shop price when a dated entry for same price exists."""
+        from tingbok.services import ean as ean_service
+
+        dated = {"date": "2026-01-01", "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": "Shop A"}
+        null_entry = {"date": None, "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": None}
+        result = {"ean": "1", "source": "off", "categories": [], "prices": [dated]}
+        obs = {"prices": [null_entry]}
+        merged = ean_service.merge_observation(result, obs)
+        assert len(merged["prices"]) == 1
+        assert merged["prices"][0]["date"] == "2026-01-01"
+
+    def test_merge_observation_null_price_pruned_when_dated_entry_added(self) -> None:
+        """merge_observation removes existing null-date entry when a dated entry for same price arrives."""
+        from tingbok.services import ean as ean_service
+
+        null_entry = {"date": None, "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": None}
+        dated = {"date": "2026-01-01", "currency": "EUR", "price": 1.5, "unit": "pcs", "shop": "Shop A"}
+        result = {"ean": "1", "source": "off", "categories": [], "prices": [null_entry]}
+        obs = {"prices": [dated]}
+        merged = ean_service.merge_observation(result, obs)
+        assert len(merged["prices"]) == 1
+        assert merged["prices"][0]["date"] == "2026-01-01"
+
     def test_save_permission_error_is_logged_and_raised(self, tmp_path: Path) -> None:
         """PermissionError on write should be logged at ERROR level and re-raised."""
         from unittest.mock import patch

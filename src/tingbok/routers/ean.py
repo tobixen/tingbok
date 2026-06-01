@@ -81,7 +81,7 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
             key = (p.get("date"), p.get("currency"), p.get("price"))
             if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in existing):
                 existing.append(p)
-        entry["prices"] = existing
+        entry["prices"] = ean_service.prune_superseded_null_prices(existing)
     if receipt_names_raw:
         existing_rn = entry.get("receipt_names", [])
         for rn in receipt_names_raw:
