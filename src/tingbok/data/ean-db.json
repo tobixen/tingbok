@@ -1357,9 +1357,9 @@
   },
   "3800047336011": {
     "categories": [
-      "brush"
+      "brush/paint"
     ],
-    "name": "Antares universal paint brush 30mm",
+    "name": "UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 ММ universal paint brush 30mm (Praktiker Art. 149020)",
     "prices": [
       {
         "currency": "EUR",
@@ -1912,9 +1912,9 @@
   },
   "4054500440916": {
     "categories": [
-      "food/beverages/beer"
+      "gloves"
     ],
-    "name": "ST.BREW Craft Beer (black can, 500ml)",
+    "name": "Würth РЪКАВИЦИ МЕХАНИЦИ RED LATEX Red Latex mechanics gloves",
     "prices": [
       {
         "currency": "EUR",
@@ -1928,6 +1928,13 @@
         "date": "2026-05-24",
         "price": 1.02,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.38,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -2073,7 +2080,7 @@
   },
   "4056489108160": {
     "categories": [
-      "milk"
+      "uht-milk"
     ],
     "name": "Pilos МЛЯКО UHT 3,5% UHT whole milk (added 2026-04-29)",
     "prices": [
