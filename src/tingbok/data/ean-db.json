@@ -2682,6 +2682,13 @@
         "price": 4.49,
         "shop": "Lidl Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.49,
+        "shop": null,
+        "unit": "6"
       }
     ],
     "receipt_names": [
