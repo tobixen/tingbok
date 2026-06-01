@@ -1922,20 +1922,6 @@
         "price": 1.38,
         "shop": "Praktiker Варна",
         "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-05-24",
-        "price": 1.02,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.38,
-        "shop": null,
-        "unit": "pcs"
       }
     ],
     "quantity": "500ml",
@@ -1945,12 +1931,6 @@
         "last_seen": "2026-05-20",
         "name": "WURTH РЪКАВИЦИ МЕХАНИЦИ RED LATEX",
         "shop": "Praktiker Варна"
-      },
-      {
-        "first_seen": "2026-05-24",
-        "last_seen": "2026-05-24",
-        "name": "ST.BREW КРАФТ БИРА",
-        "shop": "Lidl Varna"
       }
     ]
   },
