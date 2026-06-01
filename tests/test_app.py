@@ -790,7 +790,7 @@ async def test_agrovoc_excluded_for_mismatch_concepts(client, concept_id):
 
 
 @pytest.mark.anyio
-async def test_discover_source_uris_populates_memory(client):
+async def test_discover_source_uris_populates_memory():
     """Auto-discovery should add external URIs for concepts with empty source_uris."""
     import tingbok.app as app_module
 
@@ -815,7 +815,7 @@ async def test_discover_source_uris_populates_memory(client):
 
 
 @pytest.mark.anyio
-async def test_discover_skips_concepts_with_known_uris(client):
+async def test_discover_skips_concepts_with_known_uris():
     """Discovery should skip concepts that already have external URIs in vocabulary.yaml."""
     import tingbok.app as app_module
 
@@ -844,7 +844,7 @@ async def test_discover_skips_concepts_with_known_uris(client):
 
 
 @pytest.mark.anyio
-async def test_discover_skips_excluded_sources(client):
+async def test_discover_skips_excluded_sources():
     """Discovery should not query sources listed in excluded_sources."""
     import tingbok.app as app_module
 

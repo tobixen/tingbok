@@ -4,6 +4,7 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 
 import tingbok.app as app_module
+import tingbok.services.skos as skos_service_module
 from tingbok.app import app
 
 
@@ -45,6 +46,25 @@ def skos_cache_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 
 @pytest.fixture
-async def client():
+def _no_background_tasks(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Stub lifespan background tasks so tests never make real outbound HTTPS calls.
+
+    The lifespan starts three long-running coroutines that call external APIs
+    (Wikidata, DBpedia, AGROVOC cache refresh).  Cancelling them on shutdown
+    does not stop already-running asyncio.to_thread() calls, leaving SSL sockets
+    open.  Python's GC then raises ResourceWarning during the *next* test, which
+    pytest (filterwarnings=error) converts into a failure.
+    """
+
+    async def _noop(*args: object, **kwargs: object) -> None:
+        pass
+
+    monkeypatch.setattr(app_module, "_discover_source_uris_background", _noop)
+    monkeypatch.setattr(app_module, "_fetch_labels_background", _noop)
+    monkeypatch.setattr(skos_service_module, "cache_refresh_loop", _noop)
+
+
+@pytest.fixture
+async def client(_no_background_tasks: None) -> AsyncClient:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         yield ac
