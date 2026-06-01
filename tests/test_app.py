@@ -131,6 +131,29 @@ async def test_resolve_vocabulary_known_concept(client):
 
 
 @pytest.mark.anyio
+async def test_resolve_vocabulary_altlabel_input_included_in_response(client):
+    """Input label that matches a vocab concept via altLabel must appear in response.
+
+    'fresh-milk' is an altLabel of 'whole-milk' in vocabulary.yaml.  When
+    resolve is called with 'fresh-milk', the response must include 'fresh-milk'
+    as a key (not silently drop it because the canonical ID differs) and must
+    NOT list it as unresolved.  'whole-milk' and its ancestors must also be
+    present.
+    """
+    response = await client.post("/api/vocabulary/resolve", json={"labels": ["fresh-milk"], "lang": "en"})
+    assert response.status_code == 200
+    data = response.json()
+    concepts = data["concepts"]
+    # The input label must be present so the client can resolve it
+    assert "fresh-milk" in concepts, "input altLabel 'fresh-milk' must appear as a concept key"
+    # It must not be listed as unresolved
+    assert "fresh-milk" not in data["unresolved"]
+    # The canonical concept and its ancestors must be included too
+    assert "whole-milk" in concepts
+    assert "milk" in concepts
+
+
+@pytest.mark.anyio
 async def test_resolve_vocabulary_unknown_label_becomes_stub(client):
     """An unknown label is returned as a stub and listed in unresolved."""
     response = await client.post("/api/vocabulary/resolve", json={"labels": ["my-custom-category"], "lang": "en"})

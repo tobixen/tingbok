@@ -1276,9 +1276,24 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
     concepts: dict[str, VocabularyConcept] = {}
     unresolved: list[str] = []
 
-    # Add vocabulary hits (with full ancestor chain)
+    # Add vocabulary hits (with full ancestor chain).
+    # When the input label differs from the canonical concept ID (e.g. altLabel
+    # "fresh-milk" → concept "whole-milk"), also add a bridge entry keyed by the
+    # input label so the client can resolve the original label back to its canonical
+    # concept without a second lookup.
     for _label, hit in vocab_hits.items():
         _collect_with_ancestors(hit.id, concepts)
+        if _label != hit.id and _label not in concepts:
+            concepts[_label] = VocabularyConcept(
+                id=_label,
+                prefLabel=hit.prefLabel,
+                broader=[hit.id],
+                narrower=[],
+                uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{_label}",
+                source_uris=hit.source_uris,
+                labels=hit.labels,
+                altLabel=hit.altLabel,
+            )
 
     for label, per_source, uri_map in skos_fetches:
         lookup_label = label.replace("_", " ").replace("-", " ")
