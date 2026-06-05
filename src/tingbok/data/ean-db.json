@@ -813,12 +813,19 @@
         "price": 1.17,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-31",
+        "price": 1.17,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
       {
         "first_seen": "2026-05-28",
-        "last_seen": "2026-05-28",
+        "last_seen": "2026-05-31",
         "name": "СВЕТЛА БИРА 3,0%",
         "shop": "Lidl Varna"
       }
@@ -2547,13 +2554,20 @@
         "price": 1.53,
         "shop": "Lidl Варна бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-31",
+        "price": 1.53,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "1kg",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-03-11",
+        "last_seen": "2026-05-31",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl Varna"
       },
@@ -2744,13 +2758,24 @@
   },
   "4304493257153": {
     "categories": [
-      "food/beer"
+      "food/beer",
+      "food/beverages",
+      "alcohol",
+      "beers",
+      "lagers"
     ],
-    "name": "Deep Beer 3% 500ml can",
+    "name": "3% beer",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-24",
+        "price": 0.4,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-31",
         "price": 0.4,
         "shop": "Lidl Varna",
         "unit": "pcs"
@@ -2760,7 +2785,7 @@
     "receipt_names": [
       {
         "first_seen": "2026-05-24",
-        "last_seen": "2026-05-24",
+        "last_seen": "2026-05-31",
         "name": "БИРА 3 % КЕН",
         "shop": "Lidl Varna"
       }
@@ -2808,6 +2833,13 @@
         "price": 0.25,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-31",
+        "price": 0.5,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -2819,7 +2851,7 @@
       },
       {
         "first_seen": "2026-05-24",
-        "last_seen": "2026-05-24",
+        "last_seen": "2026-05-31",
         "name": "БИРА ГР. RADLER 2.5%",
         "shop": "Lidl Varna"
       }
