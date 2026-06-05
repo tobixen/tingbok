@@ -353,6 +353,30 @@
     "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)",
     "source": "manual"
   },
+  "20148201": {
+    "categories": [
+      "food/meat/pork"
+    ],
+    "name": "Baroni pork meat in own sauce tin 400g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 2.55,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "400g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "СВ. ВА. В СОБСТ. СОС",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "20149291": {
     "categories": [
       "food/meat/sausage"
