@@ -810,16 +810,24 @@
   },
   "20508098": {
     "categories": [
-      "salad"
+      "food/salad"
     ],
-    "name": "Lidl ИТАЛИАН.САЛАТА 125Г Italian salad mix 125g",
+    "name": "Lidl Italian Salad Mix 125g",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-05-24",
         "price": 0.76,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "ИТАЛИАН.САЛАТА 125Г",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1162,16 +1170,24 @@
   },
   "3800022404124": {
     "categories": [
-      "beer"
+      "food/beer"
     ],
-    "name": "ARIANA LAGERBIER 4,5% Ariana lager beer 500ml",
+    "name": "Ariana Lager Beer 4.5% 500ml",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-05-24",
         "price": 0.72,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "ARIANA LAGERBIER4,5%",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1821,9 +1837,9 @@
   },
   "4056489080510": {
     "categories": [
-      "fresh-milk"
+      "food/dairy/milk"
     ],
-    "name": "Pilos ПРЯСНО МЛЯКО 3% fresh milk 1l",
+    "name": "Pilos Fresh Milk 3% 1l",
     "prices": [
       {
         "currency": "EUR",
@@ -1873,13 +1889,20 @@
         "price": 1.43,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-24",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-05-04",
+        "last_seen": "2026-05-24",
         "name": "ПРЯСНО МЛЯКО 3%",
         "shop": "Lidl Varna"
       }
@@ -2675,9 +2698,9 @@
   },
   "4304493257153": {
     "categories": [
-      "beer"
+      "food/beer"
     ],
-    "name": "Deep БИРА 3% КЕН beer 3% can 500ml",
+    "name": "Deep Beer 3% 500ml can",
     "prices": [
       {
         "currency": "EUR",
@@ -2722,15 +2745,22 @@
   },
   "4304493269903": {
     "categories": [
-      "beer"
+      "food/beer"
     ],
-    "name": "БИРА ГР. RADLER 2,5% Grapefruit Radler 2.5% 500ml",
+    "name": "Grapefruit Radler 2.5% 500ml",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-20",
         "price": 0.5,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-24",
+        "price": 0.25,
+        "shop": "Lidl Varna",
         "unit": "pcs"
       }
     ],
@@ -2740,6 +2770,12 @@
         "last_seen": "2026-05-20",
         "name": "БИРА ГР. RADLER 2.5%",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "БИРА ГР. RADLER 2.5%",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -2873,11 +2909,34 @@
     "name": "Glade Air Freshener \"Woodland Grove\" (green can, pine scent)",
     "source": "manual"
   },
+  "5000213010785": {
+    "categories": [
+      "food/beer"
+    ],
+    "name": "Guinness Draught Stout 4x440ml pack",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-24",
+        "price": 2.52,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "GUINNESS БИРА 4,2%",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "5000213101872": {
     "categories": [
-      "beer"
+      "food/beer"
     ],
-    "name": "Guinness БИРА 4,2% Draught Stout 440ml can",
+    "name": "Guinness Draught Stout 440ml can",
     "prices": [
       {
         "currency": "EUR",
@@ -2885,6 +2944,21 @@
         "price": 2.52,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-24",
+        "price": 0.63,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "GUINNESS БИРА 4,2%",
+        "shop": "Lidl Varna"
       }
     ]
   },
