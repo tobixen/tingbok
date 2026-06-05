@@ -1402,6 +1402,29 @@
     ],
     "quantity": "800g"
   },
+  "3800123123818": {
+    "categories": [
+      "tools/soldering"
+    ],
+    "name": "Raider Soldering Gun 175W",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-28",
+        "price": 16.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-28",
+        "last_seen": "2026-05-28",
+        "name": "RAIDER ПОЯЛНИК ИНДУКЦИОНЕН НЕМ175Ч",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
   "3800161503924": {
     "categories": [
       "tools/soldering"
