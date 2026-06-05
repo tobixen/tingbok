@@ -801,6 +801,29 @@
     "name": "Italiamo Pesto Rosso (sun-dried tomato)",
     "quantity": "190g"
   },
+  "20431877": {
+    "categories": [
+      "food/beer"
+    ],
+    "name": "Pilos Light Beer 3% 500ml can",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-28",
+        "price": 1.17,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-28",
+        "last_seen": "2026-05-28",
+        "name": "СВЕТЛА БИРА 3,0%",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "20469894": {
     "categories": [
       "pesto"
@@ -2194,6 +2217,29 @@
         "first_seen": "2026-05-04",
         "last_seen": "2026-05-04",
         "name": "СВИНСКО МЕСО ХХL",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489624318": {
+    "categories": [
+      "hygiene/soap"
+    ],
+    "name": "Pilos Olive Liquid Soap 1250ml",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-28",
+        "price": 1.69,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-28",
+        "last_seen": "2026-05-28",
+        "name": "ТЕЧЕН САПУН OLIVE",
         "shop": "Lidl Varna"
       }
     ]
