@@ -193,6 +193,29 @@
       }
     ]
   },
+  "20037154": {
+    "categories": [
+      "food/sauces"
+    ],
+    "name": "Combino tomato sauce basil 420g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "ДОМАТЕН СОС БОСИЛЕК",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "20039547": {
     "categories": [
       "whipping-cream"
@@ -686,6 +709,29 @@
       }
     ]
   },
+  "20322755": {
+    "categories": [
+      "food/snacks"
+    ],
+    "name": "Alesto roasted salted peanuts 200g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 0.79,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "ФЪСТЪК ПЕЧЕН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "20349714": {
     "categories": [
       "kitchen",
@@ -1011,9 +1057,9 @@
   },
   "20710118": {
     "categories": [
-      "lentils"
+      "food/legumes"
     ],
-    "name": "РОДНА СТРЯХА ЛЕЩА Bulgarian lentils (Plovdiv)",
+    "name": "Rodna Stryaha Bulgarian lentils 500g",
     "prices": [
       {
         "currency": "EUR",
@@ -1021,9 +1067,24 @@
         "price": 1.12,
         "shop": null,
         "unit": "piece"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 1.27,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
-    "quantity": "500g"
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "20710187": {
     "categories": [
@@ -1484,6 +1545,29 @@
       }
     ],
     "quantity": "1kg"
+  },
+  "3800106400073": {
+    "categories": [
+      "food/pasta"
+    ],
+    "name": "Krina risoni rice 1kg",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 2.55,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "KRINA ОРИЗ РИЗОН",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "3800106400080": {
     "categories": [
@@ -1961,9 +2045,32 @@
     "name": "Lidl Μαυρομάτικα Φασόλια (Black eyed beans) - EXPIRED",
     "quantity": "500g"
   },
+  "4056489064169": {
+    "categories": [
+      "food/meat"
+    ],
+    "name": "Pikok bacon",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 1.78,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "БЕКОН ВАРЕНО-ПУШЕН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489080510": {
     "categories": [
-      "food/dairy/milk"
+      "food/dairy"
     ],
     "name": "Pilos Fresh Milk 3% 1l",
     "prices": [
@@ -2022,13 +2129,20 @@
         "price": 1.43,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-05-24",
+        "last_seen": "2026-06-04",
         "name": "ПРЯСНО МЛЯКО 3%",
         "shop": "Lidl Varna"
       }
