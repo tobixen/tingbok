@@ -1064,15 +1064,22 @@
   },
   "3800002300613": {
     "categories": [
-      "liquid-soap"
+      "hygiene/soap"
     ],
-    "name": "ТЕЧЕН САПУН РОДЕЯ КЕРИ Rodea Keri liquid soap 500ml",
+    "name": "Rodea Keri Liquid Soap 500ml",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 8.99,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 1.36,
+        "shop": "Маринени Бонилова, Varna",
         "unit": "pcs"
       }
     ],
@@ -1083,6 +1090,12 @@
         "last_seen": "2026-05-23",
         "name": "ТЕЧЕН САПУН РОДЕЯ (КЕРИ) 500МЛ",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "ТЕЧЕН САПУН РОДЕЯ КЕРИ 500МЛ",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -1112,15 +1125,22 @@
   },
   "3800021492457": {
     "categories": [
-      "cured-meat"
+      "food/cured-meat"
     ],
-    "name": "ЛУКАНКА ТРАКИЙСКА ХХЛ ЕКО МЕС Trakiyska lukanke XXL Eko Mes 550g",
+    "name": "Lukanitsa Trakiyska XXL Eko Mes 550g",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 5.39,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 6.55,
+        "shop": "Маринени Бонилова, Varna",
         "unit": "pcs"
       }
     ],
@@ -1131,6 +1151,12 @@
         "last_seen": "2026-05-23",
         "name": "ЛУКАНКА ТРАКИЙСКА ХХЛ ЕКО МЕС 550ГР",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "ЛУКАНКА ТРАКИЙСКА ХХЛ ЕКО МЕС",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -1151,15 +1177,22 @@
   },
   "3800038902942": {
     "categories": [
-      "toothpaste"
+      "hygiene/dental"
     ],
-    "name": "ПАСТА ПОМОРИН АНТИ-РАКЛОНЕ Pomorin Since 1954 Anti-Periodontal toothpaste 100ml",
+    "name": "Pomorin Anti-Parodont Toothpaste",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 1.65,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 0.87,
+        "shop": "Маринени Бонилова, Varna",
         "unit": "pcs"
       }
     ],
@@ -1170,6 +1203,12 @@
         "last_seen": "2026-05-23",
         "name": "ПАСТА ПОМОРИН АНТИ-РАКЛОНЕ 100МЛ",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "ПАСТА ПОМОРИН ANT-PARODONT 100МЛ",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -1227,9 +1266,9 @@
   },
   "3800052219118": {
     "categories": [
-      "beer"
+      "food/beverages/beer"
     ],
-    "name": "БИРА АСТИКА КЕН Astika beer can 500ml",
+    "name": "Astika Beer 500ml",
     "prices": [
       {
         "currency": "EUR",
@@ -1246,6 +1285,12 @@
         "last_seen": "2026-05-23",
         "name": "БИРА АСТИКА КЕН 0.5Л",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "БИРА АСТИКА КЕН 0.5Л",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -1296,15 +1341,22 @@
   },
   "3800069005506": {
     "categories": [
-      "beer"
+      "food/beverages/beer"
     ],
-    "name": "БИРА ШУМЕНСКО СПЕЦИАЛНО Shumensko Специално 330ml bottle",
+    "name": "Shumensko Spetsialno Beer 330ml",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 1.36,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 0.53,
+        "shop": "Маринени Бонилова, Varna",
         "unit": "pcs"
       }
     ],
@@ -1314,6 +1366,12 @@
         "last_seen": "2026-05-23",
         "name": "БИРА ШУМЕНСКО 0.33Л/БУТИЛКА",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "БИРА ШУМЕНСКО 0.33+БУТИЛКА",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -1450,15 +1508,22 @@
   },
   "3800207742782": {
     "categories": [
-      "cashews"
+      "food/snacks/nuts"
     ],
-    "name": "КАШУ РОДЕЯ ПЕЧЕНО Rodea roasted & salted cashews 500g",
+    "name": "Rodea Roasted Salted Cashews 500g",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-23",
         "price": 1.59,
         "shop": "Bulmag",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-23",
+        "price": 8.99,
+        "shop": "Маринени Бонилова, Varna",
         "unit": "pcs"
       }
     ],
@@ -1469,6 +1534,12 @@
         "last_seen": "2026-05-23",
         "name": "КАШУ РОДЕЯ 500ГР",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "КАШУ РОДЕЯ ПЕЧЕНО 500ГР",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -1513,9 +1584,9 @@
   },
   "3858890178678": {
     "categories": [
-      "mayonnaise"
+      "food/condiments"
     ],
-    "name": "МАЙОНЕЗА ТОМИ Thomy Mayonnaise Delicatess 263g",
+    "name": "Thomy Delicatess Mayonnaise 263g",
     "prices": [
       {
         "currency": "EUR",
@@ -1532,6 +1603,12 @@
         "last_seen": "2026-05-23",
         "name": "МАЙОНЕЗА ТОМИ 280Г",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "МАЙОНЕЗА ТИМИ 280Г",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -2920,9 +2997,9 @@
   },
   "5240056578008": {
     "categories": [
-      "liquid-soap"
+      "hygiene/soap"
     ],
-    "name": "ТЕЧЕН САПУН МОЯТА ПРИЧИНА НИЕ ВЕРА Моята Причина \"Vera\" liquid soap 500ml",
+    "name": "Moyta Prichina Vera Liquid Soap 600ml",
     "prices": [
       {
         "currency": "EUR",
@@ -2939,6 +3016,12 @@
         "last_seen": "2026-05-23",
         "name": "ТЕЧЕН САПУН МОЯТА ПРИЧИНА НИЕ ВЕРА 600МЛ",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "ТЕЧЕН САПУН МОЯТА ПРИЧИНА ВЕ 600МЛ",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -3412,9 +3495,9 @@
   },
   "7610196002608": {
     "categories": [
-      "dental-floss"
+      "hygiene/dental"
     ],
-    "name": "КОНЦИ ЗА ЗЪБИ ТРИСA TRISA dental floss 40m (waxed, mint, made in Italy)",
+    "name": "Trisa Dental Floss 40m waxed mint",
     "prices": [
       {
         "currency": "EUR",
@@ -3431,6 +3514,12 @@
         "last_seen": "2026-05-23",
         "name": "КОНЦИ ЗА ЗЪБИ ТРИСA 40Л",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "КОНЦИ ЗА ЗЪБИ ТРИСА 40М",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -3464,9 +3553,9 @@
   },
   "8445291136359": {
     "categories": [
-      "tartar-sauce"
+      "food/condiments"
     ],
-    "name": "СОС ТНОИ ТАРТАР Thomy Tartar Sauce 220g",
+    "name": "Thomy Tartar Sauce 220g",
     "prices": [
       {
         "currency": "EUR",
@@ -3483,6 +3572,12 @@
         "last_seen": "2026-05-23",
         "name": "СОС ТНОИ ТАРТАР 220Г",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "СОС ТНОМУ ТАРТАР 220Г",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
@@ -3606,9 +3701,9 @@
   },
   "9001414403044": {
     "categories": [
-      "turmeric"
+      "food/spices"
     ],
-    "name": "КУРКУМА КОТАНИ 20ГР Kotani Curcuma gemahlen (ground turmeric) 20g",
+    "name": "Kotani Ground Turmeric 20g",
     "prices": [
       {
         "currency": "EUR",
@@ -3625,6 +3720,12 @@
         "last_seen": "2026-05-23",
         "name": "КУРКУМА КОТАНИ 20ГР",
         "shop": "Bulmag"
+      },
+      {
+        "first_seen": "2026-05-23",
+        "last_seen": "2026-05-23",
+        "name": "КУРКУМА КОТАНИ 20ГР",
+        "shop": "Маринени Бонилова, Varna"
       }
     ]
   },
