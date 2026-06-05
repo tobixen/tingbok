@@ -1858,6 +1858,30 @@
       }
     ]
   },
+  "4054500440923": {
+    "categories": [
+      "food/drinks/beer"
+    ],
+    "name": "Steam Brew German Red amber filtered beer 500ml can",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-24",
+        "price": 1.02,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "ST.BREW КРАФТ БИРА",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489056010": {
     "categories": [
       "beans"
