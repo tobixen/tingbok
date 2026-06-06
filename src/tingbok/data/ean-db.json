@@ -795,6 +795,21 @@
       }
     ]
   },
+  "20358037": {
+    "categories": [
+      "rice"
+    ],
+    "name": "БЯЛ ОРИЗ Lidl white rice 1kg",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.97,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "2037795575": {
     "brand": "БОНИ",
     "categories": [
@@ -1460,6 +1475,21 @@
       }
     ]
   },
+  "3800050405919": {
+    "categories": [
+      "tomatoes"
+    ],
+    "name": "OBERON ДОМАТИ Oberon canned tomatoes (gross 1.15, -0.36 promo each)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.79,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800052219118": {
     "categories": [
       "food/beverages/beer"
@@ -1614,7 +1644,7 @@
   },
   "3800106400073": {
     "categories": [
-      "pasta"
+      "rice"
     ],
     "name": "KRINA ОРИЗ РИЗОН Krina risoni (orzo) 1kg",
     "prices": [
@@ -1735,6 +1765,21 @@
     ],
     "quantity": "800g"
   },
+  "3800106408062": {
+    "categories": [
+      "chickpeas"
+    ],
+    "name": "НАХУТ chickpeas",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.66,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800120700746": {
     "categories": [
       "food/seafood/canned-fish"
@@ -1793,6 +1838,21 @@
       }
     ]
   },
+  "3800201253550": {
+    "categories": [
+      "dishwasher-detergent"
+    ],
+    "name": "DOMENICO dishwasher detergent 500ml (GHS07 hazard label; not food)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.59,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800207742782": {
     "categories": [
       "food/snacks/nuts"
@@ -1827,6 +1887,36 @@
         "last_seen": "2026-05-23",
         "name": "КАШУ РОДЕЯ ПЕЧЕНО 500ГР",
         "shop": "Маринени Бонилова, Varna"
+      }
+    ]
+  },
+  "3800225663380": {
+    "categories": [
+      "lentils"
+    ],
+    "name": "ЧЕРВЕНА ЛЕЩА red lentils",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.78,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "3800225663700": {
+    "categories": [
+      "chickpeas"
+    ],
+    "name": "НАХУТ КРИНА Krina/Natura chickpeas 250g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.79,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1866,6 +1956,21 @@
         "last_seen": "2026-05-02",
         "name": "СУШЕНИЦА",
         "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "3800856095703": {
+    "categories": [
+      "rice"
+    ],
+    "name": "ОРИЗ BILLA Billa rice",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.78,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -3026,6 +3131,21 @@
       }
     ],
     "source": "manual"
+  },
+  "4056489965367": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "МЕСНИ ПРЪЧИЦИ ЧИЛИ chili meat sticks",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.68,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "4250153632306": {
     "categories": [
