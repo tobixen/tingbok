@@ -799,14 +799,22 @@
     "categories": [
       "rice"
     ],
-    "name": "БЯЛ ОРИЗ Lidl white rice 1kg",
+    "name": "Lidl white rice 1kg",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-06",
         "price": 0.97,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "БЯЛ ОРИЗ",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1479,7 +1487,7 @@
     "categories": [
       "tomatoes"
     ],
-    "name": "OBERON ДОМАТИ Oberon canned tomatoes (gross 1.15, -0.36 promo each)",
+    "name": "Oberon canned tomatoes",
     "prices": [
       {
         "currency": "EUR",
@@ -1487,6 +1495,21 @@
         "price": 0.79,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-06",
+        "price": 1.15,
+        "shop": "Billa Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "OBERON ДОМАТИ",
+        "shop": "Billa Varna"
       }
     ]
   },
@@ -1769,14 +1792,22 @@
     "categories": [
       "chickpeas"
     ],
-    "name": "НАХУТ chickpeas",
+    "name": "Chickpeas",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-06",
         "price": 1.66,
-        "shop": null,
+        "shop": "Billa Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "НАХУТ",
+        "shop": "Billa Varna"
       }
     ]
   },
@@ -1842,14 +1873,22 @@
     "categories": [
       "dishwasher-detergent"
     ],
-    "name": "DOMENICO dishwasher detergent 500ml (GHS07 hazard label; not food)",
+    "name": "Domenico dishwasher detergent 500ml",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-06",
         "price": 0.59,
-        "shop": null,
+        "shop": "Billa Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "DOMENICO 500 МЛ",
+        "shop": "Billa Varna"
       }
     ]
   },
@@ -1894,14 +1933,22 @@
     "categories": [
       "lentils"
     ],
-    "name": "ЧЕРВЕНА ЛЕЩА red lentils",
+    "name": "Red lentils",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-06",
         "price": 1.78,
-        "shop": null,
+        "shop": "Billa Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "ЧЕРВЕНА ЛЕЩА",
+        "shop": "Billa Varna"
       }
     ]
   },
@@ -1909,14 +1956,22 @@
     "categories": [
       "chickpeas"
     ],
-    "name": "НАХУТ КРИНА Krina/Natura chickpeas 250g",
+    "name": "Krina chickpeas",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-06",
         "price": 1.79,
-        "shop": null,
+        "shop": "Billa Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "НАХУТ КРИНА",
+        "shop": "Billa Varna"
       }
     ]
   },
@@ -1963,14 +2018,22 @@
     "categories": [
       "rice"
     ],
-    "name": "ОРИЗ BILLA Billa rice",
+    "name": "Billa rice",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-06",
         "price": 1.78,
-        "shop": null,
+        "shop": "Billa Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "ОРИЗ BILLA",
+        "shop": "Billa Varna"
       }
     ]
   },
@@ -2785,7 +2848,7 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "Pilos ЛОВДЖИЙСКА ЛУКАНКА hunters lukanka 150g",
+    "name": "Pilos Hunters Lukanka 150g",
     "prices": [
       {
         "currency": "EUR",
@@ -2807,13 +2870,20 @@
         "price": 2.04,
         "shop": "Lidl Варна бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-06",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "150g",
     "receipt_names": [
       {
         "first_seen": "2026-03-04",
-        "last_seen": "2026-03-15",
+        "last_seen": "2026-06-06",
         "name": "ЛОВДЖИЙСКА ЛУКАНКА",
         "shop": "Lidl Varna"
       },
@@ -3136,14 +3206,22 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "МЕСНИ ПРЪЧИЦИ ЧИЛИ chili meat sticks",
+    "name": "Chili meat sticks",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-06",
         "price": 1.68,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "МЕСНИ ПРЪЧИЦИ ЧИЛИ",
+        "shop": "Lidl Varna"
       }
     ]
   },
