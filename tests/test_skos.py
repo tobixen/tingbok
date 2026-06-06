@@ -1756,7 +1756,11 @@ def test_is_non_concept_uri_wikidata_valid_concept() -> None:
 
     fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q2095"}}}}]}}
     with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
-        result = is_non_concept_uri("https://www.wikidata.org/entity/Q7802")
+        # P31=Q2095 (food) is a valid concept, so the secondary P279/P31 ancestor
+        # checks run — mock them to avoid real Wikidata network calls.
+        with patch("tingbok.services.skos._batch_fetch_p279", return_value=frozenset()):
+            with patch("tingbok.services.skos._batch_fetch_p31", return_value=frozenset()):
+                result = is_non_concept_uri("https://www.wikidata.org/entity/Q7802")
 
     assert result is False
 
@@ -1803,8 +1807,11 @@ def test_is_non_concept_uri_wikidata_p279_network_error_does_not_block() -> None
 
     fake_entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q2095"}}}}]}}
     with patch("tingbok.services.skos._fetch_wikidata_entity_by_qid", return_value=fake_entity):
+        # _batch_fetch_p279/_batch_fetch_p31 return an empty set on network error, so an
+        # empty frozenset() faithfully simulates the P279 fetch failing.
         with patch("tingbok.services.skos._batch_fetch_p279", return_value=frozenset()):
-            result = is_non_concept_uri("https://www.wikidata.org/entity/Q7802")
+            with patch("tingbok.services.skos._batch_fetch_p31", return_value=frozenset()):
+                result = is_non_concept_uri("https://www.wikidata.org/entity/Q7802")
 
     assert result is False
 
