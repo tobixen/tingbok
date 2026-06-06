@@ -87,6 +87,27 @@ class ReceiptNameObservation(BaseModel):
     last_seen: str | None = None
 
 
+class ReceiptNameMatch(BaseModel):
+    """A candidate EAN matched against a printed receipt name."""
+
+    ean: str
+    #: Observed product name for this EAN (may be ``None``).
+    name: str | None = None
+    #: Similarity score in ``[0, 1]``; ``1.0`` is an exact (normalised) match.
+    score: float
+    #: The stored receipt name that matched the query.
+    matched_name: str
+    #: Shop the matched receipt name was observed at (may be ``None``).
+    shop: str | None = None
+
+
+class ReceiptNameSearchResponse(BaseModel):
+    """Ranked EAN candidates for a reverse receipt-name lookup."""
+
+    query: str
+    results: list[ReceiptNameMatch] = []
+
+
 class ProductResponse(BaseModel):
     """Product data from an EAN/barcode lookup."""
 

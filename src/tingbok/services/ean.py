@@ -12,6 +12,8 @@ from __future__ import annotations
 
 import json
 import logging
+import re
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
 
@@ -370,6 +372,68 @@ def load_ean_observations(path: Path) -> dict[str, Any]:
     except Exception as exc:
         logger.warning("Failed to load EAN observations from %s: %s", path, exc)
         return {}
+
+
+def _normalize_receipt_name(name: str) -> str:
+    """Casefold, strip, and collapse internal whitespace for comparison."""
+    return re.sub(r"\s+", " ", name.strip()).casefold()
+
+
+def search_by_receipt_name(
+    observations: dict[str, Any],
+    receipt_name: str,
+    shop: str | None = None,
+    limit: int = 10,
+    min_score: float = 0.5,
+) -> list[dict[str, Any]]:
+    """Find candidate EANs whose stored ``receipt_names`` match *receipt_name*.
+
+    Receipt parsers only print a localised receipt name, not the EAN. This
+    scans the EAN observation database for ``receipt_names`` observations whose
+    name resembles the query and returns ranked candidates.
+
+    Scoring: an exact match (case- and whitespace-insensitive) scores 1.0;
+    otherwise a ``difflib`` similarity ratio is used. The best-scoring receipt
+    name per EAN is kept. When *shop* is given, only receipt-name observations
+    recorded for that shop are considered.
+
+    Returns a list of ``{ean, name, score, matched_name, shop}`` dicts sorted by
+    descending score, capped at *limit*. ``name`` is the observed product name.
+    """
+    target = _normalize_receipt_name(receipt_name)
+    if not target:
+        return []
+
+    candidates: list[dict[str, Any]] = []
+    for ean, entry in observations.items():
+        if not isinstance(entry, dict):
+            continue
+        best_score = 0.0
+        best_name: str | None = None
+        best_shop: str | None = None
+        for rn in entry.get("receipt_names") or []:
+            rn_name = rn.get("name")
+            if not rn_name:
+                continue
+            if shop is not None and rn.get("shop") != shop:
+                continue
+            normalized = _normalize_receipt_name(rn_name)
+            score = 1.0 if normalized == target else SequenceMatcher(None, target, normalized).ratio()
+            if score > best_score:
+                best_score, best_name, best_shop = score, rn_name, rn.get("shop")
+        if best_name is not None and best_score >= min_score:
+            candidates.append(
+                {
+                    "ean": ean,
+                    "name": entry.get("name"),
+                    "score": round(best_score, 4),
+                    "matched_name": best_name,
+                    "shop": best_shop,
+                }
+            )
+
+    candidates.sort(key=lambda c: c["score"], reverse=True)
+    return candidates[:limit]
 
 
 def prune_superseded_null_prices(prices: list[dict[str, Any]]) -> list[dict[str, Any]]:

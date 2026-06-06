@@ -3,15 +3,44 @@
 import asyncio
 import logging
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Query, Request
 
 import tingbok.app as _app
-from tingbok.models import EanObservationRequest, ProductResponse
+from tingbok.models import (
+    EanObservationRequest,
+    ProductResponse,
+    ReceiptNameSearchResponse,
+)
 from tingbok.services import ean as ean_service
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
+
+
+# NOTE: declared before ``/{ean}`` so the static ``/search`` path is not
+# captured by the dynamic EAN catch-all route below.
+@router.get("/search", response_model=ReceiptNameSearchResponse)
+async def search_by_receipt_name(
+    receipt_name: str = Query(..., description="Receipt name as printed by the shop"),
+    shop: str | None = Query(None, description="Restrict to receipt names observed at this shop"),
+    limit: int = Query(10, ge=1, le=100),
+    min_score: float = Query(0.5, ge=0.0, le=1.0),
+) -> ReceiptNameSearchResponse:
+    """Find candidate EANs whose observed receipt names match *receipt_name*.
+
+    Receipt parsers (e.g. Lidl) print only a localised receipt name, not the
+    EAN. This searches the ``receipt_names`` observations in ean-db.json and
+    returns ranked candidates so a shopping importer can propose matches.
+    """
+    results = ean_service.search_by_receipt_name(
+        _app.ean_observations,
+        receipt_name,
+        shop=shop,
+        limit=limit,
+        min_score=min_score,
+    )
+    return ReceiptNameSearchResponse(query=receipt_name, results=results)
 
 
 @router.get("/{ean}", response_model=ProductResponse)

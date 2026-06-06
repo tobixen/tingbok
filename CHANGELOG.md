@@ -8,6 +8,14 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ## [Unreleased]
 
+### Added
+
+- **Reverse receipt-name lookup** — `GET /api/ean/search?receipt_name=...` returns
+  ranked candidate EANs whose stored `receipt_names` observations match the query
+  (case- and whitespace-insensitive exact match scores 1.0, otherwise a similarity
+  ratio). Optional `shop`, `limit`, and `min_score` filters. Lets a shopping importer
+  propose EAN matches for receipts that print only a localised product name.
+
 ### Fixed
 
 - **Singular and plural labels now resolve to the same concept** —
