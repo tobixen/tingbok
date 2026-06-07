@@ -1939,14 +1939,23 @@
     "categories": [
       "beer"
     ],
-    "name": "BALKANSKO СВЕТ.БИРА Balkansko light beer 4.1% (3 of 6; rest in fridge)",
+    "name": "Балканско светло пиво",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 0.51,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "quantity": "500ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "BALKANSKO СВЕТ.БИРА",
+        "shop": "Lidl Varna"
       }
     ]
   },
