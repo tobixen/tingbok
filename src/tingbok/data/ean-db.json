@@ -389,14 +389,22 @@
     "categories": [
       "food/seafood"
     ],
-    "name": "ASC КР.СКАРИДИ НТЮР ASC king prawns (frozen)",
+    "name": "King Prawns",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 3.47,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ASC КР.СКАРИДИ НТЮР",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -428,14 +436,22 @@
     "categories": [
       "food/seafood"
     ],
-    "name": "MSC СКАР. ЗАМР.270G MSC prawns 270g (frozen)",
+    "name": "Camarón boreal",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 5.45,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "MSC СКАР. ЗАМР.270G",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -570,9 +586,24 @@
         "price": 1.68,
         "shop": null,
         "unit": "piece"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 1.68,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
-    "quantity": "330g"
+    "quantity": "330g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "КАРТОФЕНО ПЮРЕ",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "20239060": {
     "categories": [
@@ -626,14 +657,22 @@
     "categories": [
       "vegetable"
     ],
-    "name": "ЧУШКИ 2 ЦВЯТА 500Г fresh mixed peppers (2 colours) 500g",
+    "name": "Fresh mixed peppers",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 2.19,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ЧУШКИ 2 ЦВЯТА 500Г",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -804,14 +843,22 @@
     "categories": [
       "beans"
     ],
-    "name": "БЯЛ БОБ white haricot beans (dry) 1kg",
+    "name": "Бял боб",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 2.14,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "БЯЛ БОБ",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1072,14 +1119,22 @@
     "categories": [
       "cream"
     ],
-    "name": "ГОТВАРСКА СМЕТАНА 22% Milbona cooking cream UHT 22% 200ml",
+    "name": "Готварска сметана 22%",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 0.79,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ГОТВАРСКА СМЕТАНА22%",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1185,14 +1240,22 @@
     "categories": [
       "cheese"
     ],
-    "name": "КРАВЕ СИРЕНЕ ЗНП Bulgarian white brine cheese 400g",
+    "name": "Българско бяло саламурено сирене",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 4.6,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "КРАВЕ СИРЕНЕ ЗНП",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -2646,14 +2709,22 @@
     "categories": [
       "pasta"
     ],
-    "name": "ФУСИЛИ ОТ МЕК.ПШ. fusili soft-wheat pasta 500g",
+    "name": "Фусили",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 0.61,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ФУСИЛИ ОТ МЕК.ПШ.",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -2661,7 +2732,7 @@
     "categories": [
       "oats"
     ],
-    "name": "Crownfield ОВЕСЕНИ ЯДКИ ФИНИ Fine Oat Flakes (Jemné ovesné vločky)",
+    "name": "Jemné ovesné vločky",
     "prices": [
       {
         "currency": "EUR",
@@ -2669,9 +2740,24 @@
         "price": 0.97,
         "shop": "Lidl Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 0.97,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
-    "quantity": "500g"
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ОВЕСЕНИ ЯДКИ ФИНИ",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "4056489352501": {
     "categories": [
@@ -3067,14 +3153,22 @@
     "categories": [
       "beer"
     ],
-    "name": "БИРА 5 % Argus light beer 5% 500ml can",
+    "name": "Светла бира 5%",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 0.51,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "БИРА 5 %",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -3283,14 +3377,22 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "ПРЯСНО МЛЯКО 3,7% fresh milk 3.7% 1L",
+    "name": "Milk 3.7% fat",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 1.68,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ПРЯСНО МЛЯКО 3,7%",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -3436,13 +3538,20 @@
         "price": 0.4,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 0.4,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "500ml",
     "receipt_names": [
       {
         "first_seen": "2026-05-24",
-        "last_seen": "2026-05-31",
+        "last_seen": "2026-06-07",
         "name": "БИРА 3 % КЕН",
         "shop": "Lidl Varna"
       }
@@ -3456,10 +3565,18 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-07",
         "price": 0.51,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "БИРА 4 %",
+        "shop": "Lidl Varna"
       }
     ]
   },
