@@ -385,6 +385,21 @@
     ],
     "quantity": "300g"
   },
+  "20103804": {
+    "categories": [
+      "food/seafood"
+    ],
+    "name": "ASC КР.СКАРИДИ НТЮР ASC king prawns (frozen)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.47,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20112813": {
     "categories": [
       "fruit-juice"
@@ -406,6 +421,21 @@
         "last_seen": "2026-05-20",
         "name": "ДИРЕКТ.СОК КАС.БОРОВ",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "20123703": {
+    "categories": [
+      "food/seafood"
+    ],
+    "name": "MSC СКАР. ЗАМР.270G MSC prawns 270g (frozen)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.45,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -530,10 +560,9 @@
   },
   "20163822": {
     "categories": [
-      "instant-foods",
-      "potatoes-instant"
+      "instant-mashed-potato"
     ],
-    "name": "КАРТОФЕНО ПЮРЕ potato puree 12x200g portions",
+    "name": "КАРТОФЕНО ПЮРЕ instant mashed potato (12×200g portions)",
     "prices": [
       {
         "currency": "EUR",
@@ -590,6 +619,21 @@
         "last_seen": "2026-05-16",
         "name": "СВ. ВА. В СОБСТ. СОС",
         "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "20242152": {
+    "categories": [
+      "vegetable"
+    ],
+    "name": "ЧУШКИ 2 ЦВЯТА 500Г fresh mixed peppers (2 colours) 500g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.19,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -753,6 +797,21 @@
         "last_seen": "2026-06-04",
         "name": "ФЪСТЪК ПЕЧЕН",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "20327361": {
+    "categories": [
+      "beans"
+    ],
+    "name": "БЯЛ БОБ white haricot beans (dry) 1kg",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.14,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1009,6 +1068,21 @@
     "name": "Родна стряха 100% Български пчелен мед букет Bulgarian honey (added 2026-01-11)",
     "quantity": "900g"
   },
+  "20531072": {
+    "categories": [
+      "cream"
+    ],
+    "name": "ГОТВАРСКА СМЕТАНА 22% Milbona cooking cream UHT 22% 200ml",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.79,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20531164": {
     "receipt_names": [
       {
@@ -1104,6 +1178,21 @@
         "last_seen": "2026-05-20",
         "name": "ШПЕК CLEANLАBEL 220G",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "20709440": {
+    "categories": [
+      "cheese"
+    ],
+    "name": "КРАВЕ СИРЕНЕ ЗНП Bulgarian white brine cheese 400g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.6,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1846,6 +1935,21 @@
       }
     ]
   },
+  "3800135310060": {
+    "categories": [
+      "beer"
+    ],
+    "name": "BALKANSKO СВЕТ.БИРА Balkansko light beer 4.1% (3 of 6; rest in fridge)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.51,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800161503924": {
     "categories": [
       "tools/soldering"
@@ -2529,6 +2633,21 @@
       }
     ]
   },
+  "4056489177548": {
+    "categories": [
+      "pasta"
+    ],
+    "name": "ФУСИЛИ ОТ МЕК.ПШ. fusili soft-wheat pasta 500g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.61,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489195917": {
     "categories": [
       "oats"
@@ -2935,6 +3054,21 @@
       }
     ]
   },
+  "4056489877714": {
+    "categories": [
+      "beer"
+    ],
+    "name": "БИРА 5 % Argus light beer 5% 500ml can",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.51,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489940685": {
     "categories": [
       "food/meat/veal"
@@ -3136,6 +3270,21 @@
       }
     ]
   },
+  "4056489941842": {
+    "categories": [
+      "fresh-milk"
+    ],
+    "name": "ПРЯСНО МЛЯКО 3,7% fresh milk 3.7% 1L",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.68,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489942542": {
     "categories": [
       "food/meat/cured-meat"
@@ -3287,6 +3436,21 @@
         "last_seen": "2026-05-31",
         "name": "БИРА 3 % КЕН",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4304493257160": {
+    "categories": [
+      "beer"
+    ],
+    "name": "БИРА 4 % Argus light beer 4% 500ml can",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.51,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
