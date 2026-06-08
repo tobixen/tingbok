@@ -389,7 +389,7 @@
     "categories": [
       "food/seafood"
     ],
-    "name": "King Prawns",
+    "name": "ASC КР.СКАРИДИ НТЮР ASC king prawns frozen",
     "prices": [
       {
         "currency": "EUR",
@@ -436,7 +436,7 @@
     "categories": [
       "food/seafood"
     ],
-    "name": "Camarón boreal",
+    "name": "MSC СКАР. ЗАМР.270G MSC prawns 270g frozen",
     "prices": [
       {
         "currency": "EUR",
@@ -1415,9 +1415,9 @@
   },
   "3800002300613": {
     "categories": [
-      "hygiene/soap"
+      "liquid-soap"
     ],
-    "name": "Rodea Keri Liquid Soap 500ml",
+    "name": "ТЕЧЕН САПУН РОДЕЯ КЕРИ Rodea Keri liquid soap 500ml",
     "prices": [
       {
         "currency": "EUR",
@@ -1548,9 +1548,9 @@
   },
   "3800038902942": {
     "categories": [
-      "hygiene/dental"
+      "toothpaste"
     ],
-    "name": "Pomorin Anti-Parodont Toothpaste",
+    "name": "ПАСТА ПОМОРИН АНТИ-РАКЛОНЕ Pomorin Since 1954 Anti-Periodontal toothpaste 100ml",
     "prices": [
       {
         "currency": "EUR",
@@ -2070,9 +2070,9 @@
   },
   "3800207742782": {
     "categories": [
-      "food/snacks/nuts"
+      "cashews"
     ],
-    "name": "Rodea Roasted Salted Cashews 500g",
+    "name": "КАШУ РОДЕЯ ПЕЧЕНО Rodea roasted & salted cashews 500g",
     "prices": [
       {
         "currency": "EUR",
@@ -2215,9 +2215,9 @@
   },
   "3858890178678": {
     "categories": [
-      "food/condiments"
+      "mayonnaise"
     ],
-    "name": "Thomy Delicatess Mayonnaise 263g",
+    "name": "МАЙОНЕЗА ТОМИ Thomy Mayonnaise Delicatess 263g",
     "prices": [
       {
         "currency": "EUR",
@@ -2499,9 +2499,9 @@
   },
   "4056489080510": {
     "categories": [
-      "food/dairy"
+      "fresh-milk"
     ],
-    "name": "Pilos Fresh Milk 3% 1l",
+    "name": "ПРЯСНО МЛЯКО 3% Pilos fresh milk 3% 1l",
     "prices": [
       {
         "currency": "EUR",
@@ -3517,13 +3517,9 @@
   },
   "4304493257153": {
     "categories": [
-      "food/beer",
-      "food/beverages",
-      "alcohol",
-      "beers",
-      "lagers"
+      "beer"
     ],
-    "name": "3% beer",
+    "name": "БИРА 3 % КЕН Argus light beer 3%",
     "prices": [
       {
         "currency": "EUR",
@@ -3801,9 +3797,9 @@
   },
   "5000213101872": {
     "categories": [
-      "food/beer"
+      "beer"
     ],
-    "name": "Guinness Draught Stout 440ml can",
+    "name": "Guinness БИРА 4,2% Draught Stout 440ml can",
     "prices": [
       {
         "currency": "EUR",
@@ -3963,9 +3959,9 @@
   },
   "5240056578008": {
     "categories": [
-      "hygiene/soap"
+      "liquid-soap"
     ],
-    "name": "Moyta Prichina Vera Liquid Soap 600ml",
+    "name": "ТЕЧЕН САПУН МОЯТА ПРИЧИНА НИЕ ВЕРА Моята Причина \"Vera\" liquid soap 500ml",
     "prices": [
       {
         "currency": "EUR",
@@ -4468,9 +4464,9 @@
   },
   "7610196002608": {
     "categories": [
-      "hygiene/dental"
+      "dental-floss"
     ],
-    "name": "Trisa Dental Floss 40m waxed mint",
+    "name": "КОНЦИ ЗА ЗЪБИ ТРИСA TRISA dental floss 40m (waxed, mint, made in Italy)",
     "prices": [
       {
         "currency": "EUR",
@@ -4526,9 +4522,9 @@
   },
   "8445291136359": {
     "categories": [
-      "food/condiments"
+      "tartar-sauce"
     ],
-    "name": "Thomy Tartar Sauce 220g",
+    "name": "СОС ТНОИ ТАРТАР Thomy Tartar Sauce 220g",
     "prices": [
       {
         "currency": "EUR",
@@ -4680,9 +4676,9 @@
   },
   "9001414403044": {
     "categories": [
-      "food/spices"
+      "turmeric"
     ],
-    "name": "Kotani Ground Turmeric 20g",
+    "name": "КУРКУМА КОТАНИ 20ГР Kotani Curcuma gemahlen (ground turmeric) 20g",
     "prices": [
       {
         "currency": "EUR",
