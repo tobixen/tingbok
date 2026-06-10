@@ -2934,6 +2934,21 @@
       }
     ]
   },
+  "4056489658801": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "ЧИЛИ КОН ПОЛО El Tequito Chili con pollo 800g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.99,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489682677": {
     "categories": [
       "pecans"
@@ -3377,13 +3392,20 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Milk 3.7% fat",
+    "name": "ПРЯСНО МЛЯКО 3,7% Pilos fresh milk 3.7% 1L",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-06-07",
         "price": 1.68,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.39,
+        "shop": null,
         "unit": "pcs"
       }
     ],
