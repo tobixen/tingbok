@@ -4566,6 +4566,21 @@
     "name": "REMA Boil-in-Bag Middagsris Thai White Rice 1kg",
     "quantity": "1kg"
   },
+  "7038010068980": {
+    "categories": [
+      "milk"
+    ],
+    "name": "Whole milk 1l",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.29,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "7039010562096": {
     "categories": [
       "food/ready-meal"
