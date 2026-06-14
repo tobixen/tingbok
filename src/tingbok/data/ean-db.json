@@ -436,14 +436,22 @@
     "categories": [
       "tinned-meat"
     ],
-    "name": "ЧИЛИ КОН КАРНЕ chili con carne (canned)",
+    "name": "Chili con carne",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-13",
         "price": 2.29,
-        "shop": null,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ЧИЛИ КОН КАРНЕ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -695,7 +703,7 @@
     "categories": [
       "vegetable"
     ],
-    "name": "ЗЕЛЕНИ АСПЕРЖИ 500Г green asparagus (Poland, D.D. CHAMP; 50% discount, short-expiry bin)",
+    "name": "Green asparagus 500g",
     "prices": [
       {
         "currency": "EUR",
@@ -710,9 +718,24 @@
         "price": 1.79,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-13",
+        "price": 3.59,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
-    "quantity": "500g"
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ЗЕЛЕНИ АСПЕРЖИ 500Г",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
   },
   "20247751": {
     "categories": [
@@ -1285,7 +1308,7 @@
     "categories": [
       "food/legumes"
     ],
-    "name": "ЛЕЩА, ПР. БЪЛГАРИЯ Rodna Stryaha Bulgarian lentils 500g",
+    "name": "Rodna Stryaha lentils 500g",
     "prices": [
       {
         "currency": "EUR",
@@ -1303,9 +1326,9 @@
       },
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-13",
         "price": 1.05,
-        "shop": null,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
       }
     ],
@@ -1316,6 +1339,12 @@
         "last_seen": "2026-06-04",
         "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -1579,7 +1608,7 @@
     "categories": [
       "beer"
     ],
-    "name": "ARIANA ЛЯТНО Ariana Lyatno summer beer 3.9% (Zagorka; -0.15 Lidl Plus coupon)",
+    "name": "Ариана Лятно",
     "prices": [
       {
         "currency": "EUR",
@@ -1587,6 +1616,22 @@
         "price": 2.4,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-13",
+        "price": 2.55,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ARIANA ЛЯТНО БИРА",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2798,14 +2843,23 @@
     "categories": [
       "yogurt-drink"
     ],
-    "name": "АЙРАН 2,2% Pilos ayran 1l",
+    "name": "Pilos ayran 1l",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-13",
         "price": 0.99,
-        "shop": null,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      }
+    ],
+    "quantity": "1l",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "АЙРАН 2,2%",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2912,14 +2966,23 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "ЛУКАНКА НАРЯЗАНА Pikok lukanka sliced 100g",
+    "name": "Pikok lukanka sliced",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-13",
         "price": 2.7,
-        "shop": null,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      }
+    ],
+    "quantity": "100g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ЛУКАНКА, НАРЯЗАНА",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -3153,14 +3216,23 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "ШПЕК БУРГАС XXL Baroni Shpek Burgas XXL dry sausage (Boni Lovech)",
+    "name": "Baroni Shpek Burgas XXL",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-13",
         "price": 2.49,
-        "shop": null,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ШПЕК БУРГАС XXL",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -3168,14 +3240,22 @@
     "categories": [
       "food/nuts"
     ],
-    "name": "ПЕЧЕН СОЛЕН БАДЕМ Alesto roasted salted almonds",
+    "name": "Alesto roasted salted almonds",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-13",
         "price": 2.49,
-        "shop": null,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ПЕЧЕН СОЛЕН БАДЕМ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -3397,7 +3477,7 @@
     "categories": [
       "yogurt"
     ],
-    "name": "Pilos КИСЕЛО МЛЯКО 3,6% yogurt 3.6% 1kg",
+    "name": "Yogurt 3.6% 1kg",
     "prices": [
       {
         "currency": "EUR",
@@ -3447,9 +3527,16 @@
         "price": 1.53,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-13",
+        "price": 1.53,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
-    "quantity": "1kg",
+    "quantity": "1000g",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
@@ -3468,6 +3555,12 @@
         "last_seen": "2026-05-16",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "КИСЕЛО МЛЯКО 3,6%",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ],
     "source": "manual"
