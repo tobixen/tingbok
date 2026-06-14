@@ -2298,14 +2298,22 @@
     "categories": [
       "food/spices/herb"
     ],
-    "name": "МАГДАНОЗ fresh parsley (Русев и Русев)",
+    "name": "Магданоз fresh parsley",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-13",
         "price": 0.86,
-        "shop": null,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "МАГДАНОЗ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
       }
     ]
   },
