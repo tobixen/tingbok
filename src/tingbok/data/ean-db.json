@@ -432,6 +432,21 @@
       }
     ]
   },
+  "20113476": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "ЧИЛИ КОН КАРНЕ chili con carne (canned)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.29,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20123703": {
     "categories": [
       "food/seafood"
@@ -678,14 +693,21 @@
   },
   "20242275": {
     "categories": [
-      "asparagus"
+      "vegetable"
     ],
-    "name": "ЗЕЛЕНИ АСПЕРЖИ 500Г green asparagus",
+    "name": "ЗЕЛЕНИ АСПЕРЖИ 500Г green asparagus (Poland, D.D. CHAMP; 50% discount, short-expiry bin)",
     "prices": [
       {
         "currency": "EUR",
         "date": null,
         "price": 3.49,
+        "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.79,
         "shop": null,
         "unit": "pcs"
       }
@@ -1278,6 +1300,13 @@
         "price": 1.27,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.05,
+        "shop": null,
+        "unit": "pcs"
       }
     ],
     "quantity": "500g",
@@ -1460,7 +1489,7 @@
     "categories": [
       "tomatoes"
     ],
-    "name": "sauce Bulgarian paprika/tomato sauce, glass jar (145 kcal/100g; in box due to short printed best-before 2026-03-13, lot"
+    "name": "sauce Bulgarian paprika/tomato sauce, glass jar (145 kcal/100g; in box due to short printed best-before 2026-03-13, lot L:13/03/26)"
   },
   "3800012140940": {
     "categories": [
@@ -1546,6 +1575,21 @@
       }
     ]
   },
+  "3800022414079": {
+    "categories": [
+      "beer"
+    ],
+    "name": "ARIANA ЛЯТНО Ariana Lyatno summer beer 3.9% (Zagorka; -0.15 Lidl Plus coupon)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.4,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800038902942": {
     "categories": [
       "toothpaste"
@@ -1580,6 +1624,21 @@
         "last_seen": "2026-05-23",
         "name": "ПАСТА ПОМОРИН ANT-PARODONT 100МЛ",
         "shop": "Маринени Бонилова, Varna"
+      }
+    ]
+  },
+  "3800045022060": {
+    "categories": [
+      "solvent"
+    ],
+    "name": "DEKORATOR MPT РАЗРЕДИТЕЛ thinner/solvent 1L (Megahim AD Ruse; GHS hazard, non-food)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.99,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -2190,6 +2249,21 @@
       }
     ]
   },
+  "3800501165300": {
+    "categories": [
+      "food/spices/herb"
+    ],
+    "name": "МАГДАНОЗ fresh parsley (Русев и Русев)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800856095703": {
     "categories": [
       "rice"
@@ -2282,9 +2356,9 @@
   },
   "4008033481595": {
     "categories": [
-      "scissors"
+      "tool-scissors"
     ],
-    "name": "Probus НОЖИЦА С ОМЕКОТЕНА ДРЪЖКА NIROSTA Stainless Steel Soft Grip Scissors 21.5cm",
+    "name": "НОЖИЦА С ОМЕКОТЕНА ДРЪЖКА scissors with soft grip, Nirosta steel",
     "prices": [
       {
         "currency": "EUR",
@@ -2334,6 +2408,21 @@
         "date": "2026-05-26",
         "price": 1.58,
         "shop": "Praktiker Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
+  "4013307787167": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "ЧЕТКИ 4 БР. ЧЕРЕН КОСЪМ set of 4 black-bristle brushes (20/30/40/50mm)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.49,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -2705,6 +2794,21 @@
       }
     ]
   },
+  "4056489177463": {
+    "categories": [
+      "yogurt-drink"
+    ],
+    "name": "АЙРАН 2,2% Pilos ayran 1l",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.99,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489177548": {
     "categories": [
       "pasta"
@@ -2800,6 +2904,21 @@
         "date": "2026-05-02",
         "price": 2.55,
         "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
+  "4056489474074": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "ЛУКАНКА НАРЯЗАНА Pikok lukanka sliced 100g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.7,
+        "shop": null,
         "unit": "pcs"
       }
     ]
@@ -3027,6 +3146,36 @@
         "last_seen": "2026-05-16",
         "name": "ДЕВЕСИЛ 18G",
         "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "4056489692485": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "ШПЕК БУРГАС XXL Baroni Shpek Burgas XXL dry sausage (Boni Lovech)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.49,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "4056489692584": {
+    "categories": [
+      "food/nuts"
+    ],
+    "name": "ПЕЧЕН СОЛЕН БАДЕМ Alesto roasted salted almonds",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.49,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -4060,6 +4209,21 @@
     "name": "JYSK Soap Confetti heart 30g",
     "quantity": "30g"
   },
+  "5701573900180": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "ЧЕТКА ПЛОСКА СУПЕР ФИНИ 35ММ flat paint brush super-fine 35mm",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.59,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "5703147691272": {
     "categories": [
       "personal-care/skincare/mask"
@@ -4786,6 +4950,21 @@
         "last_seen": "2026-05-26",
         "name": "ВЪГЪЛ КОМБИНИРАН С 3 РЪБА",
         "shop": "Praktiker Варна"
+      }
+    ]
+  },
+  "9002588722641": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "ЧЕТКА СКОСЕНА ПЛОСКА AL ROUND 50 angled flat paint brush 50mm",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.11,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   }
