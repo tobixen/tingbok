@@ -1977,6 +1977,28 @@
   },
   "3800106402008": {
     "categories": [
+      "rice"
+    ],
+    "name": "KRINA ОРИЗ СРЕДНОЗЪРНЕСТ medium grain rice",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.38,
+        "shop": null,
+        "unit": "piece"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.48,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "3800106402053": {
+    "categories": [
       "food/legumes"
     ],
     "name": "KRINA ЛЕЩА, 1КГ Krina lentils 1kg",
@@ -2003,28 +2025,6 @@
         "last_seen": "2026-06-04",
         "name": "KRINA ЛЕЩА, 1КГ",
         "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "3800106402053": {
-    "categories": [
-      "rice"
-    ],
-    "name": "KRINA ОРИЗ СРЕДНОЗЪРНЕСТ medium grain rice",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.38,
-        "shop": null,
-        "unit": "piece"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.48,
-        "shop": null,
-        "unit": "piece"
       }
     ]
   },
