@@ -43,7 +43,10 @@
     ]
   },
   "20241988": {
-    "name": "Pfirsiche gelbfleischig",
+    "categories": [
+      "food/fruits/peaches"
+    ],
+    "name": "Праскови / yellow peaches 1kg (Greece)",
     "prices": [
       {
         "currency": "EUR",
@@ -79,9 +82,9 @@
   },
   "20710118": {
     "categories": [
-      "food/legumes"
+      "lentils"
     ],
-    "name": "ЛЕЩА, ПР. БЪЛГАРИЯ Rodna Stryaha Bulgarian lentils 500g",
+    "name": "Леща / Bulgarian green lentils 500g (Родна стряха)",
     "prices": [
       {
         "currency": "EUR",
@@ -227,7 +230,10 @@
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml"
   },
   "4056489177654": {
-    "name": "Кашкавал",
+    "categories": [
+      "cheese/kashkaval"
+    ],
+    "name": "Кашкавал от краве мляко (Родна стряха)",
     "prices": [
       {
         "currency": "EUR",
@@ -277,7 +283,10 @@
     ]
   },
   "4056489941842": {
-    "name": "Milk 3.7% fat",
+    "categories": [
+      "fresh-milk"
+    ],
+    "name": "Прясно мляко 3.7% 1l (Pilos) (2×)",
     "prices": [
       {
         "currency": "EUR",
@@ -287,6 +296,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "2l/2",
     "receipt_names": [
       {
         "first_seen": "2026-06-16",
