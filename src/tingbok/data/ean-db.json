@@ -42,6 +42,26 @@
       }
     ]
   },
+  "20241988": {
+    "name": "Pfirsiche gelbfleischig",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 2.29,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "ПРАСКОВИ 1КГ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "20322755": {
     "categories": [
       "food/nuts"
@@ -65,10 +85,18 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-16",
         "price": 1.05,
-        "shop": null,
+        "shop": "Lidl Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -78,6 +106,26 @@
       "corn"
     ],
     "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
+  },
+  "20962654": {
+    "name": "Бяло саламурено сирене от краве и биволско мляко",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 4.09,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "СИРЕНЕ КРАВЕ/БИВОЛСК",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "3800012130064": {
     "categories": [
@@ -103,6 +151,26 @@
         "price": 2.04,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "3800135310060": {
+    "name": "Балканско светло пиво",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 0.51,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "BALKANSKO СВЕТ.БИРА",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -158,6 +226,26 @@
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml"
   },
+  "4056489177654": {
+    "name": "Кашкавал",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 5.59,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "КАШКАВАЛ ОТ КРАВЕ МЛ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489692584": {
     "categories": [
       "food/nuts"
@@ -185,6 +273,26 @@
         "price": 2.2,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "4056489941842": {
+    "name": "Milk 3.7% fat",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 1.39,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "ПРЯСНО МЛЯКО 3,7%",
+        "shop": "Lidl Varna"
       }
     ]
   },
