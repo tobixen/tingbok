@@ -11,3 +11,6 @@ build/
 .venv/
 venv/
 src/tingbok/_version.py
+
+# lychee link checker local cache
+.lycheecache

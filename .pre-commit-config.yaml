@@ -37,10 +37,13 @@ repos:
         stages: [pre-push]  # Run with: pre-commit run lychee --hook-stage manual
 
   - repo: https://github.com/lycheeverse/lychee
-    rev: lychee-v0.22.0
+    rev: lychee-v0.24.2
     hooks:
       - id: lychee
-        args: ["--no-progress", "--timeout", "10"]
-        types: [markdown, rst]
+        # Check links across the whole working tree (all file types, not just
+        # md/rst).  pass_filenames: false -> pre-commit passes only '.', so the
+        # whole repo is scanned rather than just the changed files.
+        args: ["--no-progress", "--timeout", "10", "--cache", "--max-cache-age", "1d", "."]
+        pass_filenames: false
         stages: [pre-push]
 
