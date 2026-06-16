@@ -113,6 +113,30 @@
     "name": "Луканка Тракийска XXL",
     "quantity": "550g"
   },
+  "3800500766577": {
+    "categories": [
+      "mushrooms"
+    ],
+    "name": "Кралска печурка / brown chestnut mushrooms 500g (Русев и Русев син ЕООД)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 2.81,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "КРАЛСКА ПЕЧУРКА 500Г",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "3800501165300": {
     "categories": [
       "food/spices/herb"
@@ -161,6 +185,30 @@
         "price": 2.2,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "4056489942139": {
+    "categories": [
+      "food/eggs"
+    ],
+    "name": "Пресни яйца размер L клас А, 10 бр. (ДЖЕНИ ОВО ЕООД, Сливен; за Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 2.29,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "10 pcs",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "ПРЕСНИ ЯЙЦА РАЗМ.L",
+        "shop": "Lidl Varna"
       }
     ]
   },
