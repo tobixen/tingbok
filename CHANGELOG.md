@@ -18,6 +18,15 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 
 ### Fixed
 
+- **`POST /api/vocabulary/resolve` no longer splits synonym/number variants into
+  separate sibling concepts** — when an input label matched a concept via
+  altLabel / prefLabel / number variant (e.g. `vegetable` → `food/vegetables`,
+  `fresh-milk` → `whole-milk`), the endpoint used to emit a *second* concept node
+  keyed by the raw input label with `broader=[canonical]`.  On the client this
+  made e.g. `vegetable` and `vegetables` disjoint sibling concepts, so
+  `inventory-md --category vegetable` and `--category vegetables` matched
+  different items.  The raw input label is now folded into the canonical
+  concept's altLabels instead, keeping a single canonical ID per concept.
 - **Singular and plural labels now resolve to the same concept** —
   `GET /api/lookup/fruit-juice` and `/api/lookup/fruit-juices` returned different
   concepts: the singular matched the `fruit juice` altLabel of the `juice` concept,

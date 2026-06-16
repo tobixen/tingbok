@@ -1195,6 +1195,24 @@ def _lookup_in_vocabulary(label: str, lang: str) -> VocabularyConcept | None:
     return None
 
 
+def _add_input_label_as_altlabel(concept: VocabularyConcept, label: str, lang: str) -> None:
+    """Record a raw input label as an altLabel on its canonical concept.
+
+    Used when a resolve input matched a concept via altLabel / prefLabel / number
+    variant: the original spelling is folded into the canonical concept's
+    altLabels (under ``lang``) so clients can resolve the raw label back to this
+    one ID.  No-op if the label already appears among any of the concept's labels
+    (case-insensitive), so e.g. a plural that equals the prefLabel is not added.
+    """
+    label_lower = label.lower()
+    if concept.prefLabel.lower() == label_lower:
+        return
+    for alts in concept.altLabel.values():
+        if any(a.lower() == label_lower for a in alts):
+            return
+    concept.altLabel.setdefault(lang, []).append(label)
+
+
 def _collect_with_ancestors(
     concept_id: str,
     result: dict[str, VocabularyConcept],
@@ -1278,22 +1296,18 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
 
     # Add vocabulary hits (with full ancestor chain).
     # When the input label differs from the canonical concept ID (e.g. altLabel
-    # "fresh-milk" → concept "whole-milk"), also add a bridge entry keyed by the
-    # input label so the client can resolve the original label back to its canonical
-    # concept without a second lookup.
+    # "fresh-milk" → concept "whole-milk", or singular "vegetable" → "vegetables"),
+    # record the raw input as an altLabel on the canonical concept rather than
+    # emitting a separate bridge node.  A bridge node keyed by the input label
+    # would split synonym/number variants into disjoint sibling concepts on the
+    # client (so e.g. "vegetable" and "vegetables" never match each other); an
+    # altLabel keeps everything anchored to one canonical ID.
     for _label, hit in vocab_hits.items():
         _collect_with_ancestors(hit.id, concepts)
-        if _label != hit.id and _label not in concepts:
-            concepts[_label] = VocabularyConcept(
-                id=_label,
-                prefLabel=hit.prefLabel,
-                broader=[hit.id],
-                narrower=[],
-                uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{_label}",
-                source_uris=hit.source_uris,
-                labels=hit.labels,
-                altLabel=hit.altLabel,
-            )
+        if _label != hit.id:
+            canonical = concepts.get(hit.id)
+            if canonical is not None:
+                _add_input_label_as_altlabel(canonical, _label, lang)
 
     for label, per_source, uri_map in skos_fetches:
         lookup_label = label.replace("_", " ").replace("-", " ")

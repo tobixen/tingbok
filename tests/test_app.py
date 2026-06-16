@@ -131,26 +131,54 @@ async def test_resolve_vocabulary_known_concept(client):
 
 
 @pytest.mark.anyio
-async def test_resolve_vocabulary_altlabel_input_included_in_response(client):
-    """Input label that matches a vocab concept via altLabel must appear in response.
+async def test_resolve_vocabulary_altlabel_input_folded_into_canonical(client):
+    """Input label that matches a vocab concept via altLabel folds into the canonical.
 
-    'fresh-milk' is an altLabel of 'whole-milk' in vocabulary.yaml.  When
-    resolve is called with 'fresh-milk', the response must include 'fresh-milk'
-    as a key (not silently drop it because the canonical ID differs) and must
-    NOT list it as unresolved.  'whole-milk' and its ancestors must also be
-    present.
+    'fresh-milk' is an altLabel of 'whole-milk' in vocabulary.yaml.  When resolve
+    is called with 'fresh-milk', the response must NOT create a separate
+    'fresh-milk' bridge concept (those split singular/plural and other synonym
+    variants into disjoint sibling nodes on the client).  Instead the input label
+    is recorded as an altLabel on the canonical 'whole-milk' concept, so the
+    client resolves the raw label to a single canonical ID.  It must also not be
+    listed as unresolved, and the canonical concept plus ancestors must be present.
     """
     response = await client.post("/api/vocabulary/resolve", json={"labels": ["fresh-milk"], "lang": "en"})
     assert response.status_code == 200
     data = response.json()
     concepts = data["concepts"]
-    # The input label must be present so the client can resolve it
-    assert "fresh-milk" in concepts, "input altLabel 'fresh-milk' must appear as a concept key"
+    # No separate bridge concept keyed by the input label
+    assert "fresh-milk" not in concepts, "input altLabel must fold into the canonical, not become its own node"
     # It must not be listed as unresolved
     assert "fresh-milk" not in data["unresolved"]
-    # The canonical concept and its ancestors must be included too
+    # The canonical concept and its ancestors must be present
     assert "whole-milk" in concepts
     assert "milk" in concepts
+    # The input label must be discoverable as an altLabel on the canonical concept
+    all_alts = {a.lower() for alts in concepts["whole-milk"]["altLabel"].values() for a in alts}
+    assert "fresh-milk" in all_alts, "input label must be recorded as an altLabel on the canonical concept"
+
+
+@pytest.mark.anyio
+async def test_resolve_singular_and_plural_fold_to_same_canonical(client):
+    """Singular and plural of the same concept must resolve to one canonical node.
+
+    Regression for the inventory-md bug where ``--category vegetable`` and
+    ``--category vegetables`` matched disjoint items because tingbok returned
+    them as two separate sibling concepts.  Both must fold into the canonical
+    concept, which must carry both spellings as altLabels.
+    """
+    response = await client.post("/api/vocabulary/resolve", json={"labels": ["vegetable", "vegetables"], "lang": "en"})
+    assert response.status_code == 200
+    concepts = response.json()["concepts"]
+    canonical = concepts["food/vegetables"]
+    # Neither spelling may appear as its own concept node
+    assert "vegetable" not in concepts
+    assert "vegetables" not in concepts
+    # Both spellings must be discoverable as a label (prefLabel or altLabel) on the
+    # canonical concept.  ("vegetables" is already the prefLabel, so it need not be
+    # duplicated into altLabels; the singular "vegetable" is folded in as an altLabel.)
+    all_labels = {canonical["prefLabel"].lower()} | {a.lower() for alts in canonical["altLabel"].values() for a in alts}
+    assert {"vegetable", "vegetables"} <= all_labels
 
 
 @pytest.mark.anyio
