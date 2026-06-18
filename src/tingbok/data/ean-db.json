@@ -142,6 +142,21 @@
     ],
     "name": "Diavena mackerel in tomato sauce (Доматен сос; net 160g / drained 96g)"
   },
+  "3800085106942": {
+    "categories": [
+      "tool-scissors"
+    ],
+    "name": "JIP office scissors 25.5 cm",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800106402053": {
     "categories": [
       "food/legumes"
@@ -218,6 +233,36 @@
         "currency": "EUR",
         "date": null,
         "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "4006825613704": {
+    "categories": [
+      "power-tool-battery"
+    ],
+    "name": "Einhell Power X-Change starter kit — 4.0Ah battery + Power X-Charger 3A (Art.Nr. 45.120.42)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 36.67,
+        "shop": null,
+        "unit": "set"
+      }
+    ]
+  },
+  "4006825618341": {
+    "categories": [
+      "power-tool"
+    ],
+    "name": "Einhell TE-RS 18 Li-S cordless random-orbital sander (Solo, no battery) (Art.Nr. 44.620.10)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 41.99,
         "shop": null,
         "unit": "pcs"
       }
@@ -330,6 +375,21 @@
       }
     ]
   },
+  "4056807318332": {
+    "categories": [
+      "work-gloves"
+    ],
+    "name": "Würth mechanics gloves \"Red Latex Grip\" size 10 (Art. 0899 408 210)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.38,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "5201340001169": {
     "categories": [
       "food/seafood/canned-fish"
@@ -341,5 +401,20 @@
       "tools/cleaning"
     ],
     "name": "Änglamark window cleaner 750ml (Coop)"
+  },
+  "9002588424903": {
+    "categories": [
+      "safety-glasses"
+    ],
+    "name": "Schuller Eh'klar safety glasses EN 166 (Art.Nr. 42490)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.36,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   }
 }
