@@ -409,6 +409,22 @@
       }
     ]
   },
+  "4056489586043": {
+    "categories": [
+      "canning",
+      "tinned-meat"
+    ],
+    "name": "СВИНСКО МЕСО ХХЛ pork meat XXL tin",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "4056489692584": {
     "categories": [
       "food/nuts"
@@ -470,7 +486,7 @@
   },
   "4056489941026": {
     "categories": [
-      "food/nuts"
+      "mixed-nuts"
     ],
     "name": "Alesto ЯДКИ СМЕС mixed nuts classic",
     "prices": [
@@ -551,6 +567,13 @@
       "food/seafood/canned-fish"
     ],
     "name": "Flokos ΣΚΟΥΜΠΡΙ φιλέτο — mackerel fillet in tomato sauce (Konva, Greek)"
+  },
+  "5901069001968": {
+    "categories": [
+      "canning",
+      "sprats"
+    ],
+    "name": "ŁOSOŚ Smoked Winter Sprats (Polish) (middle + front port)"
   },
   "7340011453437": {
     "categories": [
