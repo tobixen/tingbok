@@ -26,6 +26,26 @@
     ],
     "name": "Freshona Sweetcorn natural sweet (Lidl, 340g tin)"
   },
+  "20154202": {
+    "name": "Wok Sauce Curry",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "СОС ЗА УОК КЪРИ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "20240899": {
     "categories": [
       "canning",
@@ -77,6 +97,46 @@
         "price": 0.79,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "20348397": {
+    "name": "Горчица с хрян",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 0.51,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "ГОРЧИЦА ХРЯН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "20404741": {
+    "name": "Траен варено-пушен салам Стара планина / шпек (Родна стряха)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 2.79,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "ШПЕК СТАРА ПЛАНИНА",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -274,6 +334,26 @@
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml"
   },
+  "4056489108160": {
+    "name": "Pilos МЛЯКО UHT 3,5% UHT whole milk (added 2026-04-29)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "МЛЯКО UHT 3,5%",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489177654": {
     "categories": [
       "cheese/kashkaval"
@@ -297,6 +377,26 @@
       }
     ]
   },
+  "4056489178903": {
+    "name": "Заквасена сметана 20%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 1.59,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "ЗАКВАСЕНА СМЕТАНА",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489692584": {
     "categories": [
       "food/nuts"
@@ -309,6 +409,46 @@
         "price": 2.49,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "4056489693048": {
+    "name": "Lukanka From Panagyurishte",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 3.39,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "ПАНАГЮРСКА ЛУКАНКА",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489693130": {
+    "name": "Смядовска луканка нарязана (Родна стряха)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 2.59,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "СМЯДОВСКА ЛУКАНКА",
+        "shop": "Lidl Varna"
       }
     ]
   },
