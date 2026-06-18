@@ -27,7 +27,10 @@
     "name": "Freshona Sweetcorn natural sweet (Lidl, 340g tin)"
   },
   "20154202": {
-    "name": "Wok Sauce Curry",
+    "categories": [
+      "food/spices/curry"
+    ],
+    "name": "Сос за уок къри 490g (Vitasia, Lidl)",
     "prices": [
       {
         "currency": "EUR",
@@ -101,7 +104,10 @@
     ]
   },
   "20348397": {
-    "name": "Горчица с хрян",
+    "categories": [
+      "mustard"
+    ],
+    "name": "Горчица с хрян 200g",
     "prices": [
       {
         "currency": "EUR",
@@ -121,6 +127,9 @@
     ]
   },
   "20404741": {
+    "categories": [
+      "cured-meat"
+    ],
     "name": "Траен варено-пушен салам Стара планина / шпек (Родна стряха)",
     "prices": [
       {
@@ -378,7 +387,10 @@
     ]
   },
   "4056489178903": {
-    "name": "Заквасена сметана 20%",
+    "categories": [
+      "food/processed_animal_products/cream/cultured_cream"
+    ],
+    "name": "Заквасена сметана 20% 400g (Родна стряха)",
     "prices": [
       {
         "currency": "EUR",
@@ -433,6 +445,9 @@
     ]
   },
   "4056489693130": {
+    "categories": [
+      "cured-meat"
+    ],
     "name": "Смядовска луканка нарязана (Родна стряха)",
     "prices": [
       {
@@ -443,6 +458,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "450g/3",
     "receipt_names": [
       {
         "first_seen": "2026-06-18",
