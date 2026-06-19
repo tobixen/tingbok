@@ -326,7 +326,7 @@
     "categories": [
       "power-tool"
     ],
-    "name": "Einhell TE-RS 18 Li-S cordless random-orbital sander (Solo, no battery) (Art.Nr. 44.620.10)",
+    "name": "Einhell Te-rs 18 Li Solo Power X-change Cordless Random Orbital Sander, 18 V,",
     "prices": [
       {
         "currency": "EUR",
@@ -334,6 +334,44 @@
         "price": 41.99,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-19",
+        "price": 47.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-19",
+        "last_seen": "2026-06-19",
+        "name": "EINHELL АК.ЕКСЦЕНТЪРШЛ TE-RS18LI-S",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "4006825673227": {
+    "categories": [
+      "power-tool-battery"
+    ],
+    "name": "Einhell Power X-Change 18V 4.0Ah battery (PXC)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-19",
+        "price": 55.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-19",
+        "last_seen": "2026-06-19",
+        "name": "EINHELL АК.БАТ.18V/4АН SEALED PXC",
+        "shop": "Praktiker Varna"
       }
     ]
   },
@@ -567,6 +605,29 @@
       "food/seafood/canned-fish"
     ],
     "name": "Flokos ΣΚΟΥΜΠΡΙ φιλέτο — mackerel fillet in tomato sauce (Konva, Greek)"
+  },
+  "5411183171671": {
+    "categories": [
+      "adhesive"
+    ],
+    "name": "Soudal Fix All Xtreme Power adhesive, white (art. 341139)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-19",
+        "price": 9.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-19",
+        "last_seen": "2026-06-19",
+        "name": "SOUDAL ЛЕПИЛО XTREME POWER EXPRES",
+        "shop": "Praktiker Varna"
+      }
+    ]
   },
   "5901069001968": {
     "categories": [
