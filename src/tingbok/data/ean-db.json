@@ -219,10 +219,18 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-18",
         "price": 2.55,
-        "shop": null,
+        "shop": "Praktiker Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "JIP НОЖИЦА КАНЦЕЛАРСКА 25.5 CM",
+        "shop": "Praktiker Varna"
       }
     ]
   },
@@ -311,14 +319,22 @@
     "categories": [
       "power-tool-battery"
     ],
-    "name": "Einhell Power X-Change starter kit — 4.0Ah battery + Power X-Charger 3A (Art.Nr. 45.120.42)",
+    "name": "Einhell - Power-x-change Starter-kit 18volt 4ah, Ladegerät Hardware/electro",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-18",
         "price": 36.67,
-        "shop": null,
+        "shop": "Praktiker Varna",
         "unit": "set"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "EINHELL СТАРТОВ КОМПЛЕ KT 18 J/4",
+        "shop": "Praktiker Varna"
       }
     ]
   },
@@ -326,19 +342,19 @@
     "categories": [
       "power-tool"
     ],
-    "name": "Einhell TE-RS 18 Li-S cordless random-orbital sander (Solo, no battery) (Art.Nr. 44.620.10)",
+    "name": "Einhell Te-rs 18 Li Solo Power X-change Cordless Random Orbital Sander, 18 V,",
     "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 41.99,
-        "shop": null,
-        "unit": "pcs"
-      },
       {
         "currency": "EUR",
         "date": "2026-06-19",
         "price": 47.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 41.99,
         "shop": "Praktiker Varna",
         "unit": "pcs"
       }
@@ -348,6 +364,12 @@
         "first_seen": "2026-06-19",
         "last_seen": "2026-06-19",
         "name": "EINHELL АК.ЕКСЦЕНТЪРШЛ TE-RS18LI-S",
+        "shop": "Praktiker Varna"
+      },
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "EINHELL АК.ЕКСЦЕНТРШЛ TE-RS18LI-S",
         "shop": "Praktiker Varna"
       }
     ]
@@ -593,10 +615,18 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-18",
         "price": 1.38,
-        "shop": null,
+        "shop": "Praktiker Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "WURTH РЪКАВИЦИ МЕХАНИЦИ RED LATEX",
+        "shop": "Praktiker Varna"
       }
     ]
   },
@@ -650,10 +680,18 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-18",
         "price": 5.36,
-        "shop": null,
+        "shop": "Praktiker Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "ЗАЩИТНИ ОЧИЛА EN 166",
+        "shop": "Praktiker Varna"
       }
     ]
   }
