@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
+## [Unreleased]
+
+### Added
+- **`mushroom-foraging` (soppsanking) vocabulary concept** — neither DBpedia "mushroom
+  hunting" nor Wikidata `Q2391676` carries the canonical Norwegian term, so it is pinned
+  in `vocabulary.yaml` with nb altLabels (soppsanking, sopplukking, …) under `outdoor`.
+
+### Changed
+- **Universal English final fallback for SKOS label lookup** — `_LANGUAGE_FALLBACKS`
+  only covered the Scandinavian cluster, so a language whose index missed the
+  English-derived lookup label (e.g. `it`) dropped sources like Wikidata and returned
+  sparse, language-dependent results. A new `_fallback_langs(lang)` helper appends `en`
+  to every chain (empty for `en` itself), making `/api/lookup` results language-invariant.
+  See `docs/language-fallback-findings.md`.
+
+### Fixed
+- **Films, books and other titles excluded from category lookups** — a query like
+  `sopping` fuzzy-matched a Wikidata film (`Q7563193`), leaking a creative-work title
+  into the category vocabulary. The Wikidata non-concept filter now rejects common
+  creative-work `P31` types (film, book, album, song, video game, …) and their
+  creative-work ancestors. Blocking these instance-of values only rejects individual
+  titles; the general class concepts are unaffected.
+
 ## [v0.14.0] - 2026-06-20
 
 I've been hammering on this project for several months now, forgetting to make releases "on the go".  The following CHANGELOG seems overwhelming, it's AI-generated, probably full of junk, but I believe I'm the only user of this project so I just let it slide through.
