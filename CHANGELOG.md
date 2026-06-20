@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project should adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) - except, for pre-releases PEP440 takes precedence.
 
 
-## [Unreleased]
+## [v0.14.0] - 2026-06-20
+
+I've been hammering on this project for several months now, forgetting to make releases "on the go".  The following CHANGELOG seems overwhelming, it's AI-generated, probably full of junk, but I believe I'm the only user of this project so I just let it slide through.
 
 ### Added
 
@@ -15,84 +17,15 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   (case- and whitespace-insensitive exact match scores 1.0, otherwise a similarity
   ratio). Optional `shop`, `limit`, and `min_score` filters. Lets a shopping importer
   propose EAN matches for receipts that print only a localised product name.
-
-### Fixed
-
-- **`POST /api/vocabulary/resolve` no longer splits synonym/number variants into
-  separate sibling concepts** — when an input label matched a concept via
-  altLabel / prefLabel / number variant (e.g. `vegetable` → `food/vegetables`,
-  `fresh-milk` → `whole-milk`), the endpoint used to emit a *second* concept node
-  keyed by the raw input label with `broader=[canonical]`.  On the client this
-  made e.g. `vegetable` and `vegetables` disjoint sibling concepts, so
-  `inventory-md --category vegetable` and `--category vegetables` matched
-  different items.  The raw input label is now folded into the canonical
-  concept's altLabels instead, keeping a single canonical ID per concept.
-- **Singular and plural labels now resolve to the same concept** —
-  `GET /api/lookup/fruit-juice` and `/api/lookup/fruit-juices` returned different
-  concepts: the singular matched the `fruit juice` altLabel of the `juice` concept,
-  while the plural fell through to a network SKOS lookup.  The singular/plural step in
-  `_lookup_in_vocabulary` now generates number variations of every separator form
-  (so `fruit-juices` is tried as `fruit juice`) and — like the exact-match step —
-  also consults the runtime-enriched label caches (`_fetched_labels` /
-  `_fetched_alt_labels`), where altLabels such as `fruit juice` live.
-- **Cache refresh loop now handles legacy entries written before `_cache_key` was added** —
-  ~7 800 SKOS cache files (up to 55 days old) were silently skipped by
-  `_find_oldest_cache_entry` because they lacked the `_cache_key` field, causing the
-  loop to only see 13-day-old entries and sleep ~9 hours between each check.  A new
-  `_infer_cache_key()` helper reconstructs the key from the SHA-256 hash embedded in
-  the filename: for `labels`/`alt_labels`/`description` entries the key is rebuilt from
-  `uri`+`source` stored in the data; for `concept` entries the first three underscores
-  in the filename stem are replaced with colons.  Non-inferable entries (OFF/GPT caches
-  with `off:`/`gpt:` URIs) continue to be skipped to prevent spin-loops.  On a
-  successful refresh, the key is written back so future scans use the normal path.
-- **DBpedia disambiguation pages are now filtered at lookup time** —
-  `http://dbpedia.org/ontology/DisambiguationPage` is added to `_DBPEDIA_BLOCKED_TYPES`
-  so new lookups reject them immediately.  Stale cached disambiguation entries are also
-  evicted on the next cache hit.
-- **Four bug fixes**:
-  - `--version` flag added to the CLI argparser.
-  - Norwegian label lookup cache: cached SKOS labels fetched for one language variant
-    (e.g. `no`) are now returned when the same concept is queried under a related
-    variant (e.g. `nb`), avoiding unnecessary upstream round-trips.
-  - OFF missing categories: `_parse_off` now falls back to non-English category tags
-    (e.g. `de:`) when no `en:`-prefixed tags are present; fixes German Lidl products
-    that returned empty category lists.
-  - Cache refresh loop spin: `_find_oldest_cache_entry` skips entries without
-    `_cache_key` (e.g. OFF concept caches), preventing an infinite spin when such an
-    entry is past `max_age`.
-- **Maintenance scripts read cache dir from env/config** — `clean_vocabulary.py` and
-  `clean_skos_cache.py` now resolve the default cache directory from `TINGBOK_CACHE_DIR`
-  or `/etc/tingbok/tingbok.conf` before falling back to `~/.cache/tingbok`.
-- **EAN category strings are now normalised against the vocabulary** — after an
-  EAN/barcode lookup the raw category strings returned by upstream sources
-  (Open Food Facts, UPCitemdb, Open Library, nb.no) are matched
-  case-insensitively against vocabulary concept IDs, prefLabels, altLabels, and
-  path-segment aliases.  Matched categories are replaced with the canonical
-  concept ID (e.g. ``"spreads"`` → ``"spread"``); unmatched categories are kept
-  as-is.  The lookup index is built lazily on first use.
-- **DBpedia results typed as persons or geographical places are now filtered out** —
-  results whose RDF types include `dbo:Person`, `dbo:PopulatedPlace`,
-  `dbo:NaturalPlace`, or the equivalent `schema.org` and `foaf` types are
-  silently rejected.  This prevents cities, politicians, and mountains from
-  appearing as source URIs in vocabulary concepts.
-- **Wikidata results that are persons or geographic places are now filtered out** —
-  after finding a candidate entity the lookup now fetches its P31 (instance of)
-  and P625 (coordinate location) claims in a single `wbgetentities` request.
-  Entities whose P31 includes humans (Q5), cities/towns/villages, islands,
-  mountains, rivers, lakes, geographic regions, or Wikimedia
-  disambiguation/list pages are rejected; entities with a P625 coordinate
-  location are also rejected.  This shares the existing `wbgetentities` call
-  used for P279 (subclass-of) hierarchy fetching, so no extra round-trips are
-  added.
-- **Book lookups always include `"book"` in categories** — Open Library and nb.no results
-  previously returned an empty category list when no subjects were available.  `"book"` is
-  now appended to the categories list for all ISBN lookups.
-- **`populate-uris` no longer adds http/https duplicates** — the command now normalises
-  `http://` to `https://` when comparing discovered URIs against existing ones, preventing
-  duplicate entries when a source switches scheme between runs.
-
-### Added
-
+- **`POST /api/vocabulary/resolve` batch endpoint** — resolves a list of category
+  labels to a tailored vocabulary in a single round-trip: each label's matching
+  concept plus all ancestor concepts needed to render a complete category tree.
+  Labels not in `vocabulary.yaml` are looked up across AGROVOC, DBpedia, and Wikidata;
+  SKOS ancestors missing from the vocabulary are bridged in via their path segments,
+  and labels that resolve nowhere are returned as minimal `source="inventory"` stubs.
+  Synonym and number variants of an input label are folded into the matched concept's
+  altLabels (one canonical ID per concept) rather than emitted as separate sibling
+  concepts.  Preferred over `GET /api/vocabulary` for clients that need only a subset.
 - **Scandinavian language fallback for SKOS label lookup** — when a concept lookup
   fails for the primary language (e.g. `nb`), related Scandinavian variants
   (`no`, `da`, `nn`, `sv`) are tried before giving up.  Fallback chains are symmetric
@@ -115,7 +48,9 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 - **`scripts/clean_vocabulary.py`** — normalises `http→https`, removes duplicates and
   junk URIs from `source_uris` in `vocabulary.yaml`.  `--check-types` also removes
   person/place/disambiguation URIs by fetching RDF type information from DBpedia and
-  Wikidata.
+  Wikidata.  Both maintenance scripts resolve the default cache directory from
+  `TINGBOK_CACHE_DIR` or `/etc/tingbok/tingbok.conf` before falling back to
+  `~/.cache/tingbok`.
 - **`tingbok.services.skos.is_junk_uri(uri)`** — public pattern-only check (no network)
   for list articles and disambiguation pages.  Replaces the two private pattern helpers
   that were previously duplicated in internal callers.
@@ -161,6 +96,66 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   fields for all clients.  `cache_oldest_entry_age_days` is added for localhost clients
   alongside the existing `paths` dict, making it possible to verify that the cache
   refresh cycle is working.
+
+### Fixed
+
+- **Singular and plural labels now resolve to the same concept** —
+  `GET /api/lookup/fruit-juice` and `/api/lookup/fruit-juices` returned different
+  concepts: the singular matched the `fruit juice` altLabel of the `juice` concept,
+  while the plural fell through to a network SKOS lookup.  The singular/plural step in
+  `_lookup_in_vocabulary` now generates number variations of every separator form
+  (so `fruit-juices` is tried as `fruit juice`) and — like the exact-match step —
+  also consults the runtime-enriched label caches (`_fetched_labels` /
+  `_fetched_alt_labels`), where altLabels such as `fruit juice` live.
+- **Cache refresh loop now handles legacy entries written before `_cache_key` was added** —
+  ~7 800 SKOS cache files (up to 55 days old) were silently skipped by
+  `_find_oldest_cache_entry` because they lacked the `_cache_key` field, causing the
+  loop to only see 13-day-old entries and sleep ~9 hours between each check.  A new
+  `_infer_cache_key()` helper reconstructs the key from the SHA-256 hash embedded in
+  the filename: for `labels`/`alt_labels`/`description` entries the key is rebuilt from
+  `uri`+`source` stored in the data; for `concept` entries the first three underscores
+  in the filename stem are replaced with colons.  Non-inferable entries (OFF/GPT caches
+  with `off:`/`gpt:` URIs) continue to be skipped to prevent spin-loops.  On a
+  successful refresh, the key is written back so future scans use the normal path.
+- **DBpedia disambiguation pages are now filtered at lookup time** —
+  `http://dbpedia.org/ontology/DisambiguationPage` is added to `_DBPEDIA_BLOCKED_TYPES`
+  so new lookups reject them immediately.  Stale cached disambiguation entries are also
+  evicted on the next cache hit.
+- **Three bug fixes**:
+  - `--version` flag added to the CLI argparser.
+  - Norwegian label lookup cache: cached SKOS labels fetched for one language variant
+    (e.g. `no`) are now returned when the same concept is queried under a related
+    variant (e.g. `nb`), avoiding unnecessary upstream round-trips.
+  - OFF missing categories: `_parse_off` now falls back to non-English category tags
+    (e.g. `de:`) when no `en:`-prefixed tags are present; fixes German Lidl products
+    that returned empty category lists.
+- **EAN category strings are now normalised against the vocabulary** — after an
+  EAN/barcode lookup the raw category strings returned by upstream sources
+  (Open Food Facts, UPCitemdb, Open Library, nb.no) are matched
+  case-insensitively against vocabulary concept IDs, prefLabels, altLabels, and
+  path-segment aliases.  Matched categories are replaced with the canonical
+  concept ID (e.g. ``"spreads"`` → ``"spread"``); unmatched categories are kept
+  as-is.  The lookup index is built lazily on first use.
+- **DBpedia results typed as persons or geographical places are now filtered out** —
+  results whose RDF types include `dbo:Person`, `dbo:PopulatedPlace`,
+  `dbo:NaturalPlace`, or the equivalent `schema.org` and `foaf` types are
+  silently rejected.  This prevents cities, politicians, and mountains from
+  appearing as source URIs in vocabulary concepts.
+- **Wikidata results that are persons or geographic places are now filtered out** —
+  after finding a candidate entity the lookup now fetches its P31 (instance of)
+  and P625 (coordinate location) claims in a single `wbgetentities` request.
+  Entities whose P31 includes humans (Q5), cities/towns/villages, islands,
+  mountains, rivers, lakes, geographic regions, or Wikimedia
+  disambiguation/list pages are rejected; entities with a P625 coordinate
+  location are also rejected.  This shares the existing `wbgetentities` call
+  used for P279 (subclass-of) hierarchy fetching, so no extra round-trips are
+  added.
+- **Book lookups always include `"book"` in categories** — Open Library and nb.no results
+  previously returned an empty category list when no subjects were available.  `"book"` is
+  now appended to the categories list for all ISBN lookups.
+- **`populate-uris` no longer adds http/https duplicates** — the command now normalises
+  `http://` to `https://` when comparing discovered URIs against existing ones, preventing
+  duplicate entries when a source switches scheme between runs.
 
 ## [v0.13.0] - 2026-03-10
 
