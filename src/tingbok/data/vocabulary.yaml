@@ -1982,6 +1982,24 @@ concepts:
     source_uris:
     - https://dbpedia.org/resource/Backpack
     - https://www.wikidata.org/entity/Q654772
+  mushroom-foraging:
+    # Hardcoded: neither DBpedia "mushroom hunting" nor Wikidata Q2391676 carries
+    # the canonical Norwegian term "soppsanking", so it is pinned here.
+    prefLabel: "Mushroom foraging"
+    altLabel:
+      en: ["mushroom hunting", "mushroom picking", "mushrooming", "foraging"]
+      nb: ["soppsanking", "sopplukking", "plukke sopp", "høste sopp", "sopptur"]
+    labels:
+      en: "Mushroom foraging"
+      nb: "Soppsanking"
+      de: "Pilzesammeln"
+      sv: "Svampplockning"
+      da: "Svampeplukning"
+      fi: "Sienestäminen"
+    broader: outdoor
+    source_uris:
+    - https://dbpedia.org/resource/Mushroom_hunting
+    - https://www.wikidata.org/entity/Q2391676
 
   # =============================================================================
   # CLOTHING SUBCATEGORIES
