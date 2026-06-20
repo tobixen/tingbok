@@ -630,6 +630,12 @@
       }
     ]
   },
+  "5056170301978": {
+    "categories": [
+      "helse/tannpleie"
+    ],
+    "name": "DentaGlo Kids Toothbrushes 5-pack (Gem Imports)"
+  },
   "5201340001169": {
     "categories": [
       "food/seafood/canned-fish"
@@ -666,11 +672,32 @@
     ],
     "name": "ŁOSOŚ Smoked Winter Sprats (Polish) (middle + front port)"
   },
+  "7040110310807": {
+    "categories": [
+      "food/baking"
+    ],
+    "name": "Freia Bakekakao 250g Regia (MENY Alna, kjøpt 2026-04-11)",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": null,
+        "price": 89.0,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "7340011453437": {
     "categories": [
       "tools/cleaning"
     ],
     "name": "Änglamark window cleaner 750ml (Coop)"
+  },
+  "7350018834870": {
+    "categories": [
+      "medical"
+    ],
+    "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter, 10 stk)"
   },
   "9002588424903": {
     "categories": [
