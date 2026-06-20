@@ -75,18 +75,21 @@ including a `"_final_fallback": "en"`). As of this writing that machinery is **u
 dead code** — nothing in inventory-md's parse/resolve/serve paths calls it, and its
 live resolver `resolve_category` documents that cross-language label matching
 "belongs to the Tingbok vocabulary project." So the only *live* language-fallback
-layer is tingbok's `_LANGUAGE_FALLBACKS`, which is where the fix belongs; the
-inventory-md copy should be removed rather than kept in sync.
+layer is tingbok's `_LANGUAGE_FALLBACKS`. The inventory-md copy has since been
+**removed** (its dead `DEFAULT_LANGUAGE_FALLBACKS` / `get_fallback_chain` /
+`apply_language_fallbacks` and the two `Config` methods), leaving tingbok as the
+single source of truth for resolution-time language fallback.
 
-## Recommended fix (not yet applied — semantics change)
+## Fix applied
 
-Add a universal final fallback to `en` for every language in
-`app._LANGUAGE_FALLBACKS`, appended after the language-specific chain, e.g. resolve
-fallbacks as `_LANGUAGE_FALLBACKS.get(lang, []) + ["en"]` (de-duplicated, skipping
-`lang` itself). Rationale: lookup labels are English-derived ids, so English is the
-natural backstop for any language whose native index misses.
+A universal final fallback to `en` was added for every language via the
+`app._fallback_langs(lang)` helper, which returns
+`_LANGUAGE_FALLBACKS.get(lang, []) + ["en"]` (de-duplicated, and empty for `en`
+itself); `_fetch_one_skos_source` now iterates that instead of the raw dict.
+Rationale: lookup labels are English-derived ids, so English is the natural
+backstop for any language whose native index misses.
 
-Trade-offs to weigh before applying:
+Trade-offs:
 
 * **Pro:** language-invariant results — every language gets the full DBpedia+Wikidata
   merge and the same altLabels; fixes the reported inconsistency.

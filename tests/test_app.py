@@ -1888,6 +1888,57 @@ async def test_lookup_lang_fallback_for_scandinavian(client) -> None:
     assert data["prefLabel"] == "skrivemaskin"
 
 
+def test_fallback_langs_appends_english() -> None:
+    """Every language falls back to English last; English itself does not recurse."""
+    from tingbok.app import _fallback_langs
+
+    # Scandinavian chain preserved, with en appended as the universal backstop.
+    assert _fallback_langs("nb") == ["no", "da", "nn", "sv", "en"]
+    # A language with no specific chain still gets the English backstop.
+    assert _fallback_langs("it") == ["en"]
+    # English does not fall back to itself.
+    assert _fallback_langs("en") == []
+
+
+@pytest.mark.anyio
+async def test_lookup_lang_fallback_to_english(client) -> None:
+    """A non-Scandinavian language whose SKOS index misses the (English-derived)
+    label still resolves via the universal English final fallback.
+
+    'typewriter?lang=it' is not in the vocabulary and the SKOS source only
+    succeeds for English; without the en backstop it would 404.
+    """
+    from unittest.mock import patch
+
+    fake_concept = {
+        "uri": "http://www.wikidata.org/entity/Q1020318",
+        "prefLabel": "typewriter",
+        "source": "wikidata",
+    }
+    fake_paths = (["tools/typewriter"], True, {})
+    fake_labels = {"en": "typewriter"}
+
+    def lookup_side_effect(label: str, lang: str, source: str, cache_dir: object) -> dict | None:
+        # Only succeeds for English (it/its chain has no Scandinavian siblings)
+        if lang == "en" and label == "typewriter":
+            return fake_concept
+        return None
+
+    with patch("tingbok.app.skos_service.lookup_concept", side_effect=lookup_side_effect):
+        with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
+            with patch("tingbok.app.skos_service.get_labels", return_value=fake_labels):
+                with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
+                    with patch("tingbok.app.skos_service.get_description", return_value=None):
+                        with patch("tingbok.app.off_service.lookup_concept", return_value=None):
+                            with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
+                                response = await client.get("/api/lookup/typewriter?lang=it")
+
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
+    data = response.json()
+    assert data["id"] == "tools/typewriter"
+    assert data["prefLabel"] == "typewriter"
+
+
 def test_sigusr1_toggles_log_level() -> None:
     """SIGUSR1 toggles the tingbok logger between INFO and DEBUG."""
     import logging

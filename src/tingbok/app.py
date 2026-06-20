@@ -143,6 +143,22 @@ _LANGUAGE_FALLBACKS: dict[str, list[str]] = {
     "sv": ["da", "nb", "no", "nn"],
 }
 
+
+def _fallback_langs(lang: str) -> list[str]:
+    """Fallback language order to try after *lang*, always ending with English.
+
+    Lookup labels are English-derived concept ids (e.g. ``mushroom_hunting``), so
+    English is the universal backstop for any language whose own index does not
+    contain the (English) query string — without it, a source that only matches in
+    English is silently dropped and the merged result is poorer (see
+    docs/language-fallback-findings.md). English itself has no fallback.
+    """
+    chain = list(_LANGUAGE_FALLBACKS.get(lang, []))
+    if lang != "en" and "en" not in chain:
+        chain.append("en")
+    return chain
+
+
 #: Maps GPT top-level category labels (lowercased) to tingbok vocabulary root IDs.
 _GPT_ROOT_MAPPING: dict[str, str] = {
     "animals & pet supplies": "pets",
@@ -1408,7 +1424,7 @@ async def _fetch_one_skos_source(
         found_lang = lang
         concept = await asyncio.to_thread(skos_service.lookup_concept, lookup_label, lang, source, SKOS_CACHE_DIR)
         if not concept:
-            for fallback_lang in _LANGUAGE_FALLBACKS.get(lang, []):
+            for fallback_lang in _fallback_langs(lang):
                 concept = await asyncio.to_thread(
                     skos_service.lookup_concept, lookup_label, fallback_lang, source, SKOS_CACHE_DIR
                 )
