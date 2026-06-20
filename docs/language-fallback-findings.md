@@ -68,10 +68,15 @@ _LANGUAGE_FALLBACKS = {
 So a language whose own index does not contain the English query string gets no
 second chance, the source is dropped, and the merged result is poorer.
 
-Note: `inventory-md`'s config already anticipates a universal final fallback —
-`config.DEFAULTS["language_fallbacks"]` includes `"_final_fallback": "en"` — but
-tingbok's `app._LANGUAGE_FALLBACKS` does not implement one. The two projects'
-fallback definitions have drifted.
+Note on separation of concerns: `inventory-md` carries its own parallel fallback
+machinery (`DEFAULT_LANGUAGE_FALLBACKS`, `get_fallback_chain`,
+`apply_language_fallbacks`, `Config.language_fallbacks` / `get_language_fallback_chain`,
+including a `"_final_fallback": "en"`). As of this writing that machinery is **unused
+dead code** — nothing in inventory-md's parse/resolve/serve paths calls it, and its
+live resolver `resolve_category` documents that cross-language label matching
+"belongs to the Tingbok vocabulary project." So the only *live* language-fallback
+layer is tingbok's `_LANGUAGE_FALLBACKS`, which is where the fix belongs; the
+inventory-md copy should be removed rather than kept in sync.
 
 ## Recommended fix (not yet applied — semantics change)
 
