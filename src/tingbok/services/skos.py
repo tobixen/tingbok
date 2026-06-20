@@ -165,6 +165,39 @@ _WIKIDATA_BLOCKED_P31: frozenset[str] = frozenset(
         "Q23397",  # lake
         "Q82794",  # geographic region
         "Q35145743",  # natural geographic object
+        # Creative works / titles — a *specific* film, book, album, etc. is a title,
+        # never a useful product/category concept.  (The general class — e.g. the
+        # concept "film" Q11424 itself — is unaffected: its own P31 is a metaclass,
+        # not "film", so blocking P31=film only rejects individual films.)
+        # These are the common direct types; rarer subclasses are caught one level
+        # deeper via the creative-work ancestors in _WIKIDATA_BLOCKED_P31_ANCESTORS.
+        # Films / audiovisual works
+        "Q11424",  # film
+        "Q24869",  # feature film
+        "Q202866",  # animated film
+        "Q506240",  # television film
+        "Q5398426",  # television series
+        "Q1259759",  # miniseries
+        "Q21191270",  # television series episode
+        "Q15416",  # television program
+        "Q7889",  # video game
+        # Written works
+        "Q571",  # book
+        "Q7725634",  # literary work
+        "Q47461344",  # written work
+        "Q8261",  # novel
+        "Q49084",  # short story
+        "Q25379",  # play (drama)
+        "Q1004",  # comics
+        "Q3331189",  # version, edition, or translation
+        "Q13442814",  # scholarly article
+        # Musical works
+        "Q482994",  # album
+        "Q7366",  # song
+        "Q134556",  # single
+        "Q105543609",  # musical work/composition
+        # Visual art
+        "Q3305213",  # painting
     }
 )
 
@@ -202,6 +235,15 @@ _WIKIDATA_BLOCKED_P31_ANCESTORS: frozenset[str] = frozenset(
         # the P31-of-P31 chain (e.g. sovereign state Q7275 → P31 → social structure Q211606
         # → P31 → sociological concept Q33104129).
         "Q33104129",  # sociological concept
+        # Creative works — catches title-bearing entities whose specific P31 type is not in
+        # the _WIKIDATA_BLOCKED_P31 fast-path list but is a subclass of one of these.
+        # E.g. film Q11424 → P279 → audiovisual work Q2431196; book Q571 → P279 → written
+        # work Q47461344 / creative work Q17537576.
+        "Q17537576",  # creative work
+        "Q2431196",  # audiovisual work
+        "Q47461344",  # written work
+        "Q7725634",  # literary work
+        "Q838948",  # work of art
     }
 )
 

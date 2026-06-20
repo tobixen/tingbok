@@ -1592,6 +1592,81 @@ def test_lookup_wikidata_accepts_normal_concept(tmp_path: Path) -> None:
     assert result is not None, "Normal food concept must be accepted"
 
 
+def test_lookup_wikidata_filters_film_p31(tmp_path: Path) -> None:
+    """Wikidata entity with P31=Q11424 (film) should be rejected.
+
+    Specific films/books/etc. are titles, not category concepts — a query like
+    'sopping' must not resolve to the film 'Sopping Wet Married Teacher ...'.
+    """
+    from tingbok.services.skos import _lookup_wikidata
+
+    search_response = {"search": [{"id": "Q7563193", "label": "Sopping", "description": "2009 film"}]}
+    entity_response = _make_wikidata_entity_response("Q7563193", p31_qids=["Q11424"])  # Q11424 = film
+
+    responses = iter([search_response, entity_response])
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.side_effect = lambda: next(responses)
+        result, failed = _lookup_wikidata("sopping", "en")
+
+    assert not failed
+    assert result is None, "Film entity must be filtered out"
+
+
+def test_lookup_wikidata_filters_book_p31(tmp_path: Path) -> None:
+    """Wikidata entity with P31=Q571 (book) should be rejected."""
+    from tingbok.services.skos import _lookup_wikidata
+
+    search_response = {"search": [{"id": "Q12384", "label": "Some Novel", "description": "1998 novel"}]}
+    entity_response = _make_wikidata_entity_response("Q12384", p31_qids=["Q571"])  # Q571 = book
+
+    responses = iter([search_response, entity_response])
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.side_effect = lambda: next(responses)
+        result, failed = _lookup_wikidata("some novel", "en")
+
+    assert not failed
+    assert result is None, "Book entity must be filtered out"
+
+
+def test_lookup_wikidata_filters_creative_work_subtype_via_ancestor(tmp_path: Path) -> None:
+    """A film subtype not in the fast-path list is still rejected via its blocked ancestor.
+
+    The entity's P31 (an obscure audiovisual-work subclass) is not itself in the
+    direct blocklist, but its P279 (subclass-of) chain reaches 'audiovisual work',
+    a blocked creative-work ancestor.
+    """
+    from tingbok.services.skos import _lookup_wikidata
+
+    search_response = {"search": [{"id": "Q999001", "label": "Some Title", "description": "an obscure release"}]}
+    # P31 = Q888001 (some audiovisual-work subclass not in the direct fast-path list)
+    entity_response = _make_wikidata_entity_response("Q999001", p31_qids=["Q888001"])
+    # _batch_fetch_p279(["Q888001"]) -> Q888001 is subclass of Q2431196 (audiovisual work)
+    p279_response = {
+        "entities": {
+            "Q888001": {
+                "claims": {"P279": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q2431196"}}}}]}
+            }
+        }
+    }
+
+    responses = iter([search_response, entity_response, p279_response])
+
+    with patch("tingbok.services.skos.niquests.Session") as mock_sess:
+        sess = mock_sess.return_value.__enter__.return_value
+        sess.get.return_value.raise_for_status.return_value = None
+        sess.get.return_value.json.side_effect = lambda: next(responses)
+        result, failed = _lookup_wikidata("some title", "en")
+
+    assert not failed
+    assert result is None, "Creative-work subtype must be filtered out via ancestor"
+
+
 def test_lookup_concept_evicts_stale_dbpedia_list_article_cache(tmp_path: Path) -> None:
     """A cached DBpedia result with a List_of_* URI is evicted and re-fetched."""
     from tingbok.services.skos import _get_cache_path, _save_to_cache, lookup_concept
