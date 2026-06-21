@@ -196,7 +196,10 @@
     ]
   },
   "20710187": {
-    "name": "Baky ПАСТЕТ АПЕТИТ Bulgarian pâté",
+    "categories": [
+      "pate"
+    ],
+    "name": "Пастет Апетит / Bulgarian pâté (Baky)",
     "prices": [
       {
         "currency": "EUR",
@@ -447,6 +450,9 @@
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml"
   },
   "4052916846988": {
+    "categories": [
+      "resistance_band"
+    ],
     "name": "Ластици за тренировка / resistance bands set (Crivit, Lidl)",
     "prices": [
       {
@@ -487,7 +493,10 @@
     ]
   },
   "4056489177463": {
-    "name": "Айрян",
+    "categories": [
+      "food/processed_animal_products/fermented_milk/ayran"
+    ],
+    "name": "Айран 2.2% 1l (Pilos)",
     "prices": [
       {
         "currency": "EUR",
@@ -569,6 +578,9 @@
     ]
   },
   "4056489686323": {
+    "categories": [
+      "food/spices/paprika"
+    ],
     "name": "Пушен сладък червен пипер 17g / smoked sweet paprika (Lidl)",
     "prices": [
       {
@@ -648,7 +660,10 @@
     ]
   },
   "4056489918691": {
-    "name": "Teriyaki Sauce",
+    "categories": [
+      "teriyaki"
+    ],
+    "name": "Терияки сос / Teriyaki sauce (Vitasia)",
     "prices": [
       {
         "currency": "EUR",
@@ -703,7 +718,10 @@
     ]
   },
   "4056489941279": {
-    "name": "Прясно краве мляко 3%",
+    "categories": [
+      "whole-milk"
+    ],
+    "name": "Прясно мляко 3% 2L (Pilos)",
     "prices": [
       {
         "currency": "EUR",
@@ -771,6 +789,9 @@
     ]
   },
   "4056489942740": {
+    "categories": [
+      "pate"
+    ],
     "name": "Пастет Апетит (БЕЗМОМ variant) / Bulgarian pâté",
     "prices": [
       {
