@@ -103,6 +103,29 @@
       }
     ]
   },
+  "20324599": {
+    "categories": [
+      "beer"
+    ],
+    "name": "Светла бира 4.0% (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.27,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "СВЕТЛА БИРА 4,0%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "20348397": {
     "categories": [
       "mustard"
@@ -169,6 +192,26 @@
         "last_seen": "2026-06-16",
         "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "20710187": {
+    "name": "Baky ПАСТЕТ АПЕТИТ Bulgarian pâté",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.09,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ПАСТЕТ АПЕТИТ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -403,6 +446,26 @@
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml"
   },
+  "4052916846988": {
+    "name": "Ластици за тренировка / resistance bands set (Crivit, Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 5.11,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ФИТНЕС ПРИНАДЛ. 0518459",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489108160": {
     "name": "Pilos МЛЯКО UHT 3,5% UHT whole milk (added 2026-04-29)",
     "prices": [
@@ -420,6 +483,26 @@
         "last_seen": "2026-06-18",
         "name": "МЛЯКО UHT 3,5%",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489177463": {
+    "name": "Айрян",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.32,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "АЙРАН 2,2%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -485,6 +568,26 @@
       }
     ]
   },
+  "4056489686323": {
+    "name": "Пушен сладък червен пипер 17g / smoked sweet paprika (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 0.35,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ПУШЕН ЧЕРВ.ПИПЕР",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489692584": {
     "categories": [
       "food/nuts"
@@ -544,6 +647,26 @@
       }
     ]
   },
+  "4056489918691": {
+    "name": "Teriyaki Sauce",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 2.04,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ТЕРИЯКИ СОС",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489941026": {
     "categories": [
       "mixed-nuts"
@@ -556,6 +679,46 @@
         "price": 2.2,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "4056489941200": {
+    "name": "Yogurt 3.6% 1kg",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.53,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "КИСЕЛО МЛЯКО 3,6%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "4056489941279": {
+    "name": "Прясно краве мляко 3%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 2.19,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ПРЯСНО МЛЯКО 3% 2Л",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -604,6 +767,26 @@
         "last_seen": "2026-06-16",
         "name": "ПРЕСНИ ЯЙЦА РАЗМ.L",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489942740": {
+    "name": "Пастет Апетит (БЕЗМОМ variant) / Bulgarian pâté",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.49,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ПАСТЕТ АПЕТИТ БЕЗМОМ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
