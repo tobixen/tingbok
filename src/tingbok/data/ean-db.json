@@ -1,4 +1,24 @@
 {
+  "0766478155009": {
+    "name": "Whale Marine AK1550 Ser Kit Gulper 220",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2025-06-02",
+        "price": 42.3,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2025-06-02",
+        "last_seen": "2025-06-02",
+        "name": "WHALE Service Kit for GULPER 220",
+        "shop": "SVB24"
+      }
+    ]
+  },
   "20004323": {
     "categories": [
       "food/condiments"
@@ -514,6 +534,58 @@
       "tools/cleaning"
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml"
+  },
+  "4045302042330": {
+    "categories": [
+      "boat-equipment",
+      "boat-equipment/safety",
+      "lifejacket rearming"
+    ],
+    "name": "UML CO2 Replacement Cartridge 33g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2025-06-02",
+        "price": 40.29,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "33g",
+    "receipt_names": [
+      {
+        "first_seen": "2025-06-02",
+        "last_seen": "2025-06-02",
+        "name": "CO2 Replacement Cartridge 33 g UML",
+        "shop": "SVB24"
+      }
+    ]
+  },
+  "4045302160140": {
+    "categories": [
+      "boat-equipment",
+      "boat-equipment/safety",
+      "lifejacket rearming"
+    ],
+    "name": "UML CO2 Replacement Cartridge 38g threaded (UML 5 / Pro Sensor)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2025-06-02",
+        "price": 40.29,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "38g",
+    "receipt_names": [
+      {
+        "first_seen": "2025-06-02",
+        "last_seen": "2025-06-02",
+        "name": "CO2 Replacement Cartridge 38 g threaded UML 5 and Pro Sensor",
+        "shop": "SVB24"
+      }
+    ]
   },
   "4049726006145": {
     "name": "Кюфтета от свинско и говеждо &quot;Стара планина&quot;",
@@ -1044,6 +1116,72 @@
       "medical"
     ],
     "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter, 10 stk)"
+  },
+  "8715559001034": {
+    "name": "Epifanes Clear Varnish (500 ml) (B005ADWOUG)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2025-06-02",
+        "price": 22.13,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2025-06-02",
+        "last_seen": "2025-06-02",
+        "name": "EPIFANES One-Component Clear High-Gloss Boat Varnish for Wood (500 ml)",
+        "shop": "SVB24"
+      }
+    ]
+  },
+  "8715559001058": {
+    "name": "Epifanes Clear Varnish (1000 ml) (B005ADWKTG)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-04-28",
+        "price": 39.28,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-04-28",
+        "last_seen": "2026-04-28",
+        "name": "EPIFANES One-Component Clear High-Gloss Boat Varnish for Wood (1000 ml)",
+        "shop": "SVB24"
+      }
+    ]
+  },
+  "8717372205859": {
+    "categories": [
+      "boat-equipment",
+      "plumbing",
+      "water tank"
+    ],
+    "name": "Vetus Flexible Water Tank rectangular 100l",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2024-11-18",
+        "price": 190.17,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "100l",
+    "receipt_names": [
+      {
+        "first_seen": "2024-11-18",
+        "last_seen": "2024-11-18",
+        "name": "VETUS flexible water tank, rectangular, 100l",
+        "shop": "SVB24"
+      }
+    ]
   },
   "9002588424903": {
     "categories": [
