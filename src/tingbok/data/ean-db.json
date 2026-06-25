@@ -830,13 +830,20 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Прясно мляко 3.7% 1l (Pilos) (2×)",
+    "name": "Milk 3.7% fat",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-06-16",
         "price": 1.39,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-23",
+        "price": 1.39,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
         "unit": "pcs"
       }
     ],
@@ -847,6 +854,12 @@
         "last_seen": "2026-06-16",
         "name": "ПРЯСНО МЛЯКО 3,7%",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-06-23",
+        "last_seen": "2026-06-23",
+        "name": "ПРЯСНО МЛЯКО 3,7%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -917,6 +930,29 @@
         "last_seen": "2026-06-18",
         "name": "WURTH РЪКАВИЦИ МЕХАНИЦИ RED LATEX",
         "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "4335619347489": {
+    "categories": [
+      "baking-paper"
+    ],
+    "name": "Хартия за печене (Lidl) / baking paper",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-23",
+        "price": 1.53,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-23",
+        "last_seen": "2026-06-23",
+        "name": "ХАРТИЯ ЗА ПЕЧЕНЕ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -1029,6 +1065,26 @@
         "last_seen": "2026-06-18",
         "name": "ЗАЩИТНИ ОЧИЛА EN 166",
         "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "lidl-20349721": {
+    "name": "Кухненски ролки 3пл. / kitchen rolls 3-ply (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-23",
+        "price": 1.11,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-23",
+        "last_seen": "2026-06-23",
+        "name": "КУХНЕНСКИ РОЛКИ 3ПЛ.",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   }
