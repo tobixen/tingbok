@@ -738,6 +738,23 @@ def _build_vocab_uri_index(vocab: dict[str, Any]) -> dict[str, str]:
     return idx
 
 
+def _normalise_self_id(concept_id: str) -> str:
+    """Normalise a concept ID for self-reference comparison.
+
+    Folds case, unifies separators and strips a trailing plural ``s`` from the
+    final path segment, so that ``rope``/``Rope``/``ropes`` and
+    ``lentil``/``lentils`` all compare equal.  Used only to decide whether a
+    candidate broader entry is really the concept itself under trivial spelling
+    variation — a concept must never be its own ancestor.
+    """
+    folded = concept_id.casefold().replace("_", " ").replace("-", " ").strip()
+    segments = folded.split("/")
+    last = segments[-1]
+    if len(last) > 3 and last.endswith("s"):
+        segments[-1] = last[:-1]
+    return "/".join(segments)
+
+
 def _build_broader_from_paths(
     all_paths: list[str],
     uri_map: dict[str, str],
@@ -752,25 +769,33 @@ def _build_broader_from_paths(
         uri_map: Maps path-segment keys to source URIs (combined across sources).
         uri_index: Maps normalised source URIs to concept IDs for bridging.
         self_ids: Concept IDs to exclude — prevents self-referential broader entries.
+            Matching is normalisation-aware (case-, separator- and plural-insensitive)
+            so a concept never becomes its own ancestor via a spelling variant such as
+            ``rope`` -> ``Rope`` or ``lentil`` -> ``lentils``.
         fallback_concept_id: When all_paths is empty and this has a "/", its parent
             path is used as the sole broader entry.
     """
+    self_norms = {_normalise_self_id(s) for s in self_ids}
+
+    def _is_self(candidate: str) -> bool:
+        return _normalise_self_id(candidate) in self_norms
+
     broader: list[str] = []
     for p in all_paths:
         parent = "/".join(p.split("/")[:-1])
-        if parent and parent not in broader:
+        if parent and parent not in broader and not _is_self(parent):
             broader.append(parent)
 
     if not broader and fallback_concept_id and "/" in fallback_concept_id:
         parent = "/".join(fallback_concept_id.split("/")[:-1])
-        if parent:
+        if parent and not _is_self(parent):
             broader.append(parent)
 
     for _path_seg, seg_uri in uri_map.items():
         bridged = uri_index.get(_normalise_uri(seg_uri))
         if not bridged:
             bridged = _concept_id_from_path_seg(_path_seg)
-        if bridged and bridged not in self_ids and bridged not in broader:
+        if bridged and not _is_self(bridged) and bridged not in broader:
             broader.append(bridged)
 
     return broader

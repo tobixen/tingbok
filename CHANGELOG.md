@@ -31,6 +31,18 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `docs/language-fallback-findings.md`.
 
 ### Fixed
+- **A concept can no longer become its own ancestor** — `/api/vocabulary/resolve`
+  registers every input label's source URIs, so resolving one label (e.g. `rope`)
+  could bridge a shared upstream URI back to a sibling label that is only a case or
+  plural variant of itself (`Rope`, `ropes`), and the synonym chains `red lentils →
+  lentil → lentils` formed the same way. The self-reference filter in
+  `_build_broader_from_paths` was case-sensitive and only covered the URI-bridged
+  segments, so these variants slipped into `broader`. Downstream, after a client
+  normalises case/plurals, the links collapsed into cycles (`lentil` ⇄ `lentil`,
+  `rope` ⇄ `rope/cord`) that crashed inventory-md's `search.html` with a category-tree
+  stack overflow. The filter is now normalisation-aware (case-, separator- and
+  plural-insensitive via `_normalise_self_id`) and applied to both the path-parent and
+  URI-bridged branches, so the emitted `broader` graph stays acyclic.
 - **Films, books and other titles excluded from category lookups** — a query like
   `sopping` fuzzy-matched a Wikidata film (`Q7563193`), leaking a creative-work title
   into the category vocabulary. The Wikidata non-concept filter now rejects common

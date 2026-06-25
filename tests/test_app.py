@@ -719,6 +719,42 @@ def test_load_vocabulary_preserves_explicit_broader_override(tmp_path) -> None: 
     assert "food" not in broader
 
 
+def test_build_broader_excludes_case_variant_self() -> None:
+    """A concept must not list a case-only variant of itself as broader.
+
+    Sibling input labels register their source URIs, so resolving "rope" can
+    bridge the shared DBpedia URI back to the sibling label "Rope".  Since
+    "Rope" != "rope" case-sensitively it used to slip into rope's broader,
+    creating a rope<->Rope cycle that crashed inventory-md's search.html.
+    """
+    import tingbok.app as app_module
+
+    uri_map = {"Rope": "https://dbpedia.org/resource/Rope"}
+    uri_index = {"https://dbpedia.org/resource/Rope": "Rope"}
+    broader = app_module._build_broader_from_paths([], uri_map, uri_index, {"rope"})
+    assert "Rope" not in broader, f"case variant of self leaked into broader: {broader}"
+
+
+def test_build_broader_excludes_plural_variant_self() -> None:
+    """A concept must not list a singular/plural variant of itself as broader.
+
+    Tingbok synthesised synonym chains like "ropes" -> broader "rope" and
+    "lentil" -> broader "lentils"; once a downstream consumer normalises
+    plurals these collapse into self-loops.
+    """
+    import tingbok.app as app_module
+
+    # "ropes" resolving with a bridged sibling "rope".
+    uri_map = {"rope": "https://dbpedia.org/resource/Rope"}
+    uri_index = {"https://dbpedia.org/resource/Rope": "rope"}
+    broader = app_module._build_broader_from_paths([], uri_map, uri_index, {"ropes"})
+    assert "rope" not in broader, f"plural variant of self leaked into broader: {broader}"
+
+    # Path-derived parent that is a plural variant of the leaf must also be dropped.
+    broader2 = app_module._build_broader_from_paths(["lentils/lentil"], {}, {}, {"lentil"})
+    assert "lentils" not in broader2, f"plural parent of self leaked into broader: {broader2}"
+
+
 def test_load_vocabulary_computes_narrower_as_inverse(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Narrower is computed as the inverse of broader."""
     import tingbok.app as app_module
