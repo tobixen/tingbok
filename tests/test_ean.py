@@ -294,8 +294,100 @@ class TestCaching:
 
 
 # ---------------------------------------------------------------------------
-# Router-level tests
+# Local article-number aliasing (shop-prefixed keys)
 # ---------------------------------------------------------------------------
+
+
+class TestResolveLocalAlias:
+    """In-store article numbers are stored under a ``<shop>-<code>`` key; a bare
+    lookup of the code forwards to the prefixed record when it is unambiguous."""
+
+    def test_bare_code_forwards_to_unique_prefixed_key(self) -> None:
+        from tingbok.services import ean as ean_service
+
+        obs = {"lidl-20004132": {"name": "Baresa chopped tomatoes"}}
+        assert ean_service.resolve_local_alias(obs, "20004132") == "lidl-20004132"
+
+    def test_existing_key_does_not_forward(self) -> None:
+        """A code that is itself a key (global EAN or already-prefixed) is canonical."""
+        from tingbok.services import ean as ean_service
+
+        obs = {"20004132": {"name": "stray bare record"}, "lidl-20004132": {"name": "Baresa"}}
+        assert ean_service.resolve_local_alias(obs, "20004132") is None
+        assert ean_service.resolve_local_alias(obs, "lidl-20004132") is None
+
+    def test_no_prefixed_variant_returns_none(self) -> None:
+        from tingbok.services import ean as ean_service
+
+        assert ean_service.resolve_local_alias({"lidl-111": {}}, "20004132") is None
+
+    def test_ambiguous_match_returns_none_and_warns(self) -> None:
+        """When several shops use the same bare number, do not guess."""
+        from tingbok.services import ean as ean_service
+
+        obs = {"lidl-20004132": {"name": "a"}, "mercadona-20004132": {"name": "b"}}
+        with patch.object(ean_service.logger, "warning") as mock_warn:
+            assert ean_service.resolve_local_alias(obs, "20004132") is None
+        mock_warn.assert_called_once()
+
+
+@pytest.mark.anyio
+async def test_ean_lookup_forwards_bare_local_code_to_prefixed_record(client) -> None:
+    """GET /api/ean/20004132 returns the lidl-20004132 observation without hitting upstream."""
+    import tingbok.app as _app
+    from tingbok.services import ean as ean_service
+
+    entry = {"name": "Baresa chopped tomatoes", "categories": ["canning"], "source": "observation"}
+    with patch.object(_app, "ean_observations", {"lidl-20004132": entry}):
+        with patch.object(ean_service, "lookup_product") as mock_upstream:
+            response = await client.get("/api/ean/20004132")
+
+    mock_upstream.assert_not_called()
+    assert response.status_code == 200
+    data = response.json()
+    assert data["ean"] == "lidl-20004132"
+    assert data["name"] == "Baresa chopped tomatoes"
+
+
+@pytest.mark.anyio
+async def test_ean_lookup_prefixed_key_directly(client) -> None:
+    """GET /api/ean/lidl-20004132 resolves directly and skips upstream."""
+    import tingbok.app as _app
+    from tingbok.services import ean as ean_service
+
+    entry = {"name": "Baresa", "categories": [], "source": "observation"}
+    with patch.object(_app, "ean_observations", {"lidl-20004132": entry}):
+        with patch.object(ean_service, "lookup_product") as mock_upstream:
+            response = await client.get("/api/ean/lidl-20004132")
+
+    mock_upstream.assert_not_called()
+    assert response.status_code == 200
+    assert response.json()["ean"] == "lidl-20004132"
+
+
+@pytest.mark.anyio
+async def test_put_bare_local_code_forwards_to_prefixed_record(client, tmp_path: Path) -> None:
+    """PUT /api/ean/20004132 updates the existing lidl-20004132 record, not a new bare key."""
+    import tingbok.app as _app
+    from tingbok.services import ean as ean_service
+
+    obs_path = tmp_path / "ean-db.json"
+    existing = {"lidl-20004132": {"name": "Baresa", "categories": ["canning"]}}
+    with patch.object(_app, "EAN_OBSERVATIONS_PATH", obs_path):
+        with patch.object(_app, "ean_observations", existing):
+            with patch.object(ean_service, "lookup_product") as mock_upstream:
+                response = await client.put(
+                    "/api/ean/20004132",
+                    json={"categories": ["canning/tomatoes"], "name": "Baresa chopped tomatoes"},
+                )
+
+    mock_upstream.assert_not_called()
+    assert response.status_code == 200
+    assert response.json()["ean"] == "lidl-20004132"
+    # Persisted under the prefixed key; no stray bare record created.
+    saved = ean_service.load_ean_observations(obs_path)
+    assert "20004132" not in saved
+    assert saved["lidl-20004132"]["categories"] == ["canning/tomatoes"]
 
 
 @pytest.mark.anyio

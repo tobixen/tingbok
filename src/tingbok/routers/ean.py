@@ -51,15 +51,22 @@ async def lookup_ean(ean: str) -> ProductResponse:
     sourced from Open Food Facts, UPCitemdb, Open Library, or nb.no.
     Locally observed data (categories, prices, receipt names) from ean-db.json
     is merged into the response.  Results are cached for 60 days.
+    A bare local article number (e.g. Lidl's ``20004132``) is forwarded to its
+    shop-prefixed record (``lidl-20004132``) when one unambiguously exists.
     Returns 404 when the barcode is not found in any source.
     """
-    upstream = await asyncio.to_thread(ean_service.lookup_product, ean, _app.EAN_CACHE_DIR)
-    observation = _app.ean_observations.get(ean)
+    canonical = ean_service.resolve_local_alias(_app.ean_observations, ean) or ean
+    observation = _app.ean_observations.get(canonical)
+    # Shop-prefixed local article numbers (keys with a hyphen) have no global
+    # upstream record, so skip the network lookup for them.
+    upstream = None
+    if "-" not in canonical:
+        upstream = await asyncio.to_thread(ean_service.lookup_product, ean, _app.EAN_CACHE_DIR)
     if upstream is None:
         if not observation:
             raise HTTPException(status_code=404, detail=f"Product not found for EAN {ean}")
         result = dict(observation)
-        result.setdefault("ean", ean)
+        result.setdefault("ean", canonical)
         result.setdefault("source", "observation")
     else:
         result = dict(upstream)
@@ -79,17 +86,22 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
     and merged into future GET responses for this EAN.  This supplements (but
     does not replace) data from upstream sources; inventory categories take
     priority in the ``categories`` list.
+
+    A bare local article number is forwarded to its shop-prefixed record when
+    one unambiguously exists, so importers that emit bare scanned codes update
+    the canonical ``<shop>-<code>`` entry instead of re-creating a bare record.
     """
     if not body.categories and body.name is None:
         raise HTTPException(status_code=422, detail="At least one of 'categories' or 'name' must be provided")
 
+    store_ean = ean_service.resolve_local_alias(_app.ean_observations, ean) or ean
     canonical_categories = _app._normalize_ean_categories(body.categories)
     prices_raw = [p.model_dump() for p in body.prices]
     receipt_names_raw = [r.model_dump() for r in body.receipt_names]
     await asyncio.to_thread(
         ean_service.save_ean_observation,
         _app.EAN_OBSERVATIONS_PATH,
-        ean,
+        store_ean,
         canonical_categories,
         body.name,
         body.quantity,
@@ -97,7 +109,7 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
         receipt_names_raw,
     )
     # Update in-memory observations so subsequent GETs reflect the change immediately
-    entry = _app.ean_observations.setdefault(ean, {})
+    entry = _app.ean_observations.setdefault(store_ean, {})
     if body.categories:
         entry["categories"] = canonical_categories
     if body.name is not None:
@@ -120,7 +132,7 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
 
     logger.info(
         "Stored EAN observation for %s: categories=%s name=%r quantity=%r prices=%d receipt_names=%d",
-        ean,
+        store_ean,
         body.categories,
         body.name,
         body.quantity,
@@ -129,11 +141,14 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
     )
     _app._schedule_git_commit(ip=request.client.host if request.client else None)
 
-    # Return the full merged product view
-    upstream = await asyncio.to_thread(ean_service.lookup_product, ean, _app.EAN_CACHE_DIR)
+    # Return the full merged product view.  Shop-prefixed local keys have no
+    # upstream record, so skip the network lookup for them.
+    upstream = None
+    if "-" not in store_ean:
+        upstream = await asyncio.to_thread(ean_service.lookup_product, ean, _app.EAN_CACHE_DIR)
     if upstream is None:
         result = dict(entry)
-        result.setdefault("ean", ean)
+        result.setdefault("ean", store_ean)
         result.setdefault("source", "observation")
     else:
         result = dict(upstream)

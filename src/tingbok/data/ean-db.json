@@ -1,10 +1,4 @@
 {
-  "00501163": {
-    "categories": [
-      "food/spices"
-    ],
-    "name": "Hacendado Paella con azafrán (saffron) spice packets (4g each)"
-  },
   "0064791550": {
     "categories": [
       "pump-service-kit"
@@ -21,21 +15,6 @@
         "currency": "BGN",
         "date": null,
         "price": 16.99,
-        "shop": null,
-        "unit": "pcs"
-      }
-    ]
-  },
-  "0481093": {
-    "categories": [
-      "clothing/trouser"
-    ],
-    "name": "МЪЖКИ КАРГО ПАНТ men's cargo trousers (Lidl 2026-03-04)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 9.99,
         "shop": null,
         "unit": "pcs"
       }
@@ -77,275 +56,6 @@
     ],
     "name": "ECCO Nubuck & Suede Conditioner Daily Care, sort, 100ml"
   },
-  "20000646": {
-    "categories": [
-      "jam"
-    ],
-    "name": "Maribel Конфитюр вишна екстра cherry jam extra",
-    "quantity": "450g"
-  },
-  "20003937": {
-    "categories": [
-      "canning",
-      "bolognese"
-    ],
-    "name": "Combino СОС БОЛОНЕЗЕ bolognese sauce 400g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-01-24",
-        "price": 1.02,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-05-16",
-        "price": 2.04,
-        "shop": "Lidl Варна бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "400g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-01-24",
-        "last_seen": "2026-01-24",
-        "name": "СОС БОЛОНЕЗЕ",
-        "shop": "Lidl Varna"
-      },
-      {
-        "first_seen": "2026-05-16",
-        "last_seen": "2026-05-16",
-        "name": "СОС БОЛОНЕЗЕ",
-        "shop": "Lidl Варна бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20004132": {
-    "categories": [
-      "canning",
-      "chopped-tomatoes"
-    ],
-    "name": "Baresa НАРЯЗАНИ ДОМАТИ chopped tomatoes 400g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-16",
-        "price": 0.86,
-        "shop": "Lidl Варна бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-16",
-        "last_seen": "2026-05-16",
-        "name": "НАРЯЗАНИ ДОМАТИ",
-        "shop": "Lidl Варна бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20004323": {
-    "categories": [
-      "food/condiments"
-    ],
-    "name": "КАПЕРСИ Freshona capers 60g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-04",
-        "price": 1.02,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "60g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-04",
-        "last_seen": "2026-06-04",
-        "name": "КАПЕРСИ",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20010447": {
-    "categories": [
-      "cured-meat"
-    ],
-    "name": "ITALIAMO ПРОШУТО КРУДО prosciutto crudo 100g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-16",
-        "price": 2.55,
-        "shop": "Lidl Варна бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-16",
-        "last_seen": "2026-05-16",
-        "name": "ПРОШУТО КРУДО",
-        "shop": "Lidl Варна бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20013868": {
-    "categories": [
-      "luncheon-meat"
-    ],
-    "name": "Dulano Luncheon Meat — pork (Lidl)"
-  },
-  "20015565": {
-    "categories": [
-      "canned-pork"
-    ],
-    "name": "Dulano Chopped Pork / Τσοπτ-πορκ (Lidl; printed best-before 2026-04-27, expired)"
-  },
-  "20026363": {
-    "categories": [
-      "meatballs"
-    ],
-    "name": "Chef Select / Eridanous Κεφτεδάκια — Greek meatballs in tomato sauce (Lidl, produced by Palirria, Greece; rusty pull-tab)"
-  },
-  "20037154": {
-    "categories": [
-      "sauce"
-    ],
-    "name": "ДОМАТЕН СОС БОСИЛЕК Combino tomato sauce basil 420g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-04",
-        "price": 1.43,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-04",
-        "last_seen": "2026-06-04",
-        "name": "ДОМАТЕН СОС БОСИЛЕК",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20039547": {
-    "categories": [
-      "whipping-cream"
-    ],
-    "name": "Pilos СМЕТАНА 30% UHT whipping cream (Lidl 2026-03-04)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-03-04",
-        "price": 1.12,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-03-08",
-        "price": 1.12,
-        "shop": null,
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "200ml",
-    "receipt_names": [
-      {
-        "first_seen": "2026-03-04",
-        "last_seen": "2026-03-04",
-        "name": "СМЕТАНА 30 %",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20041663": {
-    "categories": [
-      "canning",
-      "sardines"
-    ],
-    "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-16",
-        "price": 0.75,
-        "shop": "Lidl Варна бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "90g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-16",
-        "last_seen": "2026-05-16",
-        "name": "САРДИНИ В СЛ.МАСЛО",
-        "shop": "Lidl Варна бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20046248": {
-    "categories": [
-      "canning",
-      "sardines"
-    ],
-    "name": "Nixe САРДИНИ sardines in tomato sauce",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-11",
-        "price": 0.95,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "125g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-11",
-        "last_seen": "2026-05-11",
-        "name": "САРДИНИСКОСТИКОЖА ДО",
-        "shop": "Lidl"
-      }
-    ]
-  },
-  "20051389": {
-    "categories": [
-      "mayonnaise"
-    ],
-    "name": "Kania МАЙОНЕЗА 80% mayonnaise 80%",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-02",
-        "price": 2.79,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-05-08",
-        "price": 2.79,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "472g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-08",
-        "last_seen": "2026-05-08",
-        "name": "МАЙОНЕЗА 80%",
-        "shop": "Lidl Bulgaria"
-      }
-    ]
-  },
   "2007000369012": {
     "categories": [
       "gloves"
@@ -368,1015 +78,6 @@
         "shop": "Praktiker Варна"
       }
     ]
-  },
-  "20087036": {
-    "categories": [
-      "luncheon-meat"
-    ],
-    "name": "Pikok Luncheon Meat with Pork Knuckle (Lidl, 89% meat; printed best-before not legible)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-02",
-        "price": 2.55,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "300g"
-  },
-  "20103804": {
-    "categories": [
-      "food/seafood"
-    ],
-    "name": "ASC КР.СКАРИДИ НТЮР ASC king prawns frozen",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-07",
-        "price": 3.47,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
-        "name": "ASC КР.СКАРИДИ НТЮР",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20112813": {
-    "categories": [
-      "fruit-juice"
-    ],
-    "name": "Solevita ДИРЕКТ.СОК КАС.БОРОВ direct juice blueberry-cranberry-blackcurrant",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-20",
-        "price": 2.29,
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "1l",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-20",
-        "last_seen": "2026-05-20",
-        "name": "ДИРЕКТ.СОК КАС.БОРОВ",
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20113476": {
-    "categories": [
-      "tinned-meat"
-    ],
-    "name": "Chili con carne",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-13",
-        "price": 2.29,
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-13",
-        "last_seen": "2026-06-13",
-        "name": "ЧИЛИ КОН КАРНЕ",
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20123703": {
-    "categories": [
-      "food/seafood"
-    ],
-    "name": "MSC СКАР. ЗАМР.270G MSC prawns 270g frozen",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-07",
-        "price": 5.45,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
-        "name": "MSC СКАР. ЗАМР.270G",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20144173": {
-    "brand": "W5 (Lidl)",
-    "categories": [
-      "tools/cleaning"
-    ],
-    "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)",
-    "source": "manual"
-  },
-  "20148201": {
-    "categories": [
-      "tinned-meat"
-    ],
-    "name": "СВ. ВА. В СОБСТ. СОС Baroni pork in own sauce tin 400g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-04",
-        "price": 2.55,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "400g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-04",
-        "last_seen": "2026-06-04",
-        "name": "СВ. ВА. В СОБСТ. СОС",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20149291": {
-    "categories": [
-      "food/meat/sausage"
-    ],
-    "name": "Pikok КАБАНОСИ СВ. pork cabanossi",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-08",
-        "price": 4.09,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "400g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-08",
-        "last_seen": "2026-05-08",
-        "name": "КАБАНОСИ СВ.",
-        "shop": "Lidl Bulgaria"
-      }
-    ]
-  },
-  "20153229": {
-    "categories": [
-      "corn"
-    ],
-    "name": "Freshona Sweetcorn natural sweet (Lidl, 340g tin)"
-  },
-  "20163402": {
-    "brand": "Combino",
-    "categories": [
-      "passata"
-    ],
-    "name": "Combino ПАСИРАНИ ДОМАТИ Passata (crushed tomatoes)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-01-24",
-        "price": 0.37,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "500g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-01-24",
-        "last_seen": "2026-01-24",
-        "name": "ПАСИРАНИ ДОМАТИ",
-        "shop": "Lidl Varna"
-      }
-    ],
-    "source": "manual"
-  },
-  "20163419": {
-    "categories": [
-      "tomato-passata"
-    ],
-    "name": "Baresa ПАСИРАНИ ДОМАТИ 10,5 tomato passata",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.12,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-05-08",
-        "price": 1.22,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "500g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-08",
-        "last_seen": "2026-05-08",
-        "name": "ПАСИРАНИ ДОМАТИ 10,5",
-        "shop": "Lidl Bulgaria"
-      }
-    ]
-  },
-  "20163822": {
-    "categories": [
-      "instant-mashed-potato"
-    ],
-    "name": "КАРТОФЕНО ПЮРЕ instant mashed potato (12×200g portions)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.68,
-        "shop": null,
-        "unit": "piece"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-06-07",
-        "price": 1.68,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "330g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
-        "name": "КАРТОФЕНО ПЮРЕ",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20239060": {
-    "categories": [
-      "food/vegetables/spinach"
-    ],
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-03-11",
-        "price": 2.04,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "500g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-03-11",
-        "last_seen": "2026-03-11",
-        "name": "СПАНАК 500 Г ПЛИК",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20240899": {
-    "categories": [
-      "canning",
-      "food/meat/pork"
-    ],
-    "name": "Pikok СВ. ВА. В СОБСТ. СОС pork in own juice (vepřové maso ve vlastní šťávě)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-16",
-        "price": 2.55,
-        "shop": "Lidl Варна бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "300g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-16",
-        "last_seen": "2026-05-16",
-        "name": "СВ. ВА. В СОБСТ. СОС",
-        "shop": "Lidl Варна бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20242152": {
-    "categories": [
-      "food/vegetables/sweet_peppers"
-    ],
-    "name": "ЧУШКИ 2 ЦВЯТА 500Г fresh mixed peppers (2 colours) 500g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-07",
-        "price": 2.19,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
-        "name": "ЧУШКИ 2 ЦВЯТА 500Г",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20242275": {
-    "categories": [
-      "vegetable"
-    ],
-    "name": "Green asparagus 500g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 3.49,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.79,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-06-13",
-        "price": 3.59,
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "500g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-13",
-        "last_seen": "2026-06-13",
-        "name": "ЗЕЛЕНИ АСПЕРЖИ 500Г",
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20247751": {
-    "categories": [
-      "peaches"
-    ],
-    "name": "ПРАСКОВИ 500 ГР. peaches (variety Astoria, Spain)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.49,
-        "shop": null,
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "500g"
-  },
-  "20267605": {
-    "categories": [
-      "cashews"
-    ],
-    "name": "Alesto КАШУ СУРОВО raw cashews",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-11",
-        "price": 3.57,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "200g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-11",
-        "last_seen": "2026-05-11",
-        "name": "КАШУ СУРОВО",
-        "shop": "Lidl"
-      }
-    ]
-  },
-  "20285685": {
-    "categories": [
-      "tomato-paste"
-    ],
-    "name": "Baresa Double-concentrated Tomato Paste",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-08",
-        "price": 0.86,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-08",
-        "last_seen": "2026-05-08",
-        "name": "ДОМАТЕНО ПЮРЕ 2-КОНЦ",
-        "shop": "Lidl Bulgaria"
-      }
-    ]
-  },
-  "20289867": {
-    "categories": [
-      "rusks"
-    ],
-    "name": "Tastino Wheat & Rye rusks (4x11 slices)",
-    "quantity": "360g"
-  },
-  "20305864": {
-    "categories": [
-      "tomatoes"
-    ],
-    "name": "ДОМАТИ ЧЕРИ 500Г cherry tomatoes",
-    "prices": [
-      {
-        "currency": "BGN",
-        "date": "2026-05-04",
-        "price": 2.99,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 2.99,
-        "shop": null,
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "500g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-04",
-        "last_seen": "2026-05-04",
-        "name": "ДОМАТИ, ЧЕРИ 500Г",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20305871": {
-    "categories": [
-      "salad"
-    ],
-    "name": "Polnicek ГРАДИНСКА САЛАТА lambs lettuce 125g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-16",
-        "price": 1.19,
-        "shop": "Lidl Варна бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-16",
-        "last_seen": "2026-05-16",
-        "name": "ГРАДИНСКА САЛАТА",
-        "shop": "Lidl Варна бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20322755": {
-    "categories": [
-      "food/nuts"
-    ],
-    "name": "ФЪСТЪК ПЕЧЕН Alesto roasted peanuts 200g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-04",
-        "price": 0.79,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-04",
-        "last_seen": "2026-06-04",
-        "name": "ФЪСТЪК ПЕЧЕН",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20327361": {
-    "categories": [
-      "beans"
-    ],
-    "name": "Бял боб",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-07",
-        "price": 2.14,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
-        "name": "БЯЛ БОБ",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20349714": {
-    "categories": [
-      "kitchen",
-      "kitchen-paper"
-    ],
-    "name": "КУХНЕНСКА ХАРТИЯ kitchen paper rolls 2-pack (Lidl, added 2026-01-17)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.52,
-        "shop": null,
-        "unit": "pack"
-      }
-    ]
-  },
-  "20349721": {
-    "categories": [
-      "kitchen-paper"
-    ],
-    "name": "КУХНЕНСКИ РОЛКИ 3ПЛ. kitchen rolls 3-ply (Lidl, added 2026-05-11)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-11",
-        "price": 1.11,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-11",
-        "last_seen": "2026-05-11",
-        "name": "КУХНЕНСКИ РОЛКИ 3ПЛ.",
-        "shop": "Lidl"
-      }
-    ]
-  },
-  "20358037": {
-    "categories": [
-      "rice"
-    ],
-    "name": "Lidl white rice 1kg",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-06",
-        "price": 0.97,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-06",
-        "last_seen": "2026-06-06",
-        "name": "БЯЛ ОРИЗ",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "2037795575": {
-    "brand": "БОНИ",
-    "categories": [
-      "dried-meat",
-      "meat"
-    ],
-    "name": "БОНИ Сушеница dried meat (Lidl internal barcode)",
-    "note": "Lidl internal barcode",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.78,
-        "shop": null,
-        "unit": "piece"
-      }
-    ],
-    "quantity": "140g",
-    "receipt_names": [
-      {
-        "name": "СУШЕНИЦА"
-      }
-    ],
-    "source": "manual"
-  },
-  "20379575": {
-    "categories": [
-      "sausage"
-    ],
-    "name": "ЛУКАНК.САЛАМ КР.ПАР round lukanka salami (sliced, from deli counter)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-02",
-        "price": 4.49,
-        "shop": "Lidl Варна",
-        "unit": "kg"
-      }
-    ],
-    "quantity": "282g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-02",
-        "last_seen": "2026-05-02",
-        "name": "ЛУКАНК.САЛАМ КР.ПАР",
-        "shop": "Lidl Bulgaria"
-      }
-    ]
-  },
-  "20379582": {
-    "categories": [
-      "cured-sausage"
-    ],
-    "name": "Baroni ЛУКАНКА lukanka",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-02",
-        "price": 2.4,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      }
-    ]
-  },
-  "20400569": {
-    "categories": [
-      "lentils"
-    ],
-    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.48,
-        "shop": null,
-        "unit": "piece"
-      },
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.38,
-        "shop": null,
-        "unit": "piece"
-      }
-    ]
-  },
-  "20402433": {
-    "categories": [
-      "food/meat/chicken"
-    ],
-    "name": "Пилко ЕООД Прясно пилешко бонфиле fresh chicken boneless fillet",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 4.34,
-        "shop": null,
-        "unit": "pcs"
-      }
-    ]
-  },
-  "20420635": {
-    "categories": [
-      "bouillon"
-    ],
-    "name": "Kania БУЛЬОН ПИЛЕШКИ chicken bouillon cubes (12×10g)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-02",
-        "price": 1.02,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "120g"
-  },
-  "20425562": {
-    "categories": [
-      "pesto"
-    ],
-    "name": "Italiamo Pesto Rosso (sun-dried tomato)",
-    "quantity": "190g"
-  },
-  "20431877": {
-    "categories": [
-      "food/beer"
-    ],
-    "name": "Pilos Light Beer 3% 500ml can",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-28",
-        "price": 1.17,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-05-31",
-        "price": 1.17,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-28",
-        "last_seen": "2026-05-31",
-        "name": "СВЕТЛА БИРА 3,0%",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20469894": {
-    "categories": [
-      "pesto"
-    ],
-    "name": "Italiamo Pesto Trapanese (tomato, almonds)",
-    "quantity": "180g"
-  },
-  "20508098": {
-    "categories": [
-      "food/salad"
-    ],
-    "name": "Lidl Italian Salad Mix 125g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-24",
-        "price": 0.76,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-24",
-        "last_seen": "2026-05-24",
-        "name": "ИТАЛИАН.САЛАТА 125Г",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20529772": {
-    "categories": [
-      "honey"
-    ],
-    "name": "Родна стряха 100% Български пчелен мед букет Bulgarian honey (added 2026-01-11)",
-    "quantity": "900g"
-  },
-  "20531072": {
-    "categories": [
-      "cream"
-    ],
-    "name": "Готварска сметана 22%",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-07",
-        "price": 0.79,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
-        "name": "ГОТВАРСКА СМЕТАНА22%",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20531164": {
-    "receipt_names": [
-      {
-        "name": "МОРСКИ ДАРОВЕ ТИКВ."
-      }
-    ]
-  },
-  "20561338": {
-    "categories": [
-      "coconut-milk"
-    ],
-    "name": "Freshona КОКОСОВО МЛЯКО ЛАЙТ light coconut milk",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.53,
-        "shop": null,
-        "unit": "pcs"
-      }
-    ]
-  },
-  "20621414": {
-    "categories": [
-      "pesto"
-    ],
-    "name": "Deluxe Гурме Песто Маслини olive pesto",
-    "quantity": "190g"
-  },
-  "20621421": {
-    "categories": [
-      "pesto"
-    ],
-    "name": "baresa tomato & Almond pesto / Deluxe Гурме Песто Бадеми almond pesto (starboard side)"
-  },
-  "20671525": {
-    "categories": [
-      "tinned-meat"
-    ],
-    "name": "Pikok Свинска шунка Premium — pork ham (Lidl, 96% meat)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-08",
-        "price": 2.55,
-        "shop": "Lidl Варна",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "300g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-08",
-        "last_seen": "2026-05-08",
-        "name": "ШУНКА В КОНСЕРВА",
-        "shop": "Lidl Bulgaria"
-      }
-    ]
-  },
-  "20679071": {
-    "categories": [
-      "pasta"
-    ],
-    "name": "Combino СПАГЕТИ С ЯЙЦА spaghetti with eggs",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 0.86,
-        "shop": null,
-        "unit": "pcs"
-      }
-    ]
-  },
-  "20709426": {
-    "categories": [
-      "cured-meat"
-    ],
-    "name": "Pikok ШПЕК CLEANLАBEL 220G speck (25% discount coupon applied)",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-05-20",
-        "price": 4.34,
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "220g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-05-20",
-        "last_seen": "2026-05-20",
-        "name": "ШПЕК CLEANLАBEL 220G",
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20709440": {
-    "categories": [
-      "cheese"
-    ],
-    "name": "Българско бяло саламурено сирене",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": "2026-06-07",
-        "price": 4.6,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      }
-    ],
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
-        "name": "КРАВЕ СИРЕНЕ ЗНП",
-        "shop": "Lidl Varna"
-      }
-    ]
-  },
-  "20710118": {
-    "categories": [
-      "food/legumes"
-    ],
-    "name": "Rodna Stryaha lentils 500g",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.12,
-        "shop": null,
-        "unit": "piece"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-06-04",
-        "price": 1.27,
-        "shop": "Lidl Varna",
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-06-13",
-        "price": 1.05,
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "500g",
-    "receipt_names": [
-      {
-        "first_seen": "2026-06-04",
-        "last_seen": "2026-06-04",
-        "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
-        "shop": "Lidl Varna"
-      },
-      {
-        "first_seen": "2026-06-13",
-        "last_seen": "2026-06-13",
-        "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
-        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
-      }
-    ]
-  },
-  "20710187": {
-    "categories": [
-      "canning",
-      "pate"
-    ],
-    "name": "Baky ПАСТЕТ АПЕТИТ Bulgarian pâté"
-  },
-  "20856090": {
-    "categories": [
-      "canning",
-      "corn"
-    ],
-    "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
-  },
-  "20962876": {
-    "categories": [
-      "red-beans"
-    ],
-    "name": "Campo Largo КАМПОЛАРГО БОБ КИДНИ red kidney beans",
-    "prices": [
-      {
-        "currency": "EUR",
-        "date": null,
-        "price": 1.78,
-        "shop": null,
-        "unit": "pcs"
-      }
-    ],
-    "quantity": "500g"
   },
   "2420520002823": {
     "categories": [
@@ -5083,5 +3784,1304 @@
         "unit": "pcs"
       }
     ]
+  },
+  "lidl-0481093": {
+    "categories": [
+      "clothing/trouser"
+    ],
+    "name": "МЪЖКИ КАРГО ПАНТ men's cargo trousers (Lidl 2026-03-04)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 9.99,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20000646": {
+    "categories": [
+      "jam"
+    ],
+    "name": "Maribel Конфитюр вишна екстра cherry jam extra",
+    "quantity": "450g"
+  },
+  "lidl-20003937": {
+    "categories": [
+      "canning",
+      "bolognese"
+    ],
+    "name": "Combino СОС БОЛОНЕЗЕ bolognese sauce 400g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-01-24",
+        "price": 1.02,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 2.04,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "400g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-01-24",
+        "last_seen": "2026-01-24",
+        "name": "СОС БОЛОНЕЗЕ",
+        "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "СОС БОЛОНЕЗЕ",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20004132": {
+    "categories": [
+      "canning",
+      "chopped-tomatoes"
+    ],
+    "name": "Baresa НАРЯЗАНИ ДОМАТИ chopped tomatoes 400g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 0.86,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "НАРЯЗАНИ ДОМАТИ",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20004323": {
+    "categories": [
+      "food/condiments"
+    ],
+    "name": "КАПЕРСИ Freshona capers 60g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 1.02,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "60g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "КАПЕРСИ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20010447": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "ITALIAMO ПРОШУТО КРУДО prosciutto crudo 100g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 2.55,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ПРОШУТО КРУДО",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20013868": {
+    "categories": [
+      "luncheon-meat"
+    ],
+    "name": "Dulano Luncheon Meat — pork (Lidl)"
+  },
+  "lidl-20015565": {
+    "categories": [
+      "canned-pork"
+    ],
+    "name": "Dulano Chopped Pork / Τσοπτ-πορκ (Lidl; printed best-before 2026-04-27, expired)"
+  },
+  "lidl-20026363": {
+    "categories": [
+      "meatballs"
+    ],
+    "name": "Chef Select / Eridanous Κεφτεδάκια — Greek meatballs in tomato sauce (Lidl, produced by Palirria, Greece; rusty pull-tab)"
+  },
+  "lidl-20037154": {
+    "categories": [
+      "sauce"
+    ],
+    "name": "ДОМАТЕН СОС БОСИЛЕК Combino tomato sauce basil 420g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "ДОМАТЕН СОС БОСИЛЕК",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20039547": {
+    "categories": [
+      "whipping-cream"
+    ],
+    "name": "Pilos СМЕТАНА 30% UHT whipping cream (Lidl 2026-03-04)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-03-04",
+        "price": 1.12,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-03-08",
+        "price": 1.12,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "200ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-03-04",
+        "last_seen": "2026-03-04",
+        "name": "СМЕТАНА 30 %",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20041663": {
+    "categories": [
+      "canning",
+      "sardines"
+    ],
+    "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 0.75,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "90g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "САРДИНИ В СЛ.МАСЛО",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20046248": {
+    "categories": [
+      "canning",
+      "sardines"
+    ],
+    "name": "Nixe САРДИНИ sardines in tomato sauce",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 0.95,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "125g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "САРДИНИСКОСТИКОЖА ДО",
+        "shop": "Lidl"
+      }
+    ]
+  },
+  "lidl-20051389": {
+    "categories": [
+      "mayonnaise"
+    ],
+    "name": "Kania МАЙОНЕЗА 80% mayonnaise 80%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.79,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 2.79,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "472g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "МАЙОНЕЗА 80%",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "lidl-20087036": {
+    "categories": [
+      "luncheon-meat"
+    ],
+    "name": "Pikok Luncheon Meat with Pork Knuckle (Lidl, 89% meat; printed best-before not legible)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.55,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "300g"
+  },
+  "lidl-20103804": {
+    "categories": [
+      "food/seafood"
+    ],
+    "name": "ASC КР.СКАРИДИ НТЮР ASC king prawns frozen",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 3.47,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ASC КР.СКАРИДИ НТЮР",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20112813": {
+    "categories": [
+      "fruit-juice"
+    ],
+    "name": "Solevita ДИРЕКТ.СОК КАС.БОРОВ direct juice blueberry-cranberry-blackcurrant",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 2.29,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "1l",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "ДИРЕКТ.СОК КАС.БОРОВ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20113476": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "Chili con carne",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-13",
+        "price": 2.29,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ЧИЛИ КОН КАРНЕ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20123703": {
+    "categories": [
+      "food/seafood"
+    ],
+    "name": "MSC СКАР. ЗАМР.270G MSC prawns 270g frozen",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 5.45,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "MSC СКАР. ЗАМР.270G",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20144173": {
+    "brand": "W5 (Lidl)",
+    "categories": [
+      "tools/cleaning"
+    ],
+    "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)",
+    "source": "manual"
+  },
+  "lidl-20148201": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "СВ. ВА. В СОБСТ. СОС Baroni pork in own sauce tin 400g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 2.55,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "400g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "СВ. ВА. В СОБСТ. СОС",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20149291": {
+    "categories": [
+      "food/meat/sausage"
+    ],
+    "name": "Pikok КАБАНОСИ СВ. pork cabanossi",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 4.09,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "400g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "КАБАНОСИ СВ.",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "lidl-20153229": {
+    "categories": [
+      "corn"
+    ],
+    "name": "Freshona Sweetcorn natural sweet (Lidl, 340g tin)"
+  },
+  "lidl-20163402": {
+    "brand": "Combino",
+    "categories": [
+      "passata"
+    ],
+    "name": "Combino ПАСИРАНИ ДОМАТИ Passata (crushed tomatoes)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-01-24",
+        "price": 0.37,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-01-24",
+        "last_seen": "2026-01-24",
+        "name": "ПАСИРАНИ ДОМАТИ",
+        "shop": "Lidl Varna"
+      }
+    ],
+    "source": "manual"
+  },
+  "lidl-20163419": {
+    "categories": [
+      "tomato-passata"
+    ],
+    "name": "Baresa ПАСИРАНИ ДОМАТИ 10,5 tomato passata",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.12,
+        "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 1.22,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "ПАСИРАНИ ДОМАТИ 10,5",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "lidl-20163822": {
+    "categories": [
+      "instant-mashed-potato"
+    ],
+    "name": "КАРТОФЕНО ПЮРЕ instant mashed potato (12×200g portions)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.68,
+        "shop": null,
+        "unit": "piece"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 1.68,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "330g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "КАРТОФЕНО ПЮРЕ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20239060": {
+    "categories": [
+      "food/vegetables/spinach"
+    ],
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-03-11",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-03-11",
+        "last_seen": "2026-03-11",
+        "name": "СПАНАК 500 Г ПЛИК",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20240899": {
+    "categories": [
+      "canning",
+      "food/meat/pork"
+    ],
+    "name": "Pikok СВ. ВА. В СОБСТ. СОС pork in own juice (vepřové maso ve vlastní šťávě)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 2.55,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "300g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "СВ. ВА. В СОБСТ. СОС",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20242152": {
+    "categories": [
+      "food/vegetables/sweet_peppers"
+    ],
+    "name": "ЧУШКИ 2 ЦВЯТА 500Г fresh mixed peppers (2 colours) 500g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 2.19,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ЧУШКИ 2 ЦВЯТА 500Г",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20242275": {
+    "categories": [
+      "vegetable"
+    ],
+    "name": "Green asparagus 500g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.49,
+        "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.79,
+        "shop": null,
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-13",
+        "price": 3.59,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ЗЕЛЕНИ АСПЕРЖИ 500Г",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20247751": {
+    "categories": [
+      "peaches"
+    ],
+    "name": "ПРАСКОВИ 500 ГР. peaches (variety Astoria, Spain)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.49,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g"
+  },
+  "lidl-20267605": {
+    "categories": [
+      "cashews"
+    ],
+    "name": "Alesto КАШУ СУРОВО raw cashews",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 3.57,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "200g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "КАШУ СУРОВО",
+        "shop": "Lidl"
+      }
+    ]
+  },
+  "lidl-20285685": {
+    "categories": [
+      "tomato-paste"
+    ],
+    "name": "Baresa Double-concentrated Tomato Paste",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 0.86,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "ДОМАТЕНО ПЮРЕ 2-КОНЦ",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "lidl-20289867": {
+    "categories": [
+      "rusks"
+    ],
+    "name": "Tastino Wheat & Rye rusks (4x11 slices)",
+    "quantity": "360g"
+  },
+  "lidl-20305864": {
+    "categories": [
+      "tomatoes"
+    ],
+    "name": "ДОМАТИ ЧЕРИ 500Г cherry tomatoes",
+    "prices": [
+      {
+        "currency": "BGN",
+        "date": "2026-05-04",
+        "price": 2.99,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.99,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-04",
+        "last_seen": "2026-05-04",
+        "name": "ДОМАТИ, ЧЕРИ 500Г",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20305871": {
+    "categories": [
+      "salad"
+    ],
+    "name": "Polnicek ГРАДИНСКА САЛАТА lambs lettuce 125g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-16",
+        "price": 1.19,
+        "shop": "Lidl Варна бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-16",
+        "last_seen": "2026-05-16",
+        "name": "ГРАДИНСКА САЛАТА",
+        "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20322755": {
+    "categories": [
+      "food/nuts"
+    ],
+    "name": "ФЪСТЪК ПЕЧЕН Alesto roasted peanuts 200g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 0.79,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "ФЪСТЪК ПЕЧЕН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20327361": {
+    "categories": [
+      "beans"
+    ],
+    "name": "Бял боб",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 2.14,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "БЯЛ БОБ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20349714": {
+    "categories": [
+      "kitchen",
+      "kitchen-paper"
+    ],
+    "name": "КУХНЕНСКА ХАРТИЯ kitchen paper rolls 2-pack (Lidl, added 2026-01-17)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.52,
+        "shop": null,
+        "unit": "pack"
+      }
+    ]
+  },
+  "lidl-20349721": {
+    "categories": [
+      "kitchen-paper"
+    ],
+    "name": "КУХНЕНСКИ РОЛКИ 3ПЛ. kitchen rolls 3-ply (Lidl, added 2026-05-11)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-11",
+        "price": 1.11,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-11",
+        "last_seen": "2026-05-11",
+        "name": "КУХНЕНСКИ РОЛКИ 3ПЛ.",
+        "shop": "Lidl"
+      }
+    ]
+  },
+  "lidl-20358037": {
+    "categories": [
+      "rice"
+    ],
+    "name": "Lidl white rice 1kg",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-06",
+        "price": 0.97,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-06",
+        "last_seen": "2026-06-06",
+        "name": "БЯЛ ОРИЗ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-2037795575": {
+    "brand": "БОНИ",
+    "categories": [
+      "dried-meat",
+      "meat"
+    ],
+    "name": "БОНИ Сушеница dried meat (Lidl internal barcode)",
+    "note": "Lidl internal barcode",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.78,
+        "shop": null,
+        "unit": "piece"
+      }
+    ],
+    "quantity": "140g",
+    "receipt_names": [
+      {
+        "name": "СУШЕНИЦА"
+      }
+    ],
+    "source": "manual"
+  },
+  "lidl-20379575": {
+    "categories": [
+      "sausage"
+    ],
+    "name": "ЛУКАНК.САЛАМ КР.ПАР round lukanka salami (sliced, from deli counter)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 4.49,
+        "shop": "Lidl Варна",
+        "unit": "kg"
+      }
+    ],
+    "quantity": "282g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-02",
+        "last_seen": "2026-05-02",
+        "name": "ЛУКАНК.САЛАМ КР.ПАР",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "lidl-20379582": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Baroni ЛУКАНКА lukanka",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 2.4,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20400569": {
+    "categories": [
+      "lentils"
+    ],
+    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.48,
+        "shop": null,
+        "unit": "piece"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.38,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "lidl-20402433": {
+    "categories": [
+      "food/meat/chicken"
+    ],
+    "name": "Пилко ЕООД Прясно пилешко бонфиле fresh chicken boneless fillet",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.34,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20420635": {
+    "categories": [
+      "bouillon"
+    ],
+    "name": "Kania БУЛЬОН ПИЛЕШКИ chicken bouillon cubes (12×10g)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-02",
+        "price": 1.02,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "120g"
+  },
+  "lidl-20425562": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Italiamo Pesto Rosso (sun-dried tomato)",
+    "quantity": "190g"
+  },
+  "lidl-20431877": {
+    "categories": [
+      "food/beer"
+    ],
+    "name": "Pilos Light Beer 3% 500ml can",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-28",
+        "price": 1.17,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-05-31",
+        "price": 1.17,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-28",
+        "last_seen": "2026-05-31",
+        "name": "СВЕТЛА БИРА 3,0%",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20469894": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Italiamo Pesto Trapanese (tomato, almonds)",
+    "quantity": "180g"
+  },
+  "lidl-20508098": {
+    "categories": [
+      "food/salad"
+    ],
+    "name": "Lidl Italian Salad Mix 125g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-24",
+        "price": 0.76,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-24",
+        "last_seen": "2026-05-24",
+        "name": "ИТАЛИАН.САЛАТА 125Г",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20529772": {
+    "categories": [
+      "honey"
+    ],
+    "name": "Родна стряха 100% Български пчелен мед букет Bulgarian honey (added 2026-01-11)",
+    "quantity": "900g"
+  },
+  "lidl-20531072": {
+    "categories": [
+      "cream"
+    ],
+    "name": "Готварска сметана 22%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 0.79,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "ГОТВАРСКА СМЕТАНА22%",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20531164": {
+    "receipt_names": [
+      {
+        "name": "МОРСКИ ДАРОВЕ ТИКВ."
+      }
+    ]
+  },
+  "lidl-20561338": {
+    "categories": [
+      "coconut-milk"
+    ],
+    "name": "Freshona КОКОСОВО МЛЯКО ЛАЙТ light coconut milk",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.53,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20621414": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Deluxe Гурме Песто Маслини olive pesto",
+    "quantity": "190g"
+  },
+  "lidl-20621421": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "baresa tomato & Almond pesto / Deluxe Гурме Песто Бадеми almond pesto (starboard side)"
+  },
+  "lidl-20671525": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "Pikok Свинска шунка Premium — pork ham (Lidl, 96% meat)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-08",
+        "price": 2.55,
+        "shop": "Lidl Варна",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "300g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-08",
+        "last_seen": "2026-05-08",
+        "name": "ШУНКА В КОНСЕРВА",
+        "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "lidl-20679071": {
+    "categories": [
+      "pasta"
+    ],
+    "name": "Combino СПАГЕТИ С ЯЙЦА spaghetti with eggs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20709426": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "Pikok ШПЕК CLEANLАBEL 220G speck (25% discount coupon applied)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-05-20",
+        "price": 4.34,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "220g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-05-20",
+        "last_seen": "2026-05-20",
+        "name": "ШПЕК CLEANLАBEL 220G",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20709440": {
+    "categories": [
+      "cheese"
+    ],
+    "name": "Българско бяло саламурено сирене",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-07",
+        "price": 4.6,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-07",
+        "last_seen": "2026-06-07",
+        "name": "КРАВЕ СИРЕНЕ ЗНП",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20710118": {
+    "categories": [
+      "food/legumes"
+    ],
+    "name": "Rodna Stryaha lentils 500g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.12,
+        "shop": null,
+        "unit": "piece"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-04",
+        "price": 1.27,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-13",
+        "price": 1.05,
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-04",
+        "last_seen": "2026-06-04",
+        "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
+        "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-06-13",
+        "last_seen": "2026-06-13",
+        "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
+        "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20710187": {
+    "categories": [
+      "canning",
+      "pate"
+    ],
+    "name": "Baky ПАСТЕТ АПЕТИТ Bulgarian pâté"
+  },
+  "lidl-20856090": {
+    "categories": [
+      "canning",
+      "corn"
+    ],
+    "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
+  },
+  "lidl-20962876": {
+    "categories": [
+      "red-beans"
+    ],
+    "name": "Campo Largo КАМПОЛАРГО БОБ КИДНИ red kidney beans",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.78,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g"
+  },
+  "mercadona-00501163": {
+    "categories": [
+      "food/spices"
+    ],
+    "name": "Hacendado Paella con azafrán (saffron) spice packets (4g each)"
   }
 }

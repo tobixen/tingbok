@@ -9,6 +9,15 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 ## [Unreleased]
 
 ### Added
+- **Shop-prefixed local article numbers** — in-store/GS1 "restricted distribution" codes
+  (e.g. Lidl's `20004132`) are not globally unique, so they are now stored under a
+  `<shop>-<code>` key (`lidl-20004132`, `mercadona-00501163`). `ean_service.resolve_local_alias()`
+  forwards a bare lookup to the prefixed record when exactly one shop matches, logging a
+  warning on cross-shop collisions instead of guessing. Both `GET` and `PUT /api/ean/{ean}`
+  honour the forward (so importers emitting bare scanned codes update the canonical record),
+  and neither queries upstream sources for hyphenated local keys. Existing records in
+  `ean-db.json` were migrated (66 Lidl/Mercadona codes); manufacturer part numbers and
+  ambiguous unattributed codes were left untouched.
 - **`mushroom-foraging` (soppsanking) vocabulary concept** — neither DBpedia "mushroom
   hunting" nor Wikidata `Q2391676` carries the canonical Norwegian term, so it is pinned
   in `vocabulary.yaml` with nb altLabels (soppsanking, sopplukking, …) under `outdoor`.

@@ -374,6 +374,37 @@ def load_ean_observations(path: Path) -> dict[str, Any]:
         return {}
 
 
+def resolve_local_alias(observations: dict[str, Any], code: str) -> str | None:
+    """Resolve a bare local article number to its shop-prefixed canonical key.
+
+    Local (in-store) article numbers — e.g. Lidl's ``20004132`` — are stored
+    under a shop/chain-prefixed key such as ``lidl-20004132`` because such GS1
+    "restricted distribution" codes are not globally unique: different chains
+    reuse the same number ranges.  A bare lookup of the code is forwarded to the
+    prefixed record.  Real EANs never contain a hyphen, so any key with one is a
+    shop-prefixed local key; the part after the last hyphen is the bare code.
+
+    Returns the canonical key when exactly one observation of the form
+    ``<shop>-<code>`` exists.  Returns ``None`` when *code* is already a key
+    (a global EAN or an already-prefixed key), when no prefixed variant exists,
+    or when several shops use the same bare number (ambiguous; a warning is
+    logged so the conflict surfaces rather than being silently mis-resolved).
+    """
+    if code in observations:
+        return None
+    matches = [key for key in observations if "-" in key and key.rsplit("-", 1)[1] == code]
+    if not matches:
+        return None
+    if len(matches) > 1:
+        logger.warning(
+            "Ambiguous local article number %r maps to multiple shop-prefixed records: %s",
+            code,
+            ", ".join(sorted(matches)),
+        )
+        return None
+    return matches[0]
+
+
 def _normalize_receipt_name(name: str) -> str:
     """Casefold, strip, and collapse internal whitespace for comparison."""
     return re.sub(r"\s+", " ", name.strip()).casefold()
