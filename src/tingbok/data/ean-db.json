@@ -322,6 +322,26 @@
     "name": "Луканка Тракийска XXL",
     "quantity": "550g"
   },
+  "3800500332352": {
+    "name": "Смути манго и ананас / mango-pineapple smoothie",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 3.83,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "Смути Манго и Ананас",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
+  },
   "3800500766577": {
     "categories": [
       "mushrooms"
@@ -358,6 +378,46 @@
         "price": 0.86,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "3800501740569": {
+    "name": "Балкански шиш / Balkan meat skewer (raw)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 3.29,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "Балк. шиш",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
+  },
+  "3858890178678": {
+    "name": "Mayonnaise, Delicatess",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 1.99,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "ТНОМУ Майонеза280",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
       }
     ]
   },
@@ -448,6 +508,26 @@
       "tools/cleaning"
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml"
+  },
+  "4049726006145": {
+    "name": "Кюфтета от свинско и говеждо &quot;Стара планина&quot;",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 3.32,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "Брей!Кюфтета смес",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
   },
   "4052916846988": {
     "categories": [
@@ -845,6 +925,26 @@
       "food/seafood/canned-fish"
     ],
     "name": "Flokos ΣΚΟΥΜΠΡΙ φιλέτο — mackerel fillet in tomato sauce (Konva, Greek)"
+  },
+  "5202178084768": {
+    "name": "Натурален сок 100% 1л (Greek) / 100% juice",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 3.32,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "О-нат.сок 100% 1л",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
   },
   "5411183171671": {
     "categories": [
