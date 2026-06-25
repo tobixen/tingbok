@@ -1,6 +1,9 @@
 {
   "0766478155009": {
-    "name": "Whale Marine AK1550 Ser Kit Gulper 220",
+    "categories": [
+      "pump-service-kit"
+    ],
+    "name": "Whale Service Kit AK1550 for Gulper 220 pump (diaphragm, valves, gaskets)",
     "prices": [
       {
         "currency": "EUR",
@@ -1138,7 +1141,10 @@
     ]
   },
   "8715559001058": {
-    "name": "Epifanes Clear Varnish (1000 ml) (B005ADWKTG)",
+    "categories": [
+      "varnish"
+    ],
+    "name": "Epifanes One-Component Clear High-Gloss Boat Varnish 1000ml (remaining box from 2026-04 SVB order 3912964; rest spent)",
     "prices": [
       {
         "currency": "EUR",
@@ -1159,11 +1165,9 @@
   },
   "8717372205859": {
     "categories": [
-      "boat-equipment",
-      "plumbing",
-      "water tank"
+      "watertank"
     ],
-    "name": "Vetus Flexible Water Tank rectangular 100l",
+    "name": "Vetus flexible water tank 100l, permanently installed under floor (starboard side; 2024-11 SVB order 3451027)",
     "prices": [
       {
         "currency": "EUR",
