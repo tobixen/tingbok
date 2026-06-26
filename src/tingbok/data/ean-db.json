@@ -22,6 +22,31 @@
       }
     ]
   },
+  "097653004707": {
+    "categories": [
+      "boat-equipment",
+      "sailing hardware",
+      "blocks"
+    ],
+    "name": "Harken Fiddle Block with Swivel, Clamp and Becket HK1564 (2 sheave)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-25",
+        "price": 413.39,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-25",
+        "last_seen": "2026-06-25",
+        "name": "HARKEN Fiddle Block with Swivel, Clamp and Becket / Type HK1564 / 2 sheave",
+        "shop": "SVB24"
+      }
+    ]
+  },
   "20004323": {
     "categories": [
       "food/condiments"
@@ -1445,12 +1470,19 @@
         "price": 22.13,
         "shop": "SVB24",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-25",
+        "price": 23.14,
+        "shop": "SVB24",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
       {
         "first_seen": "2025-06-02",
-        "last_seen": "2025-06-02",
+        "last_seen": "2026-06-25",
         "name": "EPIFANES One-Component Clear High-Gloss Boat Varnish for Wood (500 ml)",
         "shop": "SVB24"
       }
