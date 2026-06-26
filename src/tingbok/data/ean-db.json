@@ -24,11 +24,9 @@
   },
   "097653004707": {
     "categories": [
-      "boat-equipment",
-      "sailing hardware",
-      "blocks"
+      "sailing-hardware"
     ],
-    "name": "Harken Fiddle Block with Swivel, Clamp and Becket HK1564 (2 sheave)",
+    "name": "Harken Fiddle Block with Swivel, Clamp and Becket HK1564 (2 sheave, 76mm, V4A stainless); to be installed in the rig — starboard staysail shroud/backstay (SVB24 order 3988629, in transit)",
     "prices": [
       {
         "currency": "EUR",
@@ -1462,7 +1460,10 @@
     "name": "Spezieria Limone limoncello 30% (Bepi Tosolini, Italy)"
   },
   "8715559001034": {
-    "name": "Epifanes Clear Varnish (500 ml) (B005ADWOUG)",
+    "categories": [
+      "varnish"
+    ],
+    "name": "Epifanes One-Component Clear High-Gloss Boat Varnish 500ml (SVB24 order 3988629, in transit)",
     "prices": [
       {
         "currency": "EUR",
