@@ -37,6 +37,12 @@
       }
     ]
   },
+  "20005030": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "James Cook Gold Oversea Rum 40%"
+  },
   "20144173": {
     "categories": [
       "tools/cleaning"
@@ -268,11 +274,54 @@
       }
     ]
   },
+  "3272496315126": {
+    "categories": [
+      "single-board-computer"
+    ],
+    "name": "Raspberry Pi 5 8GB RAM (in original box, new)"
+  },
+  "3608439320989": {
+    "categories": [
+      "hiking-pants",
+      "outdoor"
+    ],
+    "name": "size:44 Decathlon NH500 Regular hiking pants grey (size 44 / FR 44 / UK 34 / L32, added 2026-01-18)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 23.52,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "3663602992639": {
+    "categories": [
+      "hardware/furniture-fitting"
+    ],
+    "name": "Furniture felt protection pads, 120-piece set (60×Ø20mm, 36×25×25mm, 24×Ø28mm), black self-adhesive"
+  },
   "3800012130064": {
     "categories": [
       "tomatoes"
     ],
     "name": "sauce Bulgarian paprika/tomato sauce, glass jar (145 kcal/100g; in box due to short printed best-before 2026-03-13, lot L:13/03/26)"
+  },
+  "3800047336028": {
+    "categories": [
+      "brush/paint"
+    ],
+    "name": "Antares Universal paint brush 40mm (Code 3602, Made in Bulgaria)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.92,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
   },
   "3800059200010": {
     "categories": [
@@ -338,6 +387,12 @@
       }
     ]
   },
+  "3800144703495": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "Villa Yustina \"Gorkata\" Dimyat 2023 white wine 13.5% (Bulgaria, PGI Thracian Valley)"
+  },
   "3800214924577": {
     "categories": [
       "cured-meat"
@@ -345,7 +400,22 @@
     "name": "Луканка Тракийска XXL",
     "quantity": "550g"
   },
+  "3800233823431": {
+    "categories": [
+      "sanding-sponge"
+    ],
+    "name": "GRAFFIT SB-L P60 sanding sponge (Bulgarian, coarse, NOT for varnish)"
+  },
+  "3800233823448": {
+    "categories": [
+      "sanding-sponge"
+    ],
+    "name": "GRAFFIT SB-L P80 sanding sponge (Bulgarian, medium-coarse, used)"
+  },
   "3800500332352": {
+    "categories": [
+      "smoothie"
+    ],
     "name": "Смути манго и ананас / mango-pineapple smoothie",
     "prices": [
       {
@@ -362,6 +432,21 @@
         "last_seen": "2026-06-22",
         "name": "Смути Манго и Ананас",
         "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
+  },
+  "3800500377513": {
+    "categories": [
+      "brush/paint"
+    ],
+    "name": "OK! natural bristle brush 30mm (Made in Italy, Art 7513, Praktiker art. 129995/123995)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.95,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -405,6 +490,9 @@
     ]
   },
   "3800501740569": {
+    "categories": [
+      "meat"
+    ],
     "name": "Балкански шиш / Balkan meat skewer (raw)",
     "prices": [
       {
@@ -449,6 +537,18 @@
         "shop": "Кауфланд Варна-Одесос ул. Девня 24"
       }
     ]
+  },
+  "4000000070061": {
+    "categories": [
+      "fuse-holder"
+    ],
+    "name": "Inline blade fuse holder with cable (PORTAFUSIBILE VOLANTE)"
+  },
+  "4006387029807": {
+    "categories": [
+      "water-filter-cartridge"
+    ],
+    "name": "Brita P1000 tap water filter cartridge (spare)"
   },
   "4006825613704": {
     "categories": [
@@ -532,6 +632,18 @@
       }
     ]
   },
+  "4015544388619": {
+    "categories": [
+      "consumables"
+    ],
+    "name": "NATURE Star wooden oral spatulas/tongue depressors 15x1.8cm birchwood (Art.-Nr. 38861, Franz Mensch GmbH)"
+  },
+  "4026495100007": {
+    "categories": [
+      "bicycle-tube"
+    ],
+    "name": "Schwalbe bicycle tube 16\"/18\" AV4 (Schrader valve, 400x35A, 37-340/28-349/37-349/28-355, Made in Indonesia)"
+  },
   "4031396000592": {
     "categories": [
       "tools/cleaning"
@@ -591,7 +703,10 @@
     ]
   },
   "4049726006145": {
-    "name": "Кюфтета от свинско и говеждо &quot;Стара планина&quot;",
+    "categories": [
+      "meatballs"
+    ],
+    "name": "Кюфтета свинско и говеждо \"Стара планина\" 480г / pork+beef meatballs",
     "prices": [
       {
         "currency": "EUR",
@@ -632,6 +747,12 @@
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
+  },
+  "4055143459044": {
+    "categories": [
+      "electrical-connectors/wago"
+    ],
+    "name": "WAGO 221-415 lever connectors (5-conductor, 0.14-4mm²)"
   },
   "4056489108160": {
     "name": "Pilos МЛЯКО UHT 3,5% UHT whole milk (added 2026-04-29)",
@@ -903,9 +1024,9 @@
   },
   "4056489941842": {
     "categories": [
-      "fresh-milk"
+      "whole-milk"
     ],
-    "name": "Milk 3.7% fat",
+    "name": "Прясно мляко 3.7% 1l (Pilos) / Pilos fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -1008,6 +1129,12 @@
       }
     ]
   },
+  "4059952545080": {
+    "categories": [
+      "sanding-block"
+    ],
+    "name": "Yellow sanding sponge (used, Made in Great Britain)"
+  },
   "4335619347489": {
     "categories": [
       "household"
@@ -1031,11 +1158,53 @@
       }
     ]
   },
+  "4690241033781": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Маленькое королевство Бена и Холли\" (Ben & Holly's Little Kingdom) all seasons (Russian)"
+  },
+  "4690241146665": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Неуловимые мстители\" (The Elusive Avengers) trilogy, 3 discs (Russian, 282 min)"
+  },
+  "4690452002453": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Доктор Айболит\" (Doctor Aibolit, based on K.I. Chukovsky, Russian, 99 min, Region ALL)"
+  },
+  "5011007002947": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "Powers Irish Rye Whiskey 43.2% (Ireland)"
+  },
+  "5034217416083": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Thomas & Friends: It's Great to Be an Engine!\" (HiT Entertainment)"
+  },
   "5056170301978": {
     "categories": [
       "helse/tannpleie"
     ],
     "name": "DentaGlo Kids Toothbrushes 5-pack (Gem Imports)"
+  },
+  "5060020627262": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Little Princess: Complete Series 1\" box set (Julian Clary)"
+  },
+  "5200021649369": {
+    "categories": [
+      "medical"
+    ],
+    "name": "VITALIS syringes 10ml with needles 21Gx1½\" (sterile, for epoxy application)"
   },
   "5201340001169": {
     "categories": [
@@ -1044,6 +1213,9 @@
     "name": "Flokos ΣΚΟΥΜΠΡΙ φιλέτο — mackerel fillet in tomato sauce (Konva, Greek)"
   },
   "5202178084768": {
+    "categories": [
+      "juice"
+    ],
     "name": "Натурален сок 100% 1л (Greek) / 100% juice",
     "prices": [
       {
@@ -1093,6 +1265,90 @@
     ],
     "name": "ŁOSOŚ Smoked Winter Sprats (Polish) (middle + front port)"
   },
+  "5944035105307": {
+    "categories": [
+      "electrical-connectors/fork"
+    ],
+    "name": "Starke Papuci furca izolati M4 yellow fork terminals 6mm"
+  },
+  "6416868871371": {
+    "categories": [
+      "sandpaper-roll"
+    ],
+    "name": "MIRKA sandpaper roll 115mm x 2.5m P320 (Made in Finland, for painted/lacquered surfaces, EXCELLENT FOR VARNISH - final sanding)"
+  },
+  "6920075776102": {
+    "categories": [
+      "smart-home-sensor"
+    ],
+    "name": "Sonoff SNZB-02 Temperature and Humidity Sensor (Zigbee, CR2450, -10~40°C, 10-90%RH)"
+  },
+  "6920075776119": {
+    "categories": [
+      "smart-home-sensor"
+    ],
+    "name": "Sonoff SNZB-03 Motion Sensor (Zigbee, CR2450)"
+  },
+  "7023060119782": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Sprint #61: Skatten i Alexandria\" by Vehlmann & Yoann (Egmont, kr 79,90)"
+  },
+  "7023060204402": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Donald Ducks Jubileumshefte - 60 år\" (100 sider klassiske historier)"
+  },
+  "7023060319946": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Disney Jubileumspocket \"Hurra!! Donald 60 år - Onkel Skrues Rivaler\""
+  },
+  "7023060321109": {
+    "categories": [
+      "book"
+    ],
+    "name": "\"LEGO DC Super Heroes: Superman og Lex Luthor!\" activity book (Cappelen Damm, AMEET)"
+  },
+  "7023060702397": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Donald Pocket #13 \"Donald Duck - den tapre ridder\" (Klassiker, 5. utgave, kr 60,90)"
+  },
+  "7023061006760": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Walt Disney's Tema Pocket \"Sheriffen\""
+  },
+  "7023063101845": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Donald Pocket #402 \"Sommerferie\""
+  },
+  "7023063301849": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Donald Pocket #428 \"Ut på tur\""
+  },
+  "7023064102773": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Donald Pocket #192 \"Donald ser spøkelser\""
+  },
+  "7031652012380": {
+    "categories": [
+      "activity-book"
+    ],
+    "name": "\"Jeg kan ALFABETET!\" (Litor 201238, Gøy å lære!, stickers, fra 5 år)"
+  },
   "7040110310807": {
     "categories": [
       "food/baking"
@@ -1108,6 +1364,30 @@
       }
     ]
   },
+  "7047160403213": {
+    "categories": [
+      "napkin"
+    ],
+    "name": "Nille Party napkins (watermelon design, 3-ply 33x33cm)"
+  },
+  "7070788005248": {
+    "categories": [
+      "book"
+    ],
+    "name": "\"Aktivitetsbok: Hest er best\" activity book"
+  },
+  "7310380706397": {
+    "categories": [
+      "napkin"
+    ],
+    "name": "ICA Home Rosa tulpaner napkins (pink tulips, 33cm)"
+  },
+  "7321940389547": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Polarekspressen\" (The Polar Express, 2004) Tom Hanks, dobbel-DVD (Norwegian release, Warner Bros.)"
+  },
   "7340011453437": {
     "categories": [
       "tools/cleaning"
@@ -1119,6 +1399,42 @@
       "medical"
     ],
     "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter, 10 stk)"
+  },
+  "7388414403901": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Bamse Sagoserier: Bamse i Mystiska Bergen\" (EGMONT, TIDSAM 4144-04)"
+  },
+  "7388443903403": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Bamse för de yngsta: Ola sköter bion\" (EGMONT, TIDSAM 4439-02)"
+  },
+  "7388443903908": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Bamse för de yngsta: Rackartyg med Vargkusinerna\" (EGMONT, TIDSAM 4439-05)"
+  },
+  "785375943475": {
+    "categories": [
+      "electronics/sensor"
+    ],
+    "name": "Zigbee Temperature & Humidity Sensor FLY ZTH01 (battery 2×AAA/LR03, Shenzhen Forever Young Technology)"
+  },
+  "8001848064676": {
+    "categories": [
+      "silicone-sealant"
+    ],
+    "name": "NPT S.r.l. transparent silicone sealant (Italian)"
+  },
+  "8009440009255": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "Spezieria Limone limoncello 30% (Bepi Tosolini, Italy)"
   },
   "8715559001034": {
     "name": "Epifanes Clear Varnish (500 ml) (B005ADWOUG)",
@@ -1186,6 +1502,12 @@
         "shop": "SVB24"
       }
     ]
+  },
+  "8717418109646": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Rottatouille\" (Ratatouille, 2007) Disney Pixar, 2-disk spesialutgave (Norwegian release)"
   },
   "9002588424903": {
     "categories": [
