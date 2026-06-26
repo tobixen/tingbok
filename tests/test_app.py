@@ -182,6 +182,45 @@ async def test_resolve_singular_and_plural_fold_to_same_canonical(client):
 
 
 @pytest.mark.anyio
+async def test_resolve_top_level_concept_singular_does_not_emit_bridge_node(client):
+    """Singular input for a top-level concept must not spawn a duplicate node.
+
+    Regression for the reported ``book`` / ``books`` duplication: the inventory
+    used ``category:book`` while the canonical concept is the top-level ``books``
+    (broader ``household``). Pre-fold tingbok synthesised a separate ``book``
+    bridge node (broader ``books``), so the web category tree showed both. The
+    singular must fold into ``books`` as an altLabel with no ``book`` node.
+
+    Unlike ``test_resolve_singular_and_plural_fold_to_same_canonical`` (a path
+    concept, ``food/vegetables``), this exercises a bare top-level concept id.
+    """
+    import tingbok.app as app_module
+
+    original = app_module.vocabulary.copy()
+    app_module.vocabulary["household"] = {"prefLabel": "Household", "broader": [], "narrower": ["books"]}
+    app_module.vocabulary["books"] = {
+        "prefLabel": "Books",
+        "broader": ["household"],
+        "narrower": [],
+        "altLabel": {"en": ["literature", "reading"]},
+    }
+    try:
+        response = await client.post("/api/vocabulary/resolve", json={"labels": ["book"], "lang": "en"})
+        assert response.status_code == 200
+        concepts = response.json()["concepts"]
+        # No separate singular node; canonical present with the singular folded in.
+        assert "book" not in concepts
+        assert "books" in concepts
+        all_labels = {concepts["books"]["prefLabel"].lower()} | {
+            a.lower() for alts in concepts["books"]["altLabel"].values() for a in alts
+        }
+        assert {"book", "books"} <= all_labels
+    finally:
+        app_module.vocabulary.clear()
+        app_module.vocabulary.update(original)
+
+
+@pytest.mark.anyio
 async def test_resolve_vocabulary_unknown_label_becomes_stub(client):
     """An unknown label is returned as a stub and listed in unresolved."""
     response = await client.post("/api/vocabulary/resolve", json={"labels": ["my-custom-category"], "lang": "en"})
