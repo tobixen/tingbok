@@ -1308,6 +1308,29 @@
     ],
     "name": "ŁOSOŚ Smoked Winter Sprats (Polish) (middle + front port)"
   },
+  "5902232633504": {
+    "categories": [
+      "thread_locking_fluid"
+    ],
+    "name": "Bostik thread-locker 10g (осигурител на резба)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-27",
+        "price": 7.66,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-27",
+        "last_seen": "2026-06-27",
+        "name": "BOSTIK ОСИГУРИТЕЛ НА РЕ[ЗБА] ЗБИ 10 G",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
   "5944035105307": {
     "categories": [
       "electrical-connectors/fork"
@@ -1478,6 +1501,30 @@
       "alcohol"
     ],
     "name": "Spezieria Limone limoncello 30% (Bepi Tosolini, Italy)"
+  },
+  "8595720698696": {
+    "categories": [
+      "oven_glove",
+      "pot_holder"
+    ],
+    "name": "Oven mitt + pot-holder set, beige",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-27",
+        "price": 3.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-27",
+        "last_seen": "2026-06-27",
+        "name": "К-Т РЪКАВИЦА И РЪКОХВАТКА БЕЖ",
+        "shop": "Praktiker Varna"
+      }
+    ]
   },
   "8715559001034": {
     "categories": [
