@@ -1069,7 +1069,7 @@
     "categories": [
       "whole-milk"
     ],
-    "name": "Прясно мляко 3.7% 1l (Pilos) / Pilos fresh milk",
+    "name": "Milk 3.7% fat",
     "prices": [
       {
         "currency": "EUR",
@@ -1081,6 +1081,13 @@
       {
         "currency": "EUR",
         "date": "2026-06-23",
+        "price": 1.39,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-27",
         "price": 1.39,
         "shop": "Lidl Varna бул. Вл. Варненчик 257",
         "unit": "pcs"
@@ -1096,7 +1103,7 @@
       },
       {
         "first_seen": "2026-06-23",
-        "last_seen": "2026-06-23",
+        "last_seen": "2026-06-27",
         "name": "ПРЯСНО МЛЯКО 3,7%",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
@@ -1648,6 +1655,26 @@
         "first_seen": "2026-06-23",
         "last_seen": "2026-06-23",
         "name": "КУХНЕНСКИ РОЛКИ 3ПЛ.",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20858544": {
+    "name": "Pork and beef kabanossi",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-27",
+        "price": 1.69,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-27",
+        "last_seen": "2026-06-27",
+        "name": "КАБАНОСИ ОТ СВ. МЕСО",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
