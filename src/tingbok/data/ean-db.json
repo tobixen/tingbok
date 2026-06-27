@@ -708,6 +708,29 @@
     ],
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml"
   },
+  "4031396048723": {
+    "categories": [
+      "boat_paint_&_composites"
+    ],
+    "name": "Yachticon Nano Propeller 250ml",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-24",
+        "price": 15.0,
+        "shop": "оборудване за водни спортове ООД",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-24",
+        "last_seen": "2026-06-24",
+        "name": "НАНО 250мл / Yachticon Nano Propeller",
+        "shop": "оборудване за водни спортове ООД"
+      }
+    ]
+  },
   "4045302042330": {
     "categories": [
       "boat-equipment",
