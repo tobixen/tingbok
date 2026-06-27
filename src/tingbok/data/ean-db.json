@@ -277,6 +277,21 @@
     ],
     "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
   },
+  "20858544": {
+    "categories": [
+      "kabanossi"
+    ],
+    "name": "Кабаноси от свинско месо (Pikok) / Pikok pork kabanossi",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.69,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "20962654": {
     "name": "Бяло саламурено сирене от краве и биволско мляко",
     "prices": [
@@ -1069,7 +1084,7 @@
     "categories": [
       "whole-milk"
     ],
-    "name": "Milk 3.7% fat",
+    "name": "Прясно мляко 3.7% 1l (Pilos) / Pilos fresh milk",
     "prices": [
       {
         "currency": "EUR",
