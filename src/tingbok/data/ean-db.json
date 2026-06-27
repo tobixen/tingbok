@@ -655,6 +655,26 @@
       }
     ]
   },
+  "4013307787167": {
+    "name": "ЧЕТКИ 4 БР. ЧЕРЕН КОСЪМ set of 4 black-bristle brushes (20/30/40/50mm)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-24",
+        "price": 2.49,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-24",
+        "last_seen": "2026-06-24",
+        "name": "ЧЕТКИ 4 БР. ЧЕРЕН КОСЪМ",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
   "4015544388619": {
     "categories": [
       "consumables"
