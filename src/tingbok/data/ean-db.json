@@ -142,9 +142,9 @@
   },
   "20322755": {
     "categories": [
-      "food/nuts"
+      "roasted_peanut"
     ],
-    "name": "ФЪСТЪК ПЕЧЕН Alesto roasted peanuts 200g",
+    "name": "Фъстък печен 200г (Alesto) / roasted peanuts, 2 bags",
     "prices": [
       {
         "currency": "EUR",
@@ -152,8 +152,16 @@
         "price": 0.79,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.65,
+        "shop": null,
+        "unit": "pcs"
       }
-    ]
+    ],
+    "quantity": "400g/2"
   },
   "20324599": {
     "categories": [
@@ -925,7 +933,10 @@
     ]
   },
   "4056489473251": {
-    "name": "Едросмляна лютеница",
+    "categories": [
+      "ljutenica"
+    ],
+    "name": "Едросмляна лютеница 550г (Родна стряха) / coarse-ground lyutenitsa",
     "prices": [
       {
         "currency": "EUR",
@@ -1124,7 +1135,10 @@
     ]
   },
   "4056489941392": {
-    "name": "Yogurt 2%",
+    "categories": [
+      "yogurt"
+    ],
+    "name": "Кисело мляко 2% 1кг (Pilos) / Pilos yogurt 2%",
     "prices": [
       {
         "currency": "EUR",
@@ -1148,7 +1162,7 @@
     "categories": [
       "whole-milk"
     ],
-    "name": "Milk 3.7% fat",
+    "name": "Прясно мляко 3.7% 1l (Pilos) / Pilos fresh milk",
     "prices": [
       {
         "currency": "EUR",
