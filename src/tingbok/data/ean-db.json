@@ -655,6 +655,29 @@
       }
     ]
   },
+  "4006825627244": {
+    "categories": [
+      "air_compressor"
+    ],
+    "name": "Einhell PRESSITO hybrid compressor 18V/230V (хибриден компресор)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 89.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-02",
+        "last_seen": "2026-07-02",
+        "name": "EINHELL ХИБРИДЕН КОМПР ECOP PXC SO",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
   "4006825673227": {
     "categories": [
       "power-tool-battery"
@@ -667,12 +690,19 @@
         "price": 55.99,
         "shop": "Praktiker Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 55.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
       {
         "first_seen": "2026-06-19",
-        "last_seen": "2026-06-19",
+        "last_seen": "2026-07-02",
         "name": "EINHELL АК.БАТ.18V/4АН SEALED PXC",
         "shop": "Praktiker Varna"
       }
