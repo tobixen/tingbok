@@ -537,7 +537,7 @@
   },
   "3800501740569": {
     "categories": [
-      "meat"
+      "shish_kebab"
     ],
     "name": "Балкански шиш / Balkan meat skewer (raw)",
     "prices": [
@@ -1162,7 +1162,7 @@
     "categories": [
       "whole-milk"
     ],
-    "name": "Milk 3.7% fat",
+    "name": "Прясно мляко 3.7% 1l (Pilos) / Pilos fresh milk",
     "prices": [
       {
         "currency": "EUR",
