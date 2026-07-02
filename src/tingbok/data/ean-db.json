@@ -924,6 +924,26 @@
       }
     ]
   },
+  "4056489473251": {
+    "name": "Едросмляна лютеница",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 3.45,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-02",
+        "last_seen": "2026-07-02",
+        "name": "ЛЮТЕНИЦА ЕДРОМЛ.550Г",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489586043": {
     "categories": [
       "canning",
@@ -1103,11 +1123,32 @@
       }
     ]
   },
+  "4056489941392": {
+    "name": "Yogurt 2%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 1.19,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "1 кг",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-02",
+        "last_seen": "2026-07-02",
+        "name": "КИСЕЛО МЛЯКО 2% 1КГ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489941842": {
     "categories": [
       "whole-milk"
     ],
-    "name": "Прясно мляко 3.7% 1l (Pilos) / Pilos fresh milk",
+    "name": "Milk 3.7% fat",
     "prices": [
       {
         "currency": "EUR",
@@ -1129,6 +1170,13 @@
         "price": 1.39,
         "shop": "Lidl Varna бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 1.39,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "2l/2",
@@ -1141,7 +1189,7 @@
       },
       {
         "first_seen": "2026-06-23",
-        "last_seen": "2026-06-27",
+        "last_seen": "2026-07-02",
         "name": "ПРЯСНО МЛЯКО 3,7%",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
@@ -1674,6 +1722,26 @@
         "last_seen": "2026-06-18",
         "name": "ЗАЩИТНИ ОЧИЛА EN 166",
         "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "lidl-20322755": {
+    "name": "Печени, осолени фъстъци",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 0.65,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-02",
+        "last_seen": "2026-07-02",
+        "name": "ФЪСТЪК ПЕЧЕН",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
