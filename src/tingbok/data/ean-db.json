@@ -1,4 +1,10 @@
 {
+  "0071247936643": {
+    "categories": [
+      "fuel-additive"
+    ],
+    "name": "Star brite Star Tron Fuel Tank Cleaner, concentrated gas/diesel formula (the fuel additive previously listed under \"Can't find\" — now located)"
+  },
   "0766478155009": {
     "categories": [
       "pump-service-kit"
@@ -356,9 +362,9 @@
   },
   "3800047336028": {
     "categories": [
-      "brush/paint"
+      "paint-brush"
     ],
-    "name": "Antares Universal paint brush 40mm (Code 3602, Made in Bulgaria)",
+    "name": "Antares Universal paint brush 40mm (Code 3602)",
     "prices": [
       {
         "currency": "EUR",
@@ -705,6 +711,21 @@
         "last_seen": "2026-07-02",
         "name": "EINHELL АК.БАТ.18V/4АН SEALED PXC",
         "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "4008033481595": {
+    "categories": [
+      "scissors"
+    ],
+    "name": "Probus НОЖИЦА С ОМЕКОТЕНА ДРЪЖКА NIROSTA Stainless Steel Soft Grip Scissors 21.5cm",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.06,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -1468,6 +1489,12 @@
       }
     ]
   },
+  "5907791844842": {
+    "categories": [
+      "adhesive-tape"
+    ],
+    "name": "PAKART paper masking tape 38mm × 50m (хартиено тиксо 38/50, made in Poland, imported by ARSEA OOD Varna) — incl. the extra roll added at the end"
+  },
   "5944035105307": {
     "categories": [
       "electrical-connectors/fork"
@@ -1769,8 +1796,348 @@
       }
     ]
   },
+  "9002588722634": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "Schuller Eh'klar ALLROUND flat paint brush (Art.Nr. 72263; size TBC)"
+  },
+  "biltema-251091": {
+    "categories": [
+      "shackle"
+    ],
+    "name": "Large galvanized bow shackle"
+  },
+  "biltema-25316": {
+    "categories": [
+      "cable-tie"
+    ],
+    "name": "BILTEMA cable ties"
+  },
+  "biltema-256635": {
+    "categories": [
+      "flag"
+    ],
+    "name": "Norwegian flag 70cm polyester purchased 2026-04-11",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": null,
+        "price": 109.0,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "biltema-25987": {
+    "categories": [
+      "gear-pump"
+    ],
+    "name": "Slightly broken Biltema 12V gear pump (Art. 25-987, 15 l/min - 4 gpm, max 2 bar / 29 psi, 10A fuse, self-priming 1.5m, run dry max 20 min, IP67, ISO 8849 Marine) - gears slightly worn; can probably still pump water, but no longer self-priming"
+  },
+  "biltema-3533295": {
+    "categories": [
+      "adhesive-tape"
+    ],
+    "name": "BILTEMA black tape 15mm x 10m"
+  },
+  "biltema-61857": {
+    "categories": [
+      "clamp"
+    ],
+    "name": "Hose clamps (stainless, various sizes)"
+  },
+  "biltema-87600": {
+    "categories": [
+      "dowel"
+    ],
+    "name": "BILTEMA wood dowels"
+  },
+  "lidl-20000646": {
+    "categories": [
+      "jam"
+    ],
+    "name": "Maribel Конфитюр вишна екстра cherry jam extra (starboard side)"
+  },
+  "lidl-20003937": {
+    "categories": [
+      "bolognese"
+    ],
+    "name": "Combino СОС БОЛОНЕЗЕ Bolognese sauce",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.02,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20004132": {
+    "categories": [
+      "canning",
+      "chopped-tomatoes"
+    ],
+    "name": "Baresa НАРЯЗАНИ ДОМАТИ chopped tomatoes",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20004323": {
+    "categories": [
+      "food/condiments"
+    ],
+    "name": "КАПЕРСИ Freshona capers 60g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.02,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20026363": {
+    "categories": [
+      "meatballs"
+    ],
+    "name": "Chef Select / Eridanous Κεφτεδάκια — Greek meatballs in tomato sauce (Lidl, produced by Palirria, Greece; rusty pull-tab)"
+  },
+  "lidl-20037154": {
+    "categories": [
+      "sauce"
+    ],
+    "name": "ДОМАТЕН СОС БОСИЛЕК Combino tomato sauce basil 420g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.43,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20041663": {
+    "categories": [
+      "canning",
+      "sardines"
+    ],
+    "name": "NIXE САРДИНИ В СЛ.МАСЛО sardines in sunflower oil",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.75,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20046248": {
+    "categories": [
+      "canning",
+      "sardines"
+    ],
+    "name": "Nixe САРДИНИ sardines in tomato sauce",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.95,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20087036": {
+    "categories": [
+      "luncheon-meat"
+    ],
+    "name": "Pikok Luncheon Meat with Pork Knuckle (Lidl, 89% meat; printed best-before not legible)"
+  },
+  "lidl-20113476": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "ЧИЛИ КОН КАРНЕ chili con carne (canned)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.29,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20144173": {
+    "categories": [
+      "tools/cleaning"
+    ],
+    "name": "W5 MAXI POWER limescale cleaner (Lidl, pink spray)"
+  },
+  "lidl-20148201": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "СВ. ВА. В СОБСТ. СОС Baroni pork in own sauce tin 400g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20153229": {
+    "categories": [
+      "corn"
+    ],
+    "name": "Freshona Sweetcorn natural sweet (Lidl, 340g tin)"
+  },
+  "lidl-20154202": {
+    "categories": [
+      "food/spices/curry"
+    ],
+    "name": "Сос за уок къри 490g (Vitasia, Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.04,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20163402": {
+    "categories": [
+      "passata"
+    ],
+    "name": "Combino ПАСИРАНИ ДОМАТИ Passata (crushed tomatoes) (port side + front port)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.37,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20163419": {
+    "categories": [
+      "passata"
+    ],
+    "name": "Baresa ПАСИРАНИ ДОМАТИ tomato passata",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.12,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20163822": {
+    "categories": [
+      "instant-mashed-potato"
+    ],
+    "name": "КАРТОФЕНО ПЮРЕ instant mashed potato (12×200g portions)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.68,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20240899": {
+    "categories": [
+      "canning",
+      "food/meat/pork"
+    ],
+    "name": "Pikok СВ. ВА. В СОБСТ. СОС pork in own juice (vepřové maso ve vlastní šťávě)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.55,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20241988": {
+    "categories": [
+      "food/fruits/peaches"
+    ],
+    "name": "Праскови / yellow peaches 1kg (Greece)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.29,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20267605": {
+    "categories": [
+      "cashews"
+    ],
+    "name": "Alesto КАШУ СУРОВО raw cashews",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 3.57,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20285685": {
+    "categories": [
+      "tomato-paste"
+    ],
+    "name": "Baresa ДОМАТЕНО ПЮРЕ 2-КОНЦ double-concentrated tomato paste",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20289867": {
+    "categories": [
+      "rusks"
+    ],
+    "name": "Tastino Wheat & Rye rusks (4x11 slices)"
+  },
   "lidl-20322755": {
-    "name": "Печени, осолени фъстъци",
+    "categories": [
+      "roasted_peanut"
+    ],
+    "name": "Фъстък печен 200г (Alesto) / roasted peanuts, 2 bags",
     "prices": [
       {
         "currency": "EUR",
@@ -1780,6 +2147,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "400g/2",
     "receipt_names": [
       {
         "first_seen": "2026-07-02",
@@ -1789,7 +2157,71 @@
       }
     ]
   },
+  "lidl-20324599": {
+    "categories": [
+      "beer"
+    ],
+    "name": "DEEP Original светла бира 4% 2.5L (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.27,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20327361": {
+    "categories": [
+      "beans"
+    ],
+    "name": "БЯЛ БОБ white haricot beans (dry) 1kg",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.14,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20348397": {
+    "categories": [
+      "mustard"
+    ],
+    "name": "Горчица с хрян 200g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.51,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20349714": {
+    "categories": [
+      "kitchen",
+      "kitchen-paper"
+    ],
+    "name": "КУХНЕНСКА ХАРТИЯ kitchen paper rolls 2-pack (Lidl, added 2026-01-17)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.52,
+        "shop": null,
+        "unit": "pack"
+      }
+    ]
+  },
   "lidl-20349721": {
+    "categories": [
+      "kitchen-paper"
+    ],
     "name": "Кухненски ролки 3пл. / kitchen rolls 3-ply (Lidl)",
     "prices": [
       {
@@ -1809,8 +2241,177 @@
       }
     ]
   },
+  "lidl-20358037": {
+    "categories": [
+      "rice"
+    ],
+    "name": "БЯЛ ОРИЗ Lidl white rice 1kg",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.97,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20400569": {
+    "categories": [
+      "lentils"
+    ],
+    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.38,
+        "shop": null,
+        "unit": "piece"
+      }
+    ]
+  },
+  "lidl-20404741": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "Траен варено-пушен салам Стара планина / шпек (Родна стряха)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.79,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20420635": {
+    "categories": [
+      "bouillon"
+    ],
+    "name": "Kania БУЛЬОН ПИЛЕШКИ chicken bouillon cubes (12×10g)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.02,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20425562": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Italiamo Pesto Rosso (sun-dried tomato) (starboard side)"
+  },
+  "lidl-20469894": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Italiamo Pesto Trapanese (tomato, almonds) (starboard side)"
+  },
+  "lidl-20531072": {
+    "categories": [
+      "cream"
+    ],
+    "name": "ГОТВАРСКА СМЕТАНА 22% Milbona cooking cream UHT 22% 200ml",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.79,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20561338": {
+    "categories": [
+      "coconut-milk"
+    ],
+    "name": "Freshona КОКОСОВО МЛЯКО ЛАЙТ light coconut milk",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.53,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20621414": {
+    "categories": [
+      "pesto"
+    ],
+    "name": "Deluxe Гурме Песто Маслини olive pesto (starboard side)"
+  },
+  "lidl-20671525": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "Pikok Свинска шунка Premium — pork ham (Lidl, 96% meat)"
+  },
+  "lidl-20679071": {
+    "categories": [
+      "pasta"
+    ],
+    "name": "Combino СПАГЕТИ С ЯЙЦА spaghetti with eggs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.86,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20710118": {
+    "categories": [
+      "lentils"
+    ],
+    "name": "Леща / Bulgarian green lentils 500g (Родна стряха)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.05,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20710187": {
+    "categories": [
+      "pate"
+    ],
+    "name": "Пастет Апетит / Bulgarian pâté (Baky)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.09,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20856090": {
+    "categories": [
+      "canning",
+      "corn"
+    ],
+    "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
+  },
   "lidl-20858544": {
-    "name": "Pork and beef kabanossi",
+    "categories": [
+      "kabanossi"
+    ],
+    "name": "Кабаноси от свинско месо (Pikok) / Pikok pork kabanossi",
     "prices": [
       {
         "currency": "EUR",
@@ -1826,6 +2427,21 @@
         "last_seen": "2026-06-27",
         "name": "КАБАНОСИ ОТ СВ. МЕСО",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20962876": {
+    "categories": [
+      "red-beans"
+    ],
+    "name": "Campo Largo КАМПОЛАРГО БОБ КИДНИ red kidney beans",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.78,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   }
