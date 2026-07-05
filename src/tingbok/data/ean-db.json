@@ -362,9 +362,9 @@
   },
   "3800047336028": {
     "categories": [
-      "paint-brush"
+      "brush/paint"
     ],
-    "name": "Antares Universal paint brush 40mm (Code 3602)",
+    "name": "Antares Universal paint brush 40mm (Code 3602, Made in Bulgaria)",
     "prices": [
       {
         "currency": "EUR",
@@ -1459,6 +1459,12 @@
       }
     ]
   },
+  "5411183179110": {
+    "categories": [
+      "adhesive"
+    ],
+    "name": "Soudal Fix All Flexi hybrid polymer adhesive/sealant — the \"elastic glue\" (Hungarian label; not in tingbok/OFF)"
+  },
   "5901069001968": {
     "categories": [
       "canning",
@@ -1690,6 +1696,12 @@
       }
     ]
   },
+  "8699596047151": {
+    "categories": [
+      "adhesive"
+    ],
+    "name": "Akfix High Tack hybrid adhesive, white, 290ml (Art. AM555, made in Türkiye; not in tingbok/OFF)"
+  },
   "8715559001034": {
     "categories": [
       "varnish"
@@ -1802,6 +1814,12 @@
     ],
     "name": "Schuller Eh'klar ALLROUND flat paint brush (Art.Nr. 72263; size TBC)"
   },
+  "biltema-191036": {
+    "categories": [
+      "washer"
+    ],
+    "name": "BILTEMA washer assortment 250pcs"
+  },
   "biltema-251091": {
     "categories": [
       "shackle"
@@ -1840,6 +1858,30 @@
       "adhesive-tape"
     ],
     "name": "BILTEMA black tape 15mm x 10m"
+  },
+  "biltema-35796": {
+    "categories": [
+      "electrical-connector"
+    ],
+    "name": "BILTEMA Kabelskosortiment insulated cable terminals assortment (300 pcs, various spade/ring/butt connectors)"
+  },
+  "biltema-440069": {
+    "categories": [
+      "electrical-connectors/butt"
+    ],
+    "name": "BILTEMA Heat shrink butt connectors (blue, waterproof)"
+  },
+  "biltema-44009": {
+    "categories": [
+      "electrical-connectors/spade"
+    ],
+    "name": "BILTEMA Dobbelflatstift double flat pin connectors"
+  },
+  "biltema-44035": {
+    "categories": [
+      "electrical-connectors/splice"
+    ],
+    "name": "BILTEMA Skarvklämma splice connectors (0.5-1.0mm²)"
   },
   "biltema-61857": {
     "categories": [
@@ -1904,6 +1946,12 @@
         "unit": "pcs"
       }
     ]
+  },
+  "lidl-20005030": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "James Cook Gold Oversea Rum 40%"
   },
   "lidl-20026363": {
     "categories": [
