@@ -577,6 +577,26 @@
     ],
     "name": "Nitrile gloves"
   },
+  "3800748051206": {
+    "name": "Чудно Прясно мляко 3.7%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-06",
+        "price": 1.84,
+        "shop": "Май Маркет Радост Varna ул. Радост 3",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-06",
+        "last_seen": "2026-07-06",
+        "name": "ПР МЛЯКО ВЕРЕЯ ЧУДНО 1Л",
+        "shop": "Май Маркет Радост Varna ул. Радост 3"
+      }
+    ]
+  },
   "3858890178678": {
     "name": "Mayonnaise, Delicatess",
     "prices": [
