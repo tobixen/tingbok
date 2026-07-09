@@ -452,6 +452,140 @@
     ],
     "name": "Villa Yustina \"Gorkata\" Dimyat 2023 white wine 13.5% (Bulgaria, PGI Thracian Valley)"
   },
+  "3800157402422": {
+    "categories": [
+      "sausage"
+    ],
+    "name": "Наденички грил пикант 480г",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 4.17,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "480g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "НАДЕНИЧКИ ГРИЛ ПИКАНТ 480ГР",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800162533609": {
+    "categories": [
+      "mosquito_coil"
+    ],
+    "name": "Спирали против комари Агива Про",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.44,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "СПИРАЛИ ПРОТИВ КОМАРИ АГИВА ПРО",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800206372485": {
+    "categories": [
+      "olive_oil"
+    ],
+    "name": "Зехтин Peristera Extra Virgin 1л (бутилирано от Булмед 2002)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 11.75,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "1l",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "МАСЛО МАСЛИНОВО ЕКСТРА ВЪРДЖИН",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800208133541": {
+    "categories": [
+      "bread"
+    ],
+    "name": "Хляб пълнозърнест с моркови",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.09,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ХЛЯБ ПЪЛНОЗЪРНЕСТ С МОРКОВИ И Т",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800210271453": {
+    "name": "Кокоши яйца",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.89,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ЯЙЦА КОКОШИ АКВИЛОН РАЗМЕР М 10",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800211081020": {
+    "name": "Гюзлеме",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 1.53,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ГЬОЗЛЕМЕТО СЪС СИРЕНЕ БАКЕРИ 23",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
   "3800214924577": {
     "categories": [
       "cured-meat"
@@ -576,6 +710,30 @@
       "gloves"
     ],
     "name": "Nitrile gloves"
+  },
+  "3800501919293": {
+    "categories": [
+      "kebapche"
+    ],
+    "name": "Кебапчета за скара Жар 6х70г",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.94,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "420g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "КЕБАПЧЕТА ЗА СКАРА ЖАР ББ 6ХР70ГР",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
   },
   "3800748051206": {
     "name": "Чудно Прясно мляко 3.7%",
@@ -1404,6 +1562,26 @@
     ],
     "name": "\"Доктор Айболит\" (Doctor Aibolit, based on K.I. Chukovsky, Russian, 99 min, Region ALL)"
   },
+  "4823077634420": {
+    "name": "roshen too cool milk суха паста",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 1.89,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ПАСТИ СУХИ РОШЕН ТУ КУЛ МИЛК П",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
   "5011007002947": {
     "categories": [
       "alcohol"
@@ -1492,12 +1670,52 @@
     ],
     "name": "Soudal Fix All Flexi hybrid polymer adhesive/sealant — the \"elastic glue\" (Hungarian label; not in tingbok/OFF)"
   },
+  "5740900400016": {
+    "name": "Краве масло",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 4.09,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "МАСЛО КРАВЕ ЛУРПАК ДАТСКО 82%",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
   "5901069001968": {
     "categories": [
       "canning",
       "sprats"
     ],
     "name": "ŁOSOŚ Smoked Winter Sprats (Polish) (middle + front port)"
+  },
+  "5901356070974": {
+    "name": "waffer roll with cocoa cream",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 1.65,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ПУРИЧКИ ВАФЛЕНИ ТАГО КАКАО 150Г",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
   },
   "5902232633504": {
     "categories": [
@@ -1519,6 +1737,29 @@
         "last_seen": "2026-06-27",
         "name": "BOSTIK ОСИГУРИТЕЛ НА РЕ[ЗБА] ЗБИ 10 G",
         "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "5904517026261": {
+    "categories": [
+      "flypaper"
+    ],
+    "name": "Лента против насекоми Bros 4бр",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.06,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ЛЕНТА БРОС ПРОТИВ НАСЕКОМИ 4БР",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
       }
     ]
   },
