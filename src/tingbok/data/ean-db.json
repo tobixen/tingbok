@@ -547,7 +547,10 @@
     ]
   },
   "3800210271453": {
-    "name": "Кокоши яйца",
+    "categories": [
+      "chicken_eggs"
+    ],
+    "name": "Яйца кокоши Аквилон размер M, 10 бр / Aquilon chicken eggs M",
     "prices": [
       {
         "currency": "EUR",
@@ -567,7 +570,10 @@
     ]
   },
   "3800211081020": {
-    "name": "Гюзлеме",
+    "categories": [
+      "gözleme"
+    ],
+    "name": "Гьозлеме със сирене / gözleme with cheese",
     "prices": [
       {
         "currency": "EUR",
@@ -1563,7 +1569,10 @@
     "name": "\"Доктор Айболит\" (Doctor Aibolit, based on K.I. Chukovsky, Russian, 99 min, Region ALL)"
   },
   "4823077634420": {
-    "name": "roshen too cool milk суха паста",
+    "categories": [
+      "biscuits"
+    ],
+    "name": "Пасти сухи Roshen Too Cool Milk / Roshen dry pastry with milk filling",
     "prices": [
       {
         "currency": "EUR",
@@ -1671,7 +1680,10 @@
     "name": "Soudal Fix All Flexi hybrid polymer adhesive/sealant — the \"elastic glue\" (Hungarian label; not in tingbok/OFF)"
   },
   "5740900400016": {
-    "name": "Краве масло",
+    "categories": [
+      "butter"
+    ],
+    "name": "Масло краве Lurpak датско 82% / Lurpak butter (2 of 2)",
     "prices": [
       {
         "currency": "EUR",
@@ -1698,7 +1710,10 @@
     "name": "ŁOSOŚ Smoked Winter Sprats (Polish) (middle + front port)"
   },
   "5901356070974": {
-    "name": "waffer roll with cocoa cream",
+    "categories": [
+      "wafer"
+    ],
+    "name": "Пурички вафлени Tago с какао 150г / Tago wafer rolls with cocoa cream",
     "prices": [
       {
         "currency": "EUR",
