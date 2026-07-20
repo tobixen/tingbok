@@ -649,6 +649,21 @@
       }
     ]
   },
+  "3800500631639": {
+    "categories": [
+      "honey"
+    ],
+    "name": "Топ Хъни мед букет 900г / Top Honey honey 900g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.99,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
   "3800500766577": {
     "categories": [
       "mushrooms"
