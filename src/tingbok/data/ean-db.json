@@ -599,6 +599,27 @@
     "name": "Луканка Тракийска XXL",
     "quantity": "550g"
   },
+  "3800214928780": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Еко Мес слайс луканка червена 100г / Eco Mes sliced red lukanka 100g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.92,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "3800230930019": {
+    "categories": [
+      "eggs"
+    ],
+    "name": "Криция пресни яйца размер М / Kritsia fresh eggs size M (Диос 2026-07-13)"
+  },
   "3800233823431": {
     "categories": [
       "sanding-sponge"
