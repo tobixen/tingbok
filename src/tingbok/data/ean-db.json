@@ -709,6 +709,26 @@
       }
     ]
   },
+  "3800501165119": {
+    "name": "Броколи, сорт Максоса, клас 1, +500г (произход България)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 2.49,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "БРОКОЛИ 500 Г",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "3800501165300": {
     "categories": [
       "food/spices/herb"
@@ -1121,6 +1141,26 @@
     ],
     "name": "WAGO 221-415 lever connectors (5-conductor, 0.14-4mm²)"
   },
+  "4056489080510": {
+    "name": "Прясно краве мляко 3%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 1.43,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ПРЯСНО МЛЯКО 3%",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "4056489108160": {
     "name": "Pilos МЛЯКО UHT 3,5% UHT whole milk (added 2026-04-29)",
     "prices": [
@@ -1207,6 +1247,27 @@
         "last_seen": "2026-06-18",
         "name": "ЗАКВАСЕНА СМЕТАНА",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489472865": {
+    "name": "Млечнокисел продукт 2% XXL 500 г",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 0.61,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "quantity": "500 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "МЛЕЧНОКИСЕЛ ПРОДУКТ",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
   },
@@ -1563,6 +1624,26 @@
     ],
     "name": "Yellow sanding sponge (used, Made in Great Britain)"
   },
+  "4335619230897": {
+    "name": "ORIGINAL FRENCH Brie",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 2.44,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "СИРЕНЕ БРИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "4335619347489": {
     "categories": [
       "household"
@@ -1714,6 +1795,26 @@
       "adhesive"
     ],
     "name": "Soudal Fix All Flexi hybrid polymer adhesive/sealant — the \"elastic glue\" (Hungarian label; not in tingbok/OFF)"
+  },
+  "5474146604470": {
+    "name": "Бисквити какао (Еверест) / cocoa biscuits",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 1.32,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "БИСКВИТИ КАКАО",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
   },
   "5740900400016": {
     "categories": [
@@ -2349,6 +2450,27 @@
     ],
     "name": "Pikok Luncheon Meat with Pork Knuckle (Lidl, 89% meat; printed best-before not legible)"
   },
+  "lidl-20092665": {
+    "name": "Гауда нарязана 200г (Lidl), мин. 48% масленост в сухото вещество",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 2.04,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "quantity": "200 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ГАУДА НАРЯЗАН",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "lidl-20113476": {
     "categories": [
       "tinned-meat"
@@ -2755,6 +2877,26 @@
       }
     ]
   },
+  "lidl-20709167": {
+    "name": "Факлички от свински гърди без кост с марината, охладени",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 5.87,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ФАКЛ. ОТ СВ. ГЪРДИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "lidl-20710118": {
     "categories": [
       "lentils"
@@ -2812,6 +2954,26 @@
         "last_seen": "2026-06-27",
         "name": "КАБАНОСИ ОТ СВ. МЕСО",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20950170": {
+    "name": "Шунка от пуешки гърди",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 0.85,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ШУНКА ОТ ПУЕШ. ГЪРДИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
   },
