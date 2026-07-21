@@ -2932,7 +2932,10 @@
     ]
   },
   "lidl-20709167": {
-    "name": "Факлички от свински гърди без кост с марината, охладени",
+    "categories": [
+      "pork-belly"
+    ],
+    "name": "Факлички от свински гърди без кост с марината, охладени / marinated boneless pork belly",
     "prices": [
       {
         "currency": "EUR",
@@ -3012,7 +3015,10 @@
     ]
   },
   "lidl-20950170": {
-    "name": "Шунка от пуешки гърди",
+    "categories": [
+      "turkey-ham"
+    ],
+    "name": "Шунка от пуешки гърди / turkey breast ham, 2 packs",
     "prices": [
       {
         "currency": "EUR",
