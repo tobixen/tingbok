@@ -238,6 +238,21 @@
       }
     ]
   },
+  "20709167": {
+    "categories": [
+      "pork-belly"
+    ],
+    "name": "Факлички от свински гърди без кост с марината, охладени / marinated boneless pork belly",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.87,
+        "shop": null,
+        "unit": "stk"
+      }
+    ]
+  },
   "20710118": {
     "categories": [
       "lentils"
@@ -303,6 +318,21 @@
         "price": 1.69,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "20950170": {
+    "categories": [
+      "turkey-ham"
+    ],
+    "name": "Шунка от пуешки гърди / turkey breast ham, 2 packs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.85,
+        "shop": null,
+        "unit": "stk"
       }
     ]
   },
@@ -710,7 +740,10 @@
     ]
   },
   "3800501165119": {
-    "name": "Броколи, сорт Максоса, клас 1, +500г (произход България)",
+    "categories": [
+      "broccoli"
+    ],
+    "name": "Броколи 500г / broccoli 500g",
     "prices": [
       {
         "currency": "EUR",
@@ -1142,7 +1175,10 @@
     "name": "WAGO 221-415 lever connectors (5-conductor, 0.14-4mm²)"
   },
   "4056489080510": {
-    "name": "Прясно краве мляко 3%",
+    "categories": [
+      "whole-milk"
+    ],
+    "name": "Прясно краве мляко 3% / fresh cow milk 3%, 3 cartons",
     "prices": [
       {
         "currency": "EUR",
@@ -1251,7 +1287,10 @@
     ]
   },
   "4056489472865": {
-    "name": "Млечнокисел продукт 2% XXL 500 г",
+    "categories": [
+      "yogurt"
+    ],
+    "name": "Млечнокисел продукт 2% XXL 500g / fermented milk product, 3 cups",
     "prices": [
       {
         "currency": "EUR",
@@ -1261,7 +1300,7 @@
         "unit": "stk"
       }
     ],
-    "quantity": "500 g",
+    "quantity": "1500g/3",
     "receipt_names": [
       {
         "first_seen": "2026-07-21",
@@ -1625,7 +1664,10 @@
     "name": "Yellow sanding sponge (used, Made in Great Britain)"
   },
   "4335619230897": {
-    "name": "ORIGINAL FRENCH Brie",
+    "categories": [
+      "brie"
+    ],
+    "name": "Сирене бри / Original French Brie",
     "prices": [
       {
         "currency": "EUR",
@@ -1797,7 +1839,10 @@
     "name": "Soudal Fix All Flexi hybrid polymer adhesive/sealant — the \"elastic glue\" (Hungarian label; not in tingbok/OFF)"
   },
   "5474146604470": {
-    "name": "Бисквити какао (Еверест) / cocoa biscuits",
+    "categories": [
+      "biscuits"
+    ],
+    "name": "Бисквити какао (Еверест) / cocoa biscuits, 4 packs Two Power X-Change 18V batteries and one charger.",
     "prices": [
       {
         "currency": "EUR",
@@ -2004,6 +2049,12 @@
       "activity-book"
     ],
     "name": "\"Jeg kan ALFABETET!\" (Litor 201238, Gøy å lære!, stickers, fra 5 år)"
+  },
+  "7038010028106": {
+    "categories": [
+      "brunost"
+    ],
+    "name": "Ekte geitost / Norwegian brown goat cheese (OFF upload pending — user to photograph)"
   },
   "7040110310807": {
     "categories": [
@@ -2451,7 +2502,10 @@
     "name": "Pikok Luncheon Meat with Pork Knuckle (Lidl, 89% meat; printed best-before not legible)"
   },
   "lidl-20092665": {
-    "name": "Гауда нарязана 200г (Lidl), мин. 48% масленост в сухото вещество",
+    "categories": [
+      "gouda"
+    ],
+    "name": "Гауда, нарязана 200g (Lidl) / sliced Gouda, min 48% fat i.t.s., lactose-free, 2 packs",
     "prices": [
       {
         "currency": "EUR",
@@ -2461,7 +2515,7 @@
         "unit": "stk"
       }
     ],
-    "quantity": "200 g",
+    "quantity": "400g/2",
     "receipt_names": [
       {
         "first_seen": "2026-07-21",
