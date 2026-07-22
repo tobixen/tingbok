@@ -743,7 +743,7 @@
     "categories": [
       "broccoli"
     ],
-    "name": "Броколи 500г / broccoli 500g",
+    "name": "Броколи, сорт Максоса, клас 1, +500г (произход България)",
     "prices": [
       {
         "currency": "EUR",
@@ -1178,7 +1178,7 @@
     "categories": [
       "whole-milk"
     ],
-    "name": "Прясно краве мляко 3% / fresh cow milk 3%, 3 cartons",
+    "name": "Прясно краве мляко 3%",
     "prices": [
       {
         "currency": "EUR",
@@ -1290,7 +1290,7 @@
     "categories": [
       "yogurt"
     ],
-    "name": "Млечнокисел продукт 2% XXL 500g / fermented milk product, 3 cups",
+    "name": "Млечнокисел продукт 2% XXL 500 г",
     "prices": [
       {
         "currency": "EUR",
@@ -1298,14 +1298,27 @@
         "price": 0.61,
         "shop": "Lidl Varna ул. Битоля 1А",
         "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 0.81,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
       }
     ],
-    "quantity": "1500g/3",
+    "quantity": "500 g",
     "receipt_names": [
       {
         "first_seen": "2026-07-21",
         "last_seen": "2026-07-21",
         "name": "МЛЕЧНОКИСЕЛ ПРОДУКТ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      },
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "КИСЕЛО КРАВЕ МЛЯКО",
         "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
@@ -1435,14 +1448,22 @@
     "categories": [
       "squid"
     ],
-    "name": "Панирани кръгчета от фино смлян калмар, полуизпържени 400g (Lidl) / breaded par-fried squid rings, chilled",
+    "name": "Calamares a romana",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-07-21",
         "price": 4.49,
-        "shop": null,
+        "shop": "Lidl Varna ул. Битоля 1А",
         "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ПАНИРАНИ КАЛМАРИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
   },
@@ -1682,7 +1703,7 @@
     "categories": [
       "brie"
     ],
-    "name": "Сирене бри / Original French Brie",
+    "name": "ORIGINAL FRENCH Brie",
     "prices": [
       {
         "currency": "EUR",
@@ -1857,7 +1878,7 @@
     "categories": [
       "biscuits"
     ],
-    "name": "Бисквити какао (Еверест) / cocoa biscuits, 4 packs Two Power X-Change 18V batteries and one charger.",
+    "name": "Бисквити какао (Еверест) / cocoa biscuits",
     "prices": [
       {
         "currency": "EUR",
@@ -2514,14 +2535,22 @@
     "categories": [
       "cornflakes"
     ],
-    "name": "Crownfield Corn Flakes 500g / cornflakes photos:pantry-foodbox",
+    "name": "Corn Flakes",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-07-21",
         "price": 1.68,
-        "shop": null,
+        "shop": "Lidl Varna ул. Битоля 1А",
         "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "КОРНФЛЕЙКС",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
   },
@@ -2535,7 +2564,7 @@
     "categories": [
       "gouda"
     ],
-    "name": "Гауда, нарязана 200g (Lidl) / sliced Gouda, min 48% fat i.t.s., lactose-free, 2 packs",
+    "name": "Гауда нарязана 200г (Lidl), мин. 48% масленост в сухото вещество",
     "prices": [
       {
         "currency": "EUR",
@@ -2545,7 +2574,7 @@
         "unit": "stk"
       }
     ],
-    "quantity": "400g/2",
+    "quantity": "200 g",
     "receipt_names": [
       {
         "first_seen": "2026-07-21",
@@ -2965,7 +2994,7 @@
     "categories": [
       "pork-belly"
     ],
-    "name": "Факлички от свински гърди без кост с марината, охладени / marinated boneless pork belly",
+    "name": "Факлички от свински гърди без кост с марината, охладени",
     "prices": [
       {
         "currency": "EUR",
@@ -3018,14 +3047,23 @@
     "categories": [
       "surimi"
     ],
-    "name": "Сурими пръчици 200g, 12 броя (Nautica) / chilled surimi sticks, 2 packs",
+    "name": "Сурими пръчици 200 г (Nautica)",
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-07-21",
         "price": 0.81,
-        "shop": null,
+        "shop": "Lidl Varna ул. Битоля 1А",
         "unit": "stk"
+      }
+    ],
+    "quantity": "200 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ОХЛАДЕНИ СУРИМИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
   },
@@ -3063,7 +3101,7 @@
     "categories": [
       "turkey-ham"
     ],
-    "name": "Шунка от пуешки гърди / turkey breast ham, 2 packs",
+    "name": "Шунка от пуешки гърди",
     "prices": [
       {
         "currency": "EUR",
