@@ -1431,6 +1431,21 @@
       }
     ]
   },
+  "4056489844761": {
+    "categories": [
+      "squid"
+    ],
+    "name": "Панирани кръгчета от фино смлян калмар, полуизпържени 400g (Lidl) / breaded par-fried squid rings, chilled",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 4.49,
+        "shop": null,
+        "unit": "stk"
+      }
+    ]
+  },
   "4056489918691": {
     "categories": [
       "teriyaki"
@@ -2495,6 +2510,21 @@
       }
     ]
   },
+  "lidl-20052454": {
+    "categories": [
+      "cornflakes"
+    ],
+    "name": "Crownfield Corn Flakes 500g / cornflakes photos:pantry-foodbox",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.68,
+        "shop": null,
+        "unit": "stk"
+      }
+    ]
+  },
   "lidl-20087036": {
     "categories": [
       "luncheon-meat"
@@ -2981,6 +3011,21 @@
         "price": 1.09,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20810399": {
+    "categories": [
+      "surimi"
+    ],
+    "name": "Сурими пръчици 200g, 12 броя (Nautica) / chilled surimi sticks, 2 packs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.81,
+        "shop": null,
+        "unit": "stk"
       }
     ]
   },
