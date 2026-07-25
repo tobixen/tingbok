@@ -2249,6 +2249,29 @@
       }
     ]
   },
+  "8680041405983": {
+    "categories": [
+      "diving_mask"
+    ],
+    "name": "Hypnos Maske & Triton Şnorkel Set Temp. Lens M6000+SN002",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-24",
+        "price": 14.9,
+        "shop": "Vantiz Sozopol пл. Черно море 8",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-24",
+        "last_seen": "2026-07-24",
+        "name": "ПЛАЖНИ СТОКИ",
+        "shop": "Vantiz Sozopol пл. Черно море 8"
+      }
+    ]
+  },
   "8699596047151": {
     "categories": [
       "adhesive"
