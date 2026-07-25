@@ -411,6 +411,26 @@
     ],
     "name": "Diavena mackerel in tomato sauce (Доматен сос; net 160g / drained 96g)"
   },
+  "3800069005506": {
+    "name": "Шуменско Специално (Бомбичка)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-24",
+        "price": 0.45,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-24",
+        "last_seen": "2026-07-24",
+        "name": "ШУМЕНСКО RGB 0.33Л",
+        "shop": "Billa Sozopol ул. Републиканска 5"
+      }
+    ]
+  },
   "3800085106942": {
     "categories": [
       "tool-scissors"
@@ -827,6 +847,26 @@
         "last_seen": "2026-07-08",
         "name": "КЕБАПЧЕТА ЗА СКАРА ЖАР ББ 6ХР70ГР",
         "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800748051053": {
+    "name": "Прясно мляко 3% внос",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-24",
+        "price": 3.4,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-24",
+        "last_seen": "2026-07-24",
+        "name": "ВЕРЕЯ ПРЯСНО МЛЯКО",
+        "shop": "Billa Sozopol ул. Републиканска 5"
       }
     ]
   },
