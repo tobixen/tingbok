@@ -392,9 +392,9 @@
   },
   "3800047336028": {
     "categories": [
-      "brush/paint"
+      "paint-brush"
     ],
-    "name": "Antares Universal paint brush 40mm (Code 3602, Made in Bulgaria)",
+    "name": "Antares Universal paint brush 40mm (Code 3602)",
     "prices": [
       {
         "currency": "EUR",
@@ -1036,9 +1036,9 @@
   },
   "4008033481595": {
     "categories": [
-      "tool-scissors"
+      "scissors"
     ],
-    "name": "НОЖИЦА С ОМЕКОТЕНА ДРЪЖКА scissors with soft grip, Nirosta steel",
+    "name": "Probus НОЖИЦА С ОМЕКОТЕНА ДРЪЖКА NIROSTA Stainless Steel Soft Grip Scissors 21.5cm",
     "prices": [
       {
         "currency": "EUR",
@@ -1330,7 +1330,7 @@
     "categories": [
       "yogurt"
     ],
-    "name": "Млечнокисел продукт 2% XXL 500 г",
+    "name": "Млечнокисел продукт 2% XXL 500g / fermented milk product, 3 cups",
     "prices": [
       {
         "currency": "EUR",
@@ -1347,7 +1347,7 @@
         "unit": "stk"
       }
     ],
-    "quantity": "500 g",
+    "quantity": "1500g/3",
     "receipt_names": [
       {
         "first_seen": "2026-07-21",
