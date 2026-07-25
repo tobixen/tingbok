@@ -2604,7 +2604,7 @@
     "categories": [
       "gouda"
     ],
-    "name": "Гауда нарязана 200г (Lidl), мин. 48% масленост в сухото вещество",
+    "name": "Гауда, нарязана 200g (Lidl) / sliced Gouda, min 48% fat i.t.s., lactose-free, 2 packs",
     "prices": [
       {
         "currency": "EUR",
@@ -2614,7 +2614,7 @@
         "unit": "stk"
       }
     ],
-    "quantity": "200 g",
+    "quantity": "400g/2",
     "receipt_names": [
       {
         "first_seen": "2026-07-21",
