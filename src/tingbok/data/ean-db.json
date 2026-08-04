@@ -411,6 +411,26 @@
     ],
     "name": "Diavena mackerel in tomato sauce (Доматен сос; net 160g / drained 96g)"
   },
+  "3800069005445": {
+    "name": "Светла бира",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-26",
+        "price": 1.68,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-26",
+        "last_seen": "2026-07-26",
+        "name": "ШУМЕНСКО 2Л",
+        "shop": "Billa Sozopol ул. Републиканска 5"
+      }
+    ]
+  },
   "3800069005506": {
     "name": "Шуменско Специално (Бомбичка)",
     "prices": [
@@ -1837,6 +1857,31 @@
       "dvd"
     ],
     "name": "\"Thomas & Friends: It's Great to Be an Engine!\" (HiT Entertainment)"
+  },
+  "5054563216953": {
+    "categories": [
+      "toothpaste",
+      "oral care",
+      "non-food"
+    ],
+    "name": "Parodontax паста за зъби 75 ml",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-26",
+        "price": 5.6,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-26",
+        "last_seen": "2026-07-26",
+        "name": "PARODONTAX 75МЛ",
+        "shop": "Billa Sozopol ул. Републиканска 5"
+      }
+    ]
   },
   "5056170301978": {
     "categories": [
