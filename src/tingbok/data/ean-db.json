@@ -1246,6 +1246,13 @@
         "price": 1.43,
         "shop": "Lidl Varna ул. Битоля 1А",
         "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "receipt_names": [
@@ -1254,6 +1261,12 @@
         "last_seen": "2026-07-21",
         "name": "ПРЯСНО МЛЯКО 3%",
         "shop": "Lidl Varna ул. Битоля 1А"
+      },
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ПРЯСНО МЛЯКО 3%",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1346,6 +1359,46 @@
       }
     ]
   },
+  "4056489294153": {
+    "name": "Бекон",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ПУШЕН БЕКОН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489358770": {
+    "name": "Краве масло 82%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 1.99,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ПРЯСНО КРАВЕ МАСЛО",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489472865": {
     "categories": [
       "yogurt"
@@ -1403,6 +1456,26 @@
         "last_seen": "2026-07-02",
         "name": "ЛЮТЕНИЦА ЕДРОМЛ.550Г",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "4056489474074": {
+    "name": "Луканка слайс",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 2.49,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ЛУКАНКА, НАРЯЗАНА",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1566,7 +1639,7 @@
     ]
   },
   "4056489941200": {
-    "name": "Yogurt 3.6% 1kg",
+    "name": "Кисело мляко 3.6%",
     "prices": [
       {
         "currency": "EUR",
@@ -1574,6 +1647,20 @@
         "price": 1.53,
         "shop": "Lidl Varna бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 1.53,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 0.66,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "receipt_names": [
@@ -1582,6 +1669,12 @@
         "last_seen": "2026-06-21",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "КИСЕЛО МЛЯКО 3,6%",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -3009,7 +3102,7 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "Траен варено-пушен салам Стара планина / шпек (Родна стряха)",
+    "name": "Траен варено-пушен салам Стара планина (Шпек)",
     "prices": [
       {
         "currency": "EUR",
@@ -3017,6 +3110,21 @@
         "price": 2.79,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 2.79,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ШПЕК СТАРА ПЛАНИНА",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -3046,6 +3154,31 @@
       "pesto"
     ],
     "name": "Italiamo Pesto Trapanese (tomato, almonds) (starboard side)"
+  },
+  "lidl-20517717": {
+    "categories": [
+      "food/seafood",
+      "squid",
+      "frozen foods"
+    ],
+    "name": "Замразени калмари (тръби), Lidl",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 5.19,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ЗАМРАЗЕНИ КАЛМАРИ",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "lidl-20531072": {
     "categories": [
@@ -3101,6 +3234,26 @@
         "price": 0.86,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20708580": {
+    "name": "Фъстъци, печени, солени",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 0.51,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ФЪСТЪК ПЕЧЕН СОЛЕН",
+        "shop": "Lidl Varna"
       }
     ]
   },
