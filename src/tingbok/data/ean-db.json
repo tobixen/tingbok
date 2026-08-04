@@ -2369,6 +2369,51 @@
     ],
     "name": "Spezieria Limone limoncello 30% (Bepi Tosolini, Italy)"
   },
+  "8033137035135": {
+    "name": "Hook Boat Hooks Telescopic Gold Blue Brand Osculati 34.458.81",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 19.0,
+        "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "3445881 КАНДЖА, ТЕЛЕСКОПИЧНА, СИНЯ",
+        "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома"
+      }
+    ]
+  },
+  "8033137194375": {
+    "categories": [
+      "fender",
+      "boat-equipment",
+      "non-food"
+    ],
+    "name": "Osculati Premium Marine Fender OF4 Ø22x104 cm (33.212.12)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 50.35,
+        "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "3321212 КРАНЕЦ, F4, OSCULATI",
+        "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома"
+      }
+    ]
+  },
   "8595720698696": {
     "categories": [
       "oven_glove",
