@@ -51,6 +51,21 @@
       }
     ]
   },
+  "20003326": {
+    "categories": [
+      "vanilla_sugar"
+    ],
+    "name": "Ванилова захар 10бр. / vanilla sugar, 10 sachets",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.4,
+        "shop": null,
+        "unit": "stk"
+      }
+    ]
+  },
   "20004323": {
     "categories": [
       "food/condiments"
@@ -215,11 +230,26 @@
       }
     ]
   },
+  "20379575": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Луканков салам, кръгъл, парче / round lukanka salami from the deli counter",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.05,
+        "shop": null,
+        "unit": "kg"
+      }
+    ]
+  },
   "20404741": {
     "categories": [
-      "cured-meat"
+      "cured-sausage"
     ],
-    "name": "Траен варено-пушен салам Стара планина / шпек (Родна стряха)",
+    "name": "Шпек Стара планина / Stara Planina shpek (dry-cured sausage), 2 packs",
     "prices": [
       {
         "currency": "EUR",
@@ -227,6 +257,13 @@
         "price": 2.79,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.79,
+        "shop": null,
+        "unit": "stk"
       }
     ],
     "receipt_names": [
@@ -235,6 +272,36 @@
         "last_seen": "2026-06-18",
         "name": "ШПЕК СТАРА ПЛАНИНА",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "20531072": {
+    "categories": [
+      "cream"
+    ],
+    "name": "Готварска сметана 22% / cooking cream 22% (2 packs)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.79,
+        "shop": null,
+        "unit": "stk"
+      }
+    ]
+  },
+  "20708580": {
+    "categories": [
+      "peanuts"
+    ],
+    "name": "Фъстък печен солен / roasted salted peanuts (2 bags)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.51,
+        "shop": null,
+        "unit": "stk"
       }
     ]
   },
@@ -296,6 +363,21 @@
         "last_seen": "2026-06-21",
         "name": "ПАСТЕТ АПЕТИТ",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "20815400": {
+    "categories": [
+      "food/nuts"
+    ],
+    "name": "Суров микс кашу и червена боровинка / raw cashew & cranberry mix",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.81,
+        "shop": null,
+        "unit": "stk"
       }
     ]
   },
@@ -392,9 +474,9 @@
   },
   "3800047336028": {
     "categories": [
-      "paint-brush"
+      "brush/paint"
     ],
-    "name": "Antares Universal paint brush 40mm (Code 3602)",
+    "name": "Antares Universal paint brush 40mm (Code 3602, Made in Bulgaria)",
     "prices": [
       {
         "currency": "EUR",
@@ -937,7 +1019,10 @@
     "name": "Inline blade fuse holder with cable (PORTAFUSIBILE VOLANTE)"
   },
   "4000607854705": {
-    "name": "Yoghurt Strawberry Chocolate",
+    "categories": [
+      "chocolate_bar"
+    ],
+    "name": "Trumpf Schogetten йогурт-ягода / yoghurt-strawberry",
     "prices": [
       {
         "currency": "EUR",
@@ -1076,9 +1161,9 @@
   },
   "4008033481595": {
     "categories": [
-      "scissors"
+      "tool-scissors"
     ],
-    "name": "Probus НОЖИЦА С ОМЕКОТЕНА ДРЪЖКА NIROSTA Stainless Steel Soft Grip Scissors 21.5cm",
+    "name": "НОЖИЦА С ОМЕКОТЕНА ДРЪЖКА scissors with soft grip, Nirosta steel",
     "prices": [
       {
         "currency": "EUR",
@@ -1249,6 +1334,9 @@
     ]
   },
   "4054599116914": {
+    "categories": [
+      "bicycle_lock"
+    ],
     "name": "Заключване механично за велосипед / bike chain lock, 6mm links, 117cm, 5-digit code (Delta-Sport, IAN 500577)",
     "prices": [
       {
@@ -1311,7 +1399,10 @@
     ]
   },
   "4056489105169": {
-    "name": "XXL Erdnüsse",
+    "categories": [
+      "peanuts"
+    ],
+    "name": "Фъстъци XXL / XXL peanuts",
     "prices": [
       {
         "currency": "EUR",
@@ -1427,7 +1518,10 @@
     ]
   },
   "4056489232872": {
-    "name": "CACAO",
+    "categories": [
+      "cocoa_powder"
+    ],
+    "name": "Какао на прах / cocoa powder",
     "prices": [
       {
         "currency": "EUR",
@@ -1447,7 +1541,10 @@
     ]
   },
   "4056489294153": {
-    "name": "Бекон",
+    "categories": [
+      "bacon"
+    ],
+    "name": "Пушен бекон / smoked bacon (2 packs)",
     "prices": [
       {
         "currency": "EUR",
@@ -1467,7 +1564,10 @@
     ]
   },
   "4056489358770": {
-    "name": "Краве масло 82%",
+    "categories": [
+      "butter"
+    ],
+    "name": "Прясно краве масло 82% / fresh butter (2 packs)",
     "prices": [
       {
         "currency": "EUR",
@@ -1554,7 +1654,10 @@
     ]
   },
   "4056489474074": {
-    "name": "Луканка слайс",
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Луканка нарязана / sliced lukanka (2 packs)",
     "prices": [
       {
         "currency": "EUR",
@@ -1947,6 +2050,9 @@
     "name": "Yellow sanding sponge (used, Made in Great Britain)"
   },
   "4335619175600": {
+    "categories": [
+      "coffee_preparation"
+    ],
     "name": "Мляно кафе еспресо / ground espresso coffee",
     "prices": [
       {
@@ -2067,11 +2173,9 @@
   },
   "5054563216953": {
     "categories": [
-      "toothpaste",
-      "oral care",
-      "non-food"
+      "toothpaste"
     ],
-    "name": "Parodontax паста за зъби 75 ml",
+    "name": "Parodontax 75 ml toothpaste",
     "prices": [
       {
         "currency": "EUR",
@@ -2466,7 +2570,10 @@
     "name": "\"Bamse för de yngsta: Rackartyg med Vargkusinerna\" (EGMONT, TIDSAM 4439-05)"
   },
   "7622210194046": {
-    "name": "M Oreo 100",
+    "categories": [
+      "chocolate_bar"
+    ],
+    "name": "Milka шоколад Oreo 100g",
     "prices": [
       {
         "currency": "EUR",
@@ -2504,7 +2611,10 @@
     "name": "Spezieria Limone limoncello 30% (Bepi Tosolini, Italy)"
   },
   "8033137035135": {
-    "name": "Hook Boat Hooks Telescopic Gold Blue Brand Osculati 34.458.81",
+    "categories": [
+      "boat_hook"
+    ],
+    "name": "Osculati telescopic boat hook, blue/gold (34.458.81)",
     "prices": [
       {
         "currency": "EUR",
@@ -2525,11 +2635,9 @@
   },
   "8033137194375": {
     "categories": [
-      "fender",
-      "boat-equipment",
-      "non-food"
+      "fender"
     ],
-    "name": "Osculati Premium Marine Fender OF4 Ø22x104 cm (33.212.12)",
+    "name": "Osculati Premium Marine Fender OF4, Ø22×104 cm (blue head, max 0.15 bar), 2 pcs",
     "prices": [
       {
         "currency": "EUR",
