@@ -936,6 +936,26 @@
     ],
     "name": "Inline blade fuse holder with cable (PORTAFUSIBILE VOLANTE)"
   },
+  "4000607854705": {
+    "name": "Yoghurt Strawberry Chocolate",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 2.3,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "TRUMPF ШОГЕТИ ЙОГ-ЯГ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4006387029807": {
     "categories": [
       "water-filter-cartridge"
@@ -1228,6 +1248,26 @@
       }
     ]
   },
+  "4054599116914": {
+    "name": "Заключване механично за велосипед / bike chain lock, 6mm links, 117cm, 5-digit code (Delta-Sport, IAN 500577)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 6.64,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "ЗАКЛ.МЕХ.ЗА ВЕЛОС 0500577",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4055143459044": {
     "categories": [
       "electrical-connectors/wago"
@@ -1270,6 +1310,26 @@
       }
     ]
   },
+  "4056489105169": {
+    "name": "XXL Erdnüsse",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 3.83,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "ФЪСТЪЦИ XXL",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489108160": {
     "name": "Pilos МЛЯКО UHT 3,5% UHT whole milk (added 2026-04-29)",
     "prices": [
@@ -1279,12 +1339,19 @@
         "price": 1.43,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "receipt_names": [
       {
         "first_seen": "2026-06-18",
-        "last_seen": "2026-06-18",
+        "last_seen": "2026-08-04",
         "name": "МЛЯКО UHT 3,5%",
         "shop": "Lidl Varna"
       }
@@ -1359,6 +1426,26 @@
       }
     ]
   },
+  "4056489232872": {
+    "name": "CACAO",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 4.6,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "КАКАО НА ПРАХ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489294153": {
     "name": "Бекон",
     "prices": [
@@ -1388,12 +1475,19 @@
         "price": 1.99,
         "shop": "Lidl Varna",
         "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 1.99,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "receipt_names": [
       {
         "first_seen": "2026-07-31",
-        "last_seen": "2026-07-31",
+        "last_seen": "2026-08-04",
         "name": "ПРЯСНО КРАВЕ МАСЛО",
         "shop": "Lidl Varna"
       }
@@ -1851,6 +1945,26 @@
       "sanding-block"
     ],
     "name": "Yellow sanding sponge (used, Made in Great Britain)"
+  },
+  "4335619175600": {
+    "name": "Мляно кафе еспресо / ground espresso coffee",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 4.08,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "МЛЯНО КАФЕ ЕСПРЕСО",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "4335619230897": {
     "categories": [
@@ -2351,6 +2465,26 @@
     ],
     "name": "\"Bamse för de yngsta: Rackartyg med Vargkusinerna\" (EGMONT, TIDSAM 4439-05)"
   },
+  "7622210194046": {
+    "name": "M Oreo 100",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 2.45,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "MILKA ШОКОЛАД ОРЕО",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "785375943475": {
     "categories": [
       "electronics/sensor"
@@ -2677,6 +2811,26 @@
       "jam"
     ],
     "name": "Maribel Конфитюр вишна екстра cherry jam extra (starboard side)"
+  },
+  "lidl-20003326": {
+    "name": "Vaníliás cukor",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 0.4,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "ВАНИЛОВА ЗАХАР 10БР.",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "lidl-20003937": {
     "categories": [
@@ -3229,7 +3383,7 @@
     "categories": [
       "cream"
     ],
-    "name": "ГОТВАРСКА СМЕТАНА 22% Milbona cooking cream UHT 22% 200ml",
+    "name": "Готварска сметана 22%",
     "prices": [
       {
         "currency": "EUR",
@@ -3237,6 +3391,21 @@
         "price": 0.79,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 0.79,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "ГОТВАРСКА СМЕТАНА22%",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -3376,6 +3545,26 @@
         "last_seen": "2026-07-21",
         "name": "ОХЛАДЕНИ СУРИМИ",
         "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
+  "lidl-20815400": {
+    "name": "Noix de cajou & cranberries",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 2.81,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "СУРОВ МИКС КАШУ И ЧЕ",
+        "shop": "Lidl Varna"
       }
     ]
   },
