@@ -2921,7 +2921,10 @@
     "name": "Maribel Конфитюр вишна екстра cherry jam extra (starboard side)"
   },
   "lidl-20003326": {
-    "name": "Vaníliás cukor",
+    "categories": [
+      "vanilla_sugar"
+    ],
+    "name": "Ванилова захар 10бр. / vanilla sugar, 10 sachets",
     "prices": [
       {
         "currency": "EUR",
@@ -3390,6 +3393,21 @@
       }
     ]
   },
+  "lidl-20379575": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Луканков салам, кръгъл, парче / round lukanka salami from the deli counter",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.05,
+        "shop": null,
+        "unit": "kg"
+      }
+    ]
+  },
   "lidl-20400569": {
     "categories": [
       "lentils"
@@ -3407,9 +3425,9 @@
   },
   "lidl-20404741": {
     "categories": [
-      "cured-meat"
+      "cured-sausage"
     ],
-    "name": "Траен варено-пушен салам Стара планина (Шпек)",
+    "name": "Шпек Стара планина / Stara Planina shpek (dry-cured sausage), 2 packs",
     "prices": [
       {
         "currency": "EUR",
@@ -3657,7 +3675,10 @@
     ]
   },
   "lidl-20815400": {
-    "name": "Noix de cajou & cranberries",
+    "categories": [
+      "food/nuts"
+    ],
+    "name": "Суров микс кашу и червена боровинка / raw cashew & cranberry mix",
     "prices": [
       {
         "currency": "EUR",
