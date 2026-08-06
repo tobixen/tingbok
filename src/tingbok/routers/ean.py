@@ -116,19 +116,15 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
         entry["name"] = body.name
     if body.quantity is not None:
         entry["quantity"] = body.quantity
+    # Same merge rules as the on-disk write above, so the in-memory copy cannot
+    # drift from the file: the old inline version never advanced last_seen, so a
+    # GET returned a stale receipt-name window until the next reload.
     if prices_raw:
-        existing = entry.get("prices", [])
-        for p in prices_raw:
-            key = (p.get("date"), p.get("currency"), p.get("price"))
-            if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in existing):
-                existing.append(p)
-        entry["prices"] = ean_service.prune_superseded_null_prices(existing)
+        entry["prices"] = ean_service.merge_price_observations(entry.get("prices", []), prices_raw)
     if receipt_names_raw:
-        existing_rn = entry.get("receipt_names", [])
-        for rn in receipt_names_raw:
-            if not any(e.get("name") == rn.get("name") and e.get("shop") == rn.get("shop") for e in existing_rn):
-                existing_rn.append(rn)
-        entry["receipt_names"] = existing_rn
+        entry["receipt_names"] = ean_service.merge_receipt_name_observations(
+            entry.get("receipt_names", []), receipt_names_raw
+        )
 
     logger.info(
         "Stored EAN observation for %s: categories=%s name=%r quantity=%r prices=%d receipt_names=%d",

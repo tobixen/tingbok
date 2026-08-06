@@ -487,6 +487,42 @@ def prune_superseded_null_prices(prices: list[dict[str, Any]]) -> list[dict[str,
     ]
 
 
+def merge_price_observations(existing: list[dict[str, Any]], new: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Append *new* price observations to *existing*, de-duplicated by date+currency+price.
+
+    Superseded null-date/null-shop entries are pruned from the result.  Used both
+    when storing a single observation and when reconciling two diverged copies of
+    the observation database (``scripts/merge_ean_db.py``).
+    """
+    merged = list(existing)
+    for p in new:
+        key = (p.get("date"), p.get("currency"), p.get("price"))
+        if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in merged):
+            merged.append(p)
+    return prune_superseded_null_prices(merged)
+
+
+def merge_receipt_name_observations(existing: list[dict[str, Any]], new: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Append *new* receipt-name observations to *existing*, keyed on name+shop.
+
+    An observation for a name/shop pair already present widens the recorded
+    window: ``last_seen`` advances and ``first_seen`` retreats.
+    """
+    merged = [dict(e) for e in existing]
+    for rn in new:
+        key = (rn.get("name", ""), rn.get("shop"))
+        found = next((e for e in merged if (e.get("name"), e.get("shop")) == key), None)
+        if found is None:
+            merged.append(dict(rn))
+            continue
+        if rn.get("last_seen", "") > found.get("last_seen", ""):
+            found["last_seen"] = rn["last_seen"]
+        rn_first = rn.get("first_seen") or ""
+        if rn_first and (not found.get("first_seen") or rn_first < found["first_seen"]):
+            found["first_seen"] = rn_first
+    return merged
+
+
 def save_ean_observation(
     path: Path,
     ean: str,
@@ -510,25 +546,9 @@ def save_ean_observation(
     if quantity:
         entry["quantity"] = quantity
     if prices:
-        existing_prices: list[dict[str, Any]] = entry.get("prices", [])
-        for p in prices:
-            key = (p.get("date"), p.get("currency"), p.get("price"))
-            if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in existing_prices):
-                existing_prices.append(p)
-        entry["prices"] = prune_superseded_null_prices(existing_prices)
+        entry["prices"] = merge_price_observations(entry.get("prices", []), prices)
     if receipt_names:
-        existing_rn: list[dict[str, Any]] = entry.get("receipt_names", [])
-        for rn in receipt_names:
-            rn_name = rn.get("name", "")
-            rn_shop = rn.get("shop")
-            existing = next((e for e in existing_rn if e.get("name") == rn_name and e.get("shop") == rn_shop), None)
-            if existing:
-                # Update last_seen date if newer
-                if rn.get("last_seen", "") > existing.get("last_seen", ""):
-                    existing["last_seen"] = rn["last_seen"]
-            else:
-                existing_rn.append(rn)
-        entry["receipt_names"] = existing_rn
+        entry["receipt_names"] = merge_receipt_name_observations(entry.get("receipt_names", []), receipt_names)
     data[ean] = entry
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
