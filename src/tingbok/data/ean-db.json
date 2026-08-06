@@ -5,6 +5,12 @@
     ],
     "name": "Whale Service Kit AK1550 for Gulper 220 pump (diaphragm, valves, gaskets)"
   },
+  "0071247936643": {
+    "categories": [
+      "fuel-additive"
+    ],
+    "name": "Star brite Star Tron Fuel Tank Cleaner, concentrated gas/diesel formula (the fuel additive previously listed under \"Can't find\" — now located)"
+  },
   "03608418831680": {
     "categories": [
       "clothing/t-shirt"
@@ -50,11 +56,57 @@
     ],
     "name": "ECCO Shoe Refresher (holder fottøy luktfritt), 60ml"
   },
+  "0766478155009": {
+    "categories": [
+      "pump-service-kit"
+    ],
+    "name": "Whale Service Kit AK1550 for Gulper 220 pump (diaphragm, valves, gaskets)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2025-06-02",
+        "price": 42.3,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2025-06-02",
+        "last_seen": "2025-06-02",
+        "name": "WHALE Service Kit for GULPER 220",
+        "shop": "SVB24"
+      }
+    ]
+  },
   "0825840789799": {
     "categories": [
       "sko/pleie"
     ],
     "name": "ECCO Nubuck & Suede Conditioner Daily Care, sort, 100ml"
+  },
+  "097653004707": {
+    "categories": [
+      "sailing-hardware"
+    ],
+    "name": "Harken Fiddle Block with Swivel, Clamp and Becket HK1564 (2 sheave, 76mm, V4A stainless); to be installed in the rig — starboard staysail shroud/backstay (SVB24 order 3988629, in transit)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-25",
+        "price": 413.39,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-25",
+        "last_seen": "2026-06-25",
+        "name": "HARKEN Fiddle Block with Swivel, Clamp and Becket / Type HK1564 / 2 sheave",
+        "shop": "SVB24"
+      }
+    ]
   },
   "2007000369012": {
     "categories": [
@@ -76,6 +128,26 @@
         "last_seen": "2026-05-20",
         "name": "STENSO РЪКАВИЦИ ПОЛИЕСТ. ХЕМА 10",
         "shop": "Praktiker Варна"
+      }
+    ]
+  },
+  "20962654": {
+    "name": "Бяло саламурено сирене от краве и биволско мляко",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 4.09,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "СИРЕНЕ КРАВЕ/БИВОЛСК",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -140,6 +212,12 @@
     ],
     "name": "L'Occitane Fleurs de Cerisier Cherry Blossom Bath & Shower Gel"
   },
+  "3272496315126": {
+    "categories": [
+      "single-board-computer"
+    ],
+    "name": "Raspberry Pi 5 8GB RAM (in original box, new)"
+  },
   "3574661317212": {
     "categories": [
       "personal-care/feminine-hygiene"
@@ -171,6 +249,28 @@
     "name": "DECATHLON repair kit for bike tubes (model 8563766)",
     "quantity": "model 8563766",
     "source": "manual"
+  },
+  "3608439320989": {
+    "categories": [
+      "hiking-pants",
+      "outdoor"
+    ],
+    "name": "size:44 Decathlon NH500 Regular hiking pants grey (size 44 / FR 44 / UK 34 / L32, added 2026-01-18)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 23.52,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "3663602992639": {
+    "categories": [
+      "hardware/furniture-fitting"
+    ],
+    "name": "Furniture felt protection pads, 120-piece set (60×Ø20mm, 36×25×25mm, 24×Ø28mm), black self-adhesive"
   },
   "3800002300613": {
     "categories": [
@@ -551,6 +651,26 @@
       }
     ]
   },
+  "3800069005445": {
+    "name": "Светла бира",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-26",
+        "price": 1.68,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-26",
+        "last_seen": "2026-07-26",
+        "name": "ШУМЕНСКО 2Л",
+        "shop": "Billa Sozopol ул. Републиканска 5"
+      }
+    ]
+  },
   "3800069005506": {
     "categories": [
       "food/beverages/beer"
@@ -570,6 +690,13 @@
         "price": 0.53,
         "shop": "Маринени Бонилова, Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-24",
+        "price": 0.45,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -584,6 +711,12 @@
         "last_seen": "2026-05-23",
         "name": "БИРА ШУМЕНСКО 0.33+БУТИЛКА",
         "shop": "Маринени Бонилова, Varna"
+      },
+      {
+        "first_seen": "2026-07-24",
+        "last_seen": "2026-07-24",
+        "name": "ШУМЕНСКО RGB 0.33Л",
+        "shop": "Billa Sozopol ул. Републиканска 5"
       }
     ]
   },
@@ -605,6 +738,29 @@
       "meatballs"
     ],
     "name": "Compass Кюфтета по ориенталски — oriental-style meatballs, ready meal (Bulgarian; rusty tin)"
+  },
+  "3800085106942": {
+    "categories": [
+      "tool-scissors"
+    ],
+    "name": "JIP office scissors 25.5 cm",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 2.55,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "JIP НОЖИЦА КАНЦЕЛАРСКА 25.5 CM",
+        "shop": "Praktiker Varna"
+      }
+    ]
   },
   "3800106400011": {
     "categories": [
@@ -768,6 +924,13 @@
       }
     ]
   },
+  "3800112205044": {
+    "categories": [
+      "powdered_sugar"
+    ],
+    "name": "Пудра захар",
+    "quantity": "500 г"
+  },
   "3800120700746": {
     "categories": [
       "food/seafood/canned-fish"
@@ -815,15 +978,52 @@
         "price": 0.51,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 0.51,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "500ml",
     "receipt_names": [
       {
         "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
+        "last_seen": "2026-06-16",
         "name": "BALKANSKO СВЕТ.БИРА",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "3800144703495": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "Villa Yustina \"Gorkata\" Dimyat 2023 white wine 13.5% (Bulgaria, PGI Thracian Valley)"
+  },
+  "3800157402422": {
+    "categories": [
+      "sausage"
+    ],
+    "name": "Наденички грил пикант 480г",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 4.17,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "480g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "НАДЕНИЧКИ ГРИЛ ПИКАНТ 480ГР",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
       }
     ]
   },
@@ -850,6 +1050,29 @@
       }
     ]
   },
+  "3800162533609": {
+    "categories": [
+      "mosquito_coil"
+    ],
+    "name": "Спирали против комари Агива Про",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.44,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "СПИРАЛИ ПРОТИВ КОМАРИ АГИВА ПРО",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
   "3800201253550": {
     "categories": [
       "dishwasher-detergent"
@@ -870,6 +1093,30 @@
         "last_seen": "2026-06-06",
         "name": "DOMENICO 500 МЛ",
         "shop": "Billa Varna"
+      }
+    ]
+  },
+  "3800206372485": {
+    "categories": [
+      "olive_oil"
+    ],
+    "name": "Зехтин Peristera Extra Virgin 1л (бутилирано от Булмед 2002)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 11.75,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "1l",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "МАСЛО МАСЛИНОВО ЕКСТРА ВЪРДЖИН",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
       }
     ]
   },
@@ -907,6 +1154,97 @@
         "last_seen": "2026-05-23",
         "name": "КАШУ РОДЕЯ ПЕЧЕНО 500ГР",
         "shop": "Маринени Бонилова, Varna"
+      }
+    ]
+  },
+  "3800208133541": {
+    "categories": [
+      "bread"
+    ],
+    "name": "Хляб пълнозърнест с моркови",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.09,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ХЛЯБ ПЪЛНОЗЪРНЕСТ С МОРКОВИ И Т",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800210271453": {
+    "categories": [
+      "chicken_eggs"
+    ],
+    "name": "Яйца кокоши Аквилон размер M, 10 бр / Aquilon chicken eggs M",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.89,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ЯЙЦА КОКОШИ АКВИЛОН РАЗМЕР М 10",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800211081020": {
+    "categories": [
+      "gözleme"
+    ],
+    "name": "Гьозлеме със сирене / gözleme with cheese",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 1.53,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ГЬОЗЛЕМЕТО СЪС СИРЕНЕ БАКЕРИ 23",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800214924577": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "Луканка Тракийска XXL",
+    "quantity": "550g"
+  },
+  "3800214928780": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Еко Мес слайс луканка червена 100г / Eco Mes sliced red lukanka 100g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.92,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
@@ -956,6 +1294,12 @@
       }
     ]
   },
+  "3800230930019": {
+    "categories": [
+      "eggs"
+    ],
+    "name": "Криция пресни яйца размер М / Kritsia fresh eggs size M (Диос 2026-07-13)"
+  },
   "3800232441247": {
     "categories": [
       "honey"
@@ -971,6 +1315,95 @@
       }
     ],
     "quantity": "900g"
+  },
+  "3800233823431": {
+    "categories": [
+      "sanding-sponge"
+    ],
+    "name": "GRAFFIT SB-L P60 sanding sponge (Bulgarian, coarse, NOT for varnish)"
+  },
+  "3800233823448": {
+    "categories": [
+      "sanding-sponge"
+    ],
+    "name": "GRAFFIT SB-L P80 sanding sponge (Bulgarian, medium-coarse, used)"
+  },
+  "3800500332352": {
+    "categories": [
+      "smoothie"
+    ],
+    "name": "Смути манго и ананас / mango-pineapple smoothie",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 3.83,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "Смути Манго и Ананас",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
+  },
+  "3800500377513": {
+    "categories": [
+      "brush/paint"
+    ],
+    "name": "OK! natural bristle brush 30mm (Made in Italy, Art 7513, Praktiker art. 129995/123995)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.95,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "3800500631639": {
+    "categories": [
+      "honey"
+    ],
+    "name": "Топ Хъни мед букет 900г / Top Honey honey 900g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.99,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "3800500766577": {
+    "categories": [
+      "mushrooms"
+    ],
+    "name": "Кралска печурка / brown chestnut mushrooms 500g (Русев и Русев син ЕООД)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 2.81,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "КРАЛСКА ПЕЧУРКА 500Г",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "3800501165027": {
     "categories": [
@@ -995,6 +1428,29 @@
       }
     ]
   },
+  "3800501165119": {
+    "categories": [
+      "broccoli"
+    ],
+    "name": "Броколи, сорт Максоса, клас 1, +500г (произход България)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 2.49,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "БРОКОЛИ 500 Г",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "3800501165300": {
     "categories": [
       "food/spices/herb"
@@ -1015,6 +1471,99 @@
         "last_seen": "2026-06-13",
         "name": "МАГДАНОЗ",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "3800501740569": {
+    "categories": [
+      "shish_kebab"
+    ],
+    "name": "Балкански шиш / Balkan meat skewer (raw)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 3.29,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "Балк. шиш",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
+  },
+  "3800501874332": {
+    "categories": [
+      "gloves"
+    ],
+    "name": "Nitrile gloves"
+  },
+  "3800501919293": {
+    "categories": [
+      "kebapche"
+    ],
+    "name": "Кебапчета за скара Жар 6х70г",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.94,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "420g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "КЕБАПЧЕТА ЗА СКАРА ЖАР ББ 6ХР70ГР",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800748051053": {
+    "name": "Прясно мляко 3% внос",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-24",
+        "price": 3.4,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-24",
+        "last_seen": "2026-07-24",
+        "name": "ВЕРЕЯ ПРЯСНО МЛЯКО",
+        "shop": "Billa Sozopol ул. Републиканска 5"
+      }
+    ]
+  },
+  "3800748051206": {
+    "name": "Чудно Прясно мляко 3.7%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-06",
+        "price": 1.84,
+        "shop": "Май Маркет Радост Varna ул. Радост 3",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-06",
+        "last_seen": "2026-07-06",
+        "name": "ПР МЛЯКО ВЕРЕЯ ЧУДНО 1Л",
+        "shop": "Май Маркет Радост Varna ул. Радост 3"
       }
     ]
   },
@@ -1053,6 +1602,13 @@
         "price": 2.43,
         "shop": "Bulmag",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 1.99,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
       }
     ],
     "quantity": "263g",
@@ -1068,6 +1624,41 @@
         "last_seen": "2026-05-23",
         "name": "МАЙОНЕЗА ТИМИ 280Г",
         "shop": "Маринени Бонилова, Varna"
+      },
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "ТНОМУ Майонеза280",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
+  },
+  "4000000070061": {
+    "categories": [
+      "fuse-holder"
+    ],
+    "name": "Inline blade fuse holder with cable (PORTAFUSIBILE VOLANTE)"
+  },
+  "4000607854705": {
+    "categories": [
+      "chocolate_bar"
+    ],
+    "name": "Trumpf Schogetten йогурт-ягода / yoghurt-strawberry",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 2.3,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "TRUMPF ШОГЕТИ ЙОГ-ЯГ",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1107,6 +1698,124 @@
     ],
     "name": "Nivea Antiperspirant Powder Effect 48h roll-on",
     "quantity": "50ml"
+  },
+  "4006387029807": {
+    "categories": [
+      "water-filter-cartridge"
+    ],
+    "name": "Brita P1000 tap water filter cartridge (spare)"
+  },
+  "4006825613704": {
+    "categories": [
+      "power-tool-battery"
+    ],
+    "name": "Einhell - Power-x-change Starter-kit 18volt 4ah, Ladegerät Hardware/electro",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 36.67,
+        "shop": "Praktiker Varna",
+        "unit": "set"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "EINHELL СТАРТОВ КОМПЛЕ KT 18 J/4",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "4006825618341": {
+    "categories": [
+      "power-tool"
+    ],
+    "name": "Einhell Te-rs 18 Li Solo Power X-change Cordless Random Orbital Sander, 18 V,",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-19",
+        "price": 47.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 41.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-19",
+        "last_seen": "2026-06-19",
+        "name": "EINHELL АК.ЕКСЦЕНТЪРШЛ TE-RS18LI-S",
+        "shop": "Praktiker Varna"
+      },
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "EINHELL АК.ЕКСЦЕНТРШЛ TE-RS18LI-S",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "4006825627244": {
+    "categories": [
+      "air_compressor"
+    ],
+    "name": "Einhell PRESSITO hybrid compressor 18V/230V (хибриден компресор)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 89.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-02",
+        "last_seen": "2026-07-02",
+        "name": "EINHELL ХИБРИДЕН КОМПР ECOP PXC SO",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "4006825673227": {
+    "categories": [
+      "power-tool-battery"
+    ],
+    "name": "Einhell Power X-Change 18V 4.0Ah battery (PXC)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-19",
+        "price": 55.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 55.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-19",
+        "last_seen": "2026-07-02",
+        "name": "EINHELL АК.БАТ.18V/4АН SEALED PXC",
+        "shop": "Praktiker Varna"
+      }
+    ]
   },
   "4008033481595": {
     "categories": [
@@ -1174,12 +1883,26 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-06-24",
         "price": 2.49,
-        "shop": null,
+        "shop": "Praktiker Varna",
         "unit": "pcs"
       }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-24",
+        "last_seen": "2026-06-24",
+        "name": "ЧЕТКИ 4 БР. ЧЕРЕН КОСЪМ",
+        "shop": "Praktiker Varna"
+      }
     ]
+  },
+  "4015544388619": {
+    "categories": [
+      "consumables"
+    ],
+    "name": "NATURE Star wooden oral spatulas/tongue depressors 15x1.8cm birchwood (Art.-Nr. 38861, Franz Mensch GmbH)"
   },
   "4015600734138": {
     "brand": "P&G",
@@ -1189,6 +1912,12 @@
     "name": "P&G body wash/shampoo 360ml",
     "quantity": "360ml",
     "source": "manual"
+  },
+  "4026495100007": {
+    "categories": [
+      "bicycle-tube"
+    ],
+    "name": "Schwalbe bicycle tube 16\"/18\" AV4 (Schrader valve, 400x35A, 37-340/28-349/37-349/28-355, Made in Indonesia)"
   },
   "4029125060993": {
     "categories": [
@@ -1204,6 +1933,29 @@
     "name": "YACHTICON PURYSAN marine toilet cleaner 500ml",
     "quantity": "500ml",
     "source": "manual"
+  },
+  "4031396048723": {
+    "categories": [
+      "boat_paint_&_composites"
+    ],
+    "name": "Yachticon Nano Propeller 250ml",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-24",
+        "price": 15.0,
+        "shop": "оборудване за водни спортове ООД",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-24",
+        "last_seen": "2026-06-24",
+        "name": "НАНО 250мл / Yachticon Nano Propeller",
+        "shop": "оборудване за водни спортове ООД"
+      }
+    ]
   },
   "4032526841801": {
     "brand": "suki",
@@ -1224,11 +1976,86 @@
     "quantity": "Ø4mm, 30m",
     "source": "manual"
   },
+  "4045302042330": {
+    "categories": [
+      "boat-equipment",
+      "boat-equipment/safety",
+      "lifejacket rearming"
+    ],
+    "name": "UML CO2 Replacement Cartridge 33g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2025-06-02",
+        "price": 40.29,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "33g",
+    "receipt_names": [
+      {
+        "first_seen": "2025-06-02",
+        "last_seen": "2025-06-02",
+        "name": "CO2 Replacement Cartridge 33 g UML",
+        "shop": "SVB24"
+      }
+    ]
+  },
+  "4045302160140": {
+    "categories": [
+      "boat-equipment",
+      "boat-equipment/safety",
+      "lifejacket rearming"
+    ],
+    "name": "UML CO2 Replacement Cartridge 38g threaded (UML 5 / Pro Sensor)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2025-06-02",
+        "price": 40.29,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "38g",
+    "receipt_names": [
+      {
+        "first_seen": "2025-06-02",
+        "last_seen": "2025-06-02",
+        "name": "CO2 Replacement Cartridge 38 g threaded UML 5 and Pro Sensor",
+        "shop": "SVB24"
+      }
+    ]
+  },
   "4046681001413": {
     "categories": [
       "ph-test-strips"
     ],
     "name": "Macherey-Nagel pH-Fix test strips 0-14 (100 strips, LOT 10D3242)"
+  },
+  "4049726006145": {
+    "categories": [
+      "meatballs"
+    ],
+    "name": "Кюфтета свинско и говеждо \"Стара планина\" 480г / pork+beef meatballs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 3.32,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "Брей!Кюфтета смес",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
   },
   "4052489642931": {
     "brand": "Стряха",
@@ -1255,6 +2082,29 @@
       }
     ],
     "source": "manual"
+  },
+  "4052916846988": {
+    "categories": [
+      "resistance_band"
+    ],
+    "name": "Ластици за тренировка / resistance bands set (Crivit, Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 5.11,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ФИТНЕС ПРИНАДЛ. 0518459",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
   },
   "4053201013610": {
     "categories": [
@@ -1309,6 +2159,35 @@
         "shop": "Lidl Varna"
       }
     ]
+  },
+  "4054599116914": {
+    "categories": [
+      "bicycle_lock"
+    ],
+    "name": "Заключване механично за велосипед / bike chain lock, 6mm links, 117cm, 5-digit code (Delta-Sport, IAN 500577)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 6.64,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "ЗАКЛ.МЕХ.ЗА ВЕЛОС 0500577",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4055143459044": {
+    "categories": [
+      "electrical-connectors/wago"
+    ],
+    "name": "WAGO 221-415 lever connectors (5-conductor, 0.14-4mm²)"
   },
   "4056489056010": {
     "categories": [
@@ -1408,15 +2287,35 @@
         "price": 1.43,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 1.43,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-06-04",
+        "last_seen": "2026-07-31",
         "name": "ПРЯСНО МЛЯКО 3%",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ПРЯСНО МЛЯКО 3%",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
   },
@@ -1440,6 +2339,29 @@
         "first_seen": "2026-03-11",
         "last_seen": "2026-03-11",
         "name": "КАШУ СЪС СОЛ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489105169": {
+    "categories": [
+      "peanuts"
+    ],
+    "name": "Фъстъци XXL / XXL peanuts",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 3.83,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "ФЪСТЪЦИ XXL",
         "shop": "Lidl Varna"
       }
     ]
@@ -1470,13 +2392,27 @@
         "price": 1.43,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-03-04",
-        "last_seen": "2026-03-04",
+        "last_seen": "2026-08-04",
         "name": "МЛЯКО UHT 3,5%",
         "shop": "Lidl Varna"
       }
@@ -1560,6 +2496,13 @@
         "price": 0.99,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.32,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
@@ -1569,6 +2512,12 @@
         "last_seen": "2026-06-13",
         "name": "АЙРАН 2,2%",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "АЙРАН 2,2%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -1591,6 +2540,52 @@
         "first_seen": "2026-06-07",
         "last_seen": "2026-06-07",
         "name": "ФУСИЛИ ОТ МЕК.ПШ.",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489177654": {
+    "categories": [
+      "cheese/kashkaval"
+    ],
+    "name": "Кашкавал от краве мляко (Родна стряха)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 5.59,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "КАШКАВАЛ ОТ КРАВЕ МЛ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489178903": {
+    "categories": [
+      "food/processed_animal_products/cream/cultured_cream"
+    ],
+    "name": "Заквасена сметана 20% 400g (Родна стряха)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 1.59,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "ЗАКВАСЕНА СМЕТАНА",
         "shop": "Lidl Varna"
       }
     ]
@@ -1626,11 +2621,87 @@
       }
     ]
   },
+  "4056489232872": {
+    "categories": [
+      "cocoa_powder"
+    ],
+    "name": "Какао на прах / cocoa powder",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 4.6,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "КАКАО НА ПРАХ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489294153": {
+    "categories": [
+      "bacon"
+    ],
+    "name": "Пушен бекон / smoked bacon (2 packs)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ПУШЕН БЕКОН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "4056489352501": {
     "categories": [
       "jam"
     ],
     "name": "Lidl Мус от сливи plum mousse"
+  },
+  "4056489358770": {
+    "categories": [
+      "butter"
+    ],
+    "name": "Прясно краве масло 82% / fresh butter (2 packs)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 1.99,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 1.99,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-08-04",
+        "name": "ПРЯСНО КРАВЕ МАСЛО",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "4056489358848": {
     "categories": [
@@ -1671,6 +2742,66 @@
       }
     ]
   },
+  "4056489472865": {
+    "categories": [
+      "yogurt"
+    ],
+    "name": "Млечнокисел продукт 2% XXL 500g / fermented milk product, 3 cups",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 0.61,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 0.81,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "quantity": "1500g/3",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "МЛЕЧНОКИСЕЛ ПРОДУКТ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      },
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "КИСЕЛО КРАВЕ МЛЯКО",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
+  "4056489473251": {
+    "categories": [
+      "ljutenica"
+    ],
+    "name": "Едросмляна лютеница",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 3.45,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-02",
+        "last_seen": "2026-07-02",
+        "name": "ЛЮТЕНИЦА ЕДРОМЛ.550Г",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489474074": {
     "categories": [
       "cured-meat"
@@ -1683,6 +2814,13 @@
         "price": 2.7,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 2.49,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "quantity": "100g",
@@ -1692,6 +2830,12 @@
         "last_seen": "2026-06-13",
         "name": "ЛУКАНКА, НАРЯЗАНА",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ЛУКАНКА, НАРЯЗАНА",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -1873,6 +3017,29 @@
       }
     ]
   },
+  "4056489686323": {
+    "categories": [
+      "food/spices/paprika"
+    ],
+    "name": "Пушен сладък червен пипер 17g / smoked sweet paprika (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 0.35,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ПУШЕН ЧЕРВ.ПИПЕР",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489692294": {
     "categories": [
       "food/spices"
@@ -2001,13 +3168,20 @@
         "price": 3.99,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 3.39,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "150g",
     "receipt_names": [
       {
         "first_seen": "2026-05-04",
-        "last_seen": "2026-05-04",
+        "last_seen": "2026-06-18",
         "name": "ПАНАГЮРСКА ЛУКАНКА",
         "shop": "Lidl Varna"
       },
@@ -2016,6 +3190,30 @@
         "last_seen": "2026-05-20",
         "name": "ПАНАГЮРСКА ЛУКАНКА",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "4056489693130": {
+    "categories": [
+      "cured-meat"
+    ],
+    "name": "Смядовска луканка нарязана (Родна стряха)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 2.59,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "450g/3",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "СМЯДОВСКА ЛУКАНКА",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -2111,6 +3309,29 @@
       }
     ]
   },
+  "4056489844761": {
+    "categories": [
+      "squid"
+    ],
+    "name": "Calamares a romana",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 4.49,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ПАНИРАНИ КАЛМАРИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "4056489877714": {
     "categories": [
       "beer"
@@ -2131,6 +3352,29 @@
         "last_seen": "2026-06-07",
         "name": "БИРА 5 %",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489918691": {
+    "categories": [
+      "teriyaki"
+    ],
+    "name": "Терияки сос / Teriyaki sauce (Vitasia)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 2.04,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ТЕРИЯКИ СОС",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2243,13 +3487,34 @@
         "price": 1.53,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.53,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 1.53,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 0.66,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "quantity": "1000g",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-05-31",
+        "last_seen": "2026-07-31",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl Varna"
       },
@@ -2270,6 +3535,12 @@
         "last_seen": "2026-06-13",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "КИСЕЛО МЛЯКО 3,6%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ],
     "source": "manual"
@@ -2300,6 +3571,13 @@
         "price": 2.19,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 2.19,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "2l",
@@ -2321,6 +3599,12 @@
         "last_seen": "2026-05-20",
         "name": "ПРЯСНО МЛЯКО 3% 2Л",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ПРЯСНО МЛЯКО 3% 2Л",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2348,6 +3632,30 @@
       }
     ]
   },
+  "4056489941392": {
+    "categories": [
+      "yogurt"
+    ],
+    "name": "Yogurt 2%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 1.19,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "1 кг",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-02",
+        "last_seen": "2026-07-02",
+        "name": "КИСЕЛО МЛЯКО 2% 1КГ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489941842": {
     "categories": [
       "fresh-milk"
@@ -2367,14 +3675,72 @@
         "price": 1.39,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 1.39,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-23",
+        "price": 1.39,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-27",
+        "price": 1.39,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 1.39,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "1 л",
     "receipt_names": [
       {
         "first_seen": "2026-06-07",
-        "last_seen": "2026-06-10",
+        "last_seen": "2026-06-16",
         "name": "ПРЯСНО МЛЯКО 3,7%",
+        "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-06-23",
+        "last_seen": "2026-07-02",
+        "name": "ПРЯСНО МЛЯКО 3,7%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "4056489942139": {
+    "categories": [
+      "food/eggs"
+    ],
+    "name": "Пресни яйца размер L клас А, 10 бр. (ДЖЕНИ ОВО ЕООД, Сливен; за Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 2.29,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "10 pcs",
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "ПРЕСНИ ЯЙЦА РАЗМ.L",
         "shop": "Lidl Varna"
       }
     ]
@@ -2430,6 +3796,29 @@
     ],
     "source": "manual"
   },
+  "4056489942740": {
+    "categories": [
+      "pate"
+    ],
+    "name": "Пастет Апетит (БЕЗМОМ variant) / Bulgarian pâté",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.49,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ПАСТЕТ АПЕТИТ БЕЗМОМ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489947882": {
     "brand": "Pilos",
     "categories": [
@@ -2467,6 +3856,35 @@
         "shop": "Lidl Varna"
       }
     ]
+  },
+  "4056807318332": {
+    "categories": [
+      "work-gloves"
+    ],
+    "name": "Würth mechanics gloves \"Red Latex Grip\" size 10 (Art. 0899 408 210)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 1.38,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "WURTH РЪКАВИЦИ МЕХАНИЦИ RED LATEX",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "4059952545080": {
+    "categories": [
+      "sanding-block"
+    ],
+    "name": "Yellow sanding sponge (used, Made in Great Britain)"
   },
   "4250153632306": {
     "categories": [
@@ -2675,6 +4093,52 @@
       }
     ]
   },
+  "4335619175600": {
+    "categories": [
+      "coffee_preparation"
+    ],
+    "name": "Мляно кафе еспресо / ground espresso coffee",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 4.08,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "МЛЯНО КАФЕ ЕСПРЕСО",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4335619230897": {
+    "categories": [
+      "brie"
+    ],
+    "name": "ORIGINAL FRENCH Brie",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 2.44,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "СИРЕНЕ БРИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "4335619252042": {
     "categories": [
       "toilet_paper"
@@ -2702,6 +4166,29 @@
         "last_seen": "2026-05-02",
         "name": "ТОАЛЕТНА ХАРТИЯ 4 ПЛ",
         "shop": "Lidl Bulgaria"
+      }
+    ]
+  },
+  "4335619347489": {
+    "categories": [
+      "household"
+    ],
+    "name": "Хартия за печене / baking paper",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-23",
+        "price": 1.53,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-23",
+        "last_seen": "2026-06-23",
+        "name": "ХАРТИЯ ЗА ПЕЧЕНЕ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -2746,6 +4233,47 @@
     ],
     "name": "Banika bath salt 200g eucalyptus oil",
     "quantity": "200g"
+  },
+  "4690241033781": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Маленькое королевство Бена и Холли\" (Ben & Holly's Little Kingdom) all seasons (Russian)"
+  },
+  "4690241146665": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Неуловимые мстители\" (The Elusive Avengers) trilogy, 3 discs (Russian, 282 min)"
+  },
+  "4690452002453": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Доктор Айболит\" (Doctor Aibolit, based on K.I. Chukovsky, Russian, 99 min, Region ALL)"
+  },
+  "4823077634420": {
+    "categories": [
+      "biscuits"
+    ],
+    "name": "Пасти сухи Roshen Too Cool Milk / Roshen dry pastry with milk filling",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 1.89,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ПАСТИ СУХИ РОШЕН ТУ КУЛ МИЛК П",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
   },
   "5000204890785": {
     "brand": "Unknown",
@@ -2808,6 +4336,12 @@
       }
     ]
   },
+  "5011007002947": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "Powers Irish Rye Whiskey 43.2% (Ireland)"
+  },
   "5012251008648": {
     "categories": [
       "personal-care/skincare"
@@ -2848,6 +4382,35 @@
     ],
     "name": "WD-40 multi-purpose lubricant 100ml"
   },
+  "5034217416083": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Thomas & Friends: It's Great to Be an Engine!\" (HiT Entertainment)"
+  },
+  "5054563216953": {
+    "categories": [
+      "toothpaste"
+    ],
+    "name": "Parodontax 75 ml toothpaste",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-26",
+        "price": 5.6,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-26",
+        "last_seen": "2026-07-26",
+        "name": "PARODONTAX 75МЛ",
+        "shop": "Billa Sozopol ул. Републиканска 5"
+      }
+    ]
+  },
   "5056170301978": {
     "categories": [
       "helse/tannpleie"
@@ -2862,6 +4425,12 @@
     "name": "Bamboo Toothbrushes 3-pack eco soft bristles",
     "quantity": "3pcs"
   },
+  "5060020627262": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Little Princess: Complete Series 1\" box set (Julian Clary)"
+  },
   "5060120173751": {
     "categories": [
       "personal-care/hair"
@@ -2873,6 +4442,12 @@
       "cosmetics/makeup"
     ],
     "name": "Dark brown/black eyeliner pencil"
+  },
+  "5200021649369": {
+    "categories": [
+      "medical"
+    ],
+    "name": "VITALIS syringes 10ml with needles 21Gx1½\" (sterile, for epoxy application)"
   },
   "5201031250739": {
     "categories": [
@@ -2921,6 +4496,29 @@
     ],
     "name": "Agrino ΡΕΒΙΘΙΑ ΧΟΝΔΡΑ Greek chickpeas (from Mexico)",
     "quantity": "500g"
+  },
+  "5202178084768": {
+    "categories": [
+      "juice"
+    ],
+    "name": "Натурален сок 100% 1л (Greek) / 100% juice",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-22",
+        "price": 3.32,
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-22",
+        "last_seen": "2026-06-22",
+        "name": "О-нат.сок 100% 1л",
+        "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
   },
   "5202336082537": {
     "categories": [
@@ -2976,6 +4574,58 @@
     ],
     "name": "Paranit lice shampoo 200ml",
     "quantity": "200ml"
+  },
+  "5411183171671": {
+    "categories": [
+      "adhesive"
+    ],
+    "name": "Soudal Fix All Xtreme Power adhesive, white (art. 341139)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-19",
+        "price": 9.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-19",
+        "last_seen": "2026-06-19",
+        "name": "SOUDAL ЛЕПИЛО XTREME POWER EXPRES",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "5411183179110": {
+    "categories": [
+      "adhesive"
+    ],
+    "name": "Soudal Fix All Flexi hybrid polymer adhesive/sealant — the \"elastic glue\" (Hungarian label; not in tingbok/OFF)"
+  },
+  "5474146604470": {
+    "categories": [
+      "biscuits"
+    ],
+    "name": "Бисквити какао (Еверест) / cocoa biscuits",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 1.32,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "БИСКВИТИ КАКАО",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
   },
   "5606026027714": {
     "categories": [
@@ -3059,6 +4709,29 @@
     ],
     "name": "Matas Tør-Klor (dry chlorine for pool disinfection, 1kg, with cyanuric acid UV stabilizer)"
   },
+  "5740900400016": {
+    "categories": [
+      "butter"
+    ],
+    "name": "Масло краве Lurpak датско 82% / Lurpak butter (2 of 2)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 4.09,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "МАСЛО КРАВЕ ЛУРПАК ДАТСКО 82%",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
   "5745001088057": {
     "categories": [
       "personal-care/soap"
@@ -3104,6 +4777,29 @@
     "name": "BranQ measuring jug (Art. 1671, Made in Poland)",
     "quantity": "500ml"
   },
+  "5901356070974": {
+    "categories": [
+      "wafer"
+    ],
+    "name": "Пурички вафлени Tago с какао 150г / Tago wafer rolls with cocoa cream",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 1.65,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ПУРИЧКИ ВАФЛЕНИ ТАГО КАКАО 150Г",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
   "5902062007025": {
     "brand": "GRAPHITE",
     "categories": [
@@ -3112,6 +4808,52 @@
     "name": "GRAPHITE welding electrodes Ø3.25mm 1kg (model 56H835, graphite.pl)",
     "quantity": "1kg, Ø3.25mm",
     "source": "manual"
+  },
+  "5902232633504": {
+    "categories": [
+      "thread_locking_fluid"
+    ],
+    "name": "Bostik thread-locker 10g (осигурител на резба)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-27",
+        "price": 7.66,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-27",
+        "last_seen": "2026-06-27",
+        "name": "BOSTIK ОСИГУРИТЕЛ НА РЕ[ЗБА] ЗБИ 10 G",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "5904517026261": {
+    "categories": [
+      "flypaper"
+    ],
+    "name": "Лента против насекоми Bros 4бр",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-08",
+        "price": 2.06,
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-08",
+        "last_seen": "2026-07-08",
+        "name": "ЛЕНТА БРОС ПРОТИВ НАСЕКОМИ 4БР",
+        "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
   },
   "5905858676245": {
     "categories": [
@@ -3170,6 +4912,12 @@
     ],
     "name": "Richmann C0129 carpenter's pencil (red,"
   },
+  "5907791844842": {
+    "categories": [
+      "adhesive-tape"
+    ],
+    "name": "PAKART paper masking tape 38mm × 50m (хартиено тиксо 38/50, made in Poland, imported by ARSEA OOD Varna) — incl. the extra roll added at the end"
+  },
   "5908068806808": {
     "brand": "GRAPHITE/Ihtiman",
     "categories": [
@@ -3179,11 +4927,23 @@
     "quantity": "1kg",
     "source": "manual"
   },
+  "5941132002140": {
+    "categories": [
+      "vanilla_sugar"
+    ],
+    "name": "Dr. Oetker Ванільний цукор / vanilla sugar, 8 g sachet (Ukrainian-language packaging, brought in by a guest)"
+  },
   "5941341041572": {
     "categories": [
       "food/beans"
     ],
     "name": "SADU Fasole cu Ciolan (beans with pork knuckle, Romanian, rusty tin)"
+  },
+  "5944035105307": {
+    "categories": [
+      "electrical-connectors/fork"
+    ],
+    "name": "Starke Papuci furca izolati M4 yellow fork terminals 6mm"
   },
   "5949065025434": {
     "brand": "Unknown",
@@ -3199,6 +4959,12 @@
     ],
     "name": "K Classic passierte Tomaten crushed (Kaufland)"
   },
+  "6416868871371": {
+    "categories": [
+      "sandpaper-roll"
+    ],
+    "name": "MIRKA sandpaper roll 115mm x 2.5m P320 (Made in Finland, for painted/lacquered surfaces, EXCELLENT FOR VARNISH - final sanding)"
+  },
   "671880520959": {
     "categories": [
       "toilet-service-kit"
@@ -3210,6 +4976,18 @@
       "t-shirt"
     ],
     "name": "ELECTRA coral/pink t-shirt (size S oversize, 100% cotton, made in Turkey)"
+  },
+  "6920075776102": {
+    "categories": [
+      "smart-home-sensor"
+    ],
+    "name": "Sonoff SNZB-02 Temperature and Humidity Sensor (Zigbee, CR2450, -10~40°C, 10-90%RH)"
+  },
+  "6920075776119": {
+    "categories": [
+      "smart-home-sensor"
+    ],
+    "name": "Sonoff SNZB-03 Motion Sensor (Zigbee, CR2450)"
   },
   "6940322700049": {
     "categories": [
@@ -3241,6 +5019,60 @@
     ],
     "quantity": "1pcs"
   },
+  "7023060119782": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Sprint #61: Skatten i Alexandria\" by Vehlmann & Yoann (Egmont, kr 79,90)"
+  },
+  "7023060204402": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Donald Ducks Jubileumshefte - 60 år\" (100 sider klassiske historier)"
+  },
+  "7023060319946": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Disney Jubileumspocket \"Hurra!! Donald 60 år - Onkel Skrues Rivaler\""
+  },
+  "7023060321109": {
+    "categories": [
+      "book"
+    ],
+    "name": "\"LEGO DC Super Heroes: Superman og Lex Luthor!\" activity book (Cappelen Damm, AMEET)"
+  },
+  "7023060702397": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Donald Pocket #13 \"Donald Duck - den tapre ridder\" (Klassiker, 5. utgave, kr 60,90)"
+  },
+  "7023061006760": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Walt Disney's Tema Pocket \"Sheriffen\""
+  },
+  "7023063101845": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Donald Pocket #402 \"Sommerferie\""
+  },
+  "7023063301849": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Donald Pocket #428 \"Ut på tur\""
+  },
+  "7023064102773": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "Donald Pocket #192 \"Donald ser spøkelser\""
+  },
   "7025921630108": {
     "categories": [
       "flange"
@@ -3252,6 +5084,12 @@
       "food/cereal/millet"
     ],
     "name": "Helios Økologiske Hirseflak"
+  },
+  "7031652012380": {
+    "categories": [
+      "activity-book"
+    ],
+    "name": "\"Jeg kan ALFABETET!\" (Litor 201238, Gøy å lære!, stickers, fra 5 år)"
   },
   "7032069712702": {
     "categories": [
@@ -3266,6 +5104,12 @@
     ],
     "name": "REMA Boil-in-Bag Middagsris Thai White Rice 1kg",
     "quantity": "1kg"
+  },
+  "7038010028106": {
+    "categories": [
+      "brunost"
+    ],
+    "name": "Ekte geitost / Norwegian brown goat cheese (OFF upload pending — user to photograph)"
   },
   "7038010068980": {
     "categories": [
@@ -3312,11 +5156,23 @@
     "name": "Define Healthy Scalp & Hair Shampoo 250ml",
     "quantity": "250ml"
   },
+  "7047160403213": {
+    "categories": [
+      "napkin"
+    ],
+    "name": "Nille Party napkins (watermelon design, 3-ply 33x33cm)"
+  },
   "7059330072679": {
     "categories": [
       "food/legumes/lentils"
     ],
     "name": "Praana Brown Lentils (Noramix)"
+  },
+  "7070788005248": {
+    "categories": [
+      "book"
+    ],
+    "name": "\"Aktivitetsbok: Hest er best\" activity book"
   },
   "7070893159096": {
     "categories": [
@@ -3335,6 +5191,12 @@
       "food/sugar"
     ],
     "name": "Dansukker Pärlsocker (perlesukker)"
+  },
+  "7310380706397": {
+    "categories": [
+      "napkin"
+    ],
+    "name": "ICA Home Rosa tulpaner napkins (pink tulips, 33cm)"
   },
   "7310572300310": {
     "categories": [
@@ -3381,6 +5243,18 @@
     ],
     "name": "Nivea Men Dry Impact 72h roll-on",
     "quantity": "50ml"
+  },
+  "7321940389547": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Polarekspressen\" (The Polar Express, 2004) Tom Hanks, dobbel-DVD (Norwegian release, Warner Bros.)"
+  },
+  "7330571251376": {
+    "categories": [
+      "dehumidifier-consumable"
+    ],
+    "name": "anslut moisture absorber refill 3x450g (Jula item nr. 416-114, for moisture absorber 416-113)"
   },
   "7330571258344": {
     "categories": [
@@ -3456,6 +5330,24 @@
     ],
     "name": "Beard Master skjeggstylingpakke"
   },
+  "7388414403901": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Bamse Sagoserier: Bamse i Mystiska Bergen\" (EGMONT, TIDSAM 4144-04)"
+  },
+  "7388443903403": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Bamse för de yngsta: Ola sköter bion\" (EGMONT, TIDSAM 4439-02)"
+  },
+  "7388443903908": {
+    "categories": [
+      "comic-book"
+    ],
+    "name": "\"Bamse för de yngsta: Rackartyg med Vargkusinerna\" (EGMONT, TIDSAM 4439-05)"
+  },
   "7392871550450": {
     "categories": [
       "cleaning/soap"
@@ -3505,11 +5397,46 @@
       }
     ]
   },
+  "7622210194046": {
+    "categories": [
+      "chocolate_bar"
+    ],
+    "name": "Milka шоколад Oreo 100g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 2.45,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "MILKA ШОКОЛАД ОРЕО",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "7622210678546": {
     "categories": [
       "milk-chocolate"
     ],
     "name": "Freia Melkesjokolade Salt Lakris (EXPIRED - use soon!)"
+  },
+  "785375943475": {
+    "categories": [
+      "electronics/sensor"
+    ],
+    "name": "Zigbee Temperature & Humidity Sensor FLY ZTH01 (battery 2×AAA/LR03, Shenzhen Forever Young Technology)"
+  },
+  "8001848064676": {
+    "categories": [
+      "silicone-sealant"
+    ],
+    "name": "NPT S.r.l. transparent silicone sealant (Italian)"
   },
   "8007270150154": {
     "categories": [
@@ -3527,11 +5454,63 @@
     ],
     "quantity": "750ml"
   },
+  "8009440009255": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "Spezieria Limone limoncello 30% (Bepi Tosolini, Italy)"
+  },
   "8024827060988": {
     "categories": [
       "buoy-holder"
     ],
     "name": "Hesteskobøye holder 15100-02 (horseshoe buoy holder,"
+  },
+  "8033137035135": {
+    "categories": [
+      "boat_hook"
+    ],
+    "name": "Osculati telescopic boat hook, blue/gold (34.458.81)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 19.0,
+        "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "3445881 КАНДЖА, ТЕЛЕСКОПИЧНА, СИНЯ",
+        "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома"
+      }
+    ]
+  },
+  "8033137194375": {
+    "categories": [
+      "fender"
+    ],
+    "name": "Osculati Premium Marine Fender OF4, Ø22×104 cm (blue head, max 0.15 bar), 2 pcs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 50.35,
+        "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "3321212 КРАНЕЦ, F4, OSCULATI",
+        "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома"
+      }
+    ]
   },
   "8445291136359": {
     "categories": [
@@ -3584,6 +5563,53 @@
       }
     ]
   },
+  "8595720698696": {
+    "categories": [
+      "oven_glove",
+      "pot_holder"
+    ],
+    "name": "Oven mitt + pot-holder set, beige",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-27",
+        "price": 3.99,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-27",
+        "last_seen": "2026-06-27",
+        "name": "К-Т РЪКАВИЦА И РЪКОХВАТКА БЕЖ",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "8680041405983": {
+    "categories": [
+      "diving_mask"
+    ],
+    "name": "Hypnos Maske & Triton Şnorkel Set Temp. Lens M6000+SN002",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-24",
+        "price": 14.9,
+        "shop": "Vantiz Sozopol пл. Черно море 8",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-24",
+        "last_seen": "2026-07-24",
+        "name": "ПЛАЖНИ СТОКИ",
+        "shop": "Vantiz Sozopol пл. Черно море 8"
+      }
+    ]
+  },
   "8681465055594": {
     "categories": [
       "canned-meat"
@@ -3629,6 +5655,12 @@
     ],
     "name": "TORK Cable Ties 150x2.5mm 100pcs Made in Turkey, halogen free)"
   },
+  "8699596047151": {
+    "categories": [
+      "adhesive"
+    ],
+    "name": "Akfix High Tack hybrid adhesive, white, 290ml (Art. AM555, made in Türkiye; not in tingbok/OFF)"
+  },
   "8714100716564": {
     "categories": [
       "personal-care/shower-gel"
@@ -3642,6 +5674,89 @@
     ],
     "name": "Colgate PLAX Fresh&Protect mouthwash 24/7",
     "source": "manual"
+  },
+  "8715559001034": {
+    "categories": [
+      "varnish"
+    ],
+    "name": "Epifanes One-Component Clear High-Gloss Boat Varnish 500ml (SVB24 order 3988629, in transit)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2025-06-02",
+        "price": 22.13,
+        "shop": "SVB24",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-25",
+        "price": 23.14,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2025-06-02",
+        "last_seen": "2026-06-25",
+        "name": "EPIFANES One-Component Clear High-Gloss Boat Varnish for Wood (500 ml)",
+        "shop": "SVB24"
+      }
+    ]
+  },
+  "8715559001058": {
+    "categories": [
+      "varnish"
+    ],
+    "name": "Epifanes One-Component Clear High-Gloss Boat Varnish 1000ml (remaining box from 2026-04 SVB order 3912964; rest spent)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-04-28",
+        "price": 39.28,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-04-28",
+        "last_seen": "2026-04-28",
+        "name": "EPIFANES One-Component Clear High-Gloss Boat Varnish for Wood (1000 ml)",
+        "shop": "SVB24"
+      }
+    ]
+  },
+  "8717372205859": {
+    "categories": [
+      "watertank"
+    ],
+    "name": "Vetus flexible water tank 100l, permanently installed under floor (starboard side; 2024-11 SVB order 3451027)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2024-11-18",
+        "price": 190.17,
+        "shop": "SVB24",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "100l",
+    "receipt_names": [
+      {
+        "first_seen": "2024-11-18",
+        "last_seen": "2024-11-18",
+        "name": "VETUS flexible water tank, rectangular, 100l",
+        "shop": "SVB24"
+      }
+    ]
+  },
+  "8717418109646": {
+    "categories": [
+      "dvd"
+    ],
+    "name": "\"Rottatouille\" (Ratatouille, 2007) Disney Pixar, 2-disk spesialutgave (Norwegian release)"
   },
   "8718951295711": {
     "brand": "Colgate",
@@ -3723,6 +5838,29 @@
     ],
     "name": "Telescoping handle for paint roller, Schuller Eh'klar Art.Nr. 214888 (rollers in epoxy storage)"
   },
+  "9002588424903": {
+    "categories": [
+      "safety-glasses"
+    ],
+    "name": "Schuller Eh'klar safety glasses EN 166 (Art.Nr. 42490)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 5.36,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "ЗАЩИТНИ ОЧИЛА EN 166",
+        "shop": "Praktiker Varna"
+      }
+    ]
+  },
   "9002588424934": {
     "categories": [
       "safety-glasses"
@@ -3770,6 +5908,12 @@
       }
     ]
   },
+  "9002588722634": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "Schuller Eh'klar ALLROUND flat paint brush (Art.Nr. 72263; size TBC)"
+  },
   "9002588722641": {
     "categories": [
       "paint-brush"
@@ -3784,6 +5928,99 @@
         "unit": "pcs"
       }
     ]
+  },
+  "biltema-191036": {
+    "categories": [
+      "washer"
+    ],
+    "name": "BILTEMA washer assortment 250pcs"
+  },
+  "biltema-251091": {
+    "categories": [
+      "shackle"
+    ],
+    "name": "Large galvanized bow shackle"
+  },
+  "biltema-25316": {
+    "categories": [
+      "cable-tie"
+    ],
+    "name": "BILTEMA cable ties"
+  },
+  "biltema-25535": {
+    "categories": [
+      "hook"
+    ],
+    "name": "Bag of screw hooks and eye hooks (BILTEMA Art. 25-535)"
+  },
+  "biltema-256635": {
+    "categories": [
+      "flag"
+    ],
+    "name": "Norwegian flag 70cm polyester purchased 2026-04-11",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": null,
+        "price": 109.0,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ]
+  },
+  "biltema-25987": {
+    "categories": [
+      "gear-pump"
+    ],
+    "name": "Slightly broken Biltema 12V gear pump (Art. 25-987, 15 l/min - 4 gpm, max 2 bar / 29 psi, 10A fuse, self-priming 1.5m, run dry max 20 min, IP67, ISO 8849 Marine) - gears slightly worn; can probably still pump water, but no longer self-priming"
+  },
+  "biltema-3533295": {
+    "categories": [
+      "adhesive-tape"
+    ],
+    "name": "BILTEMA black tape 15mm x 10m"
+  },
+  "biltema-35796": {
+    "categories": [
+      "electrical-connector"
+    ],
+    "name": "BILTEMA Kabelskosortiment insulated cable terminals assortment (300 pcs, various spade/ring/butt connectors)"
+  },
+  "biltema-440069": {
+    "categories": [
+      "electrical-connectors/butt"
+    ],
+    "name": "BILTEMA Heat shrink butt connectors (blue, waterproof)"
+  },
+  "biltema-44009": {
+    "categories": [
+      "electrical-connectors/spade"
+    ],
+    "name": "BILTEMA Dobbelflatstift double flat pin connectors"
+  },
+  "biltema-44035": {
+    "categories": [
+      "electrical-connectors/splice"
+    ],
+    "name": "BILTEMA Skarvklämma splice connectors (0.5-1.0mm²)"
+  },
+  "biltema-61857": {
+    "categories": [
+      "clamp"
+    ],
+    "name": "Hose clamps (stainless, various sizes)"
+  },
+  "biltema-87446": {
+    "categories": [
+      "screw"
+    ],
+    "name": "BILTEMA Montasjeskruesett Art. 87-446, 400 pcs Phillips PH2 electro-galvanized wood screws for indoor use, in original compartmented case (4.2x13 to 4.2x85)"
+  },
+  "biltema-87600": {
+    "categories": [
+      "dowel"
+    ],
+    "name": "BILTEMA wood dowels"
   },
   "lidl-0481093": {
     "categories": [
@@ -3806,6 +6043,29 @@
     ],
     "name": "Maribel Конфитюр вишна екстра cherry jam extra",
     "quantity": "450g"
+  },
+  "lidl-20003326": {
+    "categories": [
+      "vanilla_sugar"
+    ],
+    "name": "Ванилова захар 10бр. / vanilla sugar, 10 sachets",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 0.4,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "ВАНИЛОВА ЗАХАР 10БР.",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "lidl-20003937": {
     "categories": [
@@ -3892,6 +6152,12 @@
         "shop": "Lidl Varna"
       }
     ]
+  },
+  "lidl-20005030": {
+    "categories": [
+      "alcohol"
+    ],
+    "name": "James Cook Gold Oversea Rum 40%"
   },
   "lidl-20010447": {
     "categories": [
@@ -4069,6 +6335,29 @@
       }
     ]
   },
+  "lidl-20052454": {
+    "categories": [
+      "cornflakes"
+    ],
+    "name": "Corn Flakes",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 1.68,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "КОРНФЛЕЙКС",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "lidl-20087036": {
     "categories": [
       "luncheon-meat"
@@ -4084,6 +6373,30 @@
       }
     ],
     "quantity": "300g"
+  },
+  "lidl-20092665": {
+    "categories": [
+      "gouda"
+    ],
+    "name": "Гауда, нарязана 200g (Lidl) / sliced Gouda, min 48% fat i.t.s., lactose-free, 2 packs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 2.04,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "quantity": "400g/2",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ГАУДА НАРЯЗАН",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
   },
   "lidl-20103804": {
     "categories": [
@@ -4240,6 +6553,29 @@
     ],
     "name": "Freshona Sweetcorn natural sweet (Lidl, 340g tin)"
   },
+  "lidl-20154202": {
+    "categories": [
+      "food/spices/curry"
+    ],
+    "name": "Сос за уок къри 490g (Vitasia, Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 2.04,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "СОС ЗА УОК КЪРИ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "lidl-20163402": {
     "brand": "Combino",
     "categories": [
@@ -4373,6 +6709,29 @@
         "last_seen": "2026-05-16",
         "name": "СВ. ВА. В СОБСТ. СОС",
         "shop": "Lidl Варна бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20241988": {
+    "categories": [
+      "food/fruits/peaches"
+    ],
+    "name": "Праскови / yellow peaches 1kg (Greece)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 2.29,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-16",
+        "last_seen": "2026-06-16",
+        "name": "ПРАСКОВИ 1КГ",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -4573,14 +6932,51 @@
         "price": 0.79,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-02",
+        "price": 0.65,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
+    "quantity": "400g/2",
     "receipt_names": [
       {
         "first_seen": "2026-06-04",
         "last_seen": "2026-06-04",
         "name": "ФЪСТЪК ПЕЧЕН",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-07-02",
+        "last_seen": "2026-07-02",
+        "name": "ФЪСТЪК ПЕЧЕН",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20324599": {
+    "categories": [
+      "beer"
+    ],
+    "name": "Светла бира 4.0% (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.27,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "СВЕТЛА БИРА 4,0%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -4603,6 +6999,29 @@
         "first_seen": "2026-06-07",
         "last_seen": "2026-06-07",
         "name": "БЯЛ БОБ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20348397": {
+    "categories": [
+      "mustard"
+    ],
+    "name": "Горчица с хрян 200g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 0.51,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-06-18",
+        "name": "ГОРЧИЦА ХРЯН",
         "shop": "Lidl Varna"
       }
     ]
@@ -4635,6 +7054,13 @@
         "price": 1.11,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-23",
+        "price": 1.11,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -4643,6 +7069,12 @@
         "last_seen": "2026-05-11",
         "name": "КУХНЕНСКИ РОЛКИ 3ПЛ.",
         "shop": "Lidl"
+      },
+      {
+        "first_seen": "2026-06-23",
+        "last_seen": "2026-06-23",
+        "name": "КУХНЕНСКИ РОЛКИ 3ПЛ.",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -4706,6 +7138,13 @@
         "price": 4.49,
         "shop": "Lidl Варна",
         "unit": "kg"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 5.05,
+        "shop": null,
+        "unit": "kg"
       }
     ],
     "quantity": "282g",
@@ -4767,6 +7206,36 @@
         "price": 4.34,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "lidl-20404741": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Шпек Стара планина / Stara Planina shpek (dry-cured sausage), 2 packs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-18",
+        "price": 2.79,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 2.79,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-18",
+        "last_seen": "2026-07-31",
+        "name": "ШПЕК СТАРА ПЛАНИНА",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -4853,6 +7322,31 @@
       }
     ]
   },
+  "lidl-20517717": {
+    "categories": [
+      "food/seafood",
+      "squid",
+      "frozen foods"
+    ],
+    "name": "Замразени калмари (тръби), Lidl",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 5.19,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ЗАМРАЗЕНИ КАЛМАРИ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
   "lidl-20529772": {
     "categories": [
       "honey"
@@ -4872,12 +7366,19 @@
         "price": 0.79,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 0.79,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "receipt_names": [
       {
         "first_seen": "2026-06-07",
-        "last_seen": "2026-06-07",
+        "last_seen": "2026-08-04",
         "name": "ГОТВАРСКА СМЕТАНА22%",
         "shop": "Lidl Varna"
       }
@@ -4957,6 +7458,52 @@
       }
     ]
   },
+  "lidl-20708580": {
+    "categories": [
+      "peanuts"
+    ],
+    "name": "Фъстък печен солен / roasted salted peanuts (2 bags)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-31",
+        "price": 0.51,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-31",
+        "last_seen": "2026-07-31",
+        "name": "ФЪСТЪК ПЕЧЕН СОЛЕН",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20709167": {
+    "categories": [
+      "pork-belly"
+    ],
+    "name": "Факлички от свински гърди без кост с марината, охладени / marinated boneless pork belly",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 5.87,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ФАКЛ. ОТ СВ. ГЪРДИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "lidl-20709426": {
     "categories": [
       "cured-meat"
@@ -5030,13 +7577,20 @@
         "price": 1.05,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-06-16",
+        "price": 1.05,
+        "shop": "Lidl Varna",
+        "unit": "pcs"
       }
     ],
     "quantity": "500g",
     "receipt_names": [
       {
         "first_seen": "2026-06-04",
-        "last_seen": "2026-06-04",
+        "last_seen": "2026-06-16",
         "name": "ЛЕЩА, ПР. БЪЛГАРИЯ",
         "shop": "Lidl Varna"
       },
@@ -5053,7 +7607,71 @@
       "canning",
       "pate"
     ],
-    "name": "Baky ПАСТЕТ АПЕТИТ Bulgarian pâté"
+    "name": "Baky ПАСТЕТ АПЕТИТ Bulgarian pâté",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-21",
+        "price": 1.09,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-21",
+        "last_seen": "2026-06-21",
+        "name": "ПАСТЕТ АПЕТИТ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20810399": {
+    "categories": [
+      "surimi"
+    ],
+    "name": "Сурими пръчици 200 г (Nautica)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 0.81,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "quantity": "200 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ОХЛАДЕНИ СУРИМИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
+  "lidl-20815400": {
+    "categories": [
+      "food/nuts"
+    ],
+    "name": "Суров микс кашу и червена боровинка / raw cashew & cranberry mix",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-08-04",
+        "price": 2.81,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-04",
+        "last_seen": "2026-08-04",
+        "name": "СУРОВ МИКС КАШУ И ЧЕ",
+        "shop": "Lidl Varna"
+      }
+    ]
   },
   "lidl-20856090": {
     "categories": [
@@ -5061,6 +7679,52 @@
       "corn"
     ],
     "name": "Freshona Bio Сладка Царевица organic sweet corn (added 2026-01-11)"
+  },
+  "lidl-20858544": {
+    "categories": [
+      "kabanossi"
+    ],
+    "name": "Кабаноси от свинско месо (Pikok) / Pikok pork kabanossi",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-06-27",
+        "price": 1.69,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-06-27",
+        "last_seen": "2026-06-27",
+        "name": "КАБАНОСИ ОТ СВ. МЕСО",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20950170": {
+    "categories": [
+      "turkey-ham"
+    ],
+    "name": "Шунка от пуешки гърди / turkey breast ham, 2 packs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-07-21",
+        "price": 0.85,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "stk"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-07-21",
+        "last_seen": "2026-07-21",
+        "name": "ШУНКА ОТ ПУЕШ. ГЪРДИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
   },
   "lidl-20962876": {
     "categories": [
