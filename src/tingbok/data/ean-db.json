@@ -3501,13 +3501,6 @@
         "price": 1.53,
         "shop": "Lidl Varna",
         "unit": "stk"
-      },
-      {
-        "currency": "EUR",
-        "date": "2026-07-31",
-        "price": 0.66,
-        "shop": "Lidl Varna",
-        "unit": "stk"
       }
     ],
     "quantity": "1000g",

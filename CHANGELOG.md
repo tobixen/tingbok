@@ -23,6 +23,18 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   in `vocabulary.yaml` with nb altLabels (soppsanking, sopplukking, …) under `outdoor`.
 
 ### Changed
+- **155 products and 115 price observations recovered from the server** — the deployed
+  instance had been auto-committing to its own branch for seven weeks without pulling,
+  so its observations never reached the shared database. They are now merged in: 92
+  prices belong to the newly arrived products and 23 were added to products already
+  known. Where the server and the database disagreed on a product's name or categories
+  (38 names, 16 category lists), the database's wording was kept and the server's was
+  discarded rather than combined, so a few more specific labels the server had are
+  worth re-checking by hand.
+- **A repeated receipt name now widens its recorded date range in both directions** —
+  seeing a name again advanced `last_seen` but never moved `first_seen` earlier, so an
+  earlier sighting of an already-known name was silently dropped. This affects every
+  stored observation from now on, not only the recovery above.
 - **Universal English final fallback for SKOS label lookup** — `_LANGUAGE_FALLBACKS`
   only covered the Scandinavian cluster, so a language whose index missed the
   English-derived lookup label (e.g. `it`) dropped sources like Wikidata and returned
@@ -31,6 +43,8 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `docs/language-fallback-findings.md`.
 
 ### Fixed
+- **Bogus yogurt price removed** — Pilos yogurt 3.6% 1kg (`4056489941200`) carried two
+  prices for 2026-07-31 at the same shop, 1.53 and 0.66 EUR; the 0.66 was dropped.
 - **A concept can no longer become its own ancestor** — `/api/vocabulary/resolve`
   registers every input label's source URIs, so resolving one label (e.g. `rope`)
   could bridge a shared upstream URI back to a sibling label that is only a case or
