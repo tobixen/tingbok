@@ -11,7 +11,7 @@ systemd units:
 | Unit | Purpose |
 |---|---|
 | `tingbok-setup.service` | First-boot: `git clone` + `python3 -m venv` + `pip install` |
-| `tingbok-update.service` | Periodic: `git pull --rebase` → `pip install` → `systemctl restart tingbok` |
+| `tingbok-update.service` | Periodic: self-heal → `git merge origin/main` → `git push` → `pip install` → `systemctl restart tingbok` |
 | `tingbok-update.timer` | Fires `tingbok-update` 5 min after boot, then every 15 min |
 | `tingbok.service` | Runs `uvicorn tingbok.app:app` on `127.0.0.1:5100` |
 
@@ -45,6 +45,46 @@ are synced back to GitHub automatically.
 The key is at `/etc/tingbok/deploy_key` (owned by the `tingbok` system user).
 The push URL for the origin remote is set to SSH (`git@github.com:tobixen/tingbok.git`)
 by the `tingbok-setup` service on first boot.
+
+## Why the server merges and never rebases
+
+The service auto-commits into the same repo it pulls, so a pull reconciles two real
+histories. `git pull --rebase` was fatal here: a conflict leaves the repo on a
+**detached HEAD** with the rebase half-finished, the service happily keeps
+auto-committing onto that detached HEAD, and every later update fails with *"You are
+not currently on a branch"*. That silently stranded 62 commits for seven weeks in
+June–August 2026.
+
+Three things now prevent a repeat:
+
+1. **Merge, not rebase.** A merge cannot detach HEAD, and it never rewrites commits
+   that were already made — and possibly pushed — on the server.
+2. **A semantic merge driver for `ean-db.json`.** Both sides append observations to
+   that one file, so a *textual* merge conflicts on nearly every pull. `.gitattributes`
+   marks it `merge=ean-db` and `tingbok-setup` registers the driver:
+
+   ```sh
+   git config merge.ean-db.name "semantic merge of ean-db.json"
+   git config merge.ean-db.driver \
+     "/opt/tingbok/venv/bin/python /opt/tingbok/repo/scripts/merge_ean_db.py --merge-driver %O %A %B"
+   ```
+
+   Note the **venv** interpreter: the script imports `tingbok.services.ean` to share
+   the service's own merge rules, which needs the venv's dependencies. A bare
+   `python3` dies on `ImportError` and git falls back to a text conflict.
+
+   Registering the driver is worth doing in your own clone too — the same
+   `git config` lines, with paths adjusted.
+3. **Self-healing.** Before pulling, `tingbok-update` aborts any half-finished
+   rebase/merge/cherry-pick and reattaches a detached HEAD. If the detached commits
+   descend from the branch it fast-forwards the branch onto them; if they have
+   diverged it parks them on a `rescue/detached-<sha>` branch rather than orphaning
+   them. Either way nothing is discarded.
+
+If the driver ever cannot resolve a merge, `tingbok-update` aborts it, exits non-zero
+and leaves the repo on a clean branch, so the service keeps recording observations
+locally while you sort it out. `scripts/merge_ean_db.py --ours <ref> --theirs <ref>`
+does the same reconciliation by hand.
 
 To rotate the deploy key:
 

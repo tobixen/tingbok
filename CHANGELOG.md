@@ -22,6 +22,14 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   hunting" nor Wikidata `Q2391676` carries the canonical Norwegian term, so it is pinned
   in `vocabulary.yaml` with nb altLabels (soppsanking, sopplukking, …) under `outdoor`.
 
+### Added
+- **Observations from the server no longer go missing after a failed sync** — the
+  product database is appended to both by the running service and by hand, and the
+  two copies used to have to be reconciled by hand on every collision. Git now
+  resolves them automatically using the same rules the service applies when it
+  stores an observation, so routine simultaneous updates are no longer a conflict.
+  See `DEPLOYMENT.md` for the one-time setup a fresh clone needs.
+
 ### Changed
 - **155 products and 115 price observations recovered from the server** — the deployed
   instance had been auto-committing to its own branch for seven weeks without pulling,

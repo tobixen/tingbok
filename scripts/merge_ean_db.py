@@ -295,12 +295,63 @@ def report_unprefixed_local_codes(result: dict, new_keys: set[str], log: list[st
             log.append(f"[review] {key}: bare local code? ({result[key].get('name', '')!r})")
 
 
+def run_merge_driver(ancestor_path: str, current_path: str, other_path: str) -> int:
+    """Resolve a git merge of this file in-place; git's ``merge.<driver>.driver`` entry point.
+
+    Git invokes this with ``%O %A %B``: the common-ancestor version, the version
+    on the branch being merged *into* (which the driver must overwrite with the
+    result), and the incoming version.  Exit 0 means resolved, non-zero means
+    "record a conflict".
+
+    ``%A`` is mapped to "ours" and ``%B`` to "theirs", so the *incoming* side
+    wins on curated scalar fields.  That is right for the deployment this exists
+    for — the server merges ``origin/main`` into its own branch, making ``%B``
+    the curated shared history — and it is why the server must merge rather than
+    rebase: a rebase swaps the two sides over, and the server's receipt-derived
+    names would start overwriting the curated ones.
+    """
+
+    def load(path: str) -> dict:
+        text = Path(path).read_text(encoding="utf-8").strip()
+        return json.loads(text) if text else {}
+
+    try:
+        base, ours, theirs = load(ancestor_path), load(current_path), load(other_path)
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"merge_ean_db: cannot read inputs, leaving conflict for a human: {exc}", file=sys.stderr)
+        return 1
+
+    try:
+        result, log, new_keys = merge(base, ours, theirs)
+    except SystemExit as exc:  # the twin-pair invariant refused the result
+        print(f"merge_ean_db: {exc}", file=sys.stderr)
+        return 1
+
+    report_unprefixed_local_codes(result, new_keys, log)
+    Path(current_path).write_text(json.dumps(result, indent=2, ensure_ascii=False, sort_keys=True) + "\n")
+    # Goes to the journal on an unattended run; it is the only record of what the
+    # automatic resolution decided.
+    print(f"merge_ean_db: resolved {EAN_DB_PATH.name} -> {len(result)} entries", file=sys.stderr)
+    for line in log:
+        print(f"  {line}", file=sys.stderr)
+    return 0
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ours", default="HEAD", help="'our' git ref (default: HEAD)")
     parser.add_argument("--theirs", default="main", help="'their' git ref (default: main)")
     parser.add_argument("--dry-run", action="store_true", help="report only, do not write the file")
+    parser.add_argument(
+        "--merge-driver",
+        nargs=3,
+        metavar=("ANCESTOR", "CURRENT", "OTHER"),
+        help="run as a git merge driver over three files (%%O %%A %%B); result is written to CURRENT",
+    )
     args = parser.parse_args()
+
+    if args.merge_driver:
+        raise SystemExit(run_merge_driver(*args.merge_driver))
 
     ours_sha = resolve_sha(args.ours)
     theirs_sha = resolve_sha(args.theirs)

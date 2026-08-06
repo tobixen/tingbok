@@ -17,6 +17,7 @@ rather than picking a winning entry.
 """
 
 import importlib.util
+import json
 from pathlib import Path
 from typing import Any
 
@@ -334,6 +335,53 @@ def test_entry_deleted_on_theirs_stays_deleted(rich_entry: dict[str, Any]) -> No
     result, _, _ = merge_ean_db.merge(base, ours, theirs)
 
     assert "222" not in result
+
+
+def test_merge_driver_resolves_in_place(tmp_path: Path, rich_entry: dict[str, Any]) -> None:
+    """git calls the driver with %O %A %B and expects the result written to %A."""
+    ancestor = tmp_path / "O"
+    current = tmp_path / "A"
+    other = tmp_path / "B"
+    ancestor.write_text(json.dumps({"111": rich_entry}))
+    current.write_text(json.dumps({"111": {**rich_entry, "prices": [price("2026-08-01", 1.59)]}}))
+    other.write_text(json.dumps({"111": rich_entry, "222": {"name": "from main"}}))
+
+    rc = merge_ean_db.run_merge_driver(str(ancestor), str(current), str(other))
+
+    assert rc == 0
+    result = json.loads(current.read_text())
+    assert result["222"]["name"] == "from main", "incoming side's new entry missing"
+    assert price("2026-08-01", 1.59) in result["111"]["prices"], "our new price lost"
+    assert price("2026-01-24", 0.78) in result["111"]["prices"], "ancestor price history lost"
+    assert other.read_text() == json.dumps({"111": rich_entry, "222": {"name": "from main"}}), "%B was modified"
+
+
+def test_merge_driver_treats_empty_ancestor_as_no_common_version(tmp_path: Path) -> None:
+    """git passes an empty %O when the file has no common ancestor version."""
+    ancestor = tmp_path / "O"
+    current = tmp_path / "A"
+    other = tmp_path / "B"
+    ancestor.write_text("")
+    current.write_text(json.dumps({"111": {"name": "ours"}}))
+    other.write_text(json.dumps({"222": {"name": "theirs"}}))
+
+    rc = merge_ean_db.run_merge_driver(str(ancestor), str(current), str(other))
+
+    assert rc == 0
+    result = json.loads(current.read_text())
+    assert set(result) == {"111", "222"}
+
+
+def test_merge_driver_reports_conflict_on_unparseable_input(tmp_path: Path) -> None:
+    """A non-zero exit makes git record a conflict instead of writing garbage."""
+    ancestor = tmp_path / "O"
+    current = tmp_path / "A"
+    other = tmp_path / "B"
+    ancestor.write_text("{}")
+    current.write_text("{not json")
+    other.write_text("{}")
+
+    assert merge_ean_db.run_merge_driver(str(ancestor), str(current), str(other)) != 0
 
 
 def test_result_is_key_sorted(rich_entry: dict[str, Any]) -> None:

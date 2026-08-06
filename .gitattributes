@@ -1,0 +1,14 @@
+# The EAN observation database is appended to concurrently by the deployed
+# server (auto-commits) and by hand, so a textual merge conflicts constantly and
+# the resolution is semantic, not line-based.  scripts/merge_ean_db.py knows the
+# rules; this points git at it.
+#
+# The driver itself has to be registered per clone, since .gitattributes cannot
+# carry the command:
+#
+#   git config merge.ean-db.name "semantic merge of ean-db.json"
+#   git config merge.ean-db.driver "python3 scripts/merge_ean_db.py --merge-driver %O %A %B"
+#
+# Without that registration git falls back to the default text merge, which is
+# the previous behaviour — conflicts, but nothing silently wrong.
+src/tingbok/data/ean-db.json merge=ean-db
