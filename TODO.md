@@ -1,4 +1,7 @@
-See also ~/inventory-md/docs/TODO-CATEGORIES.md
+Tingbok owns the category *data* — the vocabulary, the sources, the hierarchy,
+the translations.  How an inventory consumes it is `~/inventory-md/docs/TODO.md`.
+The items below marked *(from inventory-md)* were migrated on 2026-08-13 from
+that project's `docs/TODO-CATEGORIES.md`, which has been retired.
 
 ## Consistency
 
@@ -6,6 +9,24 @@ See also ~/inventory-md/docs/TODO-CATEGORIES.md
 * Sometimes canonical IDs are given like a path with a slash, and sometimes they are given as a single word.  I'd like some consistency here too.  Perhaps it's good to keep slashes in canonical IDs in case the same word gets added for a different concept at some point in the future, but it's probably not needed with many parts in the canonical ID.  It could be `staples/potatoes` or `food//potatoes`, but not `food/staple/potatoes` maybe.  We'd also need some heuristics to relatively deterministicly find a canonical ID of a concept that isn't defined in vocabulary.yaml but decided from the sources.
 * Dashes vs underscores vs spaces in the canonical ID.  It seems to be a bit arbitrary now.  I think we should stick to dashes.
 * Plural vs singular.  We should have some consistency there, too.
+* *(from inventory-md)* **A canonical name rule.**  A category has many names even
+  within one language and disregarding aliases: potato / potatoes /
+  `food/vegetable/potatoes` / `food/staples/potatoes`; seal as `food/meat/seal`,
+  `toy/stuffed/seal` and `hardware/plumbing/seal`.  Proposed rule: take as many
+  legs of the path as needed to disambiguate, counting **from the end** — so
+  `soybeans` and `potatoes`, but `meat/seal`, `toy/stuffed/seal`,
+  `plumbing/seal`.  The inventory should not have to write full paths, should not
+  see random-looking IDs, and the name should be localisable.
+  The Norwegian inventory motivates the same question from the other side: is
+  `jul/belysning` a different category from `belysning`, or the same one under a
+  seasonal path?  (`jul/julebelysning` avoids the question but reads redundant.)
+  Note the specimen is gone — `~/furusetalle9-inventory` now uses
+  `elektronikk/belysning`, bare `belysning` and `jul/elektronikk`, no
+  `jul/belysning` — so this needs a fresh example before it can be tested.
+* *(from inventory-md)* **IDs for categories not in the vocabulary.**  GPT has
+  numeric IDs, AGROVOC and Wikidata have UID schemes.  Concepts outside the
+  vocabulary cannot have a persistent ID, but could carry a temporary one, kept
+  as long as some inventory still uses the category.
 
 ## Data that should be filtered
 
@@ -20,4 +41,103 @@ It also gives https://dbpedia.org/page/Teddy_Stadium - again, https://dbpedia.or
 Sometimes the EAN itself cannot be looked up, but the first digits can still tell a lot of information.  Add some logic here.
 
 The barcode lookup script in ~/inventory-md/scripts should be updated to use tingbok
+
+## Canonical tingbok URLs *(from inventory-md, important)*
+
+Concepts should be identified by a canonical tingbok URL, and clients should
+fetch categories *by* that URL starting from the virtual `_root` category, rather
+than pulling the whole of `/api/vocabulary`.  There is no such thing as a
+canonical tingbok URL today.  See `docs/canonical-urls.md` for the proposed
+scheme and the redesigned batch-resolve API.
+
+Partly landed already: inventory-md calls `POST /api/vocabulary/resolve` with the
+labels it actually uses (`resolve_vocabulary_from_tingbok()`), which is the
+batch-resolve half.  The canonical-URL half is untouched.
+
+Some concepts in `vocabulary.yaml` carry a `uri` field; that value may safely be
+overwritten by the canonical tingbok URL.
+
+Also consider a canonical — though not necessarily persistent — tingbok URL for
+*cached* concepts, i.e. ones resolved from sources rather than declared in
+`vocabulary.yaml`.
+
+## 132 tingbok-sourced concepts have no parent *(from inventory-md)*
+
+Measured in `~/solveig-inventory/vocabulary.json` on 2026-08-13 (generated
+2026-08-06 against a tingbok returning 200): 342 of 1736 concepts sit at the root
+of the tree, 132 of them tingbok-sourced.  So a fifth of the hierarchy is not a
+hierarchy, and the inventory's category browser shows `comma_splice`, `brunost`
+and `dolmas` as top-level entries.
+
+This replaces an older, vaguer claim ("quite some regressions after the latest
+rounds of work") that was carried for months without a number attached.  The
+remaining 89 unparented concepts are inventory-sourced — labels tingbok resolved
+to nothing — and are tracked in inventory-md.
+
+## Split/combine source concepts *(from inventory-md)*
+
+Some sources lump things together (spices + herbs; underwear and socks), others
+keep them apart, and sometimes the lumping is only a tree node — GPT's "Underwear
+and socks" has socks and underwear as children.
+
+Sometimes a tingbok concept should combine several source URIs *from the same
+source*: specifically "long johns" (Q2472769) and "longs" (Q56303142) should be
+one category.  The other cases can probably be handled in the vocabulary as it
+stands — if two tingbok concepts reference the same source URI, that suggests a
+parent concept referencing the source.  An "underwear and socks" node can be
+defined in the vocabulary with other sources excluded, with socks and underwear
+as children.
+
+## Source handling *(from inventory-md)*
+
+* **Treat sources equally.**  The old model had a prioritised source list; the
+  opinion recorded against it is that sources should be treated more or less
+  equally instead.  Wikidata in particular is not special — it is one source
+  among several.  Check whether any prioritisation survives in tingbok; the
+  source-specific logic is all gone from inventory-md, so tingbok is the only
+  place it can still live.
+* **Use https for source URIs**, always — some are still http.
+* `/api/skos/lookup?label=clothing` defaults to AGROVOC only; it should probably
+  look in all sources.  Possibly moot — check whether the lookup endpoint is
+  needed at all once batch-resolve is in place.
+* **Rate limiting** should be built in.  niquests ships something usable —
+  see `Retry` in `niquests.packages.urllib3.util`.
+
+## Caching and warnings *(from inventory-md)*
+
+* `/api/lookup` results are cached by the underlying SKOS service, per
+  concept/label under `~/.cache/tingbok/skos/`.  Splitting lookup results into
+  their own cache directory for easier inspection was requested and not done —
+  confirmed still not done on 2026-08-13 (`~/.cache/tingbok/` holds only `ean/`
+  and `skos/`).
+* **Translation warnings** — e.g. "bedding" as animal litter vs. household
+  bedding — should be generated at lookup time and written to a separate
+  YAML/JSON file on the server.
+
+## Google Product Taxonomy: compare against the vocabulary *(from inventory-md)*
+
+GPT is fully implemented — `gpt.py`, the `gpt:{id}` URI scheme,
+`download-taxonomy --gpt`, wired into `populate-uris` and startup label fetching,
+54 `gpt:` URIs in `vocabulary.yaml`.
+
+Remaining: how does GPT compare to the tingbok vocabulary?  Are there tingbok
+concepts with no `gpt:` URI that should have one?  Some categories may want
+remapping.  This needs manual review against the GPT hierarchy.
+
+## Categories missing translations *(from inventory-md, unverified)*
+
+Categories that exist in the vocabulary but match nothing in any source — the
+root node "Health & Safety" was the example — need translations supplied locally,
+since no source will provide them.
+
+Carried over as-is: this was already marked "needs manual verification, possibly
+no longer relevant given current multi-source tracking", and a 2026-08-13 attempt
+to verify it against a generated `vocabulary.json` was inconclusive, because that
+file is rendered for a single language and does not show which translations exist
+upstream.  Verify against `vocabulary.yaml` and the source data instead.
+
+## Data correction *(from inventory-md)*
+
+"Plant-based foods and beverages" is not the same concept as "food" — it is a
+subcategory of it.
 
