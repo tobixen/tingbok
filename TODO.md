@@ -61,6 +61,34 @@ Also consider a canonical — though not necessarily persistent — tingbok URL 
 *cached* concepts, i.e. ones resolved from sources rather than declared in
 `vocabulary.yaml`.
 
+## Serve hierarchy answers instead of making clients compute them *(from inventory-md)*
+
+From `~/inventory-md/docs/code-review-2026-05-08.md`, still open at the
+2026-06-11 review, which called it "the biggest architectural ROI".
+
+`GET /api/vocabulary` returns a flat concept list that every client then has to
+re-structure, so hierarchy knowledge leaks outward and gets reimplemented — and
+reimplemented subtly differently each time. inventory-md's `vocabulary.py`
+carries a `build_category_tree()` with its own rules for inferred hierarchy and
+stub nodes; if tingbok changes how hierarchy works, that breaks silently.
+
+* **`GET /api/concept/{id}/ancestors`** — the cheap, immediate win, and worth
+  doing well before canonical URLs land. It gives "is soybeans food?" a single
+  authoritative answer, so clients can stop walking the tree themselves.
+* **Serve a pre-built tree**, not just a flat list, so `build_category_tree()`
+  becomes glue rather than a second implementation.
+* **Own the source names.** `_SOURCE_LABELS` (`"off"` → `"OpenFoodFacts"`) and
+  `_uri_to_source()` (URI scheme → source name) live in inventory-md, so adding
+  a source to tingbok silently requires a client release. tingbok is the
+  authority on which sources exist; it should say so over the API.
+* **Own the language fallback chains.** inventory-md collapsed its own three
+  copies into one on 2026-06-12, but tingbok still hardcodes a separate copy in
+  its services. Language knowledge is tingbok's; return the chain as part of the
+  vocabulary response or from a dedicated endpoint.
+
+The client-side deletions this enables are tracked in
+`~/inventory-md/docs/TODO.md`.
+
 ## 132 tingbok-sourced concepts have no parent *(from inventory-md)*
 
 Measured in `~/solveig-inventory/vocabulary.json` on 2026-08-13 (generated
