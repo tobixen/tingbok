@@ -54,6 +54,11 @@ from pathlib import Path
 
 from tingbok import __version__
 
+#: Sources whose labels can be fetched through the SKOS service.  OFF and GPT
+#: are in the source registry but carry their labels in their own downloads.
+_SKOS_LABEL_SOURCES = frozenset({"agrovoc", "dbpedia", "wikidata"})
+
+
 # ---------------------------------------------------------------------------
 # populate-uris
 # ---------------------------------------------------------------------------
@@ -384,15 +389,10 @@ def _prune_vocabulary(
         for uri in source_uris:
             if not uri or uri.startswith("https://tingbok.plann.no/"):
                 continue
-            # Determine source from URI prefix
-            if uri.startswith(("http://aims.fao.org/", "https://aims.fao.org/")):
-                source = "agrovoc"
-            elif uri.startswith(("http://dbpedia.org/", "https://dbpedia.org/")):
-                source = "dbpedia"
-            elif uri.startswith(("http://www.wikidata.org/", "https://www.wikidata.org/")):
-                source = "wikidata"
-            else:
-                continue  # off/gpt don't support get_labels via SKOS service
+            # off/gpt don't support get_labels via the SKOS service.
+            source = skos_service.uri_to_source(uri) or ""
+            if source not in _SKOS_LABEL_SOURCES:
+                continue
 
             try:
                 fetched = skos_service.get_labels(uri, languages, source, skos_dir)
@@ -408,13 +408,8 @@ def _prune_vocabulary(
         for uri in source_uris:
             if not uri or uri.startswith("https://tingbok.plann.no/"):
                 continue
-            if uri.startswith(("http://aims.fao.org/", "https://aims.fao.org/")):
-                source = "agrovoc"
-            elif uri.startswith(("http://dbpedia.org/", "https://dbpedia.org/")):
-                source = "dbpedia"
-            elif uri.startswith(("http://www.wikidata.org/", "https://www.wikidata.org/")):
-                source = "wikidata"
-            else:
+            source = skos_service.uri_to_source(uri) or ""
+            if source not in _SKOS_LABEL_SOURCES:
                 continue
             try:
                 fetched_alts = skos_service.get_alt_labels(uri, languages, source, skos_dir)

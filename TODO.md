@@ -72,19 +72,34 @@ reimplemented subtly differently each time. inventory-md's `vocabulary.py`
 carries a `build_category_tree()` with its own rules for inferred hierarchy and
 stub nodes; if tingbok changes how hierarchy works, that breaks silently.
 
-* **`GET /api/concept/{id}/ancestors`** — the cheap, immediate win, and worth
-  doing well before canonical URLs land. It gives "is soybeans food?" a single
-  authoritative answer, so clients can stop walking the tree themselves.
+* ~~**`GET /api/concept/{id}/ancestors`**~~ — **done 2026-09-01**, as
+  `GET /api/ancestors/{concept_id}`. Breadth-first over `broader`, all parents
+  reported, cycles broken, and a concept with no `broader` falls back to its
+  path prefix when that prefix is itself a concept. It went through
+  `/api/vocabulary/{id}/ancestors` first and that was wrong: concept ids are
+  paths, so it collides with a concept called `x/ancestors`, and resolving the
+  collision either way leaves one of the two with no URL at all.
 * **Serve a pre-built tree**, not just a flat list, so `build_category_tree()`
-  becomes glue rather than a second implementation.
-* **Own the source names.** `_SOURCE_LABELS` (`"off"` → `"OpenFoodFacts"`) and
-  `_uri_to_source()` (URI scheme → source name) live in inventory-md, so adding
-  a source to tingbok silently requires a client release. tingbok is the
-  authority on which sources exist; it should say so over the API.
-* **Own the language fallback chains.** inventory-md collapsed its own three
-  copies into one on 2026-06-12, but tingbok still hardcodes a separate copy in
-  its services. Language knowledge is tingbok's; return the chain as part of the
-  vocabulary response or from a dedicated endpoint.
+  becomes glue rather than a second implementation. This is the one that would
+  actually let the client delete code — but note what the ancestors endpoint did
+  *not* buy: inventory-md generates a `vocabulary.json` that a static web UI
+  reads with no server in the loop, so `build_category_tree()` has to keep
+  working with tingbok unreachable no matter what this API grows. Serving a tree
+  makes tingbok authoritative; it does not delete the client's copy.
+* ~~**Own the source names.**~~ **Done 2026-09-01**: `tingbok/sources.py` holds
+  the one registry (name, label, hosts or URI prefixes, homepage) and
+  `GET /api/sources` serves it. `skos.uri_to_source()` re-exports it and
+  `cli.py`'s two inline prefix chains are gone, so tingbok itself no longer had
+  three copies either. Note this partly settles **"Use https for source URIs,
+  always"** under *Source handling* below: matching on host means the spelling
+  no longer changes how a URI is classified. Normalising what is *stored* is
+  still open.
+* **Own the language fallback chains.** ~~inventory-md ... still hardcodes a
+  separate copy~~ — re-checked 2026-09-01 and there is no duplication left to
+  remove: inventory-md deleted its language-fallback subsystem entirely (v0.15.0
+  "Removed"), and tingbok's `_LANGUAGE_FALLBACKS` in `app.py` is now the only
+  copy anywhere. Serving it over the API would be building an endpoint with no
+  caller. Leave it until something asks.
 
 The client-side deletions this enables are tracked in
 `~/inventory-md/docs/TODO.md`.
@@ -101,6 +116,10 @@ This replaces an older, vaguer claim ("quite some regressions after the latest
 rounds of work") that was carried for months without a number attached.  The
 remaining 89 unparented concepts are inventory-sourced — labels tingbok resolved
 to nothing — and are tracked in inventory-md.
+
+Re-measured 2026-09-01 against the same file: 353 roots of 1736, of which 134
+tingbok-sourced, 121 inferred and 98 inventory-sourced.  Drifting upward, i.e.
+nothing has been eroding it.
 
 ## Split/combine source concepts *(from inventory-md)*
 

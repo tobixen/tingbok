@@ -22,7 +22,10 @@ from fastapi_mcp import FastApiMCP
 
 from tingbok import __version__
 from tingbok.models import (
+    AncestorsResponse,
     HealthResponse,
+    SourceInfo,
+    SourcesResponse,
     VocabularyConcept,
     VocabularyConceptUpdateRequest,
     VocabularyResolveRequest,
@@ -33,6 +36,7 @@ from tingbok.services import ean as ean_service
 from tingbok.services import gpt as gpt_service
 from tingbok.services import off as off_service
 from tingbok.services import skos as skos_service
+from tingbok.sources import SOURCES
 from tingbok.text import number_variations
 
 logger = logging.getLogger(__name__)
@@ -1005,6 +1009,106 @@ def _record_lookup_warning(label: str, source_roots: dict[str, str], source_path
         WARNINGS_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception as exc:  # noqa: BLE001
         logger.warning("Failed to write lookup warning for %r: %s", label, exc)
+
+
+@app.get("/api/sources", response_model=SourcesResponse)
+async def get_sources() -> SourcesResponse:
+    """Return every category source tingbok knows about.
+
+    tingbok is the authority on which sources exist, but clients also need the
+    URI prefixes (to tell which source a ``source_uris`` entry came from) and
+    the display names (to label a per-source category subtree).  Both used to be
+    duplicated client-side, so a new source here did not show up over there
+    until the client was released again.  The list is generated from
+    :data:`tingbok.sources.SOURCES`; it is not a second hand-kept list.
+    """
+    return SourcesResponse(
+        sources=[
+            SourceInfo(
+                name=source.name,
+                label=source.label,
+                uri_prefixes=list(source.uri_prefixes),
+                hosts=list(source.hosts),
+                homepage=source.homepage,
+                is_self=source.is_self,
+            )
+            for source in SOURCES
+        ]
+    )
+
+
+def _parents_of(concept_id: str, vocab: dict[str, Any]) -> list[str]:
+    """Return the immediate parents of *concept_id* within *vocab*.
+
+    Declared ``broader`` wins.  When a concept declares none, the concept named
+    by its own path prefix is used if the vocabulary has it, which is what makes
+    ``epoxy/filler`` a child of ``epoxy`` rather than a second root beside it.
+    A path prefix that is not itself a concept yields no parent — inventing one
+    here would be a hierarchy decision, and unresolved labels are deliberately
+    left at the root for now.
+    """
+    data = vocab.get(concept_id)
+    if data is None:
+        return []
+    broader = data.get("broader") or []
+    if isinstance(broader, str):
+        broader = [broader]
+    parents = [b for b in broader if b in vocab]
+    if parents:
+        return parents
+    if "/" in concept_id:
+        parent = concept_id.rsplit("/", 1)[0]
+        if parent in vocab:
+            return [parent]
+    return []
+
+
+def ancestors_of(concept_id: str, vocab: dict[str, Any]) -> list[str]:
+    """Every transitive ancestor of *concept_id*, nearest first.
+
+    Breadth-first over :func:`_parents_of`, so a concept with several parents
+    reports all of them; already-seen concepts are skipped, which also breaks
+    the broader/narrower cycles that turn up in upstream SKOS data.
+
+    The one implementation: ``GET /api/ancestors`` and
+    :func:`tingbok.embedded.get_ancestors` both call it.  Two hand-written
+    copies of a tree walk that disagree subtly is the problem this endpoint
+    exists to solve, and having one inside this repository would be worse than
+    having one in a client.
+    """
+    ancestors: list[str] = []
+    seen: set[str] = {concept_id}
+    queue: list[str] = _parents_of(concept_id, vocab)
+    while queue:
+        current = queue.pop(0)
+        if current in seen:
+            continue
+        seen.add(current)
+        ancestors.append(current)
+        queue.extend(_parents_of(current, vocab))
+    return ancestors
+
+
+@app.get("/api/ancestors/{concept_id:path}", response_model=AncestorsResponse)
+async def get_concept_ancestors(concept_id: str) -> AncestorsResponse:
+    """Return every transitive ancestor of a concept, nearest first.
+
+    ``GET /api/vocabulary`` serves a flat list that each client then has to
+    re-structure, so "is soybeans food?" was answered by a hand-written tree
+    walk in every client, each subtly different.  This answers it once, here.
+
+    Its own path namespace, rather than ``/api/vocabulary/{id}/ancestors``:
+    concept ids are themselves paths, so that shape collides with a concept
+    genuinely called ``x/ancestors`` — and whichever way such a collision is
+    resolved, one of the two is then unreachable.
+    """
+    from fastapi import HTTPException
+
+    # A concept id never ends in a slash, so this can only be a typo.
+    concept_id = concept_id.rstrip("/")
+    if concept_id not in vocabulary:
+        raise HTTPException(status_code=404, detail=f"Concept '{concept_id}' not found")
+    return AncestorsResponse(id=concept_id, ancestors=ancestors_of(concept_id, vocabulary))
 
 
 @app.get("/api/vocabulary/{concept_id:path}")

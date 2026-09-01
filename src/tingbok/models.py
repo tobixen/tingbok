@@ -227,3 +227,46 @@ class HealthResponse(BaseModel):
     cache_next_refresh_in_seconds: float | None = None
     #: File paths (localhost clients only).
     paths: dict[str, str] | None = None
+
+
+class SourceInfo(BaseModel):
+    """One entry from tingbok's category-source registry.
+
+    Served so that clients stop carrying their own copy of the URI-prefix table
+    and the display names; adding a source to tingbok used to require a client
+    release before the source appeared in a category browser.
+    """
+
+    #: Short identifier used throughout the API (``"agrovoc"``, ``"off"``).
+    name: str
+    #: Human-readable name for display (``"OpenFoodFacts"``).
+    label: str
+    #: Literal prefixes for sources whose URIs are not http(s) (``off:``, ``gpt:``).
+    uri_prefixes: list[str] = []
+    #: Domains identifying an http(s) source URI, matched against the URI's host
+    #: and its subdomains — upstream data carries ``de.dbpedia.org`` as well as
+    #: ``dbpedia.org``, and both http and https spellings of each.
+    hosts: list[str] = []
+    #: Where a human can read about the source.
+    homepage: str | None = None
+    #: True for tingbok's own concept URIs — a concept tingbok defines itself
+    #: rather than one resolved upstream.  Such URIs are never looked up
+    #: externally, but clients still group and label concepts by this source.
+    is_self: bool = False
+
+
+class SourcesResponse(BaseModel):
+    """Response for ``GET /api/sources``."""
+
+    sources: list[SourceInfo] = []
+
+
+class AncestorsResponse(BaseModel):
+    """Response for ``GET /api/vocabulary/{concept_id}/ancestors``."""
+
+    #: The concept asked about.
+    id: str
+    #: Every transitive ancestor, nearest first, excluding the concept itself.
+    #: Deduplicated: a concept with several parents can reach one ancestor by
+    #: more than one route, and cycles in upstream SKOS data are broken.
+    ancestors: list[str] = []

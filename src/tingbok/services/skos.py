@@ -15,6 +15,7 @@ from pathlib import Path
 
 import niquests
 
+from tingbok.sources import uri_to_source as _registry_uri_to_source
 from tingbok.text import number_variations
 
 logger = logging.getLogger(__name__)
@@ -36,7 +37,10 @@ def _parse_json(response: niquests.Response, context: str = "") -> dict | None:
         return None
 
 
-CACHE_TTL_SECONDS = 60 * 60 * 24 * 60  # 60 days — matches inventory-md
+#: SKOS lookups are cached for 60 days.  inventory-md's client-side vocabulary
+#: cache is kept at the same figure deliberately (its ``_LOOKUP_CACHE_TTL_DAYS``);
+#: the two used to be 60 and 7 while this comment claimed they matched.
+CACHE_TTL_SECONDS = 60 * 60 * 24 * 60  # 60 days
 TRANSIENT_TTL_SECONDS = 60 * 60 * 4  # 4 hours — short TTL for transient failures
 DEFAULT_TIMEOUT = 10.0
 
@@ -1094,25 +1098,21 @@ def build_hierarchy_paths(
 def uri_to_source(uri: str) -> str | None:
     """Map a concept URI to its source name.
 
+    Thin re-export of :func:`tingbok.sources.uri_to_source`, kept here because
+    this is where callers have always imported it from.  The URI prefixes live
+    in :data:`tingbok.sources.SOURCES`, which is also what ``GET /api/sources``
+    serves, so a new source needs adding in exactly one place.
+
     Args:
         uri: Any URI stored in ``source_uris`` (e.g. ``"http://dbpedia.org/resource/Food"``
              or ``"off:en:potatoes"`` or ``"gpt:632"``).
 
     Returns:
         Source name string (``"agrovoc"``, ``"dbpedia"``, ``"wikidata"``, ``"off"``,
-        ``"gpt"``) or ``None`` if the URI does not match a known source.
+        ``"gpt"``) or ``None`` if the URI does not match a known source or is one
+        of tingbok's own concept URIs.
     """
-    if uri.startswith(("http://aims.fao.org/", "https://aims.fao.org/")):
-        return "agrovoc"
-    if uri.startswith(("http://dbpedia.org/", "https://dbpedia.org/")):
-        return "dbpedia"
-    if uri.startswith(("http://www.wikidata.org/", "https://www.wikidata.org/")):
-        return "wikidata"
-    if uri.startswith("off:"):
-        return "off"
-    if uri.startswith("gpt:"):
-        return "gpt"
-    return None
+    return _registry_uri_to_source(uri)
 
 
 def get_description(uri: str, source: str, lang: str, cache_dir: Path) -> str | None:
