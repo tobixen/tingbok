@@ -146,7 +146,7 @@ class EanObservationRequest(BaseModel):
 
 
 class VocabularyConcept(BaseModel):
-    """A single concept from the package vocabulary."""
+    """A single concept from the tingbok vocabulary."""
 
     id: str
     prefLabel: str
@@ -176,6 +176,11 @@ class VocabularyResolveRequest(BaseModel):
     labels: list[str]
     #: Primary language of the inventory (affects label resolution order).
     lang: str = "en"
+    #: Resolve against the vocabulary only, never the upstream SKOS sources.
+    #: A label the vocabulary does not have comes back as an unresolved stub
+    #: rather than triggering a DBpedia/Wikidata/AGROVOC lookup.  Set by the
+    #: in-process (embedded) path, where by definition there is no network.
+    offline: bool = False
 
 
 class VocabularyResolveResponse(BaseModel):

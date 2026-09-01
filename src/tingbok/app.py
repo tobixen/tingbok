@@ -260,7 +260,7 @@ def _gpt_path_from_parts(path_parts: list[str]) -> str | None:
 
 
 def _load_vocabulary(path: Path | None = None) -> dict[str, Any]:
-    """Load the package vocabulary from YAML.
+    """Load the vocabulary from YAML.
 
     For concept IDs containing ``/``, ``broader`` is inferred from the path
     when not explicitly given (e.g. ``food/dairy`` → ``broader: [food]``).
@@ -895,7 +895,7 @@ def _build_description(concept_id: str, data: dict[str, Any]) -> str | None:
 
 @app.get("/api/vocabulary")
 async def get_vocabulary() -> dict[str, VocabularyConcept]:
-    """Return the full package vocabulary.
+    """Return the full vocabulary.
 
     Returns 503 with a ``Retry-After`` header when the background label-fetch
     task has not yet processed all concepts, to avoid silently returning
@@ -1113,7 +1113,7 @@ async def get_concept_ancestors(concept_id: str) -> AncestorsResponse:
 
 @app.get("/api/vocabulary/{concept_id:path}")
 async def get_vocabulary_concept(concept_id: str) -> VocabularyConcept:
-    """Return a single concept from the package vocabulary.
+    """Return a single concept from the vocabulary.
 
     If labels have not yet been fetched for this concept by the background task,
     they are fetched on-demand before the response is built.
@@ -1396,7 +1396,7 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
     hierarchy-building needed, and every concept carries its canonical URI.
     """
     lang = request.lang
-    skos_sources = ("agrovoc", "dbpedia", "wikidata")
+    skos_sources: tuple[str, ...] = () if request.offline else ("agrovoc", "dbpedia", "wikidata")
 
     # Phase 1: resolve all labels.  Vocabulary hits are resolved directly; unknown
     # labels are looked up in all SKOS sources in parallel so hierarchy paths and
