@@ -55,6 +55,14 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `docs/language-fallback-findings.md`.
 
 ### Fixed
+- **The vocabulary endpoints are reachable over MCP** — the MCP server takes its
+  snapshot of the routes when it is constructed, and it was constructed before
+  most of them existed, so an MCP client saw only the SKOS and EAN routers.
+  `/api/sources`, `/api/ancestors`, `/api/vocabulary`, `/api/vocabulary/resolve`
+  and `/api/lookup` are now tools like the rest. Writing a concept
+  (`PUT /api/vocabulary/{id}`) is deliberately not: it edits `vocabulary.yaml`
+  and commits it. The cache endpoint's exclusion named an operation id that does
+  not exist, so it had been exposed despite being on the list; it is excluded now.
 - **`clothing/underwear` no longer reports 37 sources** — its `source_uris` was
   written as a single value rather than a list, and YAML makes that a string.
   A string is iterable, so the concept was served with one "source URI" per

@@ -581,14 +581,6 @@ async def _log_validation_error(request: Request, exc: RequestValidationError) -
 app.include_router(skos.router, prefix="/api/skos", tags=["skos"])
 app.include_router(ean.router, prefix="/api/ean", tags=["ean"])
 
-_mcp = FastApiMCP(
-    app,
-    name="tingbok",
-    description="Product and category lookup service for domestic inventory systems",
-    exclude_operations=["health_health_get", "cache_stats_api_skos_cache_get"],
-)
-_mcp.mount_http()
-
 
 @app.get("/", include_in_schema=False)
 async def root(request: Request):
@@ -1754,3 +1746,24 @@ async def lookup_concept(
         description=best_description,
         wikipediaUrl=wikipedia_url,
     )
+
+
+# The MCP server snapshots the app's routes when it is constructed, so this has
+# to come after every endpoint in this module and not merely after the routers
+# are included — built at the top, it saw the two routers and none of the
+# vocabulary, sources or ancestors endpoints, which is not what an
+# ``exclude_operations`` denylist is asking for.
+_mcp = FastApiMCP(
+    app,
+    name="tingbok",
+    description="Product and category lookup service for domestic inventory systems",
+    exclude_operations=[
+        "health_health_get",
+        # Was spelled "cache_stats_api_skos_cache_get", which is not the
+        # operation id FastAPI generates, so the endpoint was never excluded.
+        "cache_api_skos_cache_get",
+        # Read-only over MCP: this one rewrites vocabulary.yaml and commits it.
+        "put_vocabulary_concept_api_vocabulary__concept_id__put",
+    ],
+)
+_mcp.mount_http()
