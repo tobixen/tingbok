@@ -18,7 +18,8 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi_mcp import FastApiMCP
+from fastmcp import FastMCP
+from fastmcp.server.providers.openapi import MCPType, RouteMap
 
 from tingbok import __version__
 from tingbok.models import (
@@ -540,7 +541,11 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
     labels_task = asyncio.create_task(_fetch_labels_background())
     refresh_task = asyncio.create_task(skos_service.cache_refresh_loop(SKOS_CACHE_DIR, max_age_seconds, divisor))
     try:
-        yield
+        # The MCP app mounted at /mcp owns a session manager that only exists
+        # for the duration of its own lifespan; a mount does not run it, so it
+        # is entered here or /mcp is dead on arrival.
+        async with _mcp_app.lifespan(app):
+            yield
     finally:
         for task in (discovery_task, labels_task, refresh_task):
             task.cancel()
@@ -1751,19 +1756,54 @@ async def lookup_concept(
 # The MCP server snapshots the app's routes when it is constructed, so this has
 # to come after every endpoint in this module and not merely after the routers
 # are included — built at the top, it saw the two routers and none of the
-# vocabulary, sources or ancestors endpoints, which is not what an
-# ``exclude_operations`` denylist is asking for.
-_mcp = FastApiMCP(
+# vocabulary, sources or ancestors endpoints, which is not what an exclusion
+# list is asking for.
+#
+# Exclusions are matched on method and path rather than on FastAPI's generated
+# operation ids: an id is a name FastAPI derives and may change, and an
+# exclusion naming an id that does not exist fails open — the endpoint stays
+# exposed and nothing complains.  A path pattern says what is meant.
+_mcp = FastMCP.from_fastapi(
     app,
     name="tingbok",
-    description="Product and category lookup service for domestic inventory systems",
-    exclude_operations=[
-        "health_health_get",
-        # Was spelled "cache_stats_api_skos_cache_get", which is not the
-        # operation id FastAPI generates, so the endpoint was never excluded.
-        "cache_api_skos_cache_get",
+    instructions="Product and category lookup service for domestic inventory systems",
+    route_maps=[
+        RouteMap(pattern=r"^/health$", mcp_type=MCPType.EXCLUDE),
+        RouteMap(pattern=r"^/api/skos/cache$", mcp_type=MCPType.EXCLUDE),
         # Read-only over MCP: this one rewrites vocabulary.yaml and commits it.
-        "put_vocabulary_concept_api_vocabulary__concept_id__put",
+        RouteMap(methods=["PUT"], pattern=r"^/api/vocabulary/", mcp_type=MCPType.EXCLUDE),
     ],
 )
-_mcp.mount_http()
+
+# ``http_app()`` is a Starlette app with a lifespan of its own (it owns the
+# session manager); mounting it without running that lifespan yields a /mcp
+# that 500s on the first request.  ``lifespan`` above enters it around its own
+# yield, which is why this is a module global rather than a local.
+_mcp_app = _mcp.http_app(path="/")
+
+
+class _BareMcpPath:
+    """Serve the MCP endpoint at ``/mcp`` as well as at ``/mcp/``.
+
+    ``http_app()`` insists on a route path starting with ``/``, so the endpoint
+    can only sit at ``/mcp/`` once mounted.  Starlette's ``Mount`` does not
+    match the prefix on its own, so bare ``/mcp`` falls through to the router's
+    slash redirect: a 307 preserves method and body, and a client that follows
+    redirects is fine, but the previous MCP mount answered ``/mcp`` directly and
+    an already-configured client should not have to care.
+
+    Rewriting the scope is deliberate — a ``BaseHTTPMiddleware`` would wrap the
+    response, and this endpoint streams server-sent events.
+    """
+
+    def __init__(self, app: object) -> None:
+        self._app = app
+
+    async def __call__(self, scope: dict, receive: object, send: object) -> None:
+        if scope["type"] == "http" and scope.get("path") == "/mcp":
+            scope = {**scope, "path": "/mcp/", "raw_path": b"/mcp/"}
+        await self._app(scope, receive, send)
+
+
+app.mount("/mcp", _mcp_app)
+app.add_middleware(_BareMcpPath)

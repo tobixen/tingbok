@@ -27,10 +27,11 @@ dependencies = [
     "niquests>=3.0",
     "ruamel.yaml>=0.18",
     "rapidfuzz>=3.0",
-    "fastapi-mcp>=0.3",
-    # fastapi-mcp 0.4.0 (last released 2025-07-28) calls Server(name, description),
-    # which mcp 2.x rejects; unpinned, a fresh install breaks `import tingbok.app`.
-    "mcp>=1.12,<2",
+    # fastmcp, not fastapi-mcp: the latter's last release (0.4.0, 2025-07-28)
+    # calls the mcp SDK's Server() the way only mcp 1.x accepts, so it pins the
+    # whole project below mcp 2.  fastmcp carries mcp>=2 itself, which is why
+    # mcp is not named here — nothing in tingbok imports it directly.
+    "fastmcp>=4.0.1,<5",
 ]
 
 [project.scripts]
@@ -73,6 +74,4 @@ testpaths = ["tests"]
 addopts = ["--disable-socket", "--allow-unix-socket"]
 filterwarnings = [
     "error",
-    # fastapi-mcp uses a deprecated Pydantic API; suppress until upstream fixes it
-    "ignore::pydantic.warnings.PydanticDeprecatedSince211",
 ]

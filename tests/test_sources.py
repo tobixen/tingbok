@@ -164,7 +164,8 @@ def test_the_shipped_vocabulary_has_no_scalar_source_uris() -> None:
     assert scalars == []
 
 
-def test_the_mcp_surface_covers_the_endpoints_and_excludes_vocabulary_writes() -> None:
+@pytest.mark.anyio
+async def test_the_mcp_surface_covers_the_endpoints_and_excludes_vocabulary_writes() -> None:
     """The MCP server snapshots routes at construction time.
 
     Built before the endpoints in ``app.py`` were defined, it saw only the two
@@ -172,15 +173,15 @@ def test_the_mcp_surface_covers_the_endpoints_and_excludes_vocabulary_writes() -
     an MCP client despite being announced as API additions.
 
     The exclusion is asserted over the route each tool maps to, not over a
-    literal operation id: the bug this guards against was an
-    ``exclude_operations`` entry naming an id FastAPI does not generate, and an
-    assertion that a particular string is absent passes just as happily when
-    the id has changed and the endpoint is exposed under a new name.
+    literal operation id: the bug this guards against was an exclusion naming
+    an id FastAPI does not generate, and an assertion that a particular string
+    is absent passes just as happily when the id has changed and the endpoint
+    is exposed under a new name.
     """
     import tingbok.app as app_module
 
-    exposed = app_module._mcp.operation_map
-    routes = {(v["method"].lower(), v["path"]) for v in exposed.values()}
+    tools = await app_module._mcp.list_tools()
+    routes = {(t._route.method.lower(), t._route.path) for t in tools}
 
     assert ("get", "/api/sources") in routes
     assert ("get", "/api/ancestors/{concept_id}") in routes

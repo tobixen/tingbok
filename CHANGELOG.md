@@ -33,6 +33,18 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `DEPLOYMENT.md` for the one-time setup a fresh clone needs.
 
 ### Changed
+- **The MCP server runs on `fastmcp` and MCP SDK 2.x** — the endpoint is still at
+  `/mcp` and exposes the same 13 endpoints, but `fastapi-mcp` is gone. Its last
+  release (0.4.0, 2025-07-28) calls the SDK's `Server()` in a way only `mcp` 1.x
+  accepts, so once `mcp` 2.0 reached PyPI a clean install of tingbok could not
+  even import, and staying on it meant pinning the whole project below `mcp` 2
+  indefinitely. Which endpoints are exposed is now stated as method-and-path
+  patterns rather than as FastAPI's generated operation ids — an id is a name
+  FastAPI derives, and an exclusion naming an id that does not exist fails open,
+  which is exactly how the SKOS cache endpoint stayed reachable for a release.
+  `/mcp` without the trailing slash keeps working: mounting alone would answer
+  only `/mcp/` and leave a 307 behind, which not every configured client follows.
+
 - **What the code called the "package vocabulary" is now just the vocabulary** — nothing has been bundled as a package for some time, and the name misled on every read. Docstrings only.
 
 - **155 products and 115 price observations recovered from the server** — the deployed
@@ -84,15 +96,6 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   succeeded and the parse returned nothing — and an empty answer is cached as a
   definitive one. The transform lived as five copies, four of them one
   `str.replace` and the fifth an f-string; it is one function now.
-- **`mcp` pinned below 2.0** — `fastapi-mcp` declares only `mcp>=1.12.0`, and its
-  0.4.0 (last released 2025-07-28) still calls `Server(name, description)`, which
-  mcp 2.x rejects with `TypeError: Server.__init__() takes 2 positional arguments
-  but 3 were given`. Since mcp 2.0.0 hit PyPI every fresh install died on
-  `import tingbok.app`, so CI has been red on all five matrix jobs since
-  2026-08-07 while existing checkouts kept working on their installed mcp 1.x.
-  Pinning is a holding action: `fastapi-mcp` has had no release in over a year,
-  and if it stays dead the seven lines of `FastApiMCP` mounting should be
-  replaced rather than pinned around.
 - **Bogus yogurt price removed** — Pilos yogurt 3.6% 1kg (`4056489941200`) carried two
   prices for 2026-07-31 at the same shop, 1.53 and 0.66 EUR; the 0.66 was dropped.
 - **A concept can no longer become its own ancestor** — `/api/vocabulary/resolve`
