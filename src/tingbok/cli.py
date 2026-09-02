@@ -53,10 +53,11 @@ import time
 from pathlib import Path
 
 from tingbok import __version__
+from tingbok.sources import skos_lookup_sources
 
-#: Sources whose labels can be fetched through the SKOS service.  OFF and GPT
-#: are in the source registry but carry their labels in their own downloads.
-_SKOS_LABEL_SOURCES = frozenset({"agrovoc", "dbpedia", "wikidata"})
+#: Sources whose labels can be fetched through the SKOS service.  The fact
+#: itself lives on the registry entry; this is only the set-shaped view of it.
+_SKOS_LABEL_SOURCES = frozenset(skos_lookup_sources())
 
 
 # ---------------------------------------------------------------------------
@@ -124,7 +125,7 @@ def _populate_uris(
         discovered: list[str] = []
 
         # SKOS sources: agrovoc always included (Oxigraph if available, REST fallback)
-        for source in ("agrovoc", "dbpedia", "wikidata"):
+        for source in skos_lookup_sources():
             if source in excluded:
                 continue
             try:

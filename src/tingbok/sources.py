@@ -38,6 +38,10 @@ class Source:
             which is what the TODO item about normalising source URIs to https
             is really about.
         homepage: Where a human can go to read about the source.
+        skos_lookup: True when a concept's labels, description and broader
+            can be fetched from this source through the SKOS service.  OFF and
+            GPT are real sources but carry their labels in their own bulk
+            downloads, so there is nothing to look up per concept.
         is_self: True for tingbok's own concept URIs.  Such a URI identifies a
             tingbok concept rather than an upstream one, so it is not something
             to look up upstream — :func:`uri_to_source` returns ``None`` for it.
@@ -50,6 +54,7 @@ class Source:
     uri_prefixes: tuple[str, ...] = ()
     hosts: tuple[str, ...] = ()
     homepage: str | None = None
+    skos_lookup: bool = False
     is_self: bool = False
 
 
@@ -60,18 +65,21 @@ SOURCES: tuple[Source, ...] = (
         label="AGROVOC",
         hosts=("aims.fao.org",),
         homepage="https://agrovoc.fao.org/",
+        skos_lookup=True,
     ),
     Source(
         name="dbpedia",
         label="DBpedia",
         hosts=("dbpedia.org",),
         homepage="https://www.dbpedia.org/",
+        skos_lookup=True,
     ),
     Source(
         name="wikidata",
         label="Wikidata",
         hosts=("wikidata.org",),
         homepage="https://www.wikidata.org/",
+        skos_lookup=True,
     ),
     Source(
         name="off",
@@ -93,6 +101,14 @@ SOURCES: tuple[Source, ...] = (
         is_self=True,
     ),
 )
+
+
+def skos_lookup_sources() -> tuple[str, ...]:
+    """Names of the sources the SKOS service can look a concept up in.
+
+    Registry order, so callers iterating it keep a stable, documented order.
+    """
+    return tuple(source.name for source in SOURCES if source.skos_lookup)
 
 
 def source_by_name(name: str) -> Source | None:

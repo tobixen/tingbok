@@ -96,3 +96,31 @@ async def test_get_sources_covers_the_registry(client) -> None:
     response = await client.get("/api/sources")
     served = {s["name"] for s in response.json()["sources"]}
     assert served == {s.name for s in SOURCES}
+
+
+def test_skos_lookup_is_a_registry_fact() -> None:
+    """Which sources support SKOS lookup belongs on the Source, not in a set.
+
+    It was written as a fresh frozenset in cli.py and as an inline tuple in
+    five more places, which is the duplication tingbok/sources.py exists to
+    end — a new SKOS-capable source would have had to be added in six.
+    """
+    from tingbok.sources import skos_lookup_sources, source_by_name
+
+    assert skos_lookup_sources() == ("agrovoc", "dbpedia", "wikidata")
+    assert source_by_name("dbpedia").skos_lookup is True
+    assert source_by_name("off").skos_lookup is False, "OFF carries labels in its own download"
+
+
+def test_a_lookalike_host_is_not_classified_as_a_known_source() -> None:
+    """``notdbpedia.org`` and ``dbpedia.org.evil.example`` are not DBpedia.
+
+    A substring test says they are.  This is the reason the registry matches on
+    host with a dot boundary, so anything classifying a URI has to come through
+    here rather than writing ``"dbpedia.org" in uri``.
+    """
+    from tingbok.sources import uri_to_source
+
+    assert uri_to_source("https://notdbpedia.org/resource/Food") is None
+    assert uri_to_source("https://dbpedia.org.evil.example/resource/Food") is None
+    assert uri_to_source("https://de.dbpedia.org/resource/Saucen") == "dbpedia"

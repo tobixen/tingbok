@@ -1162,9 +1162,53 @@ def _upstream_get_description(uri: str, source: str, lang: str) -> str | None:
     return None
 
 
+def _dbpedia_data_uri(uri: str) -> str | None:
+    """Return the JSON data URI for a DBpedia resource URI, or ``None``.
+
+    DBpedia serves the machine-readable form of ``<host>/resource/<name>`` at
+    ``<host>/data/<name>.json``.  Every fetcher here used to spell that out as
+    ``uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/")``
+    — which matched neither the https:// form the vocabulary actually stores
+    (284 of 284 concepts) nor the language subdomains that turn up in client
+    data, and silently left the URI unchanged in both cases.  Rebuilding it
+    from the host and the local name handles all of them, and keeps the source
+    host rather than redirecting a ``de.dbpedia.org`` lookup to the English
+    site, which would answer about a different article.
+    """
+    match = re.match(r"^https?://([^/]+)/resource/(.+)$", uri)
+    if not match or uri_to_source(uri) != "dbpedia":
+        return None
+    host, local = match.groups()
+    return f"https://{host}/data/{local}.json"
+
+
+def _dbpedia_resource_keys(uri: str) -> tuple[str, ...]:
+    """The keys a DBpedia data document may describe *uri* under.
+
+    The document is keyed by the resource IRI, and DBpedia's canonical spelling
+    of that is ``http://`` — while the vocabulary stores ``https://`` for all
+    284 of its DBpedia concepts.  Looking it up under the URI as given finds
+    nothing, so the fetch succeeds and the parse comes back empty, which the
+    caller caches as a definitive answer.  Canonical spelling first.
+    """
+    without_scheme = uri.split("://", 1)[-1]
+    return (f"http://{without_scheme}", f"https://{without_scheme}")
+
+
+def _dbpedia_resource_data(data: dict, uri: str) -> dict:
+    """Pull *uri*'s own entry out of a DBpedia data document."""
+    for key in _dbpedia_resource_keys(uri):
+        entry = data.get(key)
+        if entry:
+            return entry
+    return {}
+
+
 def _get_dbpedia_description(uri: str, lang: str) -> str | None:
     """Fetch rdfs:comment for a DBpedia resource via the data API."""
-    data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
+    data_uri = _dbpedia_data_uri(uri)
+    if data_uri is None:
+        return None
     try:
         with niquests.Session() as session:
             response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
@@ -1176,7 +1220,7 @@ def _get_dbpedia_description(uri: str, lang: str) -> str | None:
     if data is None:
         return None
 
-    resource_data = data.get(uri, {})
+    resource_data = _dbpedia_resource_data(data, uri)
     for predicate in (
         "http://www.w3.org/2000/01/rdf-schema#comment",
         "http://dbpedia.org/ontology/description",
@@ -1657,7 +1701,9 @@ def _lookup_dbpedia(label: str, lang: str) -> tuple[dict | None, bool]:
 
 def _get_broader_dbpedia(uri: str, lang: str) -> list[dict]:
     """Fetch skos:broader concepts for a DBpedia URI via the data API."""
-    data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
+    data_uri = _dbpedia_data_uri(uri)
+    if data_uri is None:
+        return []
     try:
         with niquests.Session() as session:
             response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
@@ -1669,7 +1715,7 @@ def _get_broader_dbpedia(uri: str, lang: str) -> list[dict]:
     if data is None:
         return []
 
-    resource_data = data.get(uri, {})
+    resource_data = _dbpedia_resource_data(data, uri)
     broader_entries = resource_data.get("http://www.w3.org/2004/02/skos/core#broader", [])
     if not broader_entries:
         broader_entries = resource_data.get("http://dbpedia.org/ontology/broader", [])
@@ -1975,7 +2021,9 @@ def _get_dbpedia_labels(uri: str, languages: list[str]) -> dict[str, str] | None
     Returns ``None`` on transient (non-HTTP) errors; ``{}`` when the server
     responded but found no labels (e.g. 404).
     """
-    data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
+    data_uri = _dbpedia_data_uri(uri)
+    if data_uri is None:
+        return None
     try:
         with niquests.Session() as session:
             response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
@@ -1991,7 +2039,7 @@ def _get_dbpedia_labels(uri: str, languages: list[str]) -> dict[str, str] | None
         return {}
 
     labels: dict[str, str] = {}
-    resource_data = data.get(uri, {})
+    resource_data = _dbpedia_resource_data(data, uri)
     for entry in resource_data.get("http://www.w3.org/2000/01/rdf-schema#label", []):
         lang = entry.get("lang", "")
         value = entry.get("value", "")
@@ -2028,7 +2076,9 @@ def _get_wikidata_labels(uri: str, languages: list[str]) -> dict[str, str] | Non
 
 def _get_dbpedia_alt_labels(uri: str, languages: list[str]) -> dict[str, list[str]] | None:
     """Fetch SKOS altLabels for a DBpedia URI via the Data REST API."""
-    data_uri = uri.replace("http://dbpedia.org/resource/", "https://dbpedia.org/data/") + ".json"
+    data_uri = _dbpedia_data_uri(uri)
+    if data_uri is None:
+        return None
     try:
         with niquests.Session() as session:
             response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
@@ -2042,7 +2092,7 @@ def _get_dbpedia_alt_labels(uri: str, languages: list[str]) -> dict[str, list[st
     if data is None:
         return {}
     alts: dict[str, list[str]] = {}
-    resource_data = data.get(uri, {})
+    resource_data = _dbpedia_resource_data(data, uri)
     for entry in resource_data.get("http://www.w3.org/2004/02/skos/core#altLabel", []):
         lang = entry.get("lang", "")
         value = entry.get("value", "")
@@ -2119,8 +2169,9 @@ def _fetch_dbpedia_types(uri: str) -> set[str] | None:
 
     Returns the set of type URI strings, or ``None`` on network/parse error.
     """
-    local = uri.rsplit("/", 1)[-1]
-    data_uri = f"https://dbpedia.org/data/{local}.json"
+    data_uri = _dbpedia_data_uri(uri)
+    if data_uri is None:
+        return None
     try:
         with niquests.Session() as session:
             response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
@@ -2131,9 +2182,7 @@ def _fetch_dbpedia_types(uri: str) -> set[str] | None:
     data = _parse_json(response, uri)
     if data is None:
         return None
-    # The data endpoint key uses http://; try both variants for safety.
-    resource_key = f"http://dbpedia.org/resource/{local}"
-    resource_data = data.get(resource_key) or data.get(f"https://dbpedia.org/resource/{local}") or {}
+    resource_data = _dbpedia_resource_data(data, uri)
     type_entries = resource_data.get("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", [])
     return {e["value"] for e in type_entries if isinstance(e, dict) and e.get("type") == "uri"}
 
@@ -2201,13 +2250,15 @@ def is_non_concept_uri(uri: str, cache_dir: Path | None = None) -> bool | None:
 
     result: bool | None = None
 
-    if "dbpedia.org" in uri:
+    source = uri_to_source(uri)
+
+    if source == "dbpedia":
         types = _fetch_dbpedia_types(uri)
         if types is None:
             return None  # network error — do not remove
         result = bool(types & _DBPEDIA_BLOCKED_TYPES)
 
-    elif "wikidata.org" in uri:
+    elif source == "wikidata":
         qid = _extract_wikidata_qid(uri)
         if not qid:
             return None

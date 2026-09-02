@@ -36,7 +36,7 @@ from tingbok.services import ean as ean_service
 from tingbok.services import gpt as gpt_service
 from tingbok.services import off as off_service
 from tingbok.services import skos as skos_service
-from tingbok.sources import SOURCES
+from tingbok.sources import SOURCES, skos_lookup_sources
 from tingbok.text import number_variations
 
 logger = logging.getLogger(__name__)
@@ -327,7 +327,9 @@ async def _discover_source_uris_background() -> None:
         # AGROVOC REST API has too many false positives, so only use it when
         # the local Oxigraph store is available.
         agrovoc_available = skos_service.get_agrovoc_store(SKOS_CACHE_DIR) is not None
-        skos_sources = ("agrovoc", "dbpedia", "wikidata") if agrovoc_available else ("dbpedia", "wikidata")
+        skos_sources = (
+            skos_lookup_sources() if agrovoc_available else tuple(n for n in skos_lookup_sources() if n != "agrovoc")
+        )
         static_uris: list[str] = data.get("source_uris", [])
         excluded: set[str] = set(data.get("excluded_sources", []))
 
@@ -399,7 +401,7 @@ async def _fetch_concept_labels(concept_id: str, data: dict[str, Any]) -> None:
             continue
 
         try:
-            if source in ("agrovoc", "dbpedia", "wikidata"):
+            if source in skos_lookup_sources():
                 fetched = await asyncio.to_thread(
                     skos_service.get_labels, uri, _DEFAULT_FETCH_LANGUAGES, source, SKOS_CACHE_DIR
                 )
@@ -1400,7 +1402,7 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
     hierarchy-building needed, and every concept carries its canonical URI.
     """
     lang = request.lang
-    skos_sources: tuple[str, ...] = () if request.offline else ("agrovoc", "dbpedia", "wikidata")
+    skos_sources: tuple[str, ...] = () if request.offline else skos_lookup_sources()
 
     # Phase 1: resolve all labels.  Vocabulary hits are resolved directly; unknown
     # labels are looked up in all SKOS sources in parallel so hierarchy paths and
@@ -1598,7 +1600,7 @@ async def lookup_concept(
         return vocab_hit
 
     # 3. Query all SKOS sources in parallel, merge results
-    skos_sources = ("agrovoc", "dbpedia", "wikidata")
+    skos_sources = skos_lookup_sources()
     fetch_languages = _DEFAULT_FETCH_LANGUAGES
 
     # External sources index natural-language labels with spaces, not underscores or dashes.

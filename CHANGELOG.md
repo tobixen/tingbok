@@ -55,6 +55,18 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `docs/language-fallback-findings.md`.
 
 ### Fixed
+- **DBpedia descriptions and labels are actually fetched again** — the code that
+  turns a concept's DBpedia URI into the JSON endpoint behind it rewrote only the
+  `http://` spelling, while every one of the 284 DBpedia URIs in the vocabulary is
+  stored as `https://`. The rewrite was therefore a no-op for all of them, and the
+  request went to the HTML resource URL with `.json` glued on the end. Language
+  subdomains (`de.dbpedia.org`) were missed the same way, and are now kept rather
+  than being redirected to the English site, which would answer about a different
+  article. The response is also read back under DBpedia's canonical `http://`
+  key rather than under the URI as given, without which the request would have
+  succeeded and the parse returned nothing — and an empty answer is cached as a
+  definitive one. The transform lived as five copies, four of them one
+  `str.replace` and the fifth an f-string; it is one function now.
 - **`mcp` pinned below 2.0** — `fastapi-mcp` declares only `mcp>=1.12.0`, and its
   0.4.0 (last released 2025-07-28) still calls `Server(name, description)`, which
   mcp 2.x rejects with `TypeError: Server.__init__() takes 2 positional arguments
