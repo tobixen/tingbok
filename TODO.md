@@ -28,6 +28,23 @@ that project's `docs/TODO-CATEGORIES.md`, which has been retired.
   vocabulary cannot have a persistent ID, but could carry a temporary one, kept
   as long as some inventory still uses the category.
 
+## The deployed vocabulary.yaml was never migrated
+
+A deployment with `TINGBOK_DATA_DIR` set keeps its own `vocabulary.yaml`, seeded
+from the packaged copy once and never re-seeded (`bootstrap_data_dir` only
+copies when the file is absent). Two fixes landed in the packaged file on
+2026-09-02 that its copy therefore still lacks:
+
+* `food/spices` declaring `food/conditment` — a missing 's', so it advertises a
+  parent that 404s and a client building a tree from `broader` gets an orphan.
+* `clothing/underwear` with a scalar `source_uris`, served as 37 one-character
+  URIs. The loader and both writers now coerce it, so nothing corrupts further,
+  but the bad shape is still on disk.
+
+Neither is fixed by deploying. Either edit tingbok.plann.no's copy directly, or
+add a migration step that reconciles a data-dir vocabulary against the packaged
+one on startup.
+
 ## Data that should be filtered
 
 Recently (86e885b40f01149fe8cd263a841eb98933eb674f/b679cc6df936d3d8e0b9926afbbef4bb847f656f/1aaed1ed028dfa5ef7e93e2abe2e315712aab7f6) logic was added to filter away non-thingy concepts
