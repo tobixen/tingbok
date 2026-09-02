@@ -116,3 +116,40 @@ def test_calling_from_inside_an_event_loop_raises_without_a_stray_coroutine():
         return [str(w.message) for w in caught]
 
     assert asyncio.run(main()) == []
+
+
+def test_first_use_bootstraps_the_vocabulary_into_a_configured_data_dir(tmp_path, monkeypatch: pytest.MonkeyPatch):
+    """A TINGBOK_DATA_DIR that has no vocabulary.yaml yet must not be fatal.
+
+    The service's lifespan seeds the data dir from the packaged copy before
+    loading it.  The embedded entry point has to do the same: a client reaches
+    for it precisely when no service has ever run on that host, so there is
+    nobody else to have created the file.
+    """
+    data_dir = tmp_path / "data"
+    monkeypatch.setattr(app_module, "_DATA_BASE", data_dir)
+    monkeypatch.setattr(app_module, "VOCABULARY_PATH", data_dir / "vocabulary.yaml")
+    monkeypatch.setattr(app_module, "vocabulary", {})
+
+    vocab = embedded.get_vocabulary()
+
+    assert "food" in vocab
+    assert (data_dir / "vocabulary.yaml").exists()
+
+
+def test_first_use_loads_when_the_app_globals_are_empty(monkeypatch: pytest.MonkeyPatch):
+    """Cover the load branch itself, which conftest's autouse fixture hides.
+
+    ``_load_vocabulary`` runs for every test in the session, so by the time
+    anything here executes ``app_module.vocabulary`` is already populated and
+    the ``if not _app.vocabulary`` branch never runs.  Clearing it first is the
+    only way this module's own loading path is exercised at all.
+    """
+    monkeypatch.setattr(app_module, "vocabulary", {})
+    monkeypatch.setattr(app_module, "_vocab_uri_index", {})
+
+    vocab = embedded.get_vocabulary()
+
+    assert "food" in vocab
+    assert app_module.vocabulary, "the load must have populated the app module's global"
+    assert app_module._vocab_uri_index, "the URI index must have been rebuilt alongside it"

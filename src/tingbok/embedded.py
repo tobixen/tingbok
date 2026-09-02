@@ -15,6 +15,14 @@ declared* — the background label-fetching that enriches concepts from upstream
 sources needs the network and a running service, so ``labels`` and
 ``description`` may be thinner than the same concept served over HTTP.  Ids,
 hierarchy and source URIs are complete either way.
+
+That load happens once per process and is never repeated: there is no reload
+path here to match the service's, so a process that outlives an edit to
+``vocabulary.yaml`` keeps serving what the file said at first use.  Nor is the
+load synchronised — two threads racing into it both parse the YAML.  Neither is
+worth fixing for the intended use, which is a short-lived client run that wanted
+a running tingbok and did not get one; a long-lived embedded consumer is not a
+supported shape, and should talk to the service over HTTP.
 """
 
 from __future__ import annotations
@@ -30,6 +38,7 @@ from tingbok.sources import SOURCES
 def _ensure_loaded() -> dict[str, Any]:
     """Load the vocabulary into the app module if it is not there yet."""
     if not _app.vocabulary:
+        _app.bootstrap_data_dir()
         _app.vocabulary = _app._load_vocabulary()
         _app._vocab_uri_index = _app._build_vocab_uri_index(_app.vocabulary)
     return _app.vocabulary

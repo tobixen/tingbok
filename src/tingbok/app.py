@@ -486,18 +486,28 @@ def _toggle_log_level(signum: int, frame: object) -> None:  # noqa: ARG001
         logger.info("SIGUSR1: debug logging enabled. Send SIGUSR1 again to disable.")
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):  # noqa: ARG001
-    """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
-    global vocabulary, ean_observations  # noqa: PLW0603
+def bootstrap_data_dir() -> None:
+    """Seed a configured ``TINGBOK_DATA_DIR`` with the packaged vocabulary.
 
-    # Bootstrap: copy default vocabulary.yaml to data dir if it doesn't exist yet.
+    Only does anything when ``TINGBOK_DATA_DIR`` is set and the file is not
+    there yet.  Both entry points need it before they load: the service through
+    its lifespan, and :mod:`tingbok.embedded` on first use — an embedded client
+    is typically running on a host where no service ever started, so there is
+    nobody else to have created the file.
+    """
     if _DATA_BASE and not VOCABULARY_PATH.exists():
         _DATA_BASE.mkdir(parents=True, exist_ok=True)
         _pkg_vocab = Path(__file__).parent / "data" / "vocabulary.yaml"
         shutil.copy(_pkg_vocab, VOCABULARY_PATH)
         logger.info("Bootstrapped vocabulary.yaml to %s", VOCABULARY_PATH)
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):  # noqa: ARG001
+    """Load vocabulary on startup, then kick off background URI discovery and label fetching."""
+    global vocabulary, ean_observations  # noqa: PLW0603
+
+    bootstrap_data_dir()
     vocabulary = _load_vocabulary()
     global _vocab_uri_index  # noqa: PLW0603
     _vocab_uri_index = _build_vocab_uri_index(vocabulary)
