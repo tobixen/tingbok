@@ -124,3 +124,75 @@ def test_a_lookalike_host_is_not_classified_as_a_known_source() -> None:
     assert uri_to_source("https://notdbpedia.org/resource/Food") is None
     assert uri_to_source("https://dbpedia.org.evil.example/resource/Food") is None
     assert uri_to_source("https://de.dbpedia.org/resource/Saucen") == "dbpedia"
+
+
+def test_a_scalar_source_uris_is_coerced_to_a_list(tmp_path) -> None:
+    """A single URI written without a list dash must not become 37 URIs.
+
+    YAML makes ``source_uris: https://…`` a string, and a string is iterable,
+    so every consumer that treats it as a list gets one character per entry —
+    served over the API, and each one classified as an unknown source by
+    ``/api/sources`` clients.  The loader already coerces ``broader`` this way.
+    """
+    import tingbok.app as app_module
+
+    path = tmp_path / "vocabulary.yaml"
+    path.write_text(
+        """
+concepts:
+  widgets:
+    prefLabel: Widgets
+    source_uris: https://www.wikidata.org/wiki/Q198763
+"""
+    )
+    vocab = app_module._load_vocabulary(path)
+
+    assert vocab["widgets"]["source_uris"] == ["https://www.wikidata.org/wiki/Q198763"]
+
+
+def test_the_shipped_vocabulary_has_no_scalar_source_uris() -> None:
+    """The loader fixes it on read; the file should be right too."""
+    import yaml
+
+    from tingbok.app import VOCABULARY_PATH
+
+    with open(VOCABULARY_PATH) as f:
+        raw = yaml.safe_load(f)
+    scalars = [
+        cid for cid, entry in (raw.get("concepts") or {}).items() if entry and isinstance(entry.get("source_uris"), str)
+    ]
+    assert scalars == []
+
+
+def test_the_writer_coerces_a_scalar_source_uris(tmp_path) -> None:
+    """The write path never goes through ``_load_vocabulary``.
+
+    It reads the file with ruamel to preserve formatting, so the loader's
+    coercion does not protect it: appending to a string raises, and removing
+    from one rewrites the file with a list of single characters — which is then
+    git-committed.  A deployment's own vocabulary.yaml under TINGBOK_DATA_DIR is
+    seeded once and never migrated, so the bad shape can still be on disk.
+    """
+    import tingbok.app as app_module
+    from tingbok.models import VocabularyConceptUpdateRequest
+
+    path = tmp_path / "vocabulary.yaml"
+    path.write_text(
+        """
+concepts:
+  widgets:
+    prefLabel: Widgets
+    source_uris: https://www.wikidata.org/wiki/Q1
+"""
+    )
+    app_module._write_vocabulary_concept_update(
+        "widgets",
+        VocabularyConceptUpdateRequest(add_source_uris=["https://dbpedia.org/resource/Widget"]),
+        path,
+    )
+
+    written = app_module._load_vocabulary(path)["widgets"]["source_uris"]
+    assert written == [
+        "https://www.wikidata.org/wiki/Q1",
+        "https://dbpedia.org/resource/Widget",
+    ]

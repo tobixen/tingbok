@@ -2007,7 +2007,8 @@ concepts:
 
   clothing/underwear:
     prefLabel: "Underwear"
-    source_uris: https://www.wikidata.org/wiki/Q198763
+    source_uris:
+      - https://www.wikidata.org/wiki/Q198763
 
   clothing/workwear:
     prefLabel: "Workwear"

@@ -55,6 +55,15 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `docs/language-fallback-findings.md`.
 
 ### Fixed
+- **`clothing/underwear` no longer reports 37 sources** — its `source_uris` was
+  written as a single value rather than a list, and YAML makes that a string.
+  A string is iterable, so the concept was served with one "source URI" per
+  character. The loader now coerces a lone string to a one-item list, the way it
+  already did for `broader` — and so do the paths that *write* the file, which
+  read it with ruamel and never went through the loader: appending to a scalar
+  raised, and removing from one rewrote the file with 37 single-character
+  entries and committed it. That matters for a deployment whose own copy under
+  `TINGBOK_DATA_DIR` was seeded before this fix and is never re-seeded.
 - **DBpedia descriptions and labels are actually fetched again** — the code that
   turns a concept's DBpedia URI into the JSON endpoint behind it rewrote only the
   `http://` spelling, while every one of the 284 DBpedia URIs in the vocabulary is

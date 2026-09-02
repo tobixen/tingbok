@@ -38,6 +38,7 @@ from tingbok.services import off as off_service
 from tingbok.services import skos as skos_service
 from tingbok.sources import SOURCES, skos_lookup_sources
 from tingbok.text import number_variations
+from tingbok.vocabulary_file import coerce_scalar_source_uris
 
 logger = logging.getLogger(__name__)
 
@@ -272,6 +273,9 @@ def _load_vocabulary(path: Path | None = None) -> dict[str, Any]:
     with open(p) as f:
         data = yaml.safe_load(f)
     concepts: dict[str, Any] = data.get("concepts", {})
+
+    # Pass 0: normalise the document's shape (see tingbok.vocabulary_file).
+    coerce_scalar_source_uris(concepts)
 
     # Pass 1: infer ``broader`` for path-style IDs that have none.
     for concept_id, entry in concepts.items():
@@ -1164,6 +1168,13 @@ def _write_vocabulary_concept_update(
         doc = {"concepts": {}}
 
     concepts: dict = doc.setdefault("concepts", {})
+
+    # This path reads with ruamel and never goes through _load_vocabulary, so
+    # it needs the same normalisation: a deployment's own copy under
+    # TINGBOK_DATA_DIR is seeded once and never migrated, so the bad shape can
+    # still be on disk even though the packaged file is fixed.
+    coerce_scalar_source_uris(concepts)
+
     parts = concept_id.split("/")
 
     # Ensure all ancestor concepts exist.

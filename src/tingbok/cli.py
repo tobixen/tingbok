@@ -54,6 +54,7 @@ from pathlib import Path
 
 from tingbok import __version__
 from tingbok.sources import skos_lookup_sources
+from tingbok.vocabulary_file import coerce_scalar_source_uris
 
 #: Sources whose labels can be fetched through the SKOS service.  The fact
 #: itself lives on the registry entry; this is only the set-shaped view of it.
@@ -113,6 +114,7 @@ def _populate_uris(
     # --- Discover URIs ---
     updates: dict[str, list[str]] = {}  # concept_id -> list of new URIs
 
+    coerce_scalar_source_uris(concepts)
     for concept_id, data in concepts.items():
         if data is None:
             continue
@@ -234,6 +236,7 @@ def _condense_vocabulary(vocab_path: Path, *, dry_run: bool = False) -> int:
     concepts: dict = doc.get("concepts", {})
     changes = 0
 
+    coerce_scalar_source_uris(concepts)
     for concept_id, data in concepts.items():
         if data is None:
             continue
@@ -371,6 +374,7 @@ def _prune_vocabulary(
     alt_removals: dict[str, dict[str, set[str]]] = {}  # concept_id -> lang -> set of altLabel values to remove
     deviations: list[str] = []
 
+    coerce_scalar_source_uris(concepts)
     print(f"Checking {len(concepts)} concepts against sources...")
 
     for concept_id, data in concepts.items():
