@@ -28,6 +28,9 @@ dependencies = [
     "ruamel.yaml>=0.18",
     "rapidfuzz>=3.0",
     "fastapi-mcp>=0.3",
+    # fastapi-mcp 0.4.0 (last released 2025-07-28) calls Server(name, description),
+    # which mcp 2.x rejects; unpinned, a fresh install breaks `import tingbok.app`.
+    "mcp>=1.12,<2",
 ]
 
 [project.scripts]

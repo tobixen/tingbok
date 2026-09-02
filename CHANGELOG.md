@@ -55,6 +55,15 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `docs/language-fallback-findings.md`.
 
 ### Fixed
+- **`mcp` pinned below 2.0** — `fastapi-mcp` declares only `mcp>=1.12.0`, and its
+  0.4.0 (last released 2025-07-28) still calls `Server(name, description)`, which
+  mcp 2.x rejects with `TypeError: Server.__init__() takes 2 positional arguments
+  but 3 were given`. Since mcp 2.0.0 hit PyPI every fresh install died on
+  `import tingbok.app`, so CI has been red on all five matrix jobs since
+  2026-08-07 while existing checkouts kept working on their installed mcp 1.x.
+  Pinning is a holding action: `fastapi-mcp` has had no release in over a year,
+  and if it stays dead the seven lines of `FastApiMCP` mounting should be
+  replaced rather than pinned around.
 - **Bogus yogurt price removed** — Pilos yogurt 3.6% 1kg (`4056489941200`) carried two
   prices for 2026-07-31 at the same shop, 1.53 and 0.66 EUR; the 0.66 was dropped.
 - **A concept can no longer become its own ancestor** — `/api/vocabulary/resolve`
