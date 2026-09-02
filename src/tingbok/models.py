@@ -267,7 +267,12 @@ class SourcesResponse(BaseModel):
 
 
 class AncestorsResponse(BaseModel):
-    """Response for ``GET /api/vocabulary/{concept_id}/ancestors``."""
+    """Response for ``GET /api/ancestors/{concept_id}``.
+
+    Its own namespace rather than ``/api/vocabulary/{id}/ancestors``: concept
+    ids are themselves paths, so that shape collides with a concept genuinely
+    called ``x/ancestors``.
+    """
 
     #: The concept asked about.
     id: str

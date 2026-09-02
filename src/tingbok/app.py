@@ -1050,12 +1050,14 @@ async def get_sources() -> SourcesResponse:
 def _parents_of(concept_id: str, vocab: dict[str, Any]) -> list[str]:
     """Return the immediate parents of *concept_id* within *vocab*.
 
-    Declared ``broader`` wins.  When a concept declares none, the concept named
-    by its own path prefix is used if the vocabulary has it, which is what makes
-    ``epoxy/filler`` a child of ``epoxy`` rather than a second root beside it.
-    A path prefix that is not itself a concept yields no parent — inventing one
-    here would be a hierarchy decision, and unresolved labels are deliberately
-    left at the root for now.
+    Declared ``broader``, minus any entry the vocabulary does not have.  Turning
+    a path prefix into a parent — what makes ``food/nuts`` a child of ``food``
+    — is :func:`_load_vocabulary`'s job and is already recorded in ``broader``
+    by the time anything gets here; repeating the rule at this level would be
+    dead for a normally loaded vocabulary, and live only for a concept whose
+    declared parents all dangle, where it would make this function disagree with
+    the ``broader`` that ``GET /api/vocabulary/{id}`` serves for the same
+    concept.
     """
     data = vocab.get(concept_id)
     if data is None:
@@ -1063,14 +1065,10 @@ def _parents_of(concept_id: str, vocab: dict[str, Any]) -> list[str]:
     broader = data.get("broader") or []
     if isinstance(broader, str):
         broader = [broader]
-    parents = [b for b in broader if b in vocab]
-    if parents:
-        return parents
-    if "/" in concept_id:
-        parent = concept_id.rsplit("/", 1)[0]
-        if parent in vocab:
-            return [parent]
-    return []
+    # ``vocab.get(b) is not None``, not ``b in vocab``: a bare ``food:`` key in
+    # the YAML is a concept id whose value is null, and calling it a parent
+    # hands ``None`` to every consumer that then reads the concept's data.
+    return [b for b in broader if vocab.get(b) is not None]
 
 
 def ancestors_of(concept_id: str, vocab: dict[str, Any]) -> list[str]:
@@ -1080,8 +1078,9 @@ def ancestors_of(concept_id: str, vocab: dict[str, Any]) -> list[str]:
     reports all of them; already-seen concepts are skipped, which also breaks
     the broader/narrower cycles that turn up in upstream SKOS data.
 
-    The one implementation: ``GET /api/ancestors`` and
-    :func:`tingbok.embedded.get_ancestors` both call it.  Two hand-written
+    The one implementation: ``GET /api/ancestors``,
+    :func:`tingbok.embedded.get_ancestors` and :func:`_collect_with_ancestors`
+    (behind ``POST /api/vocabulary/resolve``) all call it.  Two hand-written
     copies of a tree walk that disagree subtly is the problem this endpoint
     exists to solve, and having one inside this repository would be worse than
     having one in a client.
@@ -1371,25 +1370,20 @@ def _add_input_label_as_altlabel(concept: VocabularyConcept, label: str, lang: s
 def _collect_with_ancestors(
     concept_id: str,
     result: dict[str, VocabularyConcept],
-    _visiting: frozenset[str] | None = None,
 ) -> None:
-    """Add concept_id and all its vocabulary ancestors to result, avoiding cycles."""
-    if concept_id in result:
-        return
-    visiting = _visiting or frozenset()
-    if concept_id in visiting:
-        return
+    """Add concept_id and all its vocabulary ancestors to result.
 
+    The walk itself is :func:`ancestors_of`, which is also what ``GET
+    /api/ancestors`` answers with — this only turns the ids it returns into
+    concepts.  Cycle-breaking comes with it.
+    """
     data = vocabulary.get(concept_id)
     if data is None:
         return
-    result[concept_id] = _vocabulary_concept_from_data(concept_id, data)
-
-    broader = data.get("broader", [])
-    if isinstance(broader, str):
-        broader = [broader]
-    for parent_id in broader:
-        _collect_with_ancestors(parent_id, result, visiting | {concept_id})
+    result.setdefault(concept_id, _vocabulary_concept_from_data(concept_id, data))
+    for ancestor_id in ancestors_of(concept_id, vocabulary):
+        if ancestor_id not in result:
+            result[ancestor_id] = _vocabulary_concept_from_data(ancestor_id, vocabulary[ancestor_id])
 
 
 @app.post("/api/vocabulary/resolve", response_model=VocabularyResolveResponse)

@@ -519,7 +519,7 @@ concepts:
       en: ["spice", "spices", "herbs", "seasonings"]
     broader:
     - food
-    - food/conditment
+    - food/condiments
     source_uris:
     - https://dbpedia.org/resource/Spice
     - https://www.wikidata.org/entity/Q42527
