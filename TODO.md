@@ -205,3 +205,20 @@ upstream.  Verify against `vocabulary.yaml` and the source data instead.
 "Plant-based foods and beverages" is not the same concept as "food" — it is a
 subcategory of it.
 
+## Follow-ups from the fastmcp migration (`5755391`)
+
+* **Five MCP tool names changed** and were not pinned: every route with a path
+  parameter lost its FastAPI-style suffix (`lookup_ean_api_ean__ean__get` →
+  `lookup_ean_api_ean`, likewise `observe_ean`, `lookup_concept`,
+  `get_vocabulary_concept`, `get_concept_ancestors`). A client that re-lists
+  tools each session will not notice; a hardcoded allowlist breaks.
+  `mcp_names={...}` on the `FastMCP.from_fastapi()` call in `app.py` restores
+  the old names in one line, if that is ever wanted.
+* **Dependency count went from 75 to 101** on a clean install — `fastmcp`'s
+  `[client,server]` extras pull in `authlib`, `cyclopts`, `py-key-value-aio`,
+  `opentelemetry-api` and `httpx2`. Large surface for one `/mcp` mount; not
+  investigated whether a narrower install (e.g. `fastmcp-slim` with a smaller
+  extras set) would do.
+* **`README.md` still does not document the `/mcp` endpoint** — pre-existing,
+  it was never documented under `fastapi-mcp` either.
+
