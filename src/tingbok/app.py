@@ -10,6 +10,7 @@ import subprocess
 import sys
 import time
 from contextlib import asynccontextmanager
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +28,7 @@ from tingbok.models import (
     HealthResponse,
     SourceInfo,
     SourcesResponse,
+    UpdateStatus,
     VocabularyConcept,
     VocabularyConceptUpdateRequest,
     VocabularyResolveRequest,
@@ -51,6 +53,13 @@ _CACHE_BASE = Path(os.environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache
 #: Optional writable data directory for vocabulary.yaml and ean-db.json.
 #: Set ``TINGBOK_DATA_DIR`` to enable git-tracked auto-commits on writes.
 _DATA_BASE: Path | None = Path(os.environ["TINGBOK_DATA_DIR"]) if os.environ.get("TINGBOK_DATA_DIR") else None
+
+#: Where the deployment's updater leaves its state.  Set
+#: ``TINGBOK_UPDATE_STATUS_FILE`` on a managed host; unset everywhere else, so a
+#: development checkout simply reports nothing about updates.
+_UPDATE_STATUS_FILE: Path | None = (
+    Path(os.environ["TINGBOK_UPDATE_STATUS_FILE"]) if os.environ.get("TINGBOK_UPDATE_STATUS_FILE") else None
+)
 
 #: Path to the runtime-writable vocabulary file.
 VOCABULARY_PATH: Path = (
@@ -710,6 +719,43 @@ def _normalize_ean_categories(categories: list[str]) -> list[str]:
     return result
 
 
+def _update_is_overdue(update: UpdateStatus) -> bool:
+    """True when the updater should have run again by now and has not.
+
+    The recorded failures only cover steps that got far enough to report.  A
+    run killed before that — no network for the fetch, a stopped timer, a unit
+    that will not start — leaves the last good status in place, where it reads
+    as health.  An attempt timestamp that has stopped advancing is the only
+    evidence left.
+    """
+    if update.stale_after_seconds is None or update.last_attempt is None:
+        return False
+    try:
+        last = datetime.fromisoformat(update.last_attempt)
+    except ValueError:
+        logger.warning("unparseable last_attempt in update status: %r", update.last_attempt)
+        return False
+    if last.tzinfo is None:
+        last = last.astimezone()
+    return (datetime.now().astimezone() - last).total_seconds() > update.stale_after_seconds
+
+
+def _read_update_status() -> UpdateStatus | None:
+    """Read the updater's state file, or None if there is nothing to report.
+
+    Everything here is best-effort: the file is written by a systemd unit that
+    may be midway through rewriting it, and an unreadable or half-written file
+    must never be the reason /health stops answering.
+    """
+    if _UPDATE_STATUS_FILE is None:
+        return None
+    try:
+        return UpdateStatus.model_validate_json(_UPDATE_STATUS_FILE.read_bytes())
+    except (OSError, ValueError):
+        logger.warning("could not read update status from %s", _UPDATE_STATUS_FILE, exc_info=True)
+        return None
+
+
 @app.get("/health", response_model=HealthResponse)
 async def health(request: Request):
     """Liveness check."""
@@ -720,7 +766,32 @@ async def health(request: Request):
         vocabulary_concepts_enriched=len(_concepts_fetched),
     )
     client_host = request.client.host if request.client else None
-    if client_host in {"127.0.0.1", "::1", "localhost"}:
+    is_local = client_host in {"127.0.0.1", "::1", "localhost"}
+
+    result.update = _read_update_status()
+    if result.update is None and _UPDATE_STATUS_FILE is not None and _UPDATE_STATUS_FILE.exists():
+        # There and unusable — truncated, corrupt, or readable by nobody.  The
+        # channel this endpoint reports through is broken, which is not the
+        # same answer as "no managed deployment" even though both carry no
+        # update block.  A file that is merely absent is left quiet: that is
+        # what a host looks like before the updater's first run.
+        result.status = "degraded"
+    if result.update is not None:
+        if (
+            result.update.install_failures > 0
+            or result.update.venv_rev != result.update.repo_rev
+            or _update_is_overdue(result.update)
+        ):
+            # The service answers fine; it is the deployment that is stuck.
+            result.status = "degraded"
+        if not is_local:
+            # pip and git quote filesystem paths in their errors, which is the
+            # very thing the paths block below is withheld for.  The revisions
+            # and the counter carry nothing, and are what a monitor needs, so
+            # only the error text is dropped.
+            result.update.last_error = None
+
+    if is_local:
         result.paths = {
             "vocabulary": str(VOCABULARY_PATH),
             "ean_db": str(EAN_OBSERVATIONS_PATH),

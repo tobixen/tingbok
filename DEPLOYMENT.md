@@ -121,6 +121,46 @@ ssh broxbox06.rl-tobias.c.bitbit.net sudo nixos-rebuild switch
 
 ## Checking service status
 
+The quickest check needs no ssh, because `/health` reports the updater's own state:
+
+```bash
+curl -s https://tingbok.plann.no/health | jq '.status, .update'
+```
+
+`status` is `degraded` — the service itself still answers — whenever the venv is behind
+the checkout, the last update run failed, or no run has happened for
+`stale_after_seconds` (a run killed before it could record anything, a stopped timer, a
+unit that will not start):
+
+```json
+{
+  "repo_rev": "5755391",
+  "venv_rev": "2686388",
+  "install_failures": 4,
+  "stage": "pip",
+  "last_error": null,
+  "last_attempt": "2026-09-05T14:30:04+02:00",
+  "last_success": "2026-09-05T12:00:03+02:00"
+}
+```
+
+`last_error` is `null` for anyone but a localhost client: pip and git quote filesystem
+paths in their errors, and that is what the `paths` block is withheld for.  Read it on
+the VM, where the whole block is served:
+
+```bash
+ssh broxbox06.rl-tobias.c.bitbit.net \
+  "curl -s http://127.0.0.1:5100/health | jq -r '.update.last_error'"
+```
+
+This exists because a failed update is otherwise silent: `tingbok.service` keeps serving
+from the code it imported at startup, so the breakage only surfaces at the next restart.
+`tingbok-update` writes the state via `scripts/update_status.py` to the file named by
+`TINGBOK_UPDATE_STATUS_FILE` (`/opt/tingbok/update-status.json` on the VM); off a managed
+host the variable is unset and `/health` reports no `update` block at all.
+
+For the detail behind a `degraded`:
+
 ```bash
 ssh broxbox06.rl-tobias.c.bitbit.net '
   systemctl status tingbok tingbok-update.timer

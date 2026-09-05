@@ -216,6 +216,36 @@ class VocabularyConceptUpdateRequest(BaseModel):
     remove_excluded_sources: list[str] = []
 
 
+class UpdateStatus(BaseModel):
+    """State of the deployment's self-update, as left by ``tingbok-update``.
+
+    The VM pulls and reinstalls itself on a timer, and a failure there is
+    invisible from the outside: the running service goes on serving the code it
+    imported at startup, and only dies at the next restart.  Reporting the state
+    on ``/health`` is what turns that into something a monitor can see.
+    """
+
+    #: Revision of the checkout the service runs from.
+    repo_rev: str | None = None
+    #: Revision the virtualenv was last successfully installed at.  Behind
+    #: ``repo_rev`` means a reinstall failed and is being retried.
+    venv_rev: str | None = None
+    #: Consecutive failed update runs; 0 once one succeeds.
+    install_failures: int = 0
+    #: Which step failed ("merge", "push", "pip"), if one did.
+    stage: str | None = None
+    #: Last failure, as reported by the failing command.
+    last_error: str | None = None
+    #: Timestamps of the last attempt and the last success, ISO 8601.
+    last_attempt: str | None = None
+    last_success: str | None = None
+    #: How long the updater may go without running before that is itself a
+    #: fault.  A failure that kills the run before anything can be recorded
+    #: leaves every other field looking healthy, so silence has to be the
+    #: signal; a stopped timer and a unit that will not start look the same.
+    stale_after_seconds: int | None = None
+
+
 class HealthResponse(BaseModel):
     """Health check response."""
 
@@ -232,6 +262,8 @@ class HealthResponse(BaseModel):
     cache_next_refresh_in_seconds: float | None = None
     #: File paths (localhost clients only).
     paths: dict[str, str] | None = None
+    #: Self-update state; absent when not running from a managed deployment.
+    update: UpdateStatus | None = None
 
 
 class SourceInfo(BaseModel):
