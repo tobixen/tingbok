@@ -169,6 +169,29 @@ ssh broxbox06.rl-tobias.c.bitbit.net '
 '
 ```
 
+## Anything fronting tingbok must forward X-Forwarded-For
+
+`/health` withholds its `paths` block (module, executable, data and cache dirs) from
+anyone but a localhost client, and decides that from `request.client.host`.  Behind a
+reverse proxy that is the *proxy's* address unless the proxy forwards the real one:
+uvicorn's proxy-header middleware is on by default and trusts `127.0.0.1`, but it only
+rewrites the client when an `X-Forwarded-For` header is actually present.
+
+nginx sends one only when `recommendedProxySettings` is on, which sets
+`X-Forwarded-For $proxy_add_x_forwarded_for`.  On broxbox06 it always has been —
+`services.nginx.recommendedProxySettings = true` is set globally by the matrix-server and
+chat-hub profiles the host also imports, and the per-location option inherits that — so
+the block has not in fact been exposed.  `roles/tingbok-server.nix` now sets it on the
+tingbok location explicitly all the same, because inheriting it from an unrelated profile
+means a host that imports the tingbok role *alone* would serve the block to the internet,
+and nothing about the role says so.
+
+Because `$proxy_add_x_forwarded_for` *appends* the real peer and uvicorn reads the list
+from the right, a client sending its own `X-Forwarded-For: 127.0.0.1` cannot forge its way
+in.  A direct request to `127.0.0.1:5100` on the VM sends no such header at all, so it is
+unaffected and still gets the full block.  Any other proxy put in front of tingbok needs
+the equivalent setting.
+
 ## Secrets required (not in git)
 
 | Path on VM | Purpose | Deploy script |

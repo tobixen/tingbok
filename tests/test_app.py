@@ -6,6 +6,7 @@ from unittest.mock import patch
 import pytest
 import yaml as _yaml
 from httpx import ASGITransport, AsyncClient
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 from tingbok.app import app
 
@@ -48,6 +49,50 @@ async def test_health_localhost_exposes_paths():
     assert "executable" in paths
     # cache_next_refresh_in_seconds is present (may be None if cache is empty)
     assert "cache_next_refresh_in_seconds" in data
+
+
+@pytest.mark.anyio
+async def test_health_withholds_paths_from_a_forged_forwarded_for():
+    """A remote client must not talk its way into the paths block.
+
+    Driven through uvicorn's own ProxyHeadersMiddleware rather than by setting
+    scope["client"] directly, because that middleware is what decides who the
+    client *is* behind a proxy; the gate below it is a set-membership test that
+    cannot be wrong on its own.  The proxy appends the real peer to whatever the
+    client sent and uvicorn walks the list from the right, so the forged
+    127.0.0.1 is never what it settles on.  If uvicorn ever goes back to reading
+    the leftmost entry, this is the test that notices.
+    """
+    wrapped = ProxyHeadersMiddleware(app, trusted_hosts="127.0.0.1")
+    async with AsyncClient(
+        transport=ASGITransport(app=wrapped, client=("127.0.0.1", 40000)),
+        base_url="https://tingbok.plann.no",
+    ) as ac:
+        response = await ac.get("/health", headers={"X-Forwarded-For": "127.0.0.1, 203.0.113.5"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
+    assert data.get("paths") is None
+    assert data.get("cache_oldest_entry_age_days") is None
+
+
+@pytest.mark.anyio
+async def test_a_proxy_that_forwards_nothing_looks_like_localhost():
+    """Why the reverse proxy has to be configured, pinned as a fact.
+
+    With no X-Forwarded-For to read, the middleware leaves the client as the
+    socket peer — the proxy itself — and every request off the internet then
+    passes the localhost gate.  Nothing in tingbok can detect that; it is why
+    roles/tingbok-server.nix sets recommendedProxySettings on the location and
+    why DEPLOYMENT.md tells anyone fronting tingbok to do the same.
+    """
+    wrapped = ProxyHeadersMiddleware(app, trusted_hosts="127.0.0.1")
+    async with AsyncClient(
+        transport=ASGITransport(app=wrapped, client=("127.0.0.1", 40000)),
+        base_url="https://tingbok.plann.no",
+    ) as ac:
+        response = await ac.get("/health")
+    assert response.json().get("paths") is not None
 
 
 @pytest.mark.anyio
