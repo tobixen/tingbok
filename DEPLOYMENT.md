@@ -192,6 +192,17 @@ in.  A direct request to `127.0.0.1:5100` on the VM sends no such header at all,
 unaffected and still gets the full block.  Any other proxy put in front of tingbok needs
 the equivalent setting.
 
+There is a second way in, and it is why the gate refuses `::1`.  uvicorn's middleware
+trusts the IPv4 literal `127.0.0.1` and nothing else by default, so a proxy that reaches
+uvicorn over IPv6 loopback — `proxy_pass` to a `localhost` that resolves to `::1`, or
+uvicorn bound to `::` — is not a trusted peer at all.  Its `X-Forwarded-For` is then
+ignored however correctly nginx sets it, and every request from the internet arrives with
+`request.client.host == "::1"`.  Trusting that address would hand the block to the world
+again, so tingbok does not: only IPv4 loopback opens the gate, including the
+`::ffff:127.0.0.1` form a dual-stack listener reports.  The cost is that a direct request
+over IPv6 loopback gets the public response — use `127.0.0.1`, or add `::1` to uvicorn's
+`--forwarded-allow-ips` *and* to the gate, together and deliberately.
+
 ## Secrets required (not in git)
 
 | Path on VM | Purpose | Deploy script |

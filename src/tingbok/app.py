@@ -1,6 +1,7 @@
 """FastAPI application for tingbok."""
 
 import asyncio
+import ipaddress
 import json
 import logging
 import os
@@ -756,6 +757,35 @@ def _read_update_status() -> UpdateStatus | None:
         return None
 
 
+def _is_loopback_client(client_host: str | None) -> bool:
+    """Is *client_host* an IPv4 loopback peer, and so entitled to the extra detail?
+
+    Compared as an address rather than against string literals, so the mapped
+    form a dual-stack listener reports (``::ffff:127.0.0.1``) counts as the
+    loopback it is.
+
+    ``::1`` deliberately does not.  uvicorn's proxy-header middleware defaults
+    to trusting the IPv4 literal ``127.0.0.1``, so a proxy that reaches uvicorn
+    over IPv6 loopback is not trusted, its ``X-Forwarded-For`` is ignored, and
+    every request from the internet arrives here as ``::1`` — which is the leak
+    this gate exists to prevent, wearing a different address.  A direct IPv6
+    loopback request loses the block as a result; that is the safe direction,
+    and DEPLOYMENT.md says so.
+
+    ``None`` is legal in ASGI (uvicorn reports it for a unix socket) and fails
+    closed like anything else unrecognised.
+    """
+    if client_host is None:
+        return False
+    try:
+        address = ipaddress.ip_address(client_host)
+    except ValueError:
+        return False
+    if (mapped := getattr(address, "ipv4_mapped", None)) is not None:
+        address = mapped
+    return address.version == 4 and address.is_loopback
+
+
 @app.get("/health", response_model=HealthResponse)
 async def health(request: Request):
     """Liveness check."""
@@ -765,8 +795,7 @@ async def health(request: Request):
         vocabulary_concepts=len(vocabulary),
         vocabulary_concepts_enriched=len(_concepts_fetched),
     )
-    client_host = request.client.host if request.client else None
-    is_local = client_host in {"127.0.0.1", "::1", "localhost"}
+    is_local = _is_loopback_client(request.client.host if request.client else None)
 
     result.update = _read_update_status()
     if result.update is None and _UPDATE_STATUS_FILE is not None and _UPDATE_STATUS_FILE.exists():

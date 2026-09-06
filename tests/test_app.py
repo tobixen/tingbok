@@ -57,8 +57,9 @@ async def test_health_withholds_paths_from_a_forged_forwarded_for():
 
     Driven through uvicorn's own ProxyHeadersMiddleware rather than by setting
     scope["client"] directly, because that middleware is what decides who the
-    client *is* behind a proxy; the gate below it is a set-membership test that
-    cannot be wrong on its own.  The proxy appends the real peer to whatever the
+    client *is* behind a proxy.  The gate below it is not thereby harmless — it
+    trusted ``::1`` until the address normalisation went in, which the proxy
+    layer would have fed it on any IPv6-loopback deployment.  The proxy appends the real peer to whatever the
     client sent and uvicorn walks the list from the right, so the forged
     127.0.0.1 is never what it settles on.  If uvicorn ever goes back to reading
     the leftmost entry, this is the test that notices.
@@ -2174,3 +2175,33 @@ def test_singular_and_plural_resolve_to_same_concept() -> None:
     assert plural is not None, "plural 'fruit-juices' should resolve to a vocabulary concept"
     assert singular.id == "juice"
     assert plural.id == singular.id, f"plural resolved to {plural.id!r}, singular to {singular.id!r}"
+
+
+@pytest.mark.parametrize(
+    ("client", "expect_paths"),
+    [
+        (("127.0.0.1", 12345), True),
+        # An IPv4 loopback connection to a dual-stack listener arrives in the
+        # mapped form.  DEPLOYMENT.md tells the operator a direct request to
+        # 127.0.0.1 gets the block; that has to hold whatever uvicorn was bound
+        # to, or they get a response missing exactly what they were told to look
+        # for and nothing explaining why.
+        (("::ffff:127.0.0.1", 12345), True),
+        # Not loopback, and the reason ::1 is refused: uvicorn's proxy-header
+        # middleware defaults to trusting the IPv4 literal 127.0.0.1 only, so a
+        # proxy reaching uvicorn over IPv6 loopback has its X-Forwarded-For
+        # ignored and every internet request arrives here as ::1.  Trusting it
+        # would restore the leak the gate exists to prevent.
+        (("::1", 12345), False),
+        (("2001:db8::1", 12345), False),
+        (("10.0.0.5", 12345), False),
+        # Legal in ASGI, and what uvicorn reports on a unix socket.
+        (None, False),
+    ],
+)
+@pytest.mark.anyio
+async def test_the_paths_gate_admits_only_ipv4_loopback(client, expect_paths):
+    async with AsyncClient(transport=ASGITransport(app=app, client=client), base_url="http://test") as ac:
+        response = await ac.get("/health")
+    assert response.status_code == 200
+    assert (response.json().get("paths") is not None) is expect_paths
