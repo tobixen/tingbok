@@ -28,6 +28,21 @@ that project's `docs/TODO-CATEGORIES.md`, which has been retired.
   vocabulary cannot have a persistent ID, but could carry a temporary one, kept
   as long as some inventory still uses the category.
 
+## /health tells the internet more than it needs to
+
+The `update` block is built before the localhost gate, so `stage`, `repo_rev`
+and `venv_rev` go to any unauthenticated caller. Only `last_error` is withheld,
+on the argument that the revisions and the failure counter are what a monitor
+needs and carry nothing sensitive.
+
+That argument is reasonable and was made deliberately — but the revisions are
+the exact commit SHAs of a private checkout, and `stage` names which step of the
+deploy failed. Neither is a secret; both are free reconnaissance. Worth deciding
+whether the public half should be just `status` plus `install_failures` and the
+timestamps, with the rest behind the same gate as `paths`.
+
+Raised by a clean-context review 2026-09-06 and left as-is at the time.
+
 ## The deployed vocabulary.yaml was never migrated
 
 A deployment with `TINGBOK_DATA_DIR` set keeps its own `vocabulary.yaml`, seeded
