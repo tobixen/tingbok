@@ -98,16 +98,22 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
     canonical_categories = _app._normalize_ean_categories(body.categories)
     prices_raw = [p.model_dump() for p in body.prices]
     receipt_names_raw = [r.model_dump() for r in body.receipt_names]
-    await asyncio.to_thread(
-        ean_service.save_ean_observation,
-        _app.EAN_OBSERVATIONS_PATH,
-        store_ean,
-        canonical_categories,
-        body.name,
-        body.quantity,
-        prices_raw,
-        receipt_names_raw,
-    )
+    try:
+        await asyncio.to_thread(
+            ean_service.save_ean_observation,
+            _app.EAN_OBSERVATIONS_PATH,
+            store_ean,
+            canonical_categories,
+            body.name,
+            body.quantity,
+            prices_raw,
+            receipt_names_raw,
+        )
+    except OSError as exc:
+        # A server-side fault the client can retry once fixed, so 503 rather
+        # than an unhandled 500.  The path stays in the log, not the response.
+        logger.error("EAN observation for %s not saved: %s", store_ean, exc)
+        raise HTTPException(status_code=503, detail="Observation not saved: the EAN database is not writable") from exc
     # Update in-memory observations so subsequent GETs reflect the change immediately
     entry = _app.ean_observations.setdefault(store_ean, {})
     if body.categories:

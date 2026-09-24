@@ -69,6 +69,7 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `docs/language-fallback-findings.md`.
 
 ### Fixed
+- **`PUT /api/ean` and `PUT /api/vocabulary` no longer fail when their data file has the wrong owner**, and an EAN write that still fails returns a 503 with a JSON explanation instead of an unhandled 500. `ean-db.json` and `vocabulary.yaml` are now replaced atomically, so only their directory has to be writable, and neither a crash nor a power loss mid-write can leave them truncated. `/health` checks `vocabulary.yaml` too. Two EAN observations saved at the same moment no longer lose one of them.
 - **The vocabulary endpoints are reachable over MCP** — the MCP server takes its
   snapshot of the routes when it is constructed, and it was constructed before
   most of them existed, so an MCP client saw only the SKOS and EAN routers.

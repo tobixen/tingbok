@@ -1858,6 +1858,16 @@ async def test_put_vocabulary_creates_new_concept(client, temp_vocab_path) -> No
 
 
 @pytest.mark.anyio
+@pytest.mark.skipif(__import__("os").geteuid() == 0, reason="root ignores file modes")
+async def test_put_vocabulary_replaces_a_file_it_cannot_write(client, temp_vocab_path) -> None:
+    """A read-only (e.g. root-owned) vocabulary.yaml in a writable dir is replaced, not a 500."""
+    temp_vocab_path.chmod(0o444)
+    response = await client.put("/api/vocabulary/food/new-thing", json={"prefLabel": "New Thing"})
+    assert response.status_code == 200
+    assert "food/new-thing" in _yaml.safe_load(temp_vocab_path.read_text())["concepts"]
+
+
+@pytest.mark.anyio
 async def test_put_vocabulary_creates_ancestor_concepts(client, temp_vocab_path) -> None:
     """PUT a deep path concept creates missing ancestor concepts."""
     import tingbok.app as app_module

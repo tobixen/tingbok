@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from unittest.mock import patch
 
@@ -676,6 +677,7 @@ class TestEanObservations:
         assert len(merged["prices"]) == 1
         assert merged["prices"][0]["date"] == "2026-01-01"
 
+    @pytest.mark.skipif(os.geteuid() == 0, reason="root ignores file modes")
     def test_save_permission_error_is_logged_and_raised(self, tmp_path: Path) -> None:
         """PermissionError on write should be logged at ERROR level and re-raised."""
         from unittest.mock import patch
@@ -683,12 +685,70 @@ class TestEanObservations:
         from tingbok.services import ean as ean_service
 
         path = tmp_path / "ean-db.json"
-        with patch.object(path.__class__, "write_text", side_effect=PermissionError("denied")):
+        tmp_path.chmod(0o555)
+        try:
             with patch.object(ean_service.logger, "error") as mock_log:
                 with pytest.raises(PermissionError):
                     ean_service.save_ean_observation(path, "1234", ["food"], "Test")
+        finally:
+            tmp_path.chmod(0o755)
         mock_log.assert_called_once()
         assert str(path) in str(mock_log.call_args)
+        assert list(tmp_path.iterdir()) == []
+
+    def test_save_ends_with_a_newline_and_is_fsynced(self, tmp_path: Path) -> None:
+        """Newline: the merge driver writes one, so without it every save churns the diff."""
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        with patch("os.fsync", wraps=os.fsync) as fsync:
+            ean_service.save_ean_observation(path, "111", ["food"], "Milk")
+        assert path.read_text(encoding="utf-8").endswith("}\n")
+        fsync.assert_called()
+
+    def test_concurrent_saves_do_not_lose_updates(self, tmp_path: Path) -> None:
+        """PUTs run in worker threads; an unlocked load-modify-save drops one of two."""
+        import threading
+        import time as _time
+
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        real_load = ean_service.load_ean_observations
+
+        def slow_load(p):
+            data = real_load(p)
+            _time.sleep(0.05)
+            return data
+
+        with patch.object(ean_service, "load_ean_observations", side_effect=slow_load):
+            threads = [
+                threading.Thread(target=ean_service.save_ean_observation, args=(path, ean, ["food"], "x"))
+                for ean in ("111", "222")
+            ]
+            for t in threads:
+                t.start()
+            for t in threads:
+                t.join()
+        assert set(ean_service.load_ean_observations(path)) == {"111", "222"}
+
+    @pytest.mark.skipif(os.geteuid() == 0, reason="root ignores file modes")
+    def test_save_replaces_a_file_it_cannot_write(self, tmp_path: Path) -> None:
+        """A read-only (e.g. root-owned) ean-db.json in a writable dir is replaced.
+
+        A git reset run as root once left the file owned by root, and an
+        in-place write then failed every PUT for a month.
+        """
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        path.write_text('{"111": {"name": "Old"}}', encoding="utf-8")
+        path.chmod(0o444)
+        ean_service.save_ean_observation(path, "222", ["food"], "New")
+        data = ean_service.load_ean_observations(path)
+        assert data["111"]["name"] == "Old"
+        assert data["222"]["name"] == "New"
+        assert [p.name for p in tmp_path.iterdir()] == ["ean-db.json"]
 
     def test_merge_observation_prepends_categories(self) -> None:
         """Inventory categories are prepended, giving them priority."""
@@ -751,6 +811,24 @@ async def test_put_ean_observation_stores_and_returns_product(client, tmp_path: 
     assert "household/office" in data["categories"]
     assert data["quantity"] == "10m"
     assert obs_path.exists()
+
+
+@pytest.mark.anyio
+async def test_put_ean_observation_unwritable_returns_503(client, tmp_path: Path) -> None:
+    """A write failure is a clear 503 with a JSON detail, not an unhandled 500."""
+    from unittest.mock import patch
+
+    import tingbok.app as _app
+
+    obs_path = tmp_path / "ean-db.json"
+    with patch.object(_app, "EAN_OBSERVATIONS_PATH", obs_path):
+        with patch.object(_app, "ean_observations", {}):
+            with patch("tingbok.services.ean.save_ean_observation", side_effect=PermissionError("denied")):
+                response = await client.put("/api/ean/4006381333931", json={"name": "Tesa tape"})
+    assert response.status_code == 503
+    assert "not saved" in response.json()["detail"]
+    assert str(tmp_path) not in response.text
+    assert "4006381333931" not in _app.ean_observations
 
 
 @pytest.mark.anyio

@@ -25,12 +25,16 @@ def ean_db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     data_dir.mkdir()
     path = data_dir / "ean-db.json"
     path.write_text("{}", encoding="utf-8")
+    vocab = data_dir / "vocabulary.yaml"
+    vocab.write_text("concepts: {}\n", encoding="utf-8")
     monkeypatch.setattr(app_module, "EAN_OBSERVATIONS_PATH", path)
+    monkeypatch.setattr(app_module, "VOCABULARY_PATH", vocab)
     monkeypatch.setattr(app_module, "_UPDATE_STATUS_FILE", None)
     yield path
     data_dir.chmod(0o755)
-    if path.exists():
-        path.chmod(0o644)
+    for f in (path, vocab):
+        if f.exists():
+            f.chmod(0o644)
 
 
 async def _health(client: tuple[str, int] = ("127.0.0.1", 12345)) -> dict:
@@ -84,3 +88,13 @@ async def test_health_ok_before_ean_db_exists(ean_db: Path):
     data = await _health()
     assert data["status"] == "ok"
     assert data["data_writable"] is True
+
+
+@pytest.mark.anyio
+async def test_health_degraded_when_vocabulary_read_only(ean_db: Path):
+    """vocabulary.yaml lives in the same checkout and is written by PUT /api/vocabulary."""
+    vocab = ean_db.parent / "vocabulary.yaml"
+    vocab.chmod(0o444)
+    data = await _health()
+    assert data["status"] == "degraded"
+    assert data["unwritable_paths"] == [str(vocab)]

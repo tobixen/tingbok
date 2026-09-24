@@ -15,3 +15,6 @@ src/tingbok/_version.py
 
 # lychee link checker local cache
 .lycheecache
+
+# atomic-write temp files (services/ean.py)
+.*.tmp

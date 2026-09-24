@@ -1,6 +1,7 @@
 """FastAPI application for tingbok."""
 
 import asyncio
+import io
 import ipaddress
 import json
 import logging
@@ -24,6 +25,7 @@ from fastmcp import FastMCP
 from fastmcp.server.providers.openapi import MCPType, RouteMap
 
 from tingbok import __version__
+from tingbok.fileutil import write_atomically
 from tingbok.models import (
     AncestorsResponse,
     HealthResponse,
@@ -760,16 +762,17 @@ def _read_update_status() -> UpdateStatus | None:
 def _unwritable_data_paths() -> list[str]:
     """Paths the service must be able to write but cannot.
 
-    ``ean-db.json`` is rewritten in place, so the file itself must be writable;
-    git (the service's auto-commit and the updater's merges) replaces files by
-    rename, so the directory must be too.  A file owned by someone else — left
-    behind by a git command run as root, say — breaks every PUT while the rest
-    of the service answers normally.
+    ``ean-db.json`` and ``vocabulary.yaml`` are replaced by rename, and git
+    (the service's auto-commit and the updater's merges) replaces files the
+    same way, so the directory must be writable or every PUT fails.  The files
+    themselves are checked too: the rename no longer needs them, but a data
+    file owned by someone else means a git command was run as root in the
+    checkout, which is the mistake that broke every PUT for a month and should
+    not go unnoticed again.
     """
     candidates = [EAN_OBSERVATIONS_PATH.parent]
-    if EAN_OBSERVATIONS_PATH.exists():
-        candidates.append(EAN_OBSERVATIONS_PATH)
-    return [str(p) for p in candidates if not os.access(p, os.W_OK)]
+    candidates += [p for p in (EAN_OBSERVATIONS_PATH, VOCABULARY_PATH) if p.exists()]
+    return [str(p) for p in dict.fromkeys(candidates) if not os.access(p, os.W_OK)]
 
 
 def _is_loopback_client(client_host: str | None) -> bool:
@@ -1345,8 +1348,11 @@ def _write_vocabulary_concept_update(
             s for s in (entry.get("excluded_sources") or []) if s not in body.remove_excluded_sources
         ]
 
-    with open(vocab_path, "w") as f:
-        yaml_rw.dump(doc, f)
+    # Atomically, like ean-db.json: an in-place write fails on a file left
+    # owned by someone else, even though the directory is ours.
+    buf = io.StringIO()
+    yaml_rw.dump(doc, buf)
+    write_atomically(vocab_path, buf.getvalue())
 
 
 @app.put("/api/vocabulary/{concept_id:path}", response_model=VocabularyConcept)

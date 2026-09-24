@@ -13,6 +13,7 @@ from __future__ import annotations
 import json
 import logging
 import re
+import threading
 from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
@@ -20,6 +21,7 @@ from typing import Any
 import niquests
 import yaml
 
+from tingbok.fileutil import write_atomically
 from tingbok.services.skos import (
     _add_to_not_found_cache,
     _get_cache_path,
@@ -523,6 +525,11 @@ def merge_receipt_name_observations(existing: list[dict[str, Any]], new: list[di
     return merged
 
 
+#: Serialises load-modify-save: PUTs run in worker threads, and two unlocked
+#: saves racing each other drop one of the observations.
+_save_lock = threading.Lock()
+
+
 def save_ean_observation(
     path: Path,
     ean: str,
@@ -537,6 +544,19 @@ def save_ean_observation(
     Existing entries for *ean* are updated in-place; all other EANs are preserved.
     Price observations are appended (de-duplicated by date+currency+price).
     """
+    with _save_lock:
+        _save_ean_observation_locked(path, ean, categories, name, quantity, prices, receipt_names)
+
+
+def _save_ean_observation_locked(
+    path: Path,
+    ean: str,
+    categories: list[str],
+    name: str | None,
+    quantity: str | None,
+    prices: list[dict[str, Any]] | None,
+    receipt_names: list[dict[str, Any]] | None,
+) -> None:
     data = load_ean_observations(path)
     entry: dict[str, Any] = data.get(ean, {})
     if categories:
@@ -552,7 +572,7 @@ def save_ean_observation(
     data[ean] = entry
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
-        path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+        write_atomically(path, json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     except PermissionError as exc:
         logger.error("Cannot write EAN observations to %s: %s", path, exc)
         raise
