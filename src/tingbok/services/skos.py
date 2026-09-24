@@ -22,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class UpstreamError(Exception):
-    """Raised by :func:`lookup_concept` when an upstream source returns a transient error.
+    """Raised when an upstream source returns a transient error.
+
+    Raised by :func:`lookup_concept` and by the description fetchers.
 
     The result must not be cached as a not-found entry.
     """
@@ -221,6 +223,48 @@ _WIKIDATA_BLOCKED_P31: frozenset[str] = frozenset(
 )
 
 
+# ---------------------------------------------------------------------------
+# Wikidata: one gate for every request, so a 429 is honoured everywhere
+# ---------------------------------------------------------------------------
+
+_WIKIDATA_HEADERS = {"User-Agent": "tingbok/0.1 (SKOS lookup service; https://github.com/tobixen/tingbok)"}
+#: Cooldown after a 429 without a usable Retry-After, and the ceiling for one.
+_WIKIDATA_DEFAULT_COOLDOWN = 60.0
+_WIKIDATA_MAX_COOLDOWN = 3600.0
+_wikidata_blocked_until = 0.0
+
+
+class WikidataRateLimited(niquests.exceptions.RequestException):
+    """Wikidata answered 429, or we are still inside the cooldown it asked for.
+
+    A :class:`~niquests.exceptions.RequestException` but deliberately not an
+    ``HTTPError``: several callers treat an HTTP error as a definitive answer
+    and cache it as empty, which for a 429 would poison the cache.  Callers
+    treat a plain ``RequestException`` as transient and must not cache it.
+    """
+
+
+def _wikidata_get(url: str, *, params: dict | None = None, headers: dict | None = None) -> niquests.Response:
+    """GET from Wikidata, honouring any cooldown a previous 429 asked for."""
+    global _wikidata_blocked_until  # noqa: PLW0603
+    remaining = _wikidata_blocked_until - time.time()
+    if remaining > 0:
+        raise WikidataRateLimited(f"Wikidata rate limit: cooling down for another {remaining:.0f}s")
+    with niquests.Session() as session:
+        response = session.get(url, params=params, headers=headers or _WIKIDATA_HEADERS, timeout=DEFAULT_TIMEOUT)
+    if response.status_code == 429:  # noqa: PLR2004
+        try:
+            cooldown = float(response.headers.get("Retry-After", ""))
+        except ValueError:
+            cooldown = _WIKIDATA_DEFAULT_COOLDOWN
+        cooldown = min(max(cooldown, 1.0), _WIKIDATA_MAX_COOLDOWN)
+        _wikidata_blocked_until = time.time() + cooldown
+        logger.warning("Wikidata answered 429; pausing Wikidata requests for %.0fs", cooldown)
+        raise WikidataRateLimited(f"Wikidata rate limit (429), retry after {cooldown:.0f}s")
+    response.raise_for_status()
+    return response
+
+
 def _is_wikidata_non_concept(entity: dict) -> bool:
     """Return True if a Wikidata entity should be excluded from source lookups.
 
@@ -279,16 +323,16 @@ def _extract_p31_qids(entity: dict) -> list[str]:
     return qids
 
 
-def _batch_fetch_p279(qids: list[str], headers: dict | None = None) -> frozenset[str]:
+def _batch_fetch_p279(qids: list[str], headers: dict | None = None) -> frozenset[str] | None:
     """Batch-fetch P279 (subclass-of) values for *qids* from the Wikibase Action API.
 
-    Returns the union of all P279 target QIDs found.  Network errors return an empty set
-    (caller is responsible for deciding how to handle the ambiguity).
+    Returns the union of all P279 target QIDs found, or ``None`` on a network
+    error: an empty set would read as "not blocked" and get cached as such.
     """
     if not qids:
         return frozenset()
     if headers is None:
-        headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+        headers = _WIKIDATA_HEADERS
     url = "https://www.wikidata.org/w/api.php"
     params: dict = {
         "action": "wbgetentities",
@@ -297,12 +341,10 @@ def _batch_fetch_p279(qids: list[str], headers: dict | None = None) -> frozenset
         "format": "json",
     }
     try:
-        with niquests.Session() as session:
-            response = session.get(url, params=params, headers=headers, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url, params=params, headers=headers)
     except niquests.exceptions.RequestException as e:
         logger.debug("P279 batch fetch failed for %s: %s", qids, e)
-        return frozenset()
+        return None
     data = _parse_json(response, str(qids))
     if data is None:
         return frozenset()
@@ -318,16 +360,16 @@ def _batch_fetch_p279(qids: list[str], headers: dict | None = None) -> frozenset
     return frozenset(result)
 
 
-def _batch_fetch_p31(qids: list[str], headers: dict | None = None) -> frozenset[str]:
+def _batch_fetch_p31(qids: list[str], headers: dict | None = None) -> frozenset[str] | None:
     """Batch-fetch P31 (instance-of) values for *qids* from the Wikibase Action API.
 
-    Returns the union of all P31 target QIDs found.  Network errors return an empty set
-    (caller is responsible for deciding how to handle the ambiguity).
+    Returns the union of all P31 target QIDs found, or ``None`` on a network
+    error: an empty set would read as "not blocked" and get cached as such.
     """
     if not qids:
         return frozenset()
     if headers is None:
-        headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+        headers = _WIKIDATA_HEADERS
     url = "https://www.wikidata.org/w/api.php"
     params: dict = {
         "action": "wbgetentities",
@@ -336,12 +378,10 @@ def _batch_fetch_p31(qids: list[str], headers: dict | None = None) -> frozenset[
         "format": "json",
     }
     try:
-        with niquests.Session() as session:
-            response = session.get(url, params=params, headers=headers, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url, params=params, headers=headers)
     except niquests.exceptions.RequestException as e:
         logger.debug("P31 batch fetch failed for %s: %s", qids, e)
-        return frozenset()
+        return None
     data = _parse_json(response, str(qids))
     if data is None:
         return frozenset()
@@ -1209,13 +1249,21 @@ def get_description(uri: str, source: str, lang: str, cache_dir: Path) -> str | 
     if cached is not None:
         return cached.get("description")
 
-    desc = _upstream_get_description(uri, source, lang)
+    try:
+        desc = _upstream_get_description(uri, source, lang)
+    except UpstreamError as e:
+        logger.debug("%s", e)
+        return None
     _save_to_cache(cache_path, {"uri": uri, "source": source, "lang": lang, "description": desc}, cache_key=cache_key)
     return desc
 
 
 def _upstream_get_description(uri: str, source: str, lang: str) -> str | None:
-    """Fetch a description from the appropriate upstream source."""
+    """Fetch a description from the appropriate upstream source.
+
+    Raises :class:`UpstreamError` on a transient failure, which callers must
+    not cache: ``None`` means the source has no description.
+    """
     if source == "dbpedia":
         return _get_dbpedia_description(uri, lang)
     if source == "wikidata":
@@ -1275,8 +1323,7 @@ def _get_dbpedia_description(uri: str, lang: str) -> str | None:
             response = session.get(data_uri, timeout=DEFAULT_TIMEOUT)
             response.raise_for_status()
     except niquests.exceptions.RequestException as e:
-        logger.debug("DBpedia description fetch failed for %s: %s", uri, e)
-        return None
+        raise UpstreamError(f"DBpedia description fetch failed for {uri}: {e}") from e
     data = _parse_json(response, uri)
     if data is None:
         return None
@@ -1300,14 +1347,11 @@ def _get_wikidata_description(uri: str, lang: str) -> str | None:
     if not qid.startswith("Q"):
         return None
     url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{qid}/descriptions"
-    headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+    headers = _WIKIDATA_HEADERS
     try:
-        with niquests.Session() as session:
-            response = session.get(url, headers=headers, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url, headers=headers)
     except niquests.exceptions.RequestException as e:
-        logger.debug("Wikidata description fetch failed for %s: %s", uri, e)
-        return None
+        raise UpstreamError(f"Wikidata description fetch failed for {uri}: {e}") from e
     data = _parse_json(response, uri)
     if data is None:
         return None
@@ -1822,11 +1866,9 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
         "format": "json",
         "limit": "15",
     }
-    headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+    headers = _WIKIDATA_HEADERS
     try:
-        with niquests.Session() as session:
-            response = session.get(url, params=search_params, headers=headers, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url, params=search_params, headers=headers)
     except niquests.exceptions.Timeout as e:
         logger.warning("Wikidata search timed out for '%s': %s", label, e)
         return None, True
@@ -1871,11 +1913,7 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
         "format": "json",
     }
     try:
-        with niquests.Session() as session:
-            entity_response = session.get(
-                entity_claims_url, params=entity_params, headers=headers, timeout=DEFAULT_TIMEOUT
-            )
-            entity_response.raise_for_status()
+        entity_response = _wikidata_get(entity_claims_url, params=entity_params, headers=headers)
         entity_data = _parse_json(entity_response, qid)
         entity = (entity_data or {}).get("entities", {}).get(qid, {})
     except niquests.exceptions.RequestException as e:
@@ -1891,10 +1929,14 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
     p31_qids = _extract_p31_qids(entity)
     if p31_qids:
         p31_parents = _batch_fetch_p279(p31_qids, headers)
+        if p31_parents is None:
+            return None, True  # Transient: cannot tell whether it is blocked
         if p31_parents & _WIKIDATA_BLOCKED_P31_ANCESTORS:
             logger.debug("Wikidata %s filtered out (P31 is subclass of blocked ancestor)", qid)
             return None, False
         p31_p31_values = _batch_fetch_p31(p31_qids, headers)
+        if p31_p31_values is None:
+            return None, True
         if p31_p31_values & _WIKIDATA_BLOCKED_P31_ANCESTORS:
             logger.debug("Wikidata %s filtered out (P31's P31 is blocked ancestor)", qid)
             return None, False
@@ -1920,11 +1962,7 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
             "format": "json",
         }
         try:
-            with niquests.Session() as session:
-                lbl_response = session.get(
-                    entity_claims_url, params=label_params, headers=headers, timeout=DEFAULT_TIMEOUT
-                )
-                lbl_response.raise_for_status()
+            lbl_response = _wikidata_get(entity_claims_url, params=label_params, headers=headers)
             lbl_data = _parse_json(lbl_response, "|".join(broader_qids))
             entities = (lbl_data or {}).get("entities", {})
             for bqid in broader_qids:
@@ -1932,8 +1970,9 @@ def _lookup_wikidata(label: str, lang: str) -> tuple[dict | None, bool]:
                 lbl = entities.get(bqid, {}).get("labels", {}).get(lang, {}).get("value", "")
                 broader.append({"uri": broader_uri, "label": lbl})
         except niquests.exceptions.RequestException as e:
+            # Transient: blank labels would be cached with the concept for 60 days.
             logger.debug("Wikidata label fetch for broader failed: %s", e)
-            broader = [{"uri": f"http://www.wikidata.org/entity/{bqid}", "label": ""} for bqid in broader_qids]
+            return None, True
 
     return {
         "uri": uri,
@@ -1955,11 +1994,9 @@ def _get_broader_wikidata(qid: str, lang: str, headers: dict | None = None) -> l
         "format": "json",
     }
     if headers is None:
-        headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+        headers = _WIKIDATA_HEADERS
     try:
-        with niquests.Session() as session:
-            response = session.get(url, params=params, headers=headers, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url, params=params, headers=headers)
     except niquests.exceptions.RequestException as e:
         logger.debug("Wikidata wbgetentities failed for %s: %s", qid, e)
         return []
@@ -1991,9 +2028,7 @@ def _get_broader_wikidata(qid: str, lang: str, headers: dict | None = None) -> l
         "format": "json",
     }
     try:
-        with niquests.Session() as session:
-            response = session.get(url, params=label_params, headers=headers, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url, params=label_params, headers=headers)
     except niquests.exceptions.RequestException as e:
         logger.debug("Wikidata label fetch for broader failed: %s", e)
         return [{"uri": f"http://www.wikidata.org/entity/{bqid}", "label": ""} for bqid in broader_qids]
@@ -2129,9 +2164,7 @@ def _get_wikidata_labels(uri: str, languages: list[str]) -> dict[str, str] | Non
         return {}
     url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{qid}/labels"
     try:
-        with niquests.Session() as session:
-            response = session.get(url, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url)
     except niquests.exceptions.HTTPError as e:
         logger.debug("Wikidata HTTP error for %s: %s", uri, e)
         return {}  # Definitive server response — cache as empty
@@ -2178,9 +2211,7 @@ def _get_wikidata_alt_labels(uri: str, languages: list[str]) -> dict[str, list[s
         return {}
     url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{qid}/aliases"
     try:
-        with niquests.Session() as session:
-            response = session.get(url, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url)
     except niquests.exceptions.HTTPError:
         return {}
     except niquests.exceptions.RequestException as e:
@@ -2270,11 +2301,9 @@ def _fetch_wikidata_entity_by_qid(qid: str) -> dict | None:
     """
     url = "https://www.wikidata.org/w/api.php"
     params: dict = {"action": "wbgetentities", "ids": qid, "props": "claims", "format": "json"}
-    headers = {"User-Agent": "tingbok/0.1 (SKOS lookup service)"}
+    headers = _WIKIDATA_HEADERS
     try:
-        with niquests.Session() as session:
-            response = session.get(url, params=params, headers=headers, timeout=DEFAULT_TIMEOUT)
-            response.raise_for_status()
+        response = _wikidata_get(url, params=params, headers=headers)
     except niquests.exceptions.RequestException as e:
         logger.debug("Wikidata entity fetch failed for %s: %s", qid, e)
         return None
@@ -2341,10 +2370,14 @@ def is_non_concept_uri(uri: str, cache_dir: Path | None = None) -> bool | None:
             p31_qids = _extract_p31_qids(entity)
             if p31_qids:
                 p31_parents = _batch_fetch_p279(p31_qids)
+                if p31_parents is None:
+                    return None  # network error — do not decide, do not cache
                 if p31_parents & _WIKIDATA_BLOCKED_P31_ANCESTORS:
                     result = True
                 if not result:
                     p31_p31_values = _batch_fetch_p31(p31_qids)
+                    if p31_p31_values is None:
+                        return None
                     if p31_p31_values & _WIKIDATA_BLOCKED_P31_ANCESTORS:
                         result = True
 

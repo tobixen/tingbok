@@ -2133,3 +2133,175 @@ async def test_cache_refresh_loop_does_not_spin_on_failures(tmp_path: Path) -> N
     assert len(sleeps) == 3, f"spun through {len(refreshed)} refreshes without sleeping"  # noqa: PLR2004
     assert all(s > 0 for s in sleeps)
     assert sleeps[1] > sleeps[0], "consecutive failures back off"
+
+
+# ---------------------------------------------------------------------------
+# Wikidata rate limiting
+# ---------------------------------------------------------------------------
+
+
+class _FakeResponse:
+    def __init__(self, status: int, headers: dict | None = None, payload: dict | None = None) -> None:
+        self.status_code = status
+        self.headers = headers or {}
+        self._payload = payload or {}
+        self.text = json.dumps(self._payload)
+
+    def json(self) -> dict:
+        return self._payload
+
+    def raise_for_status(self) -> None:
+        import niquests
+
+        if self.status_code >= 400:  # noqa: PLR2004
+            raise niquests.exceptions.HTTPError(f"{self.status_code} Client Error", response=self)
+
+
+@pytest.fixture
+def _reset_wikidata_cooldown():
+    import tingbok.services.skos as skos_module
+
+    skos_module._wikidata_blocked_until = 0.0
+    yield
+    skos_module._wikidata_blocked_until = 0.0
+
+
+@pytest.mark.usefixtures("_reset_wikidata_cooldown")
+def test_wikidata_429_is_transient_and_starts_a_cooldown() -> None:
+    """A 429 is not cached as "no labels", and later calls do not hit Wikidata until Retry-After."""
+    import tingbok.services.skos as skos_module
+
+    calls: list[str] = []
+
+    def fake_get(self, url, **kwargs):
+        calls.append(url)
+        return _FakeResponse(429, headers={"Retry-After": "120"})
+
+    with patch("niquests.Session.get", fake_get):
+        assert skos_module._get_wikidata_labels("http://www.wikidata.org/entity/Q1", ["en"]) is None
+        assert skos_module._lookup_wikidata("potatoes", "en") == (None, True)
+    assert len(calls) == 1, "the second call must be refused locally during the cooldown"
+    assert skos_module._wikidata_blocked_until == pytest.approx(time.time() + 120, abs=5)
+
+
+@pytest.mark.usefixtures("_reset_wikidata_cooldown")
+def test_wikidata_requests_carry_a_user_agent() -> None:
+    """Wikimedia throttles clients without a descriptive User-Agent."""
+    import tingbok.services.skos as skos_module
+
+    seen: list[dict] = []
+
+    def fake_get(self, url, **kwargs):
+        seen.append(kwargs.get("headers") or {})
+        return _FakeResponse(200, payload={})
+
+    with patch("niquests.Session.get", fake_get):
+        skos_module._get_wikidata_labels("http://www.wikidata.org/entity/Q1", ["en"])
+        skos_module._get_wikidata_alt_labels("http://www.wikidata.org/entity/Q1", ["en"])
+    assert seen
+    assert all("tingbok" in h.get("User-Agent", "") for h in seen)
+
+
+# ---------------------------------------------------------------------------
+# Wikidata failures must never be cached as answers
+# ---------------------------------------------------------------------------
+
+
+def _rate_limited(*args, **kwargs):
+    import tingbok.services.skos as skos_module
+
+    raise skos_module.WikidataRateLimited("cooling down")
+
+
+def test_wikidata_description_failure_is_not_cached(tmp_path: Path) -> None:
+    """A rate-limited description fetch returns None but caches nothing.
+
+    Regression: the None was cached as "no description" for the full TTL, and
+    during a cooldown every request fails locally at once, so the refresh loop
+    could blank out descriptions in bulk.
+    """
+    import tingbok.services.skos as skos_module
+
+    uri = "http://www.wikidata.org/entity/Q1"
+    with patch.object(skos_module, "_wikidata_get", side_effect=_rate_limited):
+        assert get_description(uri, "wikidata", "en", tmp_path) is None
+    assert list(tmp_path.glob("description_*.json")) == []
+
+
+def test_refresh_keeps_description_when_wikidata_fails(tmp_path: Path) -> None:
+    import tingbok.services.skos as skos_module
+
+    uri = "http://www.wikidata.org/entity/Q1"
+    key = "description:wikidata:" + __import__("hashlib").md5(uri.encode()).hexdigest()[:16]  # noqa: S324
+    path = _get_cache_path(tmp_path, key)
+    _save_to_cache(path, {"uri": uri, "source": "wikidata", "lang": "en", "description": "The universe"}, cache_key=key)
+    with patch.object(skos_module, "_wikidata_get", side_effect=_rate_limited):
+        assert _refresh_entry(path, tmp_path) is False
+    assert json.loads(path.read_text())["description"] == "The universe"
+
+
+def _wikidata_fake(fail_on: str):
+    """_wikidata_get stand-in: a search hit and an entity with P31/P279, failing on *fail_on*."""
+    import tingbok.services.skos as skos_module
+
+    entity = {
+        "claims": {
+            "P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q2"}}}}],
+            "P279": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q3"}}}}],
+        }
+    }
+
+    def fake(url, *, params=None, headers=None):
+        params = params or {}
+        if params.get("action") == "wbsearchentities":
+            step = "search"
+            payload = {"search": [{"id": "Q1", "label": "potatoes", "description": "tuber"}]}
+        elif params.get("props") == "labels":
+            step = "broader-labels"
+            payload = {"entities": {"Q3": {"labels": {"en": {"value": "vegetable"}}}}}
+        elif params.get("ids") == "Q1":
+            step = "entity"
+            payload = {"entities": {"Q1": entity}}
+        else:
+            step = "p31-batch"
+            payload = {"entities": {}}
+        if step == fail_on:
+            raise skos_module.WikidataRateLimited("cooling down")
+        return type("R", (), {"json": lambda self: payload, "text": json.dumps(payload), "status_code": 200})()
+
+    return fake
+
+
+@pytest.mark.parametrize("fail_on", ["p31-batch", "broader-labels"])
+def test_wikidata_lookup_is_transient_when_a_secondary_fetch_fails(fail_on: str) -> None:
+    """Without the P31 filter or the broader labels the concept must not be cached.
+
+    Regression: a failed P31 batch read as "not blocked", and failed broader
+    labels became blank labels, both cached for 60 days.
+    """
+    import tingbok.services.skos as skos_module
+
+    with patch.object(skos_module, "_wikidata_get", side_effect=_wikidata_fake(fail_on)):
+        assert skos_module._lookup_wikidata("potatoes", "en") == (None, True)
+
+
+def test_wikidata_lookup_succeeds_when_nothing_fails() -> None:
+    import tingbok.services.skos as skos_module
+
+    with patch.object(skos_module, "_wikidata_get", side_effect=_wikidata_fake("nothing")):
+        concept, failed = skos_module._lookup_wikidata("potatoes", "en")
+    assert failed is False
+    assert concept is not None
+    assert concept["broader"] == [{"uri": "http://www.wikidata.org/entity/Q3", "label": "vegetable"}]
+
+
+def test_is_non_concept_uri_undetermined_when_p31_batch_fails(tmp_path: Path) -> None:
+    import tingbok.services.skos as skos_module
+
+    entity = {"claims": {"P31": [{"mainsnak": {"snaktype": "value", "datavalue": {"value": {"id": "Q2"}}}}]}}
+    with (
+        patch.object(skos_module, "_fetch_wikidata_entity_by_qid", return_value=entity),
+        patch.object(skos_module, "_wikidata_get", side_effect=_rate_limited),
+    ):
+        assert skos_module.is_non_concept_uri("http://www.wikidata.org/entity/Q1", tmp_path) is None
+    assert list(tmp_path.glob("type_check_*.json")) == []
