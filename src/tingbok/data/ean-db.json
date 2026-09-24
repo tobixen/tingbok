@@ -28,31 +28,31 @@
   },
   "0635346370120": {
     "categories": [
-      "personal-care/skincare/cleanser"
+      "helse/hudpleie/ansiktsrens"
     ],
-    "name": "ClinicCare Concentrated Cleansing Foam"
+    "name": "ClinicCare Concentrated Cleansing Foam (Sweden)"
   },
   "0635346370540": {
     "categories": [
-      "personal-care/skincare"
+      "helse/hudpleie/serum"
     ],
-    "name": "ClinicCare X3MEGF Pure Liquid"
+    "name": "ClinicCare X3MEGF Pure Liquid (Sweden)"
   },
   "0635346370557": {
     "categories": [
-      "personal-care/skincare/serum"
+      "helse/hudpleie/serum"
     ],
-    "name": "ClinicCare X3MEGF Pure Essence serum"
+    "name": "ClinicCare X3MEGF Pure Essence serum (Sweden)"
   },
   "0635346370564": {
     "categories": [
-      "personal-care/skincare/serum"
+      "helse/hudpleie/serum"
     ],
-    "name": "ClinicCare X3M EGF Pure Serum"
+    "name": "ClinicCare X3M EGF Pure Serum (Sweden)"
   },
   "0737425462006": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/luktfjerner"
     ],
     "name": "ECCO Shoe Refresher (holder fottøy luktfritt), 60ml"
   },
@@ -81,7 +81,7 @@
   },
   "0825840789799": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/skokrem"
     ],
     "name": "ECCO Nubuck & Suede Conditioner Daily Care, sort, 100ml"
   },
@@ -190,6 +190,12 @@
     ],
     "source": "manual"
   },
+  "27262917": {
+    "categories": [
+      "helse/personlig/deodorant"
+    ],
+    "name": "Today Cool Fuss-Deo fotspray 24h"
+  },
   "3200106407018": {
     "categories": [
       "beans"
@@ -208,9 +214,9 @@
   },
   "3253581345177": {
     "categories": [
-      "personal-care/shower-gel"
+      "bad/hygiene/dusjsåpe"
     ],
-    "name": "L'Occitane Fleurs de Cerisier Cherry Blossom Bath & Shower Gel"
+    "name": "L'Occitane Fleurs de Cerisier Cherry Blossom shower gel (miniature)"
   },
   "3272496315126": {
     "categories": [
@@ -218,9 +224,15 @@
     ],
     "name": "Raspberry Pi 5 8GB RAM (in original box, new)"
   },
+  "3574660192063": {
+    "categories": [
+      "helse/hygiene/tampong"
+    ],
+    "name": "o.b. ProComfort tamponer Mini, 16 stk"
+  },
   "3574661317212": {
     "categories": [
-      "personal-care/feminine-hygiene"
+      "helse/hygiene/truseinnlegg"
     ],
     "name": "oo Liners 20 SuperThin",
     "quantity": "20pcs"
@@ -1717,13 +1729,13 @@
   },
   "4001499930799": {
     "categories": [
-      "cleaning/soap"
+      "rengjøring/flekkfjerner"
     ],
-    "name": "Frosch wie Gallseife Seifenstück vegan stain remover"
+    "name": "Frosch \"wie Gallseife\" Seifenstück (flekkmiddel, vegansk)"
   },
   "4002092305595": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/skorens"
     ],
     "name": "Collonil Clean + Care kondisjonerende renseskum, 200ml"
   },
@@ -1747,9 +1759,9 @@
   },
   "4005808909018": {
     "categories": [
-      "personal-care/deodorant"
+      "helse/personlig/deodorant"
     ],
-    "name": "Nivea Antiperspirant Powder Effect 48h roll-on",
+    "name": "Nivea \"эффект пудры\" Антиперспирант 48ч roll-on (pulver-effekt, russisk)",
     "quantity": "50ml"
   },
   "4006387029807": {
@@ -1906,6 +1918,12 @@
     ],
     "name": "Speick vegan deodorant 40ml (German)"
   },
+  "4009800006720": {
+    "categories": [
+      "bad/hygiene/såpe"
+    ],
+    "name": "Speick Honig Pflanzenseife 75g (honning planteoljesåpe)"
+  },
   "4013307315001": {
     "categories": [
       "spatula"
@@ -1974,9 +1992,9 @@
   },
   "4029125060993": {
     "categories": [
-      "personal-care/lice-treatment"
+      "helse/parasitt/lusemiddel"
     ],
-    "name": "Nüda lice treatment Pohl Boskamp"
+    "name": "Nüda lusemiddel (Pohl Boskamp, nr.1 i Tyskland)"
   },
   "4031396000592": {
     "brand": "YACHTICON",
@@ -2161,7 +2179,7 @@
   },
   "4053201013610": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/fargefornyer"
     ],
     "name": "Bama Fargefornyer Nøytral, semsket og nubuck, 75ml"
   },
@@ -3932,6 +3950,24 @@
     ],
     "name": "Yellow sanding sponge (used, Made in Great Britain)"
   },
+  "4086200257396": {
+    "categories": [
+      "helse/hudpleie/hudkrem"
+    ],
+    "name": "Sans Soucis hudkrem (Baden-Baden, 12M)"
+  },
+  "42349518": {
+    "categories": [
+      "helse/personlig/deodorant"
+    ],
+    "name": "Nivea Men Black & White Invisible Fresh roll-on 50ml"
+  },
+  "42449034": {
+    "categories": [
+      "helse/personlig/deodorant"
+    ],
+    "name": "Nivea Men Dry Impact Plus 48h roll-on"
+  },
   "4250153632306": {
     "categories": [
       "precision-scale"
@@ -4249,35 +4285,41 @@
   },
   "4601240000155": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/skosvamp"
     ],
     "name": "Dividik Klassik sko-svamp, glatt skinn, sort, 50 gangers bruk"
   },
+  "4607013581098": {
+    "categories": [
+      "helse/medisin/forkjølelse"
+    ],
+    "name": "АнтиГриппин для детей (russisk forkjølelsesmedisin for barn, 10 brusetabletter)"
+  },
   "4607131420293": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/skosvamp"
     ],
     "name": "Salton sko-svamp, glatt skinn, fargeløs (UTLØPT 06/2016)"
   },
   "4620009352854": {
     "categories": [
-      "personal-care/aromatherapy"
+      "eterisk-olje"
     ],
-    "name": "GlavBanya essential oils set 3x17ml pine, mint, eucalyptus",
+    "name": "GlavBanya eteriske oljer sett 3x17ml (furu, mynte, eukalyptus)",
     "quantity": "3x17ml"
   },
   "4627090993140": {
     "categories": [
-      "personal-care/shower-gel"
+      "bad/hygiene/dusjsåpe"
     ],
-    "name": "Cafe Mimi Shower Gel black currant and cranberry extracts",
+    "name": "Café Mimi shower gel (solbær og tranebær)",
     "quantity": "100ml"
   },
   "4680018108132": {
     "categories": [
-      "personal-care/bath"
+      "bad/hygiene/badesalt"
     ],
-    "name": "Banika bath salt 200g eucalyptus oil",
+    "name": "Banika \"Соль для бани\" badsalt 200g (eukalyptusolje)",
     "quantity": "200g"
   },
   "4690241033781": {
@@ -4388,38 +4430,50 @@
     ],
     "name": "Powers Irish Rye Whiskey 43.2% (Ireland)"
   },
+  "5011987140837": {
+    "categories": [
+      "bil/motorolje"
+    ],
+    "name": "Shell Helix HX7 10W-40 motorolje 1 L (2012)"
+  },
   "5012251008648": {
     "categories": [
-      "personal-care/skincare"
+      "helse/hudpleie/porestrips"
     ],
-    "name": "Deep Cleansing Nose Pore Strips 6pcs witch hazel",
+    "name": "Deep Cleansing Nose Pore Strips 6stk (witch hazel)",
     "quantity": "6pcs"
+  },
+  "5012748616127": {
+    "categories": [
+      "helse/medisin/avføringsmiddel"
+    ],
+    "name": "Movicol Junior 20 doseposer (mot forstoppelse, barn 2–11 år, uten smakstilsetning)"
   },
   "5017689075910": {
     "categories": [
-      "food/legumes/lentils"
+      "mat/belgvekster/linser"
     ],
-    "name": "TRS Green Lentils 2kg",
+    "name": "TRS Green Lentils grønne linser 2kg",
     "quantity": "2kg"
   },
   "5017689389178": {
     "categories": [
-      "food/legumes"
+      "mat/belgvekster/cowpeas"
     ],
     "name": "TRS Red Cow Peas 2kg",
     "quantity": "2kg"
   },
   "5017689763336": {
     "categories": [
-      "food/seeds/sesame"
+      "mat/frø/sesamfrø"
     ],
     "name": "TRS Sesame Seeds Hulled"
   },
   "5018605000535": {
     "categories": [
-      "red-beans"
+      "mat/belgvekster/kidneybønner"
     ],
-    "name": "Dark Red Kidney Beans 2kg",
+    "name": "Dark Red Kidney Beans 2kg (Finest Quality)",
     "quantity": "2kg"
   },
   "5032227340015": {
@@ -4459,17 +4513,23 @@
   },
   "5056170301978": {
     "categories": [
-      "helse/tannpleie"
+      "helse/tannpleie/tannbørste"
     ],
     "name": "DentaGlo Kids Toothbrushes 5-pack (Gem Imports)",
     "quantity": "5pcs"
   },
   "5056170328920": {
     "categories": [
-      "personal-care/dental"
+      "helse/tannpleie/tannbørste"
     ],
-    "name": "Bamboo Toothbrushes 3-pack eco soft bristles",
+    "name": "Bamboo Toothbrushes 3-pack eco soft bristles (Gem Imports, PER-2892)",
     "quantity": "3pcs"
+  },
+  "5056170363853": {
+    "categories": [
+      "kontor/skrivesaker/tusj"
+    ],
+    "name": "The Box Metallic Markers, 3-pakning (gull, sølv, bronse)"
   },
   "5060020627262": {
     "categories": [
@@ -4479,15 +4539,15 @@
   },
   "5060120173751": {
     "categories": [
-      "personal-care/hair"
+      "helse/hår/sjampo"
     ],
-    "name": "XHC Papaya Shampoo & Conditioner Bar no plastic waste"
+    "name": "XHC Papaya Shampoo & Conditioner Bar (no plastic waste)"
   },
   "5060503767393": {
     "categories": [
-      "cosmetics/makeup"
+      "helse/sminke/eyeliner"
     ],
-    "name": "Dark brown/black eyeliner pencil"
+    "name": "Mørk brun/svart eyeliner blyant"
   },
   "5200021649369": {
     "categories": [
@@ -4616,9 +4676,9 @@
   },
   "5391520950285": {
     "categories": [
-      "personal-care/lice-treatment"
+      "helse/parasitt/lusemiddel"
     ],
-    "name": "Paranit lice shampoo 200ml",
+    "name": "Paranit luseshampoo 200ml (russisk, \"уничтожает вшей и гнид\")",
     "quantity": "200ml"
   },
   "5411183171671": {
@@ -4681,31 +4741,37 @@
   },
   "5701013102723": {
     "categories": [
-      "personal-care/nail"
+      "helse/negler/neglelakkfjerner"
     ],
-    "name": "DKS Impulsiv Nailpolish Remover 100ml acetone-free",
+    "name": "DKS Impulsiv Neglelakfjerner / Nailpolish Remover 100ml (acetonefri)",
     "quantity": "100ml"
   },
   "5701259100187": {
     "categories": [
-      "food/sugar"
+      "mat/sukker"
     ],
-    "name": "Dansukker produkt 1kg",
+    "name": "Dan Sukker/Dansukker produkt 1kg (type ukjent fra foto)",
     "quantity": "1kg"
   },
   "5701259100781": {
     "categories": [
-      "food/sugar"
+      "mat/sukker"
     ],
     "name": "Dan Sukker Melis 500g",
     "quantity": "500g"
   },
   "5701390210240": {
     "categories": [
-      "personal-care/soap"
+      "bad/hygiene/såpe"
     ],
-    "name": "JYSK Soap Confetti heart 30g",
+    "name": "JYSK Soap Confetti hjerte 30g",
     "quantity": "30g"
+  },
+  "5701566114006": {
+    "categories": [
+      "helse/personlig/leppepomade"
+    ],
+    "name": "SANS Lipbalm No Perfume, 2 × 5.1 g"
   },
   "5701573900180": {
     "categories": [
@@ -4722,32 +4788,44 @@
       }
     ]
   },
+  "5702071366164": {
+    "categories": [
+      "helse/medisin/hals"
+    ],
+    "name": "CuraMed Sår Hals med Råmelk (Orkla Health), 20 sugetabletter, vitamin D, råmelk, vitamin C"
+  },
   "5703147691272": {
     "categories": [
-      "personal-care/skincare/mask"
+      "helse/hudpleie/ansiktsmaske"
     ],
-    "name": "Vichy Multimask 3-pack",
+    "name": "Vichy Multimask 3-pakning",
     "quantity": "3pcs"
   },
   "5706920117105": {
     "categories": [
-      "food/rice"
+      "mat/ris/sushiris"
     ],
-    "name": "Sushi Ris 900g",
+    "name": "Sushi ris 900g (pakkedato 2023-04-17, best-before delvis uleselig)",
     "quantity": "900g"
   },
   "5708146602045": {
     "categories": [
-      "helse/tannpleie"
+      "helse/tannpleie/tannbørste"
     ],
     "name": "Scanlegio barnetannbørste med krokodille"
   },
   "5708146602373": {
     "categories": [
-      "helse/tannpleie"
+      "helse/tannpleie/tannpirker"
     ],
     "name": "Scanlegio barnetannstikkere 25stk giraffmotiv (4+ år)",
     "quantity": "25pcs"
+  },
+  "5708625265251": {
+    "categories": [
+      "rør/avløp"
+    ],
+    "name": "Svart skjøtemuffe (avløpsrør)"
   },
   "5709404112603": {
     "categories": [
@@ -4780,9 +4858,9 @@
   },
   "5745001088057": {
     "categories": [
-      "personal-care/soap"
+      "bad/hygiene/såpe"
     ],
-    "name": "Paris Cherry Blossom hand soap 90g vegan",
+    "name": "Paris Cherry Blossom håndssåpe 90g vegan (N°008, Produced in Turkey)",
     "quantity": "90g"
   },
   "5900951311505": {
@@ -4973,6 +5051,12 @@
     "quantity": "1kg",
     "source": "manual"
   },
+  "5909990612871": {
+    "categories": [
+      "helse/førstehjelp/desinfeksjon"
+    ],
+    "name": "Woda utleniona (hydrogenperoksid 3 %)"
+  },
   "5941132002140": {
     "categories": [
       "vanilla_sugar"
@@ -5041,17 +5125,35 @@
     ],
     "name": "MARITIM VHF antenna adapter (prod.nr 9551-26, stainless)"
   },
+  "70113235": {
+    "categories": [
+      "helse/hudpleie/hudkrem"
+    ],
+    "name": "Dr Greve Pharma Barn Allroundkrem 75ml"
+  },
   "7020650112000": {
     "categories": [
-      "food/flour"
+      "mat/mel"
     ],
     "name": "Norgesmøllene Hvetemel 2kg",
     "quantity": "2kg"
   },
+  "7021110120016": {
+    "categories": [
+      "bil/spylervæske"
+    ],
+    "name": "Blåtind Vinter -15 °C spylervæske 3 L (Wilhelmsen Chemicals)"
+  },
+  "7022810462437": {
+    "categories": [
+      "kontor/teip"
+    ],
+    "name": "Giform usynlig teip, 3-pakning, 15mm × 15m (Europris art.nr. 46243)"
+  },
   "7022810464905": {
     "brand": "Europris",
     "categories": [
-      "verktøy/brann"
+      "lighter"
     ],
     "name": "Peislighter rett tennrør (Europris art 46490, kjøpt 2026-04-08)",
     "prices": [
@@ -5127,7 +5229,7 @@
   },
   "7029121011811": {
     "categories": [
-      "food/cereal/millet"
+      "mat/korn/hirseflak"
     ],
     "name": "Helios Økologiske Hirseflak"
   },
@@ -5139,16 +5241,16 @@
   },
   "7032069712702": {
     "categories": [
-      "personal-care/feminine-hygiene"
+      "helse/hygiene/bind"
     ],
-    "name": "Libresse Wings Ultra+ 14pcs",
+    "name": "Libresse Wings Ultra+ 14stk",
     "quantity": "14pcs"
   },
   "7032069724750": {
     "categories": [
-      "food/rice"
+      "mat/ris/jasminris"
     ],
-    "name": "REMA Boil-in-Bag Middagsris Thai White Rice 1kg",
+    "name": "Boil-in-Bag Middagsris Thai White Rice 1kg 8 poser à 125g (REMA)",
     "quantity": "1kg"
   },
   "7038010028106": {
@@ -5174,14 +5276,14 @@
   },
   "7039010562096": {
     "categories": [
-      "food/ready-meal"
+      "mat/ferdigmat"
     ],
     "name": "Toro Meksikansk Gryte med ris, bønner og paprika"
   },
   "7040110310807": {
     "brand": "Freia",
     "categories": [
-      "food/baking"
+      "mat/baking/kakao"
     ],
     "name": "Freia Bakekakao 250g Regia (MENY Alna, kjøpt 2026-04-11)",
     "prices": [
@@ -5195,11 +5297,17 @@
     ],
     "quantity": "250g"
   },
+  "7041068126977": {
+    "categories": [
+      "bil/startgass"
+    ],
+    "name": "Startgass for diesel- og bensinmotorer (spray)"
+  },
   "7046110066416": {
     "categories": [
-      "personal-care/hair/shampoo"
+      "helse/hår/sjampo"
     ],
-    "name": "Define Healthy Scalp & Hair Shampoo 250ml",
+    "name": "Define Healthy Scalp & Hair Shampoo (Elida Hair Innovation Centre)",
     "quantity": "250ml"
   },
   "7047160403213": {
@@ -5208,11 +5316,17 @@
     ],
     "name": "Nille Party napkins (watermelon design, 3-ply 33x33cm)"
   },
+  "7049981151045": {
+    "categories": [
+      "kjøkken/drikkeflaske"
+    ],
+    "name": "Ninja Master drikkeflaske 400ml, grønn, Tritan BPA-fri (art.nr 115104A)"
+  },
   "7059330072679": {
     "categories": [
-      "food/legumes/lentils"
+      "mat/belgvekster/linser"
     ],
-    "name": "Praana Brown Lentils (Noramix)"
+    "name": "Praana Brown Lentils brune linser"
   },
   "7070788005248": {
     "categories": [
@@ -5220,11 +5334,23 @@
     ],
     "name": "\"Aktivitetsbok: Hest er best\" activity book"
   },
+  "7070866033149": {
+    "categories": [
+      "helse/førstehjelp/plaster"
+    ],
+    "name": "Norgesplaster Steril Bandasje Ekstra stor XL, 20×9.7cm, 5 stk"
+  },
   "7070893159096": {
     "categories": [
       "cockpit-lamp"
     ],
     "name": "Biltema cockpit lamp"
+  },
+  "7071134128826": {
+    "categories": [
+      "helse/kosttilskudd/vitaminer"
+    ],
+    "name": "Metode+ Tigervitaminer Bringebær (Apotek 1), 60 tyggbare poter, 9 vitaminer, sukkerfri, 10µg D3"
   },
   "7309860323636": {
     "categories": [
@@ -5234,9 +5360,9 @@
   },
   "7310340114026": {
     "categories": [
-      "food/sugar"
+      "mat/sukker"
     ],
-    "name": "Dansukker Pärlsocker (perlesukker)"
+    "name": "Dansukker Pärlsocker (svensk perlesukker)"
   },
   "7310380706397": {
     "categories": [
@@ -5246,46 +5372,76 @@
   },
   "7310572300310": {
     "categories": [
-      "personal-care/intimate"
+      "helse/hudpleie/intimkrem"
     ],
-    "name": "RFSU Private Area Soft Balance 2in1 Intimate Cream"
+    "name": "RFSU Private Area Soft Balance 2in1 Intimkrem"
   },
   "7310610012267": {
     "categories": [
-      "personal-care/shower-gel"
+      "bad/hygiene/dusjsåpe"
     ],
-    "name": "Bliw Tindved Dusjgelé 250ml",
+    "name": "Bliw Tindved Dusjgelé 250ml (produced in Scandinavia)",
     "quantity": "250ml"
   },
   "7310790088212": {
     "categories": [
-      "personal-care/feminine-hygiene"
+      "helse/hygiene/bind"
     ],
     "name": "Libresse FreshProtect bind"
   },
   "7311020031322": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/impregnering"
     ],
     "name": "Boston Raingard Allover impregnerings-spray"
   },
   "7311041020401": {
     "categories": [
-      "food/syrup"
+      "mat/sirup"
     ],
     "name": "Eldorado Mørk Sirup 500g",
     "quantity": "500g"
   },
+  "7312600973756": {
+    "categories": [
+      "hage/frø/revebjelle"
+    ],
+    "name": "Blossom frøpose: Revebjelle (Digitalis purpurea)"
+  },
+  "7312600973817": {
+    "categories": [
+      "hage/frø/blomkarse"
+    ],
+    "name": "Blossom frøpose: Stor Blomkarse / Indiankrasse (Tropaeolum majus)"
+  },
   "7312669995478": {
     "categories": [
-      "personal-care/hair"
+      "helse/hår/balsam"
     ],
-    "name": "ELW Conditioning Balsam med aprikosolje 50ml",
+    "name": "ELW Conditioning Balsam med aprikosolje (hårbalsam)",
     "quantity": "50ml"
+  },
+  "7314890003762": {
+    "categories": [
+      "bil/dekk/punkteringsspray"
+    ],
+    "name": "Finilec punkteringsspray/dekktett (dekk over 14\")"
+  },
+  "7316190012024": {
+    "categories": [
+      "kjøkken/servietter"
+    ],
+    "name": "Pictura papirservietter 40x40cm, 12 stk, 3-lag, påfugl/blomstermotiv (AB Pictura, Sverige)"
+  },
+  "7317191048975": {
+    "categories": [
+      "bil/drivstofftilsetning"
+    ],
+    "name": "Shell i-Kondensfjerner 0,2 L"
   },
   "7319470816107": {
     "categories": [
-      "personal-care/deodorant"
+      "helse/personlig/deodorant"
     ],
     "name": "Nivea Men Dry Impact 72h roll-on",
     "quantity": "50ml"
@@ -5308,24 +5464,36 @@
     ],
     "name": "Jula corner brackets 28x28mm (402-452,"
   },
+  "7330571350024": {
+    "categories": [
+      "bil/spylervæske"
+    ],
+    "name": "Hamron sommerspylervæske (Jula, art. 004593) – fotografert ved A55, men ikke synlig i oversiktsbildet"
+  },
   "7331210066481": {
     "categories": [
       "vase"
     ],
     "name": "ICA Decanter Capas 1.5L clear (plastic, used as a flower vase)"
   },
+  "7331656207523": {
+    "categories": [
+      "bil/kjølevæske"
+    ],
+    "name": "Starta Glykol Röd 774F Longlife konsentrat 4 L (produkt 2075-255)"
+  },
   "7332531074803": {
     "categories": [
-      "personal-care/hair"
+      "helse/hår/balsam"
     ],
-    "name": "Schwarzkopf Gliss Supreme Length 200ml",
+    "name": "Schwarzkopf Gliss Supreme Length 200ml balsamspray",
     "quantity": "200ml"
   },
   "7332551627096": {
     "categories": [
-      "baby/wipes"
+      "helse/hygiene/engangskluter"
     ],
-    "name": "Vidi Barn dry disposable wipes non-woven"
+    "name": "Vidi Barn tørre engangskluter (bleiebytte/ansikt/hender, Mölnlycke)"
   },
   "7340011453437": {
     "brand": "Coop",
@@ -5338,7 +5506,7 @@
   },
   "7340191102170": {
     "categories": [
-      "food/nuts/almonds"
+      "mat/nøtter/mandler"
     ],
     "name": "Coop Mandler 500g",
     "quantity": "500g"
@@ -5351,30 +5519,36 @@
   },
   "7340191144774": {
     "categories": [
-      "food/pasta"
+      "mat/pasta/fusilli"
     ],
-    "name": "Coop Fusilli Durumsorte 500g",
+    "name": "Coop Fusilli Durumsorte 500g (Made in Italy)",
     "quantity": "500g"
   },
   "7340191167919": {
     "categories": [
-      "food/breadcrumbs"
+      "mat/brødsmuler"
     ],
     "name": "Coop Strøkavring 400g",
     "quantity": "400g"
   },
+  "7350015000018": {
+    "categories": [
+      "helse/medisin/nese"
+    ],
+    "name": "Miwana Renässans nesedråper, 20 × 2 ml engangsdoser"
+  },
   "7350018834870": {
     "categories": [
-      "medical"
+      "helse/medisin/elektrolytt"
     ],
     "name": "Apotea Vätskeersättning Hallon (elektrolyttbrustabletter, 10 stk)",
     "quantity": "10pcs"
   },
   "7350074024499": {
     "categories": [
-      "personal-care/shaving/beard"
+      "helse/barbering/skjeggpleie"
     ],
-    "name": "Beard Master skjeggstylingpakke"
+    "name": "Beard Master skjeggstylingpakke (\"without leaving a mess behind\")"
   },
   "7388414403901": {
     "categories": [
@@ -5394,18 +5568,24 @@
     ],
     "name": "\"Bamse för de yngsta: Rackartyg med Vargkusinerna\" (EGMONT, TIDSAM 4439-05)"
   },
+  "7391860400233": {
+    "categories": [
+      "hage/plenklipper/olje"
+    ],
+    "name": "Texaco Lawn Machine Oil / plenklipperolje SAE 30"
+  },
   "7392871550450": {
     "categories": [
-      "cleaning/soap"
+      "rengjøring/flekkfjerner"
     ],
-    "name": "ImseVimse Citrus Stain Remover Soap 230g organic",
+    "name": "ImseVimse Citrus Stain Remover Soap 230g (organic, Sweden)",
     "quantity": "230g"
   },
   "7393173024281": {
     "categories": [
       "pipe_wrench"
     ],
-    "name": "Clas Ohlson rørtang CR-V 1\" / pipe wrench 1\" (art. 30-7206)",
+    "name": "Rørtang CR-V 1\" / pipe wrench, red (Clas Ohlson 30-7206)",
     "prices": [
       {
         "currency": "NOK",
@@ -5435,6 +5615,12 @@
       "screw"
     ],
     "name": "Clas Ohlson crosshead screws 4.2x16mm PZ-2 DIN 7982 EXTREME (11.1412-3)"
+  },
+  "7393173150157": {
+    "categories": [
+      "elektronikk/kabel/lydkabel"
+    ],
+    "name": "Biltema lydkabel 3,5 mm – 3,5 mm, gullbelagt (Art. 38-1237)"
   },
   "7610196002608": {
     "categories": [
@@ -5529,6 +5715,12 @@
     ],
     "name": "Spezieria Limone limoncello 30% (Bepi Tosolini, Italy)"
   },
+  "8020584536230": {
+    "categories": [
+      "bil/bremsevæske"
+    ],
+    "name": "Brembo Premium DOT 4 bremsevæske 500 ml"
+  },
   "8024827060988": {
     "categories": [
       "buoy-holder"
@@ -5580,6 +5772,24 @@
         "shop": "ЛЗ Яхтен магазин Варна Морска гара ул. Вълнолома"
       }
     ]
+  },
+  "8435557708581": {
+    "categories": [
+      "dekorasjon/stearinlys"
+    ],
+    "name": "Oh Yeah! stearinlys, hvitt, 7cm"
+  },
+  "8435557713066": {
+    "categories": [
+      "fest/ballonger"
+    ],
+    "name": "Oh Yeah! lange ballonger for ballongdyr, pastel, 15 stk, 115cm"
+  },
+  "8435557714100": {
+    "categories": [
+      "fest/pappkopper"
+    ],
+    "name": "OH YEAH! Pastell Rose papirkopper 270cc, 6 stk, REF 119-1113 (The Sorso Factory, Spania)"
   },
   "8445291136359": {
     "categories": [
@@ -5701,21 +5911,21 @@
   },
   "8690757001980": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/skosvamp"
     ],
     "name": "Silver Express Instant Shine Sponge, nøytral/fargeløs, 6ml"
   },
   "8690757162025": {
     "categories": [
-      "sko/pleie"
+      "sko/pleie/skokrem"
     ],
     "name": "Silver Premium Self Shine Shoe Cream, sort"
   },
   "8697439056726": {
     "categories": [
-      "personal-care/soap"
+      "bad/hygiene/såpe"
     ],
-    "name": "Elegance Turkish Jasmine/Yasemin bar soap 250g",
+    "name": "Elegance Turkish Jasmine/Yasemin såpe 250g",
     "quantity": "250g"
   },
   "8697664908052,": {
@@ -5732,9 +5942,9 @@
   },
   "8714100716564": {
     "categories": [
-      "personal-care/shower-gel"
+      "bad/hygiene/dusjsåpe"
     ],
-    "name": "Camay Romance Forever shower gel"
+    "name": "Camay Romance Forever shower gel (russisk)"
   },
   "8714789732671": {
     "brand": "Colgate",
@@ -5837,14 +6047,14 @@
   },
   "8718951386495": {
     "categories": [
-      "helse/tannpleie"
+      "helse/tannpleie/tannbørste"
     ],
     "name": "Colgate Extra Clean tannbørster Duo Pack medium (MFG 16/01/2023)",
     "quantity": "2pcs"
   },
   "8719874194471": {
     "categories": [
-      "personal-care/shaving"
+      "helse/barbering/barberhøvel"
     ],
     "name": "Sence 6 Disposable Razors",
     "quantity": "6pcs"
@@ -5852,23 +6062,32 @@
   "8721098347236": {
     "brand": "McGregor",
     "categories": [
-      "personal-care/grooming"
+      "helse/barbering/trimmer"
     ],
-    "name": "McGregor Body Groomer",
+    "name": "McGregor Body Groomer hårtrimmer (Europris Grorud, kjøpt 2026-04-08)",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": null,
+        "price": 279.0,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ],
     "quantity": "1pcs"
   },
   "8886467000560": {
     "categories": [
-      "personal-care/soap"
+      "bad/hygiene/såpe"
     ],
-    "name": "Lux Soft Touch bar soap 80g French Rose & Almond Oil",
+    "name": "Lux Soft Touch bar soap 80g (French Rose & Almond Oil)",
     "quantity": "80g"
   },
   "9000101627220": {
     "categories": [
-      "personal-care/deodorant"
+      "helse/personlig/deodorant"
     ],
-    "name": "Fa Men Pure Control Hemp Inspired Scent 72h roll-on",
+    "name": "Fa Men Pure Control Hemp Inspired Scent 72h roll-on 50ml (Schwarzkopf/Henkel)",
     "quantity": "50ml"
   },
   "9001414403044": {
@@ -5998,6 +6217,18 @@
       }
     ]
   },
+  "9788278885567": {
+    "categories": [
+      "bøker/barnebøker"
+    ],
+    "name": "\"Bli en Klimaekspert\" barneaktivitetsbok (med klistremerker og plakat)"
+  },
+  "biltema-17594": {
+    "categories": [
+      "friluft/gassboks"
+    ],
+    "name": "Biltema gassbeholder butan 227 g (Art. 17-594)"
+  },
   "biltema-191036": {
     "categories": [
       "washer"
@@ -6054,6 +6285,12 @@
       "electrical-connector"
     ],
     "name": "BILTEMA Kabelskosortiment insulated cable terminals assortment (300 pcs, various spade/ring/butt connectors)"
+  },
+  "biltema-382986": {
+    "categories": [
+      "sikkerhet/hansker"
+    ],
+    "name": "Biltema arbeidshansker nylon/mikrofiber, str 10 XL (Art. 38-2986)"
   },
   "biltema-440069": {
     "categories": [
