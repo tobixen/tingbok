@@ -69,6 +69,7 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `docs/language-fallback-findings.md`.
 
 ### Fixed
+- **The background cache refresh no longer spins on an entry it cannot refresh.** Open Food Facts entries were handed to the SKOS lookup, which rejected them as an unknown source (about 41 000 log warnings in 3 hours, plus a full cache-directory scan each time). They are now refreshed from the local OFF taxonomy. A failed refresh is recorded in the cache entry, which then waits 4 hours before its next try, doubling with each further failure up to 30 days, so entries that can never be refreshed stop crowding out the rest. Consecutive failures also slow the loop down, so an upstream that is rate-limiting or down is no longer hammered.
 - **`PUT /api/ean` and `PUT /api/vocabulary` no longer fail when their data file has the wrong owner**, and an EAN write that still fails returns a 503 with a JSON explanation instead of an unhandled 500. `ean-db.json` and `vocabulary.yaml` are now replaced atomically, so only their directory has to be writable, and neither a crash nor a power loss mid-write can leave them truncated. `/health` checks `vocabulary.yaml` too. Two EAN observations saved at the same moment no longer lose one of them.
 - **The vocabulary endpoints are reachable over MCP** — the MCP server takes its
   snapshot of the routes when it is constructed, and it was constructed before

@@ -1992,3 +1992,144 @@ def test_is_non_concept_uri_wikidata_political_state_blocked_via_p31_chain() -> 
                 result = is_non_concept_uri("https://www.wikidata.org/entity/Q7275")
 
     assert result is True
+
+
+# ---------------------------------------------------------------------------
+# Background refresh: OFF entries and failures must not spin the loop
+# ---------------------------------------------------------------------------
+
+
+def _write_off_cache_entry(cache_dir: Path, label: str, cached_at: float) -> Path:
+    """Write an OFF concept cache file exactly as services/off.py does: no _cache_key."""
+    cache_path = _get_cache_path(cache_dir, f"concept:off:en:{label}")
+    cache_path.write_text(
+        json.dumps({"uri": f"off:en:{label}", "prefLabel": label, "source": "off", "_cached_at": cached_at})
+    )
+    return cache_path
+
+
+def test_refresh_entry_refreshes_off_concept_from_local_taxonomy(tmp_path: Path) -> None:
+    """A real OFF cache entry is re-derived from the taxonomy, not sent to a SKOS endpoint.
+
+    Regression: the refresh inferred the key concept:off:en:<label> from the
+    filename and handed "off" to _upstream_lookup, which only knows the SKOS
+    sources.  It logged "Unknown SKOS source: off" and failed, forever.
+    """
+    import tingbok.services.skos as skos_module
+
+    cache_path = _write_off_cache_entry(tmp_path, "fibreglass", cached_at=1.0)
+    fresh = {"uri": "off:en:fibre-glass", "prefLabel": "Fibreglass", "source": "off", "broader": []}
+    with (
+        patch("tingbok.services.off._get_taxonomy", return_value=object()),
+        patch("tingbok.services.off.lookup_concept", return_value=fresh) as off_lookup,
+        patch.object(skos_module.logger, "warning") as warn,
+    ):
+        assert _refresh_entry(cache_path, tmp_path) is True
+    off_lookup.assert_called_once_with("fibreglass", "en")
+    warn.assert_not_called()
+    data = json.loads(cache_path.read_text())
+    assert data["prefLabel"] == "Fibreglass"
+    assert data["_cached_at"] > 1.0
+
+
+def test_refresh_entry_keeps_off_entry_when_taxonomy_unavailable(tmp_path: Path) -> None:
+    """No taxonomy is a transient failure: the cached concept must not be overwritten."""
+    cache_path = _write_off_cache_entry(tmp_path, "fibreglass", cached_at=1.0)
+    with patch("tingbok.services.off._get_taxonomy", return_value=None):
+        assert _refresh_entry(cache_path, tmp_path) is False
+    assert json.loads(cache_path.read_text())["uri"] == "off:en:fibreglass"
+
+
+def test_find_oldest_cache_entry_skips_entries_waiting_to_retry(tmp_path: Path) -> None:
+    """An entry whose last refresh failed is passed over until its retry time."""
+    from tingbok.services.skos import _mark_refresh_failed
+
+    old = _write_off_cache_entry(tmp_path, "a", cached_at=1.0)
+    newer = _write_off_cache_entry(tmp_path, "b", cached_at=2.0)
+    _mark_refresh_failed(old)
+    result = _find_oldest_cache_entry(tmp_path)
+    assert result is not None
+    assert result[0] == newer
+
+
+def test_mark_refresh_failed_backs_off_per_entry_and_keeps_the_data(tmp_path: Path) -> None:
+    """Recorded in the file, so it survives a restart; each failure doubles the wait.
+
+    Kept in memory for a fixed 4 hours, more than a couple of dozen entries that
+    can never be refreshed filled the window and starved the healthy ones.
+    """
+    from tingbok.services.skos import TRANSIENT_TTL_SECONDS, _mark_refresh_failed
+
+    path = _write_off_cache_entry(tmp_path, "a", cached_at=1.0)
+    _mark_refresh_failed(path)
+    first = json.loads(path.read_text())
+    _mark_refresh_failed(path)
+    second = json.loads(path.read_text())
+    assert second["_refresh_failures"] == 2  # noqa: PLR2004
+    assert first["_refresh_retry_after"] == pytest.approx(time.time() + TRANSIENT_TTL_SECONDS, abs=5)
+    assert second["_refresh_retry_after"] == pytest.approx(time.time() + 2 * TRANSIENT_TTL_SECONDS, abs=5)
+    assert second["uri"] == "off:en:a"
+    assert second["_cached_at"] == 1.0
+
+
+def test_successful_refresh_clears_the_failure_record(tmp_path: Path) -> None:
+    from tingbok.services.skos import _mark_refresh_failed
+
+    path = _write_off_cache_entry(tmp_path, "a", cached_at=1.0)
+    _mark_refresh_failed(path)
+    _save_to_cache(path, {"uri": "off:en:a"}, cache_key="concept:off:en:a")
+    data = json.loads(path.read_text())
+    assert "_refresh_failures" not in data
+    assert "_refresh_retry_after" not in data
+
+
+def test_refresh_backoff_is_capped_without_overflow() -> None:
+    """2.0 ** n overflows at n = 1024, which would kill the background task."""
+    from tingbok.services.skos import _REFRESH_BACKOFF_MAX, _refresh_backoff
+
+    assert _refresh_backoff(1) == 2.0  # noqa: PLR2004
+    assert _refresh_backoff(5000) == _REFRESH_BACKOFF_MAX
+
+
+@pytest.mark.anyio
+async def test_cache_refresh_loop_does_not_spin_on_failures(tmp_path: Path) -> None:
+    """A failed refresh neither retries the same entry at once nor loops without sleeping.
+
+    Regression: the loop always took the oldest entry, a failure left it the
+    oldest, and a stale entry means no sleep, so it spun on one entry and
+    re-read the whole cache directory each time (41 000 warnings in 3 hours).
+    Hammering an upstream that answers 429 the same way is no better.
+    """
+    import tingbok.services.skos as skos_module
+
+    a = _write_off_cache_entry(tmp_path, "a", cached_at=1.0)
+    b = _write_off_cache_entry(tmp_path, "b", cached_at=2.0)
+    refreshed: list[Path] = []
+    sleeps: list[float] = []
+
+    class _Stop(Exception):
+        pass
+
+    async def fake_sleep(secs: float) -> None:
+        sleeps.append(secs)
+        if len(sleeps) >= 3:  # noqa: PLR2004
+            raise _Stop
+
+    def fake_refresh(path: Path, cache_dir: Path) -> bool:
+        refreshed.append(path)
+        if len(refreshed) > 10:  # noqa: PLR2004
+            raise _Stop  # spinning: refreshing again without ever sleeping
+        return False
+
+    with (
+        patch.object(skos_module, "_refresh_entry", side_effect=fake_refresh),
+        patch("asyncio.sleep", side_effect=fake_sleep),
+        pytest.raises(_Stop),
+    ):
+        await skos_module.cache_refresh_loop(tmp_path, max_age_seconds=10.0)
+
+    assert refreshed[:2] == [a, b]
+    assert json.loads(a.read_text())["_refresh_failures"] == 1
+    assert len(sleeps) == 3, f"spun through {len(refreshed)} refreshes without sleeping"  # noqa: PLR2004
+    assert all(s > 0 for s in sleeps)
+    assert sleeps[1] > sleeps[0], "consecutive failures back off"

@@ -42,6 +42,21 @@ def _parse_json(response: niquests.Response, context: str = "") -> dict | None:
 #: the two used to be 60 and 7 while this comment claimed they matched.
 CACHE_TTL_SECONDS = 60 * 60 * 24 * 60  # 60 days
 TRANSIENT_TTL_SECONDS = 60 * 60 * 4  # 4 hours — short TTL for transient failures
+#: Ceiling for the background refresh's sleep after consecutive failures.
+_REFRESH_BACKOFF_MAX = 600.0
+#: Ceiling for how long one entry waits after repeated failed refreshes.
+_REFRESH_RETRY_MAX = 30 * 86400
+
+
+def _refresh_backoff(consecutive_failures: int) -> float:
+    """Loop sleep after *consecutive_failures* failed refreshes in a row.
+
+    The exponent is capped: ``2.0 ** 1024`` raises OverflowError, and that
+    would end the background task for good.
+    """
+    return min(_REFRESH_BACKOFF_MAX, 2.0 ** min(consecutive_failures, 20))
+
+
 DEFAULT_TIMEOUT = 10.0
 
 #: Timestamp (epoch seconds) of the next scheduled cache refresh; ``None`` until the loop starts.
@@ -545,8 +560,11 @@ def _infer_cache_key(cache_path: Path, data: dict) -> str | None:
       colons (reversing the safe-key encoding for the three ``concept:src:lang:label``
       separators) and verifies with the embedded hash.
 
-    Returns ``None`` when the key cannot be reliably inferred (e.g. entries with
-    ``off:`` or ``gpt:`` URIs whose keys were never stored in the file).
+    Returns ``None`` when the key cannot be reliably inferred, e.g. a label
+    containing characters the safe-key encoding also turns into ``_``.  OFF
+    concept entries (written without ``_cache_key`` by ``services/off.py``) are
+    usually inferable through strategy 2, and :func:`_upstream_lookup` refreshes
+    them from the local taxonomy.
     """
     # Extract the 16-char SHA-256 prefix that _get_cache_path embeds in the filename.
     stem = cache_path.stem  # e.g. "concept_agrovoc_en_lentils_35e5ed0dc7b6ae8c"
@@ -591,13 +609,15 @@ def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
     Entries with a ``_cache_key`` are always eligible.  Legacy entries that lack
     ``_cache_key`` are included when :func:`_infer_cache_key` can reconstruct their key
     (covering SKOS entries written before the field was added).  Entries whose key
-    cannot be inferred — e.g. OFF / GPT concept caches with non-HTTP URIs — are
-    skipped so the refresh loop never spins on them.
+    cannot be inferred are skipped, as are entries whose last refresh failed
+    and whose ``_refresh_retry_after`` has not yet come (see
+    :func:`_mark_refresh_failed`), so the loop never spins on them.
 
     Returns ``None`` when the directory is empty or contains no eligible entries.
     """
     oldest_path: Path | None = None
     oldest_ts: float = float("inf")
+    now = time.time()
 
     for cache_path in cache_dir.glob("*.json"):
         if cache_path.name == "_not_found.json":
@@ -611,6 +631,8 @@ def _find_oldest_cache_entry(cache_dir: Path) -> tuple[Path, float] | None:
             # Legacy entry — only include it if we can infer the key at refresh time.
             if _infer_cache_key(cache_path, data) is None:
                 continue
+        if data.get("_refresh_retry_after", 0) > now:
+            continue
         ts = data.get("_cached_at", float("inf"))
         if ts < oldest_ts:
             oldest_ts = ts
@@ -664,7 +686,9 @@ def _refresh_entry(cache_path: Path, cache_dir: Path) -> bool:
                 return False
             new_data = concept if concept else {}
             _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
-            return bool(concept)
+            # Refreshed even when upstream no longer has it: a False here
+            # would make the loop back off as if upstream had failed.
+            return True
 
         elif prefix in ("labels", "alt_labels"):
             uri = data.get("uri", "")
@@ -703,6 +727,31 @@ def _refresh_entry(cache_path: Path, cache_dir: Path) -> bool:
     return False
 
 
+def _mark_refresh_failed(cache_path: Path) -> None:
+    """Record a failed refresh in the entry itself, and when to try it again.
+
+    The wait doubles with each consecutive failure, from ``TRANSIENT_TTL_SECONDS``
+    up to ``_REFRESH_RETRY_MAX``, so an entry that can never be refreshed stops
+    taking turns from healthy ones.  It lives in the file so it survives a
+    restart; the cached data is left alone, and a successful
+    :func:`_save_to_cache` writes the entry afresh without these fields.
+    """
+    try:
+        with open(cache_path, encoding="utf-8") as f:
+            data: dict = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return
+    failures = int(data.get("_refresh_failures", 0)) + 1
+    delay = min(_REFRESH_RETRY_MAX, TRANSIENT_TTL_SECONDS * 2.0 ** min(failures - 1, 20))
+    data["_refresh_failures"] = failures
+    data["_refresh_retry_after"] = time.time() + delay
+    try:
+        with open(cache_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        logger.warning("Could not record failed refresh in %s: %s", cache_path, e)
+
+
 async def cache_refresh_loop(
     cache_dir: Path,
     max_age_seconds: float = CACHE_TTL_SECONDS,
@@ -736,6 +785,12 @@ async def cache_refresh_loop(
         max_age_seconds / 86400,
         divisor,
     )
+    # A failed refresh leaves the entry the oldest, and a stale entry means no
+    # sleep, so without this the loop spins on one entry, re-reading the whole
+    # cache directory each time, and hammers an upstream that is already
+    # refusing (429) or unreachable.  Failed entries are set aside (recorded
+    # in the entry, see _mark_refresh_failed) and consecutive failures back off.
+    consecutive_failures = 0
     while True:
         oldest = _find_oldest_cache_entry(cache_dir)
         if oldest is None:
@@ -746,6 +801,8 @@ async def cache_refresh_loop(
         cache_path, oldest_ts = oldest
         age = time.time() - oldest_ts
         sleep_secs = max(0.0, (max_age_seconds - age) / divisor)
+        if consecutive_failures:
+            sleep_secs = max(sleep_secs, _refresh_backoff(consecutive_failures))
 
         _next_refresh_at = time.time() + sleep_secs
         if sleep_secs > 0:
@@ -757,7 +814,11 @@ async def cache_refresh_loop(
             await asyncio.sleep(sleep_secs)
 
         logger.debug("Refreshing oldest cache entry: %s (age %.1fd)", cache_path.name, age / 86400)
-        await asyncio.to_thread(_refresh_entry, cache_path, cache_dir)
+        if await asyncio.to_thread(_refresh_entry, cache_path, cache_dir):
+            consecutive_failures = 0
+        else:
+            consecutive_failures += 1
+            await asyncio.to_thread(_mark_refresh_failed, cache_path)
 
 
 def _is_in_not_found_cache(cache_dir: Path, key: str, ttl: int = CACHE_TTL_SECONDS) -> bool:
@@ -1512,6 +1573,15 @@ def _upstream_lookup(label: str, lang: str, source: str, cache_dir: Path) -> tup
         return _lookup_dbpedia(label, lang)
     if source == "wikidata":
         return _lookup_wikidata(label, lang)
+    if source == "off":
+        # Not a SKOS endpoint: OFF concepts come from the local taxonomy, but
+        # their cache entries share this directory and the background refresh
+        # reaches them through here.
+        from tingbok.services import off as off_service  # noqa: PLC0415
+
+        if off_service._get_taxonomy() is None:
+            return None, True
+        return off_service.lookup_concept(label, lang), False
     logger.warning("Unknown SKOS source: %s", source)
     return None, True
 
