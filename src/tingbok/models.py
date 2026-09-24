@@ -264,6 +264,11 @@ class HealthResponse(BaseModel):
     paths: dict[str, str] | None = None
     #: Self-update state; absent when not running from a managed deployment.
     update: UpdateStatus | None = None
+    #: Whether the service can write ean-db.json.  False makes the status
+    #: "degraded": every PUT /api/ean would fail.
+    data_writable: bool | None = None
+    #: The paths that are not writable (localhost clients only).
+    unwritable_paths: list[str] | None = None
 
 
 class SourceInfo(BaseModel):

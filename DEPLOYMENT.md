@@ -159,6 +159,13 @@ from the code it imported at startup, so the breakage only surfaces at the next 
 `TINGBOK_UPDATE_STATUS_FILE` (`/opt/tingbok/update-status.json` on the VM); off a managed
 host the variable is unset and `/health` reports no `update` block at all.
 
+`status` is also `degraded` when `data_writable` is `false`: the service cannot write
+`ean-db.json` or its directory, so every `PUT /api/ean` fails.  The usual cause is a git
+command run as root in `/opt/tingbok/repo`, which leaves the files it touched owned by
+root.  Run git there as `sudo -u tingbok git ...`, never as root.  Localhost clients get
+the offending paths in `unwritable_paths`; the repair is
+`sudo chown -R tingbok:tingbok /opt/tingbok`.
+
 For the detail behind a `degraded`:
 
 ```bash

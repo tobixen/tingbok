@@ -757,6 +757,21 @@ def _read_update_status() -> UpdateStatus | None:
         return None
 
 
+def _unwritable_data_paths() -> list[str]:
+    """Paths the service must be able to write but cannot.
+
+    ``ean-db.json`` is rewritten in place, so the file itself must be writable;
+    git (the service's auto-commit and the updater's merges) replaces files by
+    rename, so the directory must be too.  A file owned by someone else — left
+    behind by a git command run as root, say — breaks every PUT while the rest
+    of the service answers normally.
+    """
+    candidates = [EAN_OBSERVATIONS_PATH.parent]
+    if EAN_OBSERVATIONS_PATH.exists():
+        candidates.append(EAN_OBSERVATIONS_PATH)
+    return [str(p) for p in candidates if not os.access(p, os.W_OK)]
+
+
 def _is_loopback_client(client_host: str | None) -> bool:
     """Is *client_host* an IPv4 loopback peer, and so entitled to the extra detail?
 
@@ -819,6 +834,14 @@ async def health(request: Request):
             # and the counter carry nothing, and are what a monitor needs, so
             # only the error text is dropped.
             result.update.last_error = None
+
+    unwritable = _unwritable_data_paths()
+    result.data_writable = not unwritable
+    if unwritable:
+        logger.warning("data paths not writable: %s", ", ".join(unwritable))
+        result.status = "degraded"
+        if is_local:
+            result.unwritable_paths = unwritable
 
     if is_local:
         result.paths = {
