@@ -5348,6 +5348,29 @@
     "name": "ImseVimse Citrus Stain Remover Soap 230g organic",
     "quantity": "230g"
   },
+  "7393173024281": {
+    "categories": [
+      "pipe_wrench"
+    ],
+    "name": "Clas Ohlson rørtang CR-V 1\" / pipe wrench 1\" (art. 30-7206)",
+    "prices": [
+      {
+        "currency": "NOK",
+        "date": "2026-08-29",
+        "price": 199.9,
+        "shop": "Clas Ohlson Oslo Stovner senter 3",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-08-29",
+        "last_seen": "2026-08-29",
+        "name": "30-7206 RØRTANG -CR-V 1\"",
+        "shop": "Clas Ohlson Oslo Stovner senter 3"
+      }
+    ]
+  },
   "7393173096165": {
     "categories": [
       "screw"
