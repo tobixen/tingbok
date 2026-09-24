@@ -527,9 +527,9 @@
   },
   "3800047336028": {
     "categories": [
-      "paint-brush"
+      "brush/paint"
     ],
-    "name": "Antares Universal paint brush 40mm (Code 3602)",
+    "name": "Antares Universal paint brush 40mm (Code 3602, Made in Bulgaria)",
     "prices": [
       {
         "currency": "EUR",
@@ -1158,7 +1158,10 @@
     ]
   },
   "3800207823016": {
-    "name": "прясно мляко Тертер",
+    "categories": [
+      "fresh-milk"
+    ],
+    "name": "Прясно мляко Тертер 3.6% 1л / Terter fresh milk 1l",
     "prices": [
       {
         "currency": "EUR",
@@ -1254,7 +1257,10 @@
     ]
   },
   "3800212340621": {
-    "name": "Кисело Мляко С Каймак",
+    "categories": [
+      "yogurt"
+    ],
+    "name": "Родопчанка кисело мляко с каймак 1кг / Rodopchanka yoghurt with cream top 1kg",
     "prices": [
       {
         "currency": "EUR",
@@ -2268,9 +2274,9 @@
   },
   "4056489080510": {
     "categories": [
-      "fresh-milk"
+      "whole-milk"
     ],
-    "name": "ПРЯСНО МЛЯКО 3% Pilos fresh milk 3% 1l",
+    "name": "Прясно краве мляко 3% / fresh cow milk 3%, 3 cartons",
     "prices": [
       {
         "currency": "EUR",
@@ -2851,9 +2857,9 @@
   },
   "4056489474074": {
     "categories": [
-      "cured-meat"
+      "cured-sausage"
     ],
-    "name": "Pikok lukanka sliced",
+    "name": "Луканка нарязана / sliced lukanka (2 packs)",
     "prices": [
       {
         "currency": "EUR",
@@ -2965,7 +2971,7 @@
   "4056489586043": {
     "categories": [
       "canning",
-      "meat"
+      "tinned-meat"
     ],
     "name": "СВИНСКО МЕСО ХХЛ pork meat XXL tin",
     "prices": [
@@ -3163,7 +3169,7 @@
     "categories": [
       "food/nuts"
     ],
-    "name": "Alesto roasted salted almonds",
+    "name": "ПЕЧЕН СОЛЕН БАДЕМ Alesto roasted salted almonds",
     "prices": [
       {
         "currency": "EUR",
@@ -3450,7 +3456,7 @@
   },
   "4056489941026": {
     "categories": [
-      "food/nuts"
+      "mixed-nuts"
     ],
     "name": "Alesto ЯДКИ СМЕС mixed nuts classic",
     "prices": [
@@ -4806,7 +4812,7 @@
   "5901069001968": {
     "categories": [
       "canning",
-      "fish"
+      "sprats"
     ],
     "name": "ŁOSOŚ Smoked Winter Sprats (Polish) (middle + front port)"
   },
@@ -6985,9 +6991,9 @@
   },
   "lidl-20322755": {
     "categories": [
-      "food/nuts"
+      "roasted_peanut"
     ],
-    "name": "ФЪСТЪК ПЕЧЕН Alesto roasted peanuts 200g",
+    "name": "Фъстък печен 200г (Alesto) / roasted peanuts, 2 bags",
     "prices": [
       {
         "currency": "EUR",
@@ -7191,9 +7197,9 @@
   },
   "lidl-20379575": {
     "categories": [
-      "sausage"
+      "cured-sausage"
     ],
-    "name": "ЛУКАНК.САЛАМ КР.ПАР round lukanka salami (sliced, from deli counter)",
+    "name": "Луканков салам, кръгъл, парче / round lukanka salami from the deli counter",
     "prices": [
       {
         "currency": "EUR",
@@ -7616,9 +7622,9 @@
   },
   "lidl-20710118": {
     "categories": [
-      "food/legumes"
+      "lentils"
     ],
-    "name": "Rodna Stryaha lentils 500g",
+    "name": "Леща / Bulgarian green lentils 500g (Родна стряха)",
     "prices": [
       {
         "currency": "EUR",
