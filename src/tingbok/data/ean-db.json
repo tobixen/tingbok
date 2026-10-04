@@ -1613,7 +1613,10 @@
     ]
   },
   "3800748051206": {
-    "name": "Чудно Прясно мляко 3.7%",
+    "categories": [
+      "fresh-milk"
+    ],
+    "name": "Верея Чудно прясно мляко 3.7% 1л / fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -2305,9 +2308,9 @@
   },
   "4056489080510": {
     "categories": [
-      "whole-milk"
+      "fresh-milk"
     ],
-    "name": "Прясно краве мляко 3%",
+    "name": "Pilos прясно мляко 3% 1л / fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -5397,15 +5400,24 @@
     "name": "Metode+ Tigervitaminer Bringebær (Apotek 1), 60 tyggbare poter, 9 vitaminer, sukkerfri, 10µg D3"
   },
   "7090007553817": {
-    "name": "Rentier Snack",
+    "categories": [
+      "fermented_sausage"
+    ],
+    "name": "Mydland Rein Spekesnack 25g / reindeer snack sausage",
     "quantity": "25 g"
   },
   "7090018140228": {
-    "name": "Hvalbiff",
+    "categories": [
+      "meat/whale_meat"
+    ],
+    "name": "Lofothval Hvalbiff 450g (3 skiver) / whale steak, frozen",
     "quantity": "450 g"
   },
   "7090061670109": {
-    "name": "Tørrfisk",
+    "categories": [
+      "food/fishery_products/dried_fish"
+    ],
+    "name": "Wilsgård Tørrfisk fra Senja 100g / stockfish",
     "quantity": "100 g"
   },
   "7309860323636": {
