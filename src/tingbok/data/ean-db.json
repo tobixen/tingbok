@@ -1621,6 +1621,13 @@
         "price": 1.84,
         "shop": "Май Маркет Радост Varna ул. Радост 3",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-04",
+        "price": 1.84,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "receipt_names": [
@@ -1629,6 +1636,12 @@
         "last_seen": "2026-07-06",
         "name": "ПР МЛЯКО ВЕРЕЯ ЧУДНО 1Л",
         "shop": "Май Маркет Радост Varna ул. Радост 3"
+      },
+      {
+        "first_seen": "2026-10-04",
+        "last_seen": "2026-10-04",
+        "name": "VEREYA ПРЯСНО МЛЯКО",
+        "shop": "Lidl Varna"
       }
     ]
   },
@@ -2294,7 +2307,7 @@
     "categories": [
       "whole-milk"
     ],
-    "name": "Прясно краве мляко 3% / fresh cow milk 3%, 3 cartons",
+    "name": "Прясно краве мляко 3%",
     "prices": [
       {
         "currency": "EUR",
@@ -2372,13 +2385,20 @@
         "price": 1.43,
         "shop": "Lidl Varna",
         "unit": "stk"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-04",
+        "price": 1.43,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "quantity": "1l",
     "receipt_names": [
       {
         "first_seen": "2026-01-24",
-        "last_seen": "2026-07-31",
+        "last_seen": "2026-10-04",
         "name": "ПРЯСНО МЛЯКО 3%",
         "shop": "Lidl Varna"
       },
@@ -3468,6 +3488,30 @@
         "first_seen": "2026-03-11",
         "last_seen": "2026-03-11",
         "name": "ТЕЛЕШКО ЗА ГОТВЕНЕ",
+        "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489940845": {
+    "categories": [
+      "lentils"
+    ],
+    "name": "Леща Campo Largo 1 кг / lentils",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-04",
+        "price": 1.59,
+        "shop": "Lidl Varna",
+        "unit": "stk"
+      }
+    ],
+    "quantity": "1 kg",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-04",
+        "last_seen": "2026-10-04",
+        "name": "ЛЕЩА",
         "shop": "Lidl Varna"
       }
     ]
@@ -5351,6 +5395,18 @@
       "helse/kosttilskudd/vitaminer"
     ],
     "name": "Metode+ Tigervitaminer Bringebær (Apotek 1), 60 tyggbare poter, 9 vitaminer, sukkerfri, 10µg D3"
+  },
+  "7090007553817": {
+    "name": "Rentier Snack",
+    "quantity": "25 g"
+  },
+  "7090018140228": {
+    "name": "Hvalbiff",
+    "quantity": "450 g"
+  },
+  "7090061670109": {
+    "name": "Tørrfisk",
+    "quantity": "100 g"
   },
   "7309860323636": {
     "categories": [
@@ -7396,12 +7452,19 @@
         "price": 0.97,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-04",
+        "price": 0.97,
+        "shop": "Lidl Varna",
+        "unit": "stk"
       }
     ],
     "receipt_names": [
       {
         "first_seen": "2026-06-06",
-        "last_seen": "2026-06-06",
+        "last_seen": "2026-10-04",
         "name": "БЯЛ ОРИЗ",
         "shop": "Lidl Varna"
       }
