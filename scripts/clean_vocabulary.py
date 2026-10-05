@@ -31,6 +31,7 @@ from pathlib import Path
 # Allow running directly from the repo root without an editable install.
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+from tingbok.fileutil import dump_yaml_atomically
 from tingbok.services.skos import is_junk_uri, is_non_concept_uri
 
 _TINGBOK_CONF = Path("/etc/tingbok/tingbok.conf")
@@ -154,8 +155,7 @@ def clean_vocabulary(
                 del data["source_uris"]
 
     if not dry_run:
-        with open(vocab_path, "w", encoding="utf-8") as f:
-            yaml.dump(doc, f)
+        dump_yaml_atomically(yaml, doc, vocab_path)
 
     return {"removed": total_removed, "normalised": total_normalised}
 

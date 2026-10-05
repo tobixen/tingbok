@@ -1,7 +1,6 @@
 """FastAPI application for tingbok."""
 
 import asyncio
-import io
 import ipaddress
 import json
 import logging
@@ -25,7 +24,7 @@ from fastmcp import FastMCP
 from fastmcp.server.providers.openapi import MCPType, RouteMap
 
 from tingbok import __version__
-from tingbok.fileutil import write_atomically
+from tingbok.fileutil import dump_yaml_atomically
 from tingbok.models import (
     AncestorsResponse,
     HealthResponse,
@@ -1348,11 +1347,7 @@ def _write_vocabulary_concept_update(
             s for s in (entry.get("excluded_sources") or []) if s not in body.remove_excluded_sources
         ]
 
-    # Atomically, like ean-db.json: an in-place write fails on a file left
-    # owned by someone else, even though the directory is ours.
-    buf = io.StringIO()
-    yaml_rw.dump(doc, buf)
-    write_atomically(vocab_path, buf.getvalue())
+    dump_yaml_atomically(yaml_rw, doc, vocab_path)
 
 
 @app.put("/api/vocabulary/{concept_id:path}", response_model=VocabularyConcept)

@@ -53,6 +53,7 @@ import time
 from pathlib import Path
 
 from tingbok import __version__
+from tingbok.fileutil import dump_yaml_atomically
 from tingbok.sources import skos_lookup_sources
 from tingbok.vocabulary_file import coerce_scalar_source_uris
 
@@ -189,8 +190,7 @@ def _populate_uris(
                 existing.append(uri)
         data["source_uris"] = existing
 
-    with open(vocab_path, "w") as f:
-        yaml.dump(doc, f)
+    dump_yaml_atomically(yaml, doc, vocab_path)
 
     print(f"Updated {vocab_path}")
     return 0
@@ -264,8 +264,7 @@ def _condense_vocabulary(vocab_path: Path, *, dry_run: bool = False) -> int:
     print(f"{'(dry-run) ' if dry_run else ''}Removed {changes} redundant field(s).")
 
     if not dry_run:
-        with open(vocab_path, "w") as f:
-            yaml.dump(doc, f)
+        dump_yaml_atomically(yaml, doc, vocab_path)
         print(f"Updated {vocab_path}")
 
     return 0
@@ -528,8 +527,7 @@ def _prune_vocabulary(
         if not alt_block:
             del data["altLabel"]
 
-    with open(vocab_path, "w") as f:
-        yaml.dump(doc, f)
+    dump_yaml_atomically(yaml, doc, vocab_path)
 
     print(f"Updated {vocab_path}")
     return 0

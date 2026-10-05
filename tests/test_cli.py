@@ -37,6 +37,7 @@ def _run_populate(
     tmp_path: Path,
     extra_args: list[str] | None = None,
     vocab_content: str = MINIMAL_VOCAB,
+    readonly: bool = False,
 ) -> tuple[int, str]:
     """Run the populate-uris command against a temp vocabulary file."""
     from io import StringIO
@@ -46,6 +47,8 @@ def _run_populate(
 
     vocab_file = tmp_path / "vocabulary.yaml"
     vocab_file.write_text(vocab_content)
+    if readonly:
+        vocab_file.chmod(0o444)
     # cache_dir is the root cache directory (skos/ and gpt/ are subdirs)
     cache_dir = tmp_path
 
@@ -231,6 +234,7 @@ def _run_prune(
     extra_args: list[str] | None = None,
     vocab_content: str = "",
     alt_labels_side_effect=None,
+    readonly: bool = False,
 ) -> tuple[int, str]:
     """Run the prune-vocabulary command against a temp vocabulary file.
 
@@ -246,6 +250,8 @@ def _run_prune(
 
     vocab_file = tmp_path / "vocabulary.yaml"
     vocab_file.write_text(vocab_content)
+    if readonly:
+        vocab_file.chmod(0o444)
     cache_dir = tmp_path
 
     argv = ["tingbok", "prune-vocabulary", str(vocab_file), "--cache-dir", str(cache_dir)]
@@ -692,6 +698,7 @@ def _run_condense(
     tmp_path: Path,
     extra_args: list[str] | None = None,
     vocab_content: str = VOCAB_WITH_REDUNDANT_HIERARCHY,
+    readonly: bool = False,
 ) -> tuple[int, str]:
     """Run the condense-vocabulary command against a temp vocabulary file."""
     from io import StringIO
@@ -701,6 +708,8 @@ def _run_condense(
 
     vocab_file = tmp_path / "vocabulary.yaml"
     vocab_file.write_text(vocab_content)
+    if readonly:
+        vocab_file.chmod(0o444)
     argv = ["tingbok", "condense-vocabulary", str(vocab_file)]
     if extra_args:
         argv.extend(extra_args)
@@ -875,3 +884,50 @@ def test_version_flag_prints_version_and_exits() -> None:
                 cli_module.main()
     assert exc_info.value.code == 0
     assert __version__ in captured.getvalue()
+
+
+# ---------------------------------------------------------------------------
+# vocabulary.yaml is replaced atomically, like PUT /api/vocabulary does
+# ---------------------------------------------------------------------------
+
+_skip_as_root = pytest.mark.skipif(__import__("os").geteuid() == 0, reason="root ignores file modes")
+
+
+@_skip_as_root
+def test_populate_uris_replaces_a_file_it_cannot_write(tmp_path: Path) -> None:
+    """A read-only (e.g. root-owned) vocabulary.yaml in a writable dir is replaced."""
+    from tingbok.services import skos as skos_service
+
+    def fake_lookup(label, lang, source, cache_dir):
+        if source == "dbpedia" and label.lower() == "electronics":
+            return {"uri": "http://dbpedia.org/resource/Electronics", "source": "dbpedia", "broader": []}
+        return None
+
+    with patch.object(skos_service, "lookup_concept", side_effect=fake_lookup):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, _ = _run_populate(tmp_path, readonly=True)
+
+    assert rc == 0
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    assert "http://dbpedia.org/resource/Electronics" in updated["concepts"]["electronics"]["source_uris"]
+
+
+@_skip_as_root
+def test_prune_vocabulary_replaces_a_file_it_cannot_write(tmp_path: Path) -> None:
+    from tingbok.services import skos as skos_service
+
+    with patch.object(skos_service, "get_labels", return_value={"en": "Food", "nb": "Mat"}):
+        with patch.object(skos_service, "get_agrovoc_store", return_value=None):
+            rc, _ = _run_prune(tmp_path, vocab_content=VOCAB_WITH_LABELS, readonly=True)
+
+    assert rc == 0
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    assert "en" not in updated["concepts"]["food"].get("labels", {})
+
+
+@_skip_as_root
+def test_condense_vocabulary_replaces_a_file_it_cannot_write(tmp_path: Path) -> None:
+    rc, _ = _run_condense(tmp_path, readonly=True)
+    assert rc == 0
+    updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
+    assert "narrower" not in updated["concepts"]["food"]

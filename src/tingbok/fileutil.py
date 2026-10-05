@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import io
 import os
 import tempfile
 from pathlib import Path
+from typing import Any
 
 
 def write_atomically(path: Path, text: str) -> None:
@@ -36,3 +38,14 @@ def write_atomically(path: Path, text: str) -> None:
         pass
     finally:
         os.close(dir_fd)
+
+
+def dump_yaml_atomically(yaml: Any, doc: Any, path: Path) -> None:
+    """Serialise *doc* with the ruamel *yaml* instance and replace *path* with it.
+
+    See :func:`write_atomically`: vocabulary.yaml lives in the same checkout as
+    ``ean-db.json`` and is as exposed to a root-owned file.
+    """
+    buf = io.StringIO()
+    yaml.dump(doc, buf)
+    write_atomically(path, buf.getvalue())
