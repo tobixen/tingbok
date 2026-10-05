@@ -15,6 +15,7 @@ from pathlib import Path
 
 import niquests
 
+from tingbok.fileutil import write_atomically
 from tingbok.sources import uri_to_source as _registry_uri_to_source
 from tingbok.text import number_variations
 
@@ -525,8 +526,23 @@ def _get_cache_path(cache_dir: Path, key: str) -> Path:
     return cache_dir / f"{safe_key}_{key_hash}.json"
 
 
+def _write_cache_file(cache_path: Path, data: dict) -> None:
+    """Replace *cache_path* with *data* as JSON.
+
+    Replaced rather than rewritten in place, so only the directory has to be
+    writable: a file left owned by another user (a CLI command run as root)
+    would otherwise fail every write, and the refresh loop would keep picking
+    the same never-updated entry.
+    """
+    write_atomically(cache_path, json.dumps(data, ensure_ascii=False, indent=2), durable=False)
+
+
 def _get_not_found_cache_path(cache_dir: Path) -> Path:
     return cache_dir / "_not_found.json"
+
+
+#: How stale ``_last_accessed`` may get before a cache hit re-stamps it.
+_ACCESS_STAMP_INTERVAL = 86400
 
 
 def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | None:  # noqa: ARG001
@@ -536,8 +552,9 @@ def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | N
     enforced — freshness is maintained by the background :func:`cache_refresh_loop`
     rather than by hard expiry.  Stale-but-present data is always returned.
 
-    Stamps ``_last_accessed`` on every hit so that :func:`prune_cache` can
-    distinguish recently-used entries from abandoned ones.
+    Stamps ``_last_accessed`` so that :func:`prune_cache` can distinguish
+    recently-used entries from abandoned ones — at most once a day, since
+    pruning works in months and a stamp rewrites the whole file.
     """
     if not cache_path.exists():
         return None
@@ -545,12 +562,12 @@ def _load_from_cache(cache_path: Path, ttl: int = CACHE_TTL_SECONDS) -> dict | N
         with open(cache_path, encoding="utf-8") as f:
             data: dict = json.load(f)
         now = time.time()
-        data["_last_accessed"] = now
-        try:
-            with open(cache_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-        except OSError as e:
-            logger.debug("Cache access-stamp failed for %s: %s", cache_path, e)
+        if now - data.get("_last_accessed", 0) > _ACCESS_STAMP_INTERVAL:
+            data["_last_accessed"] = now
+            try:
+                _write_cache_file(cache_path, data)
+            except OSError as e:
+                logger.debug("Cache access-stamp failed for %s: %s", cache_path, e)
         return data
     except (json.JSONDecodeError, OSError) as e:
         logger.debug("Cache read failed for %s: %s", cache_path, e)
@@ -563,8 +580,8 @@ def _save_to_cache(
     *,
     last_accessed: float | None = None,
     cache_key: str | None = None,
-) -> None:
-    """Save data to a cache file, stamping ``_cached_at``.
+) -> bool:
+    """Save data to a cache file, stamping ``_cached_at``.  Returns whether it was written.
 
     Args:
         last_accessed: When provided (e.g. during a background refresh that should
@@ -582,10 +599,11 @@ def _save_to_cache(
         payload["_cache_key"] = cache_key
     try:
         cache_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(cache_path, "w", encoding="utf-8") as f:
-            json.dump(payload, f, ensure_ascii=False, indent=2)
+        _write_cache_file(cache_path, payload)
     except OSError as e:
         logger.warning("Cache write failed for %s: %s", cache_path, e)
+        return False
+    return True
 
 
 def _infer_cache_key(cache_path: Path, data: dict) -> str | None:
@@ -725,10 +743,11 @@ def _refresh_entry(cache_path: Path, cache_dir: Path) -> bool:
             if query_failed:
                 return False
             new_data = concept if concept else {}
-            _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
             # Refreshed even when upstream no longer has it: a False here
-            # would make the loop back off as if upstream had failed.
-            return True
+            # would make the loop back off as if upstream had failed.  An
+            # unwritable cache is a failure, though, or the entry stays the
+            # oldest and the loop spins on it.
+            return _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
 
         elif prefix in ("labels", "alt_labels"):
             uri = data.get("uri", "")
@@ -747,8 +766,7 @@ def _refresh_entry(cache_path: Path, cache_dir: Path) -> bool:
                 if result is None:
                     return False
                 new_data = {"uri": uri, "source": source, "alt_labels": result}
-            _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
-            return True
+            return _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
 
         elif prefix == "description":
             uri = data.get("uri", "")
@@ -758,8 +776,7 @@ def _refresh_entry(cache_path: Path, cache_dir: Path) -> bool:
                 return False
             desc = _upstream_get_description(uri, source, lang)
             new_data = {"uri": uri, "source": source, "lang": lang, "description": desc}
-            _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
-            return True
+            return _save_to_cache(cache_path, new_data, last_accessed=last_accessed, cache_key=cache_key)
 
     except Exception as exc:  # noqa: BLE001
         logger.debug("Refresh failed for %s: %s", cache_path, exc)
@@ -786,8 +803,7 @@ def _mark_refresh_failed(cache_path: Path) -> None:
     data["_refresh_failures"] = failures
     data["_refresh_retry_after"] = time.time() + delay
     try:
-        with open(cache_path, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        _write_cache_file(cache_path, data)
     except OSError as e:
         logger.warning("Could not record failed refresh in %s: %s", cache_path, e)
 
@@ -905,8 +921,7 @@ def _add_to_not_found_cache(cache_dir: Path, key: str, *, transient: bool = Fals
     data.setdefault("entries", {})[key] = entry
     try:
         cache_dir.mkdir(parents=True, exist_ok=True)
-        with open(cache_path, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        _write_cache_file(cache_path, data)
     except OSError as e:
         logger.warning("Not-found cache write failed: %s", e)
 

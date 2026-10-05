@@ -9,25 +9,31 @@ from pathlib import Path
 from typing import Any
 
 
-def write_atomically(path: Path, text: str) -> None:
+def write_atomically(path: Path, text: str, *, durable: bool = True) -> None:
     """Replace *path* with *text* via a fsynced temp file and a rename.
 
     Only the directory has to be writable, not the file: a git command run as
     root once left ``ean-db.json`` owned by root, and an in-place write then
     failed every PUT.  Neither a crash nor a power loss mid-write leaves a
-    truncated file behind.
+    truncated file behind.  *durable* False skips the fsyncs, for a cache
+    that can be fetched again: a crash still never leaves a truncated file,
+    but a power loss may lose the write, or on some filesystems leave the
+    file empty.
     """
     fd, tmp = tempfile.mkstemp(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp")
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             f.write(text)
-            f.flush()
-            os.fsync(f.fileno())
+            if durable:
+                f.flush()
+                os.fsync(f.fileno())
         os.chmod(tmp, 0o644)
         os.replace(tmp, path)
     except BaseException:
         Path(tmp).unlink(missing_ok=True)
         raise
+    if not durable:
+        return
     try:
         dir_fd = os.open(path.parent, os.O_RDONLY)
     except OSError:

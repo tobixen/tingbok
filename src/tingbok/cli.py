@@ -53,7 +53,7 @@ import time
 from pathlib import Path
 
 from tingbok import __version__
-from tingbok.fileutil import dump_yaml_atomically
+from tingbok.fileutil import dump_yaml_atomically, write_atomically
 from tingbok.sources import skos_lookup_sources
 from tingbok.vocabulary_file import coerce_scalar_source_uris
 
@@ -585,8 +585,7 @@ def _prune_not_found_cache(cache_path: Path, cutoff: float, *, dry_run: bool = F
             del entries[k]
         data["entries"] = entries
         try:
-            with open(cache_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
+            write_atomically(cache_path, json.dumps(data, ensure_ascii=False, indent=2), durable=False)
         except OSError as exc:
             print(f"Warning: could not write {cache_path}: {exc}", file=sys.stderr)
     return len(stale)

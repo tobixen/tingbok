@@ -2305,3 +2305,94 @@ def test_is_non_concept_uri_undetermined_when_p31_batch_fails(tmp_path: Path) ->
     ):
         assert skos_module.is_non_concept_uri("http://www.wikidata.org/entity/Q1", tmp_path) is None
     assert list(tmp_path.glob("type_check_*.json")) == []
+
+
+# ---------------------------------------------------------------------------
+# Cache files are replaced, not rewritten in place: a file left owned by
+# another user (e.g. root running a CLI command) must not wedge the service.
+# ---------------------------------------------------------------------------
+
+_skip_as_root = pytest.mark.skipif(__import__("os").geteuid() == 0, reason="root ignores file modes")
+
+
+@_skip_as_root
+def test_save_to_cache_replaces_a_file_it_cannot_write(tmp_path: Path) -> None:
+    import json
+
+    from tingbok.services import skos as skos_service
+
+    path = tmp_path / "entry.json"
+    path.write_text(json.dumps({"uri": "x", "_cached_at": 1.0}))
+    path.chmod(0o444)
+    skos_service._save_to_cache(path, {"uri": "x"}, cache_key="concept:wikidata:en:x")
+    assert json.loads(path.read_text())["_cached_at"] > 1.0
+
+
+@_skip_as_root
+def test_mark_refresh_failed_replaces_a_file_it_cannot_write(tmp_path: Path) -> None:
+    import json
+
+    from tingbok.services import skos as skos_service
+
+    path = tmp_path / "entry.json"
+    path.write_text(json.dumps({"uri": "x", "_cached_at": 1.0}))
+    path.chmod(0o444)
+    skos_service._mark_refresh_failed(path)
+    assert json.loads(path.read_text())["_refresh_failures"] == 1
+
+
+@_skip_as_root
+def test_not_found_cache_replaces_a_file_it_cannot_write(tmp_path: Path) -> None:
+    from tingbok.services import skos as skos_service
+
+    nf = skos_service._get_not_found_cache_path(tmp_path)
+    nf.write_text('{"entries": {}}')
+    nf.chmod(0o444)
+    skos_service._add_to_not_found_cache(tmp_path, "concept:wikidata:en:x")
+    assert skos_service._is_in_not_found_cache(tmp_path, "concept:wikidata:en:x")
+
+
+@_skip_as_root
+def test_load_from_cache_stamps_a_file_it_cannot_write(tmp_path: Path) -> None:
+    import json
+
+    from tingbok.services import skos as skos_service
+
+    path = tmp_path / "entry.json"
+    path.write_text(json.dumps({"uri": "x", "_cached_at": 1.0}))
+    path.chmod(0o444)
+    assert skos_service._load_from_cache(path) is not None
+    assert "_last_accessed" in json.loads(path.read_text())
+
+
+def test_refresh_entry_fails_when_the_write_fails(tmp_path: Path) -> None:
+    """A refresh that cannot be saved is a failure, so the loop backs off instead of spinning."""
+    import json
+
+    from tingbok.services import skos as skos_service
+
+    path = tmp_path / "entry.json"
+    path.write_text(json.dumps({"uri": "x", "_cache_key": "concept:wikidata:en:milk", "_cached_at": 1.0}))
+    with (
+        patch("tingbok.services.skos._upstream_lookup", return_value=({"uri": "y"}, False)),
+        patch("tingbok.services.skos.write_atomically", side_effect=PermissionError("read-only dir")),
+    ):
+        assert skos_service._refresh_entry(path, tmp_path) is False
+
+
+def test_load_from_cache_skips_a_recent_access_stamp(tmp_path: Path) -> None:
+    """A hit only rewrites the file when the last stamp is over a day old."""
+    import json
+
+    from tingbok.services import skos as skos_service
+
+    path = tmp_path / "entry.json"
+    path.write_text(json.dumps({"uri": "x", "_cached_at": 1.0, "_last_accessed": time.time() - 3600}))
+    with patch("tingbok.services.skos.write_atomically") as write:
+        assert skos_service._load_from_cache(path) is not None
+    write.assert_not_called()
+
+    path.write_text(json.dumps({"uri": "x", "_cached_at": 1.0, "_last_accessed": time.time() - 2 * 86400}))
+    with patch("tingbok.services.skos.write_atomically") as write:
+        skos_service._load_from_cache(path)
+    write.assert_called_once()
