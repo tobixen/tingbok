@@ -862,3 +862,46 @@ async def test_put_ean_observation_null_shop_price_accepted(client, tmp_path: Pa
                     },
                 )
     assert response.status_code == 200
+
+
+class TestPriceUnits:
+    """Piece counts arrive as "stk", "piece" or "pcs"; they are stored as "pcs"."""
+
+    @pytest.mark.parametrize("unit", ["stk", "stk.", "piece", "pieces", "pc", "pcs", "pcs.", "STK"])
+    def test_save_normalises_piece_units(self, tmp_path: Path, unit: str) -> None:
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        price = {"date": "2026-10-04", "currency": "EUR", "price": 1.84, "unit": unit, "shop": "Lidl"}
+        ean_service.save_ean_observation(path, "111", [], None, prices=[price])
+        assert ean_service.load_ean_observations(path)["111"]["prices"][0]["unit"] == "pcs"
+
+    def test_other_units_are_kept(self, tmp_path: Path) -> None:
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        price = {"date": "2026-10-04", "currency": "EUR", "price": 3.2, "unit": "kg", "shop": "Lidl"}
+        ean_service.save_ean_observation(path, "111", [], None, prices=[price])
+        assert ean_service.load_ean_observations(path)["111"]["prices"][0]["unit"] == "kg"
+
+    def test_load_normalises_existing_data(self, tmp_path: Path) -> None:
+        """Older entries are normalised on read, and so rewritten by the next save."""
+        import json
+
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        stored = {"222": {"prices": [{"date": "2026-01-01", "currency": "EUR", "price": 1.0, "unit": "stk"}]}}
+        path.write_text(json.dumps(stored))
+        assert ean_service.load_ean_observations(path)["222"]["prices"][0]["unit"] == "pcs"
+
+        ean_service.save_ean_observation(path, "111", ["food"], None)
+        assert json.loads(path.read_text())["222"]["prices"][0]["unit"] == "pcs"
+
+
+def test_load_ean_observations_rejects_a_non_object(tmp_path: Path) -> None:
+    from tingbok.services import ean as ean_service
+
+    path = tmp_path / "ean-db.json"
+    path.write_text("[]")
+    assert ean_service.load_ean_observations(path) == {}

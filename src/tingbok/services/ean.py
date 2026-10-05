@@ -370,10 +370,36 @@ def load_ean_observations(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
         logger.warning("Failed to load EAN observations from %s: %s", path, exc)
         return {}
+    if not isinstance(data, dict):
+        logger.warning("EAN observations in %s are not a JSON object; ignoring them", path)
+        return {}
+    return normalise_observations(data)
+
+
+def normalise_observations(data: dict[str, Any]) -> dict[str, Any]:
+    """Normalise every price unit in a loaded observation database in place, and return it."""
+    for entry in data.values():
+        if isinstance(entry, dict):
+            for p in entry.get("prices") or []:
+                _normalise_price_unit(p)
+    return data
+
+
+#: Spellings of "per piece" seen from clients ("stk" is Norwegian).  Stored as
+#: "pcs", so one product's prices are not split across three units.
+_PIECE_UNITS = frozenset({"stk", "piece", "pieces", "pc", "pcs"})
+
+
+def _normalise_price_unit(price: dict[str, Any]) -> dict[str, Any]:
+    """Rewrite a piece-count ``unit`` on *price* to ``"pcs"`` in place, and return it."""
+    unit = price.get("unit")
+    if isinstance(unit, str) and unit.strip().rstrip(".").lower() in _PIECE_UNITS:
+        price["unit"] = "pcs"
+    return price
 
 
 def resolve_local_alias(observations: dict[str, Any], code: str) -> str | None:
@@ -498,6 +524,7 @@ def merge_price_observations(existing: list[dict[str, Any]], new: list[dict[str,
     """
     merged = list(existing)
     for p in new:
+        p = _normalise_price_unit(dict(p))
         key = (p.get("date"), p.get("currency"), p.get("price"))
         if not any((ep.get("date"), ep.get("currency"), ep.get("price")) == key for ep in merged):
             merged.append(p)

@@ -48,6 +48,7 @@ sys.path.insert(0, str(Path(__file__).parents[1] / "src"))
 from tingbok.services.ean import (  # noqa: E402
     merge_price_observations,
     merge_receipt_name_observations,
+    normalise_observations,
 )
 
 EAN_DB_PATH = Path("src/tingbok/data/ean-db.json")
@@ -313,7 +314,7 @@ def run_merge_driver(ancestor_path: str, current_path: str, other_path: str) -> 
 
     def load(path: str) -> dict:
         text = Path(path).read_text(encoding="utf-8").strip()
-        return json.loads(text) if text else {}
+        return normalise_observations(json.loads(text)) if text else {}
 
     try:
         base, ours, theirs = load(ancestor_path), load(current_path), load(other_path)

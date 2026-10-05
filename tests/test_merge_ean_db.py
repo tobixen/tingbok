@@ -248,7 +248,7 @@ def test_richer_theirs_fields_survive_a_truncated_ours(rich_entry: dict[str, Any
     assert merged["source"] == "manual"
     assert merged["name"] == "Yogurt 3.6% 1kg", "curated name must win over the receipt-derived one"
     assert price("2026-01-24", 0.78) in merged["prices"], "theirs price history dropped"
-    assert price("2026-07-31", 1.53, unit="stk") in merged["prices"], "ours new price lost"
+    assert price("2026-07-31", 1.53, unit="pcs") in merged["prices"], "ours new price lost (stk is stored as pcs)"
 
 
 def test_prices_dedup_by_date_currency_price(rich_entry: dict[str, Any]) -> None:
@@ -392,3 +392,20 @@ def test_result_is_key_sorted(rich_entry: dict[str, Any]) -> None:
     result, _, _ = merge_ean_db.merge(base, ours, theirs)
 
     assert list(result) == sorted(result)
+
+
+def test_merge_driver_normalises_piece_units(tmp_path: Path, rich_entry: dict[str, Any]) -> None:
+    """Rows that pass straight through (theirs-only, ours-only) get "pcs" too, as the service would."""
+    ancestor = tmp_path / "O"
+    current = tmp_path / "A"
+    other = tmp_path / "B"
+    ancestor.write_text("")
+    current.write_text(json.dumps({"111": {"prices": [price("2026-08-01", 1.59, unit="stk")]}}))
+    other.write_text(json.dumps({"222": {"prices": [price("2026-08-02", 2.0, unit="piece")]}}))
+
+    rc = merge_ean_db.run_merge_driver(str(ancestor), str(current), str(other))
+
+    assert rc == 0
+    result = json.loads(current.read_text())
+    assert result["111"]["prices"][0]["unit"] == "pcs"
+    assert result["222"]["prices"][0]["unit"] == "pcs"
