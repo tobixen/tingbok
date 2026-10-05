@@ -9,6 +9,7 @@ import shutil
 import signal
 import subprocess
 import sys
+import threading
 import time
 from contextlib import asynccontextmanager
 from datetime import datetime
@@ -198,14 +199,26 @@ _GPT_ROOT_MAPPING: dict[str, str] = {
 }
 
 
+#: Per-commit client addresses, kept in the data checkout's .git directory.
+_AUTO_COMMIT_LOG = "tingbok-auto-commits.log"
+_git_commit_lock = threading.Lock()
+
+
 def _git_commit_data(data_dir: Path, ips: frozenset[str] = frozenset()) -> None:
     """Stage and commit changed data files in *data_dir* using git.
 
     Only ``ean-db.json`` and ``vocabulary.yaml`` are considered.  Does nothing
-    if neither file exists or neither has any uncommitted changes.  Runs
-    synchronously; call via ``asyncio.to_thread`` from async contexts.
+    if neither file exists or neither has any uncommitted changes.  The client
+    addresses in *ips* are logged to ``.git/tingbok-auto-commits.log`` rather
+    than put in the (public) commit message.  Runs synchronously; call via
+    ``asyncio.to_thread`` from async contexts.  Serialised, so a commit and
+    its log line always pair the right sha with the right addresses.
     """
+    with _git_commit_lock:
+        _git_commit_data_locked(data_dir, ips)
 
+
+def _git_commit_data_locked(data_dir: Path, ips: frozenset[str]) -> None:
     def run(*cmd: str) -> subprocess.CompletedProcess[str]:
         return subprocess.run(cmd, cwd=data_dir, capture_output=True, text=True)
 
@@ -216,18 +229,31 @@ def _git_commit_data(data_dir: Path, ips: frozenset[str] = frozenset()) -> None:
     if not run("git", "status", "--porcelain", *existing).stdout.strip():
         return  # nothing changed
     run("git", "add", *existing)
-    ip_str = f" (from {', '.join(sorted(ips))})" if ips else ""
+    timestamp = time.strftime("%Y-%m-%dT%H:%M:%S%z")
     result = run(
         "git",
         "commit",
         "-m",
-        f"auto-commit: data update {time.strftime('%Y-%m-%dT%H:%M:%S')}{ip_str}",
+        f"auto-commit: data update {time.strftime('%Y-%m-%dT%H:%M:%S')}",
         "--author=tingbok <tingbok@localhost>",
     )
-    if result.returncode == 0:
-        logger.info("Git auto-commit: %s", result.stdout.strip().splitlines()[0])
+    # Which clients made the change is worth keeping, but not in the public
+    # history: it goes to a log inside the checkout's .git, and the journal.
+    # A failed commit is logged too: its staged change lands in a later one.
+    ip_str = ",".join(sorted(ips)) or "-"
+    if result.returncode != 0:
+        logger.warning("Git auto-commit failed (changes from %s): %s", ip_str, result.stderr.strip())
+        sha = "commit-failed"
     else:
-        logger.warning("Git auto-commit failed: %s", result.stderr.strip())
+        sha = run("git", "rev-parse", "HEAD").stdout.strip()
+        logger.info("Git auto-commit %s from %s", sha, ip_str)
+    git_dir = run("git", "rev-parse", "--absolute-git-dir").stdout.strip()
+    if git_dir:
+        try:
+            with open(Path(git_dir) / _AUTO_COMMIT_LOG, "a", encoding="utf-8") as f:
+                f.write(f"{timestamp} {sha} {ip_str}\n")
+        except OSError as exc:
+            logger.warning("Could not log auto-commit %s from %s: %s", sha, ip_str, exc)
 
 
 def _schedule_git_commit(ip: str | None = None) -> None:

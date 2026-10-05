@@ -36,6 +36,7 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
   See `DEPLOYMENT.md` for the one-time setup a fresh clone needs.
 
 ### Changed
+- **Data auto-commits no longer carry client IP addresses in their message** — the repository is public. The addresses are logged on the server instead, in `.git/tingbok-auto-commits.log` of the data checkout and in the journal.
 - **Per-piece prices are stored with `unit: "pcs"`** — clients send `stk`, `piece` and `pcs` for the same thing, so one product's price history was split across three units. All of them are now stored and served as `pcs`; existing entries are read as `pcs` and rewritten on the next save.
 - **The MCP server runs on `fastmcp` and MCP SDK 2.x** — the endpoint is still at
   `/mcp` and exposes the same 13 endpoints, but `fastapi-mcp` is gone. Its last

@@ -46,6 +46,15 @@ The key is at `/etc/tingbok/deploy_key` (owned by the `tingbok` system user).
 The push URL for the origin remote is set to SSH (`git@github.com:tobixen/tingbok.git`)
 by the `tingbok-setup` service on first boot.
 
+## Who changed the data
+
+Each auto-commit is a plain `auto-commit: data update <time>`; the client
+addresses behind it are not put in the public history.  They are appended,
+one line per commit (`<time> <sha> <addresses>`, or `commit-failed` in place
+of the sha), to `.git/tingbok-auto-commits.log` in the data checkout, and
+logged to the journal.  The file lives only in that checkout: a re-clone or a
+rebuilt VM starts it afresh, so copy it first if the history matters.
+
 ## Why the server merges and never rebases
 
 The service auto-commits into the same repo it pulls, so a pull reconciles two real

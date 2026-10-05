@@ -2116,7 +2116,33 @@ def test_git_commit_data_commits_when_changed(tmp_path: Path) -> None:
     log = subprocess.run(["git", "log", "--oneline"], cwd=tmp_path, capture_output=True, text=True, check=True)
     commits = log.stdout.strip().splitlines()
     assert len(commits) == 2, f"Expected 2 commits, got: {commits}"
-    assert "192.168.1.1" in commits[0], f"IP not in commit message: {commits[0]}"
+    body = subprocess.run(["git", "log", "-1", "--format=%B"], cwd=tmp_path, capture_output=True, text=True).stdout
+    assert "192.168.1.1" not in body, "client IPs belong in the server-side log, not the public history"
+    sha = subprocess.run(["git", "rev-parse", "HEAD"], cwd=tmp_path, capture_output=True, text=True).stdout.strip()
+    ip_log = (tmp_path / ".git" / "tingbok-auto-commits.log").read_text()
+    assert sha in ip_log, "full sha, so the log stays unambiguous"
+    assert "192.168.1.1" in ip_log
+
+
+def test_git_commit_data_logs_ips_when_the_commit_fails(tmp_path: Path) -> None:
+    """The staged change lands in a later commit; its clients must not vanish from the log."""
+    import subprocess
+
+    from tingbok.app import _git_commit_data
+
+    _git_init_with_commit(tmp_path, {"ean-db.json": '{"a": 1}'})
+    (tmp_path / "ean-db.json").write_text('{"a": 2}')
+    hook = tmp_path / ".git" / "hooks" / "pre-commit"
+    hook.write_text("#!/bin/sh\nexit 1\n")
+    hook.chmod(0o755)
+
+    _git_commit_data(tmp_path, frozenset(["192.168.1.7"]))
+
+    log = subprocess.run(["git", "log", "--oneline"], cwd=tmp_path, capture_output=True, text=True).stdout
+    assert len(log.strip().splitlines()) == 1
+    ip_log = (tmp_path / ".git" / "tingbok-auto-commits.log").read_text()
+    assert "commit-failed" in ip_log
+    assert "192.168.1.7" in ip_log
 
 
 def test_git_commit_data_skips_when_clean(tmp_path: Path) -> None:
