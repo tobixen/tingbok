@@ -931,3 +931,230 @@ def test_condense_vocabulary_replaces_a_file_it_cannot_write(tmp_path: Path) -> 
     assert rc == 0
     updated = yaml.safe_load((tmp_path / "vocabulary.yaml").read_text())
     assert "narrower" not in updated["concepts"]["food"]
+
+
+# ---------------------------------------------------------------------------
+# requeue-cache
+# ---------------------------------------------------------------------------
+
+
+def _run_requeue_cache(cache_dir: Path, extra_args: list[str]) -> tuple[int, str]:
+    import io
+
+    argv = ["tingbok", "requeue-cache", "--cache-dir", str(cache_dir), *extra_args]
+    with patch("sys.argv", argv):
+        with patch("sys.stdout", new_callable=io.StringIO) as mock_out:
+            try:
+                from tingbok.cli import main
+
+                main()
+            except SystemExit as exc:
+                return int(exc.code or 0), mock_out.getvalue()
+    return 0, mock_out.getvalue()
+
+
+def _skos_entry(skos_dir: Path, key: str, data: dict, cached_at: float) -> Path:
+    from tingbok.services import skos as skos_service
+
+    path = skos_service._get_cache_path(skos_dir, key)
+    path.write_text(json.dumps({**data, "_cache_key": key, "_cached_at": cached_at}))
+    return path
+
+
+def test_requeue_cache_makes_old_entries_of_a_source_due(tmp_path: Path) -> None:
+    """Entries cached before the cutoff are made due for the refresh loop; others are untouched."""
+    from tingbok.services import skos as skos_service
+
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    old = time.time() - 30 * 86400
+    new = time.time() - 3600
+    wd_old = _skos_entry(skos_dir, "concept:wikidata:en:milk", {"uri": "http://www.wikidata.org/entity/Q8495"}, old)
+    wd_desc = _skos_entry(
+        skos_dir,
+        "description:wikidata:0123456789abcdef",
+        {"uri": "http://www.wikidata.org/entity/Q8495", "source": "wikidata", "description": None},
+        old,
+    )
+    wd_new = _skos_entry(skos_dir, "concept:wikidata:en:rice", {"uri": "http://www.wikidata.org/entity/Q5090"}, new)
+    agro_old = _skos_entry(skos_dir, "concept:agrovoc:en:milk", {"uri": "http://aims.fao.org/aos/agrovoc/c_4826"}, old)
+    failed = {**json.loads(wd_old.read_text()), "_refresh_failures": 3, "_refresh_retry_after": time.time() + 9999}
+    wd_old.write_text(json.dumps(failed))
+
+    cutoff = time.strftime("%Y-%m-%d", time.localtime(time.time() - 86400))
+    rc, out = _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", cutoff, "--spread-days", "0"])
+
+    assert rc == 0
+    max_age, _ = skos_service.cache_refresh_config()
+    due = time.time() - max_age + 5
+    for path in (wd_old, wd_desc):
+        data = json.loads(path.read_text())
+        assert data["_cached_at"] <= due
+        assert "_refresh_retry_after" not in data
+        assert "_refresh_failures" not in data
+    assert json.loads(wd_new.read_text())["_cached_at"] == new
+    assert json.loads(agro_old.read_text())["_cached_at"] == old
+    assert "Requeued 2," in out
+
+
+def test_requeue_cache_deletes_entries_the_refresh_loop_cannot_refetch(tmp_path: Path) -> None:
+    """type_check entries have no refresh path; they are deleted and refetched on next use."""
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    old = time.time() - 30 * 86400
+    tc = _skos_entry(
+        skos_dir,
+        "type_check:0123456789abcdef",
+        {"uri": "http://www.wikidata.org/entity/Q8495", "is_non_concept": False},
+        old,
+    )
+    tc_dbp = _skos_entry(
+        skos_dir,
+        "type_check:fedcba9876543210",
+        {"uri": "http://dbpedia.org/resource/Milk", "is_non_concept": False},
+        old,
+    )
+
+    rc, _ = _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01"])
+
+    assert rc == 0
+    assert not tc.exists()
+    assert tc_dbp.exists()
+
+
+def test_requeue_cache_drops_old_not_found_entries_of_the_source(tmp_path: Path) -> None:
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    old = time.time() - 30 * 86400
+    nf = skos_dir / "_not_found.json"
+    nf.write_text(
+        json.dumps(
+            {
+                "entries": {
+                    "concept:wikidata:en:milk": {"cached_at": old},
+                    "concept:dbpedia:en:milk": {"cached_at": old},
+                    "concept:wikidata:en:rice": {"cached_at": time.time()},
+                }
+            }
+        )
+    )
+
+    cutoff = time.strftime("%Y-%m-%d", time.localtime(time.time() - 86400))
+    _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", cutoff])
+
+    entries = json.loads(nf.read_text())["entries"]
+    assert set(entries) == {"concept:dbpedia:en:milk", "concept:wikidata:en:rice"}
+
+
+def test_requeue_cache_dry_run_changes_nothing(tmp_path: Path) -> None:
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    old = time.time() - 30 * 86400
+    entry = _skos_entry(skos_dir, "concept:wikidata:en:milk", {"uri": "http://www.wikidata.org/entity/Q8495"}, old)
+    tc = _skos_entry(skos_dir, "type_check:0123456789abcdef", {"uri": "http://www.wikidata.org/entity/Q8495"}, old)
+    before = entry.read_text()
+
+    rc, out = _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01", "--dry-run"])
+
+    assert rc == 0
+    assert entry.read_text() == before
+    assert tc.exists()
+    assert "Would" in out
+
+
+def test_requeue_cache_deletes_empty_label_entries(tmp_path: Path) -> None:
+    """The refresh re-fetches labels only in the languages already cached, so an empty one is deleted."""
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    old = time.time() - 30 * 86400
+    uri = "http://www.wikidata.org/entity/Q8495"
+    empty = _skos_entry(
+        skos_dir, "labels:wikidata:0123456789abcdef", {"uri": uri, "source": "wikidata", "labels": {}}, old
+    )
+    empty_alt = _skos_entry(
+        skos_dir, "alt_labels:wikidata:0123456789abcdef", {"uri": uri, "source": "wikidata", "alt_labels": {}}, old
+    )
+    full = _skos_entry(
+        skos_dir, "labels:wikidata:fedcba9876543210", {"uri": uri, "source": "wikidata", "labels": {"en": "milk"}}, old
+    )
+
+    _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01"])
+
+    assert not empty.exists()
+    assert not empty_alt.exists()
+    assert full.exists()
+
+
+def test_requeue_cache_includes_entries_without_cached_at(tmp_path: Path) -> None:
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    entry = _skos_entry(skos_dir, "concept:wikidata:en:milk", {"uri": "http://www.wikidata.org/entity/Q8495"}, 0)
+    data = json.loads(entry.read_text())
+    del data["_cached_at"]
+    entry.write_text(json.dumps(data))
+
+    cutoff = time.strftime("%Y-%m-%d", time.localtime(time.time() - 86400))
+    _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", cutoff, "--spread-days", "0"])
+
+    assert "_cached_at" in json.loads(entry.read_text())
+
+
+def test_requeue_cache_reports_unreadable_files(tmp_path: Path) -> None:
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    (skos_dir / "broken.json").write_text("{")
+
+    rc, out = _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01"])
+
+    assert rc == 0
+    assert "skipped 1 unreadable" in out
+
+
+def test_requeue_cache_rejects_a_bad_date(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    rc, _ = _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "last tuesday"])
+    assert rc == 2
+
+
+def test_requeue_cache_uses_the_refresh_loops_max_age(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """The loop's max age comes from TINGBOK_CACHE_MAX_AGE_DAYS; a requeued entry must be due by it."""
+    monkeypatch.setenv("TINGBOK_CACHE_MAX_AGE_DAYS", "30")
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    entry = _skos_entry(
+        skos_dir, "concept:wikidata:en:milk", {"uri": "http://www.wikidata.org/entity/Q8495"}, time.time() - 86400 * 2
+    )
+
+    _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01", "--spread-days", "0"])
+
+    assert json.loads(entry.read_text())["_cached_at"] <= time.time() - 30 * 86400 + 5
+
+
+def test_requeue_cache_rejects_a_negative_spread(tmp_path: Path) -> None:
+    rc, _ = _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01", "--spread-days", "-1"])
+    assert rc == 2
+
+
+def test_requeue_cache_keeps_requeued_entries_out_of_prune_cache(tmp_path: Path) -> None:
+    """A requeued entry looks 90 days old; without an access stamp prune-cache would delete it."""
+    skos_dir = tmp_path / "skos"
+    skos_dir.mkdir()
+    entry = _skos_entry(
+        skos_dir, "concept:wikidata:en:milk", {"uri": "http://www.wikidata.org/entity/Q8495"}, time.time() - 86400
+    )
+
+    _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01"])
+    _run_prune_cache(tmp_path)
+
+    assert entry.exists()
+
+
+@pytest.mark.parametrize("spread", ["nan", "inf"])
+def test_requeue_cache_rejects_a_non_finite_spread(tmp_path: Path, spread: str) -> None:
+    rc, _ = _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01", "--spread-days", spread])
+    assert rc == 2
+
+
+def test_requeue_cache_rejects_a_bad_max_age_setting(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("TINGBOK_CACHE_MAX_AGE_DAYS", "ninety")
+    rc, _ = _run_requeue_cache(tmp_path, ["--source", "wikidata", "--before", "2099-01-01"])
+    assert rc == 2

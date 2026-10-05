@@ -473,22 +473,6 @@ async def _fetch_labels_background() -> None:
     logger.info("Background label fetch complete (%d concepts)", total)
 
 
-def _cache_refresh_config() -> tuple[float, float]:
-    """Read cache refresh settings from environment variables.
-
-    ``TINGBOK_CACHE_MAX_AGE_DAYS`` — how old (in days) the oldest entry must be
-    before it is considered stale (default: 90).
-
-    ``TINGBOK_CACHE_REFRESH_DIVISOR`` — controls sleep between refreshes;
-    ``sleep = (max_age - age) / divisor`` (default: 200).
-    """
-    import os  # noqa: PLC0415
-
-    max_age_days = float(os.environ.get("TINGBOK_CACHE_MAX_AGE_DAYS", "90"))
-    divisor = float(os.environ.get("TINGBOK_CACHE_REFRESH_DIVISOR", "200"))
-    return max_age_days * 86400, divisor
-
-
 def _toggle_log_level(signum: int, frame: object) -> None:  # noqa: ARG001
     """Toggle the tingbok logger between INFO and DEBUG on SIGUSR1.
 
@@ -547,7 +531,7 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
     signal.signal(signal.SIGUSR1, _toggle_log_level)
     logger.info("SIGUSR1 handler registered. Send 'kill -USR1 %d' to toggle debug logging.", os.getpid())
 
-    max_age_seconds, divisor = _cache_refresh_config()
+    max_age_seconds, divisor = skos_service.cache_refresh_config()
     discovery_task = asyncio.create_task(_discover_source_uris_background())
     labels_task = asyncio.create_task(_fetch_labels_background())
     refresh_task = asyncio.create_task(skos_service.cache_refresh_loop(SKOS_CACHE_DIR, max_age_seconds, divisor))

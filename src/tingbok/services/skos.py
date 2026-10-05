@@ -808,6 +808,22 @@ def _mark_refresh_failed(cache_path: Path) -> None:
         logger.warning("Could not record failed refresh in %s: %s", cache_path, e)
 
 
+def cache_refresh_config() -> tuple[float, float]:
+    """The refresh loop's ``(max_age_seconds, divisor)``, from the environment.
+
+    ``TINGBOK_CACHE_MAX_AGE_DAYS`` — how old (in days) the oldest entry must be
+    before it is considered stale (default: 90).
+
+    ``TINGBOK_CACHE_REFRESH_DIVISOR`` — controls sleep between refreshes;
+    ``sleep = (max_age - age) / divisor`` (default: 200).
+    """
+    import os  # noqa: PLC0415
+
+    max_age_days = float(os.environ.get("TINGBOK_CACHE_MAX_AGE_DAYS", "90"))
+    divisor = float(os.environ.get("TINGBOK_CACHE_REFRESH_DIVISOR", "200"))
+    return max_age_days * 86400, divisor
+
+
 async def cache_refresh_loop(
     cache_dir: Path,
     max_age_seconds: float = CACHE_TTL_SECONDS,

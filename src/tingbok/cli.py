@@ -48,6 +48,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 import time
 from pathlib import Path
@@ -592,6 +593,119 @@ def _prune_not_found_cache(cache_path: Path, cutoff: float, *, dry_run: bool = F
 
 
 # ---------------------------------------------------------------------------
+# requeue-cache
+# ---------------------------------------------------------------------------
+
+#: Cache-key prefixes the background refresh loop knows how to re-fetch.
+_REFRESHABLE_PREFIXES = frozenset({"concept", "labels", "alt_labels", "description"})
+
+
+def _non_negative_float(value: str) -> float:
+    """argparse type for a number that must not be negative."""
+    try:
+        number = float(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(f"not a number: {value!r}") from exc
+    if not math.isfinite(number) or number < 0:
+        raise argparse.ArgumentTypeError(f"must be a finite, non-negative number: {value}")
+    return number
+
+
+def _parse_before(value: str) -> float:
+    """argparse type for ``--before``: an ISO date or timestamp, as a Unix time."""
+    from datetime import datetime  # noqa: PLC0415
+
+    try:
+        return datetime.fromisoformat(value).timestamp()
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(f"not an ISO date: {value!r}") from exc
+
+
+def _cache_entry_source(cache_path: Path, data: dict) -> tuple[str | None, str | None]:
+    """Return ``(source, refreshable key)`` for a SKOS cache entry.
+
+    The key is ``None`` when the refresh loop cannot re-fetch the entry.
+    """
+    from tingbok.services import skos as skos_service  # noqa: PLC0415
+
+    key = data.get("_cache_key") or skos_service._infer_cache_key(cache_path, data)
+    prefix, _, tail = (key or "").partition(":")
+    source = data.get("source")
+    if prefix == "concept":
+        source = tail.split(":", 1)[0]
+    elif not source and data.get("uri"):
+        source = skos_service.uri_to_source(data["uri"])
+    return source, key if prefix in _REFRESHABLE_PREFIXES else None
+
+
+def _requeue_cache(
+    cache_dir: Path,
+    sources: set[str],
+    before: float,
+    *,
+    max_age: float,
+    spread_days: float = 7.0,
+    dry_run: bool = False,
+) -> tuple[int, int, int, int]:
+    """Make SKOS entries from *sources* cached before *before* due for re-fetching.
+
+    Before the fix for Wikidata 429s a failed request could be cached as an
+    answer — no labels, no description, "not blocked" — and the cache keeps an
+    answer until the refresh loop gets to it.  Entries the loop can re-fetch
+    get a ``_cached_at`` that makes them due, by the loop's *max_age*, at a
+    random point within *spread_days*, so it works through them over at most
+    that long rather than in one burst.  The rest are deleted and fetched
+    again on next use: type checks, and empty label entries, which the loop
+    would re-fetch in English only.  So are not-found entries for those
+    sources.
+
+    Returns ``(requeued, deleted, not_found_dropped, unreadable)``.
+    """
+    import random  # noqa: PLC0415
+
+    from tingbok.services import skos as skos_service  # noqa: PLC0415
+
+    now = time.time()
+    requeued = deleted = dropped = unreadable = 0
+    for cache_path in sorted(cache_dir.glob("*.json")):
+        try:
+            data: dict = json.loads(cache_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            unreadable += 1
+            continue
+        if cache_path.name == "_not_found.json":
+            entries: dict = data.get("entries", {})
+            prefixes = tuple(f"concept:{src}:" for src in sources)
+            stale = [k for k, v in entries.items() if k.startswith(prefixes) and v.get("cached_at", 0) < before]
+            dropped += len(stale)
+            if stale and not dry_run:
+                for k in stale:
+                    del entries[k]
+                skos_service._write_cache_file(cache_path, data)
+            continue
+        source, key = _cache_entry_source(cache_path, data)
+        if source not in sources or data.get("_cached_at", 0) >= before:
+            continue
+        prefix = (key or "").split(":", 1)[0]
+        if key is None or (prefix in ("labels", "alt_labels") and not data.get(prefix)):
+            deleted += 1
+            if not dry_run:
+                cache_path.unlink(missing_ok=True)
+            continue
+        requeued += 1
+        if not dry_run:
+            data.pop("_refresh_failures", None)
+            data.pop("_refresh_retry_after", None)
+            data["_cache_key"] = key
+            # Without an access stamp prune-cache falls back to _cached_at,
+            # which now looks max_age old, and would delete the entry.
+            data.setdefault("_last_accessed", now)
+            data["_cached_at"] = now - max_age + random.uniform(0, spread_days * 86400)  # noqa: S311
+            skos_service._write_cache_file(cache_path, data)
+    return requeued, deleted, dropped, unreadable
+
+
+# ---------------------------------------------------------------------------
 # download-taxonomy
 # ---------------------------------------------------------------------------
 
@@ -818,6 +932,53 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     pc.add_argument("--dry-run", action="store_true", help="Report what would be deleted without deleting anything")
 
+    # requeue-cache
+    rq = sub.add_parser(
+        "requeue-cache",
+        help="Make SKOS cache entries from given sources due for re-fetching",
+        description=(
+            "Make SKOS cache entries from SOURCE cached before DATE due for the\n"
+            "background refresh, spread over at most --spread-days so upstream is\n"
+            "not hit in a burst.  What the refresh cannot repair is deleted, to be\n"
+            "fetched again on next use: type checks, empty label entries and\n"
+            "not-found entries.  Safe to run while the service is up, and to re-run.\n"
+            "The loop's max age is read from TINGBOK_CACHE_MAX_AGE_DAYS here, so run\n"
+            "it with the same environment as the service.\n"
+            "Use it when upstream answers were cached wrongly, e.g. failed Wikidata\n"
+            "requests cached as answers before the upgrade that stopped that: pass\n"
+            "the day after the upgrade as DATE.  Run it as the service user."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    rq.add_argument(
+        "--cache-dir",
+        metavar="DIR",
+        default=None,
+        help="Cache root directory (default: $TINGBOK_CACHE_DIR or ~/.cache/tingbok).  Scans DIR/skos/.",
+    )
+    rq.add_argument(
+        "--source",
+        action="append",
+        required=True,
+        choices=["agrovoc", "dbpedia", "wikidata"],
+        help="Source whose entries to requeue (repeatable)",
+    )
+    rq.add_argument(
+        "--before",
+        metavar="DATE",
+        required=True,
+        type=_parse_before,
+        help="Requeue entries cached before DATE (YYYY-MM-DD, local midnight, or an ISO timestamp)",
+    )
+    rq.add_argument(
+        "--spread-days",
+        metavar="DAYS",
+        type=_non_negative_float,
+        default=7.0,
+        help="Spread the re-fetches over at most DAYS days (default: 7)",
+    )
+    rq.add_argument("--dry-run", action="store_true", help="Report what would change without changing anything")
+
     return parser
 
 
@@ -874,6 +1035,34 @@ def main() -> None:
             gpt_locales = args.gpt if args.gpt else ["en-GB"]
         rc = _download_taxonomy(cache_dir, gpt_locales=gpt_locales, agrovoc=args.agrovoc)
         sys.exit(rc)
+
+    if args.command == "requeue-cache":
+        from os import environ  # noqa: PLC0415
+
+        cache_dir = (
+            Path(args.cache_dir)
+            if args.cache_dir
+            else Path(environ.get("TINGBOK_CACHE_DIR", str(Path.home() / ".cache" / "tingbok")))
+        )
+        from tingbok.services import skos as skos_service  # noqa: PLC0415
+
+        try:
+            max_age, _ = skos_service.cache_refresh_config()
+        except ValueError as exc:
+            parser.error(f"bad TINGBOK_CACHE_MAX_AGE_DAYS / TINGBOK_CACHE_REFRESH_DIVISOR: {exc}")
+        requeued, deleted, dropped, unreadable = _requeue_cache(
+            cache_dir / "skos",
+            set(args.source),
+            args.before,
+            max_age=max_age,
+            spread_days=args.spread_days,
+            dry_run=args.dry_run,
+        )
+        would = "Would have " if args.dry_run else ""
+        print(f"{would}requeued {requeued}, deleted {deleted}, dropped {dropped} not-found entries.".capitalize())
+        if unreadable:
+            print(f"  (skipped {unreadable} unreadable file(s) — being written by the service?  Run it again.)")
+        sys.exit(0)
 
     if args.command == "prune-cache":
         from os import environ  # noqa: PLC0415
