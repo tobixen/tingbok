@@ -114,6 +114,9 @@ async def observe_ean(ean: str, body: EanObservationRequest, request: Request) -
         # than an unhandled 500.  The path stays in the log, not the response.
         logger.error("EAN observation for %s not saved: %s", store_ean, exc)
         raise HTTPException(status_code=503, detail="Observation not saved: the EAN database is not writable") from exc
+    except ean_service.ObservationsUnreadable as exc:
+        logger.error("EAN observation for %s not saved: %s", store_ean, exc)
+        raise HTTPException(status_code=503, detail="Observation not saved: the EAN database cannot be read") from exc
     # Update in-memory observations so subsequent GETs reflect the change immediately
     entry = _app.ean_observations.setdefault(store_ean, {})
     if body.categories:

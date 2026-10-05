@@ -905,3 +905,40 @@ def test_load_ean_observations_rejects_a_non_object(tmp_path: Path) -> None:
     path = tmp_path / "ean-db.json"
     path.write_text("[]")
     assert ean_service.load_ean_observations(path) == {}
+
+
+class TestUnreadableDatabase:
+    """A PUT on top of an ean-db.json that cannot be parsed must not replace it with one entry."""
+
+    @pytest.mark.parametrize("content", ["[]", '{"a": 1', "<<<<<<< HEAD\n{}\n"])
+    def test_save_refuses_to_overwrite(self, tmp_path: Path, content: str) -> None:
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        path.write_text(content)
+        with pytest.raises(ean_service.ObservationsUnreadable):
+            ean_service.save_ean_observation(path, "111", ["food"], "Milk")
+        assert path.read_text() == content
+
+    def test_reads_stay_lenient(self, tmp_path: Path) -> None:
+        from tingbok.services import ean as ean_service
+
+        path = tmp_path / "ean-db.json"
+        path.write_text('{"a": 1')
+        assert ean_service.load_ean_observations(path) == {}
+
+
+@pytest.mark.anyio
+async def test_put_ean_observation_unreadable_db_returns_503(client, tmp_path: Path) -> None:
+    from unittest.mock import patch
+
+    import tingbok.app as _app
+
+    obs_path = tmp_path / "ean-db.json"
+    obs_path.write_text("[]")
+    with patch.object(_app, "EAN_OBSERVATIONS_PATH", obs_path):
+        with patch.object(_app, "ean_observations", {}):
+            response = await client.put("/api/ean/4006381333931", json={"name": "Tesa tape"})
+    assert response.status_code == 503
+    assert "not saved" in response.json()["detail"]
+    assert obs_path.read_text() == "[]"

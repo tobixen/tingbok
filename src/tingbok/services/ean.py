@@ -361,23 +361,34 @@ def load_manual_ean(path: Path) -> dict[str, Any]:
         return {}
 
 
+class ObservationsUnreadable(ValueError):
+    """``ean-db.json`` exists but is not a readable JSON object."""
+
+
+def _read_ean_observations(path: Path) -> dict[str, Any]:
+    """Load *path*, raising :class:`ObservationsUnreadable` if it exists but cannot be used."""
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise ObservationsUnreadable(f"cannot read EAN observations from {path}: {exc}") from exc
+    if not isinstance(data, dict):
+        raise ObservationsUnreadable(f"EAN observations in {path} are not a JSON object")
+    return normalise_observations(data)
+
+
 def load_ean_observations(path: Path) -> dict[str, Any]:
     """Load inventory-sourced EAN observations from *path* (JSON).
 
     Returns an empty dict if the file does not exist or cannot be parsed.
     Keys are EAN strings; values are dicts with ``categories`` and/or ``name``.
     """
-    if not path.exists():
-        return {}
     try:
-        data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
-    except Exception as exc:
-        logger.warning("Failed to load EAN observations from %s: %s", path, exc)
+        return _read_ean_observations(path)
+    except ObservationsUnreadable as exc:
+        logger.warning("%s", exc)
         return {}
-    if not isinstance(data, dict):
-        logger.warning("EAN observations in %s are not a JSON object; ignoring them", path)
-        return {}
-    return normalise_observations(data)
 
 
 def normalise_observations(data: dict[str, Any]) -> dict[str, Any]:
@@ -584,7 +595,9 @@ def _save_ean_observation_locked(
     prices: list[dict[str, Any]] | None,
     receipt_names: list[dict[str, Any]] | None,
 ) -> None:
-    data = load_ean_observations(path)
+    # Strict: saving on top of a file that failed to parse would replace the
+    # whole database with this one entry.
+    data = _read_ean_observations(path)
     entry: dict[str, Any] = data.get(ean, {})
     if categories:
         entry["categories"] = categories
