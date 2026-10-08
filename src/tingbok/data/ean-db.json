@@ -1420,7 +1420,7 @@
     "categories": [
       "paint-brush"
     ],
-    "name": "OK universal natural-bristle paint brush 20mm (четка ОК естествен косъм 20 мм)",
+    "name": "OK универсална четка естествен косъм 20 мм / natural-bristle paint brush 20 mm, made in Italy (Praktiker art. 129994)",
     "prices": [
       {
         "currency": "EUR",
@@ -1639,7 +1639,7 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Чудно Прясно мляко 3.7%",
+    "name": "Верея Чудно прясно мляко 3.7% 1л / fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -1663,6 +1663,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "3l/3",
     "receipt_names": [
       {
         "first_seen": "2026-07-06",
@@ -2933,7 +2934,10 @@
     ]
   },
   "4056489473749": {
-    "name": "Кисело Мляко 3,6%",
+    "categories": [
+      "yogurt"
+    ],
+    "name": "Родна Стряха българско кисело мляко 3,6% ЗНП 400g / yogurt",
     "prices": [
       {
         "currency": "EUR",
@@ -2943,6 +2947,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "1200g/3",
     "receipt_names": [
       {
         "first_seen": "2026-10-07",
@@ -3063,7 +3068,7 @@
     "categories": [
       "tinned-meat"
     ],
-    "name": "Свинско Месо В Собствен Сос",
+    "name": "Pikok Свинско месо в собствен сос XXL 400g / pork in own sauce",
     "prices": [
       {
         "currency": "EUR",
@@ -3073,6 +3078,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "800g/2",
     "receipt_names": [
       {
         "first_seen": "2026-10-07",
@@ -4322,7 +4328,7 @@
     "categories": [
       "shower_gel"
     ],
-    "name": "Cien Shower Gel ZERO 1l XXL (without colouring, without soap)",
+    "name": "Cien Shower Gel ZERO XXL 1l / душгел",
     "prices": [
       {
         "currency": "EUR",
@@ -5126,7 +5132,7 @@
     "categories": [
       "paint-brush"
     ],
-    "name": "HARDEN flat angular paint brush 38mm, series 60 (четка плоска с наклон)",
+    "name": "HARDEN четка плоска серия 60 с наклон 38 / flat angular paint brush 38 mm (Praktiker art. 457015)",
     "prices": [
       {
         "currency": "EUR",
@@ -6387,7 +6393,7 @@
     "categories": [
       "paint-brush"
     ],
-    "name": "Schuller Eh'klar ALLROUND angled flat paint brush 40mm (Art.Nr. 72263)",
+    "name": "Schuller Eh'klar ALLROUND angled flat paint brush 40 mm (Art.Nr. 72263, Praktiker art. 493783)",
     "prices": [
       {
         "currency": "EUR",
@@ -6745,7 +6751,7 @@
     "categories": [
       "whipping-cream"
     ],
-    "name": "Pilos СМЕТАНА 30% UHT whipping cream (Lidl 2026-03-04)",
+    "name": "Pilos сметана 30% UHT / whipping cream",
     "prices": [
       {
         "currency": "EUR",
@@ -7902,7 +7908,7 @@
     "categories": [
       "toilet_paper"
     ],
-    "name": "Lidl toilet paper 100% cellulose 2-ply (ТОАЛ.ХАРТ100%,2ПЛ)",
+    "name": "Тоалетна хартия 100% целулоза 2пл / toilet paper 2-ply",
     "prices": [
       {
         "currency": "EUR",
@@ -8318,9 +8324,9 @@
   },
   "lidl-20974619": {
     "categories": [
-      "paper_towel"
+      "tool/physical_tool/cleaning_tool/paper_towel"
     ],
-    "name": "Lidl kitchen paper rolls (КУХНЕНСКА ХАРТИЯ)",
+    "name": "Кухненска хартия / kitchen paper rolls (Lidl)",
     "prices": [
       {
         "currency": "EUR",
