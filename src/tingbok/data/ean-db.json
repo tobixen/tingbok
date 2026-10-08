@@ -623,7 +623,7 @@
         "date": null,
         "price": 0.42,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       }
     ]
   },
@@ -840,7 +840,7 @@
         "date": null,
         "price": 2.3,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       }
     ]
   },
@@ -855,14 +855,14 @@
         "date": null,
         "price": 1.38,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       },
       {
         "currency": "EUR",
         "date": null,
         "price": 1.48,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       }
     ]
   },
@@ -1376,7 +1376,7 @@
         "date": null,
         "price": 3.67,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       }
     ],
     "quantity": "900g"
@@ -1413,6 +1413,29 @@
         "last_seen": "2026-06-22",
         "name": "Смути Манго и Ананас",
         "shop": "Кауфланд Варна-Одесос ул. Девня 24"
+      }
+    ]
+  },
+  "3800500377506": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "OK universal natural-bristle paint brush 20mm (четка ОК естествен косъм 20 мм)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 0.85,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "ЧЕТКА ОК ЕСТЕСТВЕН КОСЪМ 20 MM",
+        "shop": "Praktiker Varna"
       }
     ]
   },
@@ -1504,7 +1527,7 @@
         "date": "2026-07-21",
         "price": 2.49,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -1616,7 +1639,7 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Верея Чудно прясно мляко 3.7% 1л / fresh milk",
+    "name": "Чудно Прясно мляко 3.7%",
     "prices": [
       {
         "currency": "EUR",
@@ -1630,7 +1653,14 @@
         "date": "2026-10-04",
         "price": 1.84,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 1.84,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -1645,6 +1675,12 @@
         "last_seen": "2026-10-04",
         "name": "VEREYA ПРЯСНО МЛЯКО",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "VEREYA ПРЯСНО МЛЯКО",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -1731,7 +1767,7 @@
         "date": "2026-08-04",
         "price": 2.3,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -2258,7 +2294,7 @@
         "date": "2026-08-04",
         "price": 6.64,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -2380,21 +2416,21 @@
         "date": "2026-07-21",
         "price": 1.43,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       },
       {
         "currency": "EUR",
         "date": "2026-07-31",
         "price": 1.43,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       },
       {
         "currency": "EUR",
         "date": "2026-10-04",
         "price": 1.43,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
@@ -2448,7 +2484,7 @@
         "date": "2026-08-04",
         "price": 3.83,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -2499,7 +2535,7 @@
         "date": "2026-08-04",
         "price": 1.43,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
@@ -2726,7 +2762,7 @@
         "date": "2026-08-04",
         "price": 4.6,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -2749,7 +2785,7 @@
         "date": "2026-07-31",
         "price": 2.04,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -2778,14 +2814,14 @@
         "date": "2026-07-31",
         "price": 1.99,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       },
       {
         "currency": "EUR",
         "date": "2026-08-04",
         "price": 1.99,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -2847,14 +2883,14 @@
         "date": "2026-07-21",
         "price": 0.61,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       },
       {
         "currency": "EUR",
         "date": "2026-07-21",
         "price": 0.81,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "quantity": "1500g/3",
@@ -2896,6 +2932,26 @@
       }
     ]
   },
+  "4056489473749": {
+    "name": "Кисело Мляко 3,6%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 0.59,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "КИС. МЛЯКО 3,6% ЗНП",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "4056489474074": {
     "categories": [
       "cured-sausage"
@@ -2914,7 +2970,7 @@
         "date": "2026-07-31",
         "price": 2.49,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "quantity": "100g",
@@ -3007,7 +3063,24 @@
     "categories": [
       "tinned-meat"
     ],
-    "name": "Pikok Свинско месо в собствен сос XXL — pork in own sauce (Lidl, 98% meat, coarsely ground; printed best-before not legible)"
+    "name": "Свинско Месо В Собствен Сос",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 2.55,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "СВИНСКО В СОБСТ.СОС",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
   },
   "4056489586043": {
     "categories": [
@@ -3414,7 +3487,7 @@
         "date": "2026-07-21",
         "price": 4.49,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -3506,7 +3579,7 @@
         "date": "2026-10-04",
         "price": 1.59,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "quantity": "1 kg",
@@ -3618,7 +3691,7 @@
         "date": "2026-07-31",
         "price": 1.53,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "quantity": "1000g",
@@ -4233,7 +4306,7 @@
         "date": "2026-08-04",
         "price": 4.08,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -4242,6 +4315,29 @@
         "last_seen": "2026-08-04",
         "name": "МЛЯНО КАФЕ ЕСПРЕСО",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4335619208247": {
+    "categories": [
+      "shower_gel"
+    ],
+    "name": "Cien Shower Gel ZERO 1l XXL (without colouring, without soap)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 1.59,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "ДУШГЕЛ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -4256,7 +4352,7 @@
         "date": "2026-07-21",
         "price": 2.44,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -4768,7 +4864,7 @@
         "date": "2026-07-21",
         "price": 1.32,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -5023,6 +5119,29 @@
         "last_seen": "2026-07-08",
         "name": "ЛЕНТА БРОС ПРОТИВ НАСЕКОМИ 4БР",
         "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "5905061058531": {
+    "categories": [
+      "paint-brush"
+    ],
+    "name": "HARDEN flat angular paint brush 38mm, series 60 (четка плоска с наклон)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 3.06,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "ЧЕТКА ПЛОСКА СЕРИЯ 60 С НАКЛОН 38",
+        "shop": "Praktiker Varna"
       }
     ]
   },
@@ -5731,7 +5850,7 @@
         "date": "2026-08-04",
         "price": 2.45,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -6268,7 +6387,24 @@
     "categories": [
       "paint-brush"
     ],
-    "name": "Schuller Eh'klar ALLROUND flat paint brush (Art.Nr. 72263; size TBC)"
+    "name": "Schuller Eh'klar ALLROUND angled flat paint brush 40mm (Art.Nr. 72263)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 5.11,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "ЧЕТКА СКОСЕНА ПЛОСКА ALLROUND 40 M",
+        "shop": "Praktiker Varna"
+      }
+    ]
   },
   "9002588722641": {
     "categories": [
@@ -6278,10 +6414,18 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
+        "date": "2026-10-07",
         "price": 5.11,
-        "shop": null,
+        "shop": "Praktiker Varna",
         "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "ЧЕТКА СКОСЕНА ПЛОСКА ALLROUND 50 M",
+        "shop": "Praktiker Varna"
       }
     ]
   },
@@ -6429,7 +6573,7 @@
         "date": "2026-08-04",
         "price": 0.4,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -6616,6 +6760,13 @@
         "price": 1.12,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 1.08,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "quantity": "200ml",
@@ -6625,6 +6776,12 @@
         "last_seen": "2026-03-04",
         "name": "СМЕТАНА 30 %",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "СМЕТАНА 30 %",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -6720,7 +6877,7 @@
         "date": "2026-07-21",
         "price": 1.68,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -6759,7 +6916,7 @@
         "date": "2026-07-21",
         "price": 2.04,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "quantity": "400g/2",
@@ -7018,7 +7175,7 @@
         "date": null,
         "price": 1.68,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       },
       {
         "currency": "EUR",
@@ -7470,7 +7627,14 @@
         "date": "2026-10-04",
         "price": 0.97,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 0.97,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -7479,6 +7643,12 @@
         "last_seen": "2026-10-04",
         "name": "БЯЛ ОРИЗ",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "БЯЛ ОРИЗ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -7496,7 +7666,7 @@
         "date": null,
         "price": 0.78,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       }
     ],
     "quantity": "140g",
@@ -7564,14 +7734,14 @@
         "date": null,
         "price": 1.48,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       },
       {
         "currency": "EUR",
         "date": null,
         "price": 1.38,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       }
     ]
   },
@@ -7608,7 +7778,7 @@
         "date": "2026-07-31",
         "price": 2.79,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -7716,7 +7886,7 @@
         "date": "2026-07-31",
         "price": 5.19,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -7725,6 +7895,29 @@
         "last_seen": "2026-07-31",
         "name": "ЗАМРАЗЕНИ КАЛМАРИ",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "lidl-20519681": {
+    "categories": [
+      "toilet_paper"
+    ],
+    "name": "Lidl toilet paper 100% cellulose 2-ply (ТОАЛ.ХАРТ100%,2ПЛ)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 2.45,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "ТОАЛ.ХАРТ100%,2ПЛ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
@@ -7753,7 +7946,7 @@
         "date": "2026-08-04",
         "price": 0.79,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -7850,7 +8043,7 @@
         "date": "2026-07-31",
         "price": 0.51,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -7873,7 +8066,7 @@
         "date": "2026-07-21",
         "price": 5.87,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -7943,7 +8136,7 @@
         "date": null,
         "price": 1.12,
         "shop": null,
-        "unit": "piece"
+        "unit": "pcs"
       },
       {
         "currency": "EUR",
@@ -8018,7 +8211,7 @@
         "date": "2026-07-21",
         "price": 0.81,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "quantity": "200 g",
@@ -8042,7 +8235,7 @@
         "date": "2026-08-04",
         "price": 2.81,
         "shop": "Lidl Varna",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -8095,7 +8288,7 @@
         "date": "2026-07-21",
         "price": 0.85,
         "shop": "Lidl Varna ул. Битоля 1А",
-        "unit": "stk"
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -8122,6 +8315,29 @@
       }
     ],
     "quantity": "500g"
+  },
+  "lidl-20974619": {
+    "categories": [
+      "paper_towel"
+    ],
+    "name": "Lidl kitchen paper rolls (КУХНЕНСКА ХАРТИЯ)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 2.19,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "КУХНЕНСКА ХАРТИЯ",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
   },
   "mercadona-00501163": {
     "categories": [
