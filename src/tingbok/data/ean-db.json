@@ -508,13 +508,6 @@
     "prices": [
       {
         "currency": "EUR",
-        "date": null,
-        "price": 0.86,
-        "shop": null,
-        "unit": "pcs"
-      },
-      {
-        "currency": "EUR",
         "date": "2026-05-20",
         "price": 0.69,
         "shop": "Praktiker Варна",
@@ -526,6 +519,13 @@
         "price": 0.69,
         "shop": "Praktiker Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-07",
+        "price": 0.86,
+        "shop": "Praktiker Varna",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -534,6 +534,12 @@
         "last_seen": "2026-05-26",
         "name": "UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 ММ",
         "shop": "Praktiker Варна"
+      },
+      {
+        "first_seen": "2026-10-07",
+        "last_seen": "2026-10-07",
+        "name": "UNIVERSAL БОЯДЖИЙСКА ЧЕТКА 30 MM",
+        "shop": "Praktiker Varna"
       }
     ]
   },
@@ -2808,7 +2814,7 @@
     "categories": [
       "butter"
     ],
-    "name": "Прясно краве масло 82% / fresh butter (2 packs)",
+    "name": "Прясно краве масло 82% / fresh butter",
     "prices": [
       {
         "currency": "EUR",
@@ -8232,7 +8238,7 @@
   },
   "lidl-20815400": {
     "categories": [
-      "food/nuts"
+      "trail_mix"
     ],
     "name": "Суров микс кашу и червена боровинка / raw cashew & cranberry mix",
     "prices": [
