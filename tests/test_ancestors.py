@@ -246,3 +246,18 @@ async def test_the_endpoint_and_the_embedded_helper_agree(client) -> None:
     for concept_id in ("food/nuts", "food", "food/snacks"):
         over_http = (await client.get(f"/api/ancestors/{concept_id}")).json()["ancestors"]
         assert over_http == embedded.get_ancestors(concept_id)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "concept_id", ["canned-tomatoes", "peeled-tomatoes", "chopped-tomatoes", "passata", "tomato-paste"]
+)
+async def test_every_canned_tomato_product_shares_one_parent(client, concept_id) -> None:
+    # Mirrors OFF's en:canned-tomato-products, so a search for tinned
+    # tomatoes finds paste and passata as well as the tins themselves.
+    response = await client.get(f"/api/ancestors/{concept_id}")
+    assert response.status_code == 200
+    ancestors = response.json()["ancestors"]
+    assert "canned-tomato-products" in ancestors
+    assert "tomatoes" in ancestors
+    assert "food/preserved" in ancestors

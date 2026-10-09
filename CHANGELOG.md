@@ -28,6 +28,12 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 - **`mushroom-foraging` (soppsanking) vocabulary concept** — neither DBpedia "mushroom
   hunting" nor Wikidata `Q2391676` carries the canonical Norwegian term, so it is pinned
   in `vocabulary.yaml` with nb altLabels (soppsanking, sopplukking, …) under `outdoor`.
+- **`canned-tomato-products` vocabulary concept** — the common parent of `canned-tomatoes`
+  (with `peeled-tomatoes` under it), `chopped-tomatoes`, `passata` and `tomato-paste`,
+  modelled on OFF's `en:canned-tomato-products`. It sits under both `tomatoes` and
+  `preserved-vegetables`, so a search for preserved food or for tomatoes finds them all.
+  Before this, only `passata` was in the tree. The Bulgarian "доматено пюре" moved from
+  `passata` to `tomato-paste`, which is what it means on a label.
 - **Observations from the server no longer go missing after a failed sync** — the
   product database is appended to both by the running service and by hand, and the
   two copies used to have to be reconciled by hand on every collision. Git now

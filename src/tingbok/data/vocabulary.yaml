@@ -953,16 +953,69 @@ concepts:
   passata:
     prefLabel: "Passata"
     altLabel:
-      en: ["tomato passata", "strained tomatoes", "crushed tomatoes", "tomato puree",
-        "sieved tomatoes"]
-      bg: ["пасирани домати", "доматено пюре"]
+      en: ["tomato passata", "strained tomatoes", "tomato puree", "sieved tomatoes"]
+      bg: ["пасирани домати"]
       de: ["passierte Tomaten"]
-    broader: tomatoes
+    broader: canned-tomato-products
 
     source_uris:
     - https://dbpedia.org/resource/Tomato_purée
     - https://www.wikidata.org/entity/Q3006352
     - off:en:strained-tomatoes
+  # Common parent of every preserved tomato product, modelled on OFF's
+  # en:canned-tomato-products.  Unlike OFF, it sits under tomatoes itself
+  # (OFF: tomatoes-and-their-products), so a search for tomatoes finds the
+  # tins and the paste too.  Fresh tomatoes stay directly under tomatoes.
+  canned-tomato-products:
+    prefLabel: "Canned tomato products"
+    altLabel:
+      en: ["tinned tomato products", "preserved tomatoes", "conserved tomatoes"]
+      bg: ["доматени консерви"]
+    broader: ["tomatoes", "preserved-vegetables"]
+
+    source_uris:
+    - off:en:canned-tomato-products
+  canned-tomatoes:
+    prefLabel: "Canned tomatoes"
+    altLabel:
+      en: ["tinned tomatoes"]
+      bg: ["консервирани домати"]
+    broader: canned-tomato-products
+
+    source_uris:
+    - off:en:canned-tomatoes
+  peeled-tomatoes:
+    prefLabel: "Peeled tomatoes"
+    altLabel:
+      en: ["whole peeled tomatoes", "peeled tomatoes in tomato juice"]
+      bg: ["белени домати"]
+      de: ["geschälte Tomaten"]
+    broader: canned-tomatoes
+
+    source_uris:
+    - off:en:peeled-tomatoes
+  chopped-tomatoes:
+    prefLabel: "Chopped tomatoes"
+    altLabel:
+      en: ["diced tomatoes", "crushed tomatoes", "tomato pulp", "polpa"]
+      bg: ["нарязани домати"]
+      de: ["gehackte Tomaten", "stückige Tomaten"]
+    broader: canned-tomato-products
+
+    source_uris:
+    - off:en:canned-tomato-pulp
+  tomato-paste:
+    prefLabel: "Tomato paste"
+    altLabel:
+      en: ["tomato concentrate", "double concentrated tomato paste"]
+      # OFF files "доматено пюре" under en:tomato-purees, but on Bulgarian
+      # labels (Baresa 2-конц.) it is the concentrated paste.
+      bg: ["доматено пюре", "доматена паста", "доматен концентрат"]
+      de: ["Tomatenmark"]
+    broader: canned-tomato-products
+
+    source_uris:
+    - off:en:tomato-pastes
   mushrooms:
     prefLabel: "Mushrooms"
     altLabel:
