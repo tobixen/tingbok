@@ -1151,7 +1151,10 @@
     ]
   },
   "3800202645095": {
-    "name": "Луканка смядовска КФМ слайс",
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Луканка смядовска КФМ слайс 100g / sliced Smyadovska lukanka",
     "prices": [
       {
         "currency": "EUR",
@@ -1174,7 +1177,7 @@
     "categories": [
       "cured-sausage"
     ],
-    "name": "Майстор Цветко Шпек сандвич XXL слайс",
+    "name": "Майстор Цветко Шпек сандвич XXL слайс / sliced shpek",
     "prices": [
       {
         "currency": "EUR",
@@ -1387,7 +1390,7 @@
     "categories": [
       "cured-sausage"
     ],
-    "name": "луканка червена ЕКО МЕС",
+    "name": "Луканка червена Еко Мес 100g / Eko Mes red lukanka",
     "prices": [
       {
         "currency": "EUR",
@@ -1414,7 +1417,10 @@
     ]
   },
   "3800219426069": {
-    "name": "Seafood Mix",
+    "categories": [
+      "food/seafood"
+    ],
+    "name": "Michik Морски микс / frozen seafood mix",
     "prices": [
       {
         "currency": "EUR",
@@ -2089,7 +2095,7 @@
     "categories": [
       "dishwashing_liquid"
     ],
-    "name": "Frosch Zitronen Spül-Gel 500ml / препарат за съдове лимон",
+    "name": "Frosch препарат за съдове лимон 500мл / Frosch lemon dishwashing liquid",
     "prices": [
       {
         "currency": "EUR",
@@ -2124,7 +2130,7 @@
     "categories": [
       "food/spices/curry"
     ],
-    "name": "K-Classic Asia rote Curry Paste 195g / Червена къри паста",
+    "name": "K-Classic Asia rote Curry Paste 195g / red curry paste",
     "prices": [
       {
         "currency": "EUR",
@@ -2328,7 +2334,7 @@
     "categories": [
       "mushrooms"
     ],
-    "name": "Гъби печурки едри 600g (Стил Пласт, Полша)",
+    "name": "Гъби печурки едри 600g / large white mushrooms (prepacked)",
     "prices": [
       {
         "currency": "EUR",
@@ -2338,6 +2344,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "600g/6",
     "receipt_names": [
       {
         "first_seen": "2026-10-08",
@@ -4622,7 +4629,10 @@
     "source": "manual"
   },
   "4337185830822": {
-    "name": "Chocolate Bar",
+    "categories": [
+      "milk-chocolate"
+    ],
+    "name": "Katy млечен шоколад 100g / milk chocolate (Kaufland)",
     "prices": [
       {
         "currency": "EUR",
@@ -4632,6 +4642,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "300g/3",
     "receipt_names": [
       {
         "first_seen": "2026-10-08",
@@ -4722,7 +4733,10 @@
     ]
   },
   "5000157076410": {
-    "name": "Seriously Good Mayonnaise",
+    "categories": [
+      "mayonnaise"
+    ],
+    "name": "Heinz Seriously Good Mayonnaise 775g",
     "prices": [
       {
         "currency": "EUR",
@@ -5303,7 +5317,10 @@
     ]
   },
   "5901713025449": {
-    "name": "Šalša",
+    "categories": [
+      "passata"
+    ],
+    "name": "K-Classic Šalša / пасирани домати 500ml / passata",
     "prices": [
       {
         "currency": "EUR",
@@ -5313,6 +5330,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "6l/12",
     "receipt_names": [
       {
         "first_seen": "2026-10-08",
@@ -5326,7 +5344,7 @@
     "categories": [
       "peeled_tomatoes"
     ],
-    "name": "K-Classic Geschälte Tomaten in Tomatensaft / Белени домати",
+    "name": "K-Classic Geschälte Tomaten / peeled tomatoes in tomato juice (tin)",
     "prices": [
       {
         "currency": "EUR",
