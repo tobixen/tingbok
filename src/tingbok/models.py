@@ -176,10 +176,12 @@ class VocabularyResolveRequest(BaseModel):
     labels: list[str]
     #: Primary language of the inventory (affects label resolution order).
     lang: str = "en"
-    #: Resolve against the vocabulary only, never the upstream SKOS sources.
-    #: A label the vocabulary does not have comes back as an unresolved stub
-    #: rather than triggering a DBpedia/Wikidata/AGROVOC lookup.  Set by the
-    #: in-process (embedded) path, where by definition there is no network.
+    #: Never query the upstream SKOS sources.  A label the vocabulary does not
+    #: have comes back as an unresolved stub rather than triggering a
+    #: DBpedia/Wikidata/AGROVOC lookup — unless the Open Food Facts taxonomy,
+    #: which is local, knows it; OFF is used only if its taxonomy file is
+    #: already downloaded.  Set by the in-process (embedded) path, where by
+    #: definition there is no network.
     offline: bool = False
 
 

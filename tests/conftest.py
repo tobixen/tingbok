@@ -4,6 +4,7 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 
 import tingbok.app as app_module
+import tingbok.services.off as off_service_module
 import tingbok.services.skos as skos_service_module
 from tingbok.app import app
 
@@ -19,6 +20,17 @@ def _clear_skos_label_cache():
     app_module._skos_label_cache.clear()
     yield
     app_module._skos_label_cache.clear()
+
+
+@pytest.fixture(autouse=True)
+def _no_real_off_taxonomy(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Never load the real Open Food Facts taxonomy in tests.
+
+    With the ``off`` extra installed, ``get_taxonomy()`` reads (or downloads)
+    the full taxonomy, and resolve/lookup results would depend on what OFF
+    holds that day.  Tests that want OFF patch ``_get_taxonomy`` themselves.
+    """
+    monkeypatch.setattr(off_service_module, "_get_taxonomy", lambda *args, **kwargs: None)
 
 
 @pytest.fixture(autouse=True)

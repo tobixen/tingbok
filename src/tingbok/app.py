@@ -953,6 +953,120 @@ def _build_broader_from_paths(
     return broader
 
 
+def _off_concept_id(uri: str) -> str:
+    """Concept ID for an OFF node not in the vocabulary: ``off:en:canned-tomatoes`` → ``canned-tomatoes``.
+
+    When that id is taken by a vocabulary concept which does not declare the
+    OFF URI, the two are not assumed to be the same thing, and the stub keeps
+    the language prefix (``en:canned-tomatoes``) instead.
+    """
+    node_id = uri.removeprefix("off:")
+    short = node_id.split(":", 1)[-1]
+    return node_id if short in vocabulary else short
+
+
+def _off_known_to_vocabulary(uri: str) -> bool:
+    """Whether an OFF node is a vocabulary concept: one that lists it in ``source_uris``."""
+    return uri in _vocab_uri_index
+
+
+def _lookup_off(
+    lookup_label: str, lang: str, allow_download: bool = True
+) -> tuple[dict[str, Any] | None, dict[str, dict[str, Any]]]:
+    """Look *lookup_label* up in OFF and walk its parents into the vocabulary.
+
+    Returns ``(off_concept, graph)``; *graph* is :func:`off_service.broader_graph`
+    bridged at vocabulary concepts, empty when OFF has no route into the
+    vocabulary.  Never raises.
+    """
+    try:
+        off_concept = off_service.lookup_concept(lookup_label, lang, SKOS_CACHE_DIR, allow_download=allow_download)
+        if not off_concept or not off_concept.get("uri"):
+            return None, {}
+        graph = off_service.broader_graph(
+            off_concept["uri"], _off_known_to_vocabulary, lang, allow_download=allow_download
+        )
+        return off_concept, graph
+    except Exception as exc:  # noqa: BLE001
+        logger.debug("OFF lookup failed for '%s': %s", lookup_label, exc)
+        return None, {}
+
+
+def _off_broader(uri: str, graph: dict[str, dict[str, Any]], uri_to_id: dict[str, str], self_id: str) -> list[str]:
+    """Concept IDs of the OFF parents of *uri* in *graph*, mapped through *uri_to_id*.
+
+    OFF lists both a node's parent and that parent's ancestors as parents
+    (en:canned-tomatoes has en:canned-tomato-products *and* en:tomatoes); a
+    parent that is a vocabulary ancestor of another parent is dropped.
+    """
+    broader: list[str] = []
+    for parent_uri in graph.get(uri, {}).get("broader", []):
+        parent_id = uri_to_id.get(parent_uri) or _off_concept_id(parent_uri)
+        if parent_id != self_id and parent_id not in broader:
+            broader.append(parent_id)
+    return _drop_implied_parents(broader)
+
+
+def _off_vocabulary_broader(uri: str, graph: dict[str, dict[str, Any]], self_id: str) -> list[str]:
+    """The nearest vocabulary concepts above *uri* in an OFF *graph*, skipping OFF-only nodes.
+
+    For responses that cannot carry stub concepts (``GET /api/lookup``): every
+    id returned is one the client can fetch.
+    """
+    found: list[str] = []
+    seen: set[str] = set()
+    pending = list(graph.get(uri, {}).get("broader", []))
+    while pending:
+        parent_uri = pending.pop(0)
+        if parent_uri in seen:
+            continue
+        seen.add(parent_uri)
+        parent_id = _vocab_uri_index.get(parent_uri)
+        if parent_id:
+            if parent_id != self_id and parent_id not in found:
+                found.append(parent_id)
+        else:
+            pending.extend(graph.get(parent_uri, {}).get("broader", []))
+    return _drop_implied_parents(found)
+
+
+def _drop_implied_parents(broader: list[str]) -> list[str]:
+    """Drop parents that are vocabulary ancestors of another parent in *broader*."""
+    implied = {a for p in broader if p in vocabulary for a in ancestors_of(p, vocabulary)}
+    return [p for p in broader if p not in implied]
+
+
+def _add_off_graph_concepts(
+    start_uri: str,
+    graph: dict[str, dict[str, Any]],
+    uri_to_id: dict[str, str],
+    concepts: dict[str, VocabularyConcept],
+    lang: str,
+) -> None:
+    """Add the concepts above *start_uri* in an OFF *graph* to a resolve response.
+
+    Vocabulary concepts (the bridges) come with their vocabulary ancestors;
+    OFF nodes between the start and the bridges become stubs carrying their
+    ``off:`` URI, so the client gets an unbroken chain.
+    """
+    for uri, node in graph.items():
+        if uri == start_uri:
+            continue
+        concept_id = uri_to_id.get(uri) or _off_concept_id(uri)
+        if concept_id in vocabulary:
+            _collect_with_ancestors(concept_id, concepts)
+        elif concept_id not in concepts:
+            concepts[concept_id] = VocabularyConcept(
+                id=concept_id,
+                prefLabel=node["label"],
+                broader=_off_broader(uri, graph, uri_to_id, concept_id),
+                narrower=[],
+                uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{concept_id}",
+                source_uris=[uri],
+                labels={lang: node["label"]},
+            )
+
+
 def _concept_id_from_path_seg(path_seg: str) -> str | None:
     """Derive a concept ID from a uri_map path-segment key if its root is a vocabulary concept.
 
@@ -1559,15 +1673,20 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
         else:
             skos_labels.append(label)
 
-    # Fetch SKOS data for all unresolved labels in parallel
-    async def _fetch_all_sources(label: str) -> tuple[str, list[tuple], dict[str, str]]:
-        """Return (label, per_source_results, combined_uri_map) for one label."""
+    # Fetch SKOS and OFF data for all unresolved labels in parallel.  OFF is a
+    # local taxonomy, so it is consulted offline too — but offline it may only
+    # use a taxonomy file already on disk, never download one.
+    async def _fetch_all_sources(label: str) -> tuple[str, list[tuple], dict[str, str], tuple]:
+        """Return (label, per_source_results, combined_uri_map, (off_concept, off_graph)) for one label."""
         lookup_label = label.replace("_", " ").replace("-", " ")
-        per_source = await asyncio.gather(*(_fetch_one_skos_source(lookup_label, s, lang) for s in skos_sources))
+        off_task = asyncio.to_thread(_lookup_off, lookup_label, lang, not request.offline)
+        *per_source, off_result = await asyncio.gather(
+            *(_fetch_one_skos_source(lookup_label, s, lang) for s in skos_sources), off_task
+        )
         uri_map: dict[str, str] = {}
         for _, _, _, m in per_source:
             uri_map.update(m)
-        return label, list(per_source), uri_map
+        return label, per_source, uri_map, off_result
 
     skos_fetches = await asyncio.gather(*(_fetch_all_sources(lbl) for lbl in skos_labels))
 
@@ -1576,12 +1695,12 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
     # Start from the static vocabulary index and overlay batch-level entries.
     local_uri_to_label: dict[str, str] = dict(_vocab_uri_index)
 
-    for label, per_source, _ in skos_fetches:
-        for _, _, uris, _ in per_source:
-            for uri in uris:
-                n = _normalise_uri(uri)
-                if n and n not in local_uri_to_label:
-                    local_uri_to_label[n] = label  # input label as concept ID
+    for label, per_source, _, (off_concept, _) in skos_fetches:
+        off_uris = [off_concept["uri"]] if off_concept else []
+        for uri in [u for _, _, uris, _ in per_source for u in uris] + off_uris:
+            n = _normalise_uri(uri)
+            if n and n not in local_uri_to_label:
+                local_uri_to_label[n] = label  # input label as concept ID
 
     # Phase 3: build VocabularyConcept for each SKOS-resolved label and assemble response
     concepts: dict[str, VocabularyConcept] = {}
@@ -1602,8 +1721,18 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
             if canonical is not None:
                 _add_input_label_as_altlabel(canonical, _label, lang)
 
-    for label, per_source, uri_map in skos_fetches:
+    for label, per_source, uri_map, (off_concept, off_graph) in skos_fetches:
         lookup_label = label.replace("_", " ").replace("-", " ")
+        off_uri: str | None = off_concept["uri"] if off_concept else None
+
+        # OFF matched a node the vocabulary already has (e.g. a French label for
+        # en:strained-tomatoes → passata): fold into that concept like a vocabulary hit.
+        canonical_id = _vocab_uri_index.get(off_uri) if off_uri else None
+        if canonical_id:
+            _collect_with_ancestors(canonical_id, concepts)
+            _add_input_label_as_altlabel(concepts[canonical_id], label, lang)
+            continue
+
         merged_labels: dict[str, str] = {}
         source_uris: list[str] = []
         all_paths: list[str] = []
@@ -1621,8 +1750,10 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
             if lang not in merged_labels:
                 pref_label_val = concept.get("prefLabel", label)
                 merged_labels[lang] = pref_label_val
-
-        if not source_uris and not all_paths:
+        # An OFF match that does not lead into the vocabulary places nothing:
+        # without SKOS results the label stays unresolved (with its OFF URI),
+        # so a client still knows to look again later.
+        if not source_uris and not all_paths and not off_graph:
             unresolved.append(label)
             concepts[label] = VocabularyConcept(
                 id=label,
@@ -1630,13 +1761,22 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
                 broader=[],
                 narrower=[],
                 uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{label}",
-                source_uris=[],
+                source_uris=[off_uri] if off_uri else [],
                 labels={lang: label},
             )
             continue
+        if off_concept:
+            source_uris.append(off_uri)
+            merged_labels.setdefault(lang, off_concept.get("prefLabel", lookup_label))
 
-        # Build broader from SKOS paths and URI bridging.
-        broader = _build_broader_from_paths(all_paths, uri_map, local_uri_to_label, {label})
+        # When OFF's taxonomy leads into the vocabulary, its chain is the hierarchy:
+        # it is curated food data, where the SKOS paths for food are often deep
+        # ontology chains (good/non_durable_goods/.../food_paste) that would only
+        # add noise next to it.  Otherwise build broader from SKOS paths and URI bridging.
+        if off_graph:
+            broader = _off_broader(off_uri, off_graph, local_uri_to_label, label)
+        else:
+            broader = _build_broader_from_paths(all_paths, uri_map, local_uri_to_label, {label})
 
         # Use INPUT LABEL as concept ID (not the SKOS-derived vocabulary-anchored path)
         # so that resolve_category() on the client side finds concepts by their raw label.
@@ -1658,6 +1798,9 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
         for parent_id in broader:
             if parent_id in vocabulary:
                 _collect_with_ancestors(parent_id, concepts)
+        if off_graph:
+            _add_off_graph_concepts(off_uri, off_graph, local_uri_to_label, concepts, lang)
+            continue
         for path_seg, seg_uri in uri_map.items():
             if _vocab_uri_index.get(_normalise_uri(seg_uri)):
                 continue  # vocabulary concept — already handled above
@@ -1730,8 +1873,10 @@ async def lookup_concept(
     1. If ``label`` matches a vocabulary concept ID or prefLabel/altLabel → return
        that concept (already enriched with external-source data in the background).
     2. Otherwise query AGROVOC, DBpedia and Wikidata **in parallel**, merge labels,
-       altLabels, descriptions and source URIs from all sources, and derive the
-       canonical concept ID from the hierarchy path.  Returns 404 only when no
+       altLabels, descriptions and source URIs from all sources (plus GPT and Open
+       Food Facts), and derive the canonical concept ID from the hierarchy path.
+       ``broader`` comes from the Open Food Facts taxonomy when its parents lead
+       into the vocabulary, otherwise from the SKOS paths.  Returns 404 only when no
        source finds the label.
     """
     from fastapi import HTTPException
@@ -1820,9 +1965,9 @@ async def lookup_concept(
         for lg, lbl in gpt_labels.items():
             merged_labels.setdefault(lg, lbl)
 
-    # Also query OFF (local food taxonomy, no network) — URI and multilingual labels only;
-    # hierarchy path building from OFF is deferred to future work since AGROVOC covers food.
-    off_concept = await asyncio.to_thread(off_service.lookup_concept, lookup_label, lang, SKOS_CACHE_DIR)
+    # Also query OFF (local food taxonomy) — URI, multilingual labels, and the
+    # hierarchy when its parents lead into the vocabulary.
+    off_concept, off_graph = await asyncio.to_thread(_lookup_off, lookup_label, lang)
     if off_concept:
         off_uri = off_concept.get("uri", "")
         if off_uri and off_uri not in source_uris:
@@ -1864,9 +2009,14 @@ async def lookup_concept(
     _self_ids: set[str] = {concept_id} if concept_id else set()
     if _concept_seg:
         _self_ids.add(_concept_seg)
-    broader = _build_broader_from_paths(
-        all_paths, combined_uri_map, _vocab_uri_index, _self_ids, fallback_concept_id=concept_id
-    )
+    # OFF's chain wins over SKOS paths when it bridges into the vocabulary
+    # (same rule as resolve_vocabulary).
+    if off_graph:
+        broader = _off_vocabulary_broader(off_concept["uri"], off_graph, _concept_seg or label)
+    else:
+        broader = _build_broader_from_paths(
+            all_paths, combined_uri_map, _vocab_uri_index, _self_ids, fallback_concept_id=concept_id
+        )
     best_description = max(descriptions, key=len) if descriptions else None
 
     # Populate reverse label cache so future non-English lookups can find this concept

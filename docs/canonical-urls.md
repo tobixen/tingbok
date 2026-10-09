@@ -228,9 +228,11 @@ This avoids breaking existing clients while the new endpoint matures.
    `VocabularyConcept` response carries `uri` set to the canonical URL.
 
 2. **Done**: `POST /api/vocabulary/resolve` implemented.  Resolves each input label via
-   vocabulary (vocabulary-matched: full concept + ancestors; unmatched: stub with
-   `source_uris=[]`).  SKOS resolution for unmatched labels is still done client-side
-   via `GET /api/lookup/{label}`.
+   vocabulary (vocabulary-matched: full concept + ancestors).  Unmatched labels are
+   looked up server-side in AGROVOC/DBpedia/Wikidata and the Open Food Facts taxonomy;
+   when OFF's parents lead into the vocabulary, that chain is the hierarchy (OFF nodes
+   in between become stubs with their `off:` URI).  Labels no source knows come back
+   as stubs with `source_uris=[]`.
 
 3. **Done**: inventory-md uses batch resolve when parsing.  `resolve_vocabulary_from_tingbok()`
    in `vocabulary.py` calls `POST /api/vocabulary/resolve`; `parse --auto` uses it with
@@ -243,5 +245,4 @@ This avoids breaking existing clients while the new endpoint matures.
 
 5. **Remaining**: retire the `uri` field in `vocabulary.yaml` (move values to
    `source_uris`) once all clients treat the `/api/vocabulary/{id}` URL as the primary
-   identifier.  Also: extend `POST /api/vocabulary/resolve` to do SKOS resolution
-   server-side for unmatched labels (so clients need zero fallback calls).
+   identifier.

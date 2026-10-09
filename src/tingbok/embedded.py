@@ -121,11 +121,12 @@ def resolve_vocabulary(labels: list[str], lang: str = "en", offline: bool = Fals
     Args:
         labels:  Category labels or concept ids as the inventory writes them.
         lang:    Primary language of the inventory.
-        offline: Resolve against the vocabulary only.  A caller that reached for
-            this module because the network was unavailable wants this: the
-            default would otherwise fall through to DBpedia and friends for
-            every label the vocabulary does not have, which is the one thing
-            that cannot work here.
+        offline: Resolve against the vocabulary, plus the Open Food Facts
+            taxonomy if its file is already downloaded.  A caller that reached
+            for this module because the network was unavailable wants this:
+            the default would otherwise fall through to DBpedia and friends
+            for every label the vocabulary does not have, which is the one
+            thing that cannot work here.
     """
     _ensure_loaded()
     request = VocabularyResolveRequest(labels=labels, lang=lang, offline=offline)

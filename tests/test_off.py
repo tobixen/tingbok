@@ -5,6 +5,10 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+# Bound before conftest's autouse fixture stubs the loader out, so the loader
+# itself can still be tested.
+from tingbok.services.off import _get_taxonomy as _real_get_taxonomy
+
 
 def _make_node(node_id: str, names: dict, synonyms: dict | None = None, parents: list | None = None) -> MagicMock:
     node = MagicMock()
@@ -234,3 +238,145 @@ def test_off_get_labels_taxonomy_unavailable() -> None:
         result = off_service.get_labels("off:en:potatoes", ["en"])
 
     assert result == {}
+
+
+# ---------------------------------------------------------------------------
+# broader_graph — walking OFF parents up to concepts the caller knows
+# ---------------------------------------------------------------------------
+
+# Mirrors the real OFF chain: peeled → canned tomatoes → canned tomato products,
+# with side branches that do and do not lead anywhere the vocabulary knows.
+_PLANT = _make_node("en:plant-based-foods", {"en": "Plant-based foods"})
+_CANNED_FOODS = _make_node("en:canned-foods", {"en": "Canned foods"})
+_VEG = _make_node("en:vegetables", {"en": "Vegetables"}, parents=[_PLANT])
+_TOMATOES = _make_node("en:tomatoes", {"en": "Tomatoes"}, parents=[_VEG])
+_TOMATO_PRODUCTS = _make_node("en:tomatoes-and-their-products", {"en": "Tomatoes and their products"}, parents=[_PLANT])
+_CANNED_VEG = _make_node("en:canned-vegetables", {"en": "Canned vegetables"}, parents=[_CANNED_FOODS])
+_CANNED_TOMATO_PRODUCTS = _make_node(
+    "en:canned-tomato-products", {"en": "Canned tomato products"}, parents=[_TOMATO_PRODUCTS, _CANNED_FOODS]
+)
+_CANNED_TOMATOES = _make_node(
+    "en:canned-tomatoes", {"en": "Canned tomatoes"}, parents=[_CANNED_TOMATO_PRODUCTS, _CANNED_VEG, _TOMATOES]
+)
+_PEELED = _make_node("en:peeled-tomatoes", {"en": "Peeled tomatoes"}, parents=[_CANNED_TOMATOES])
+_TOMATO_TAXONOMY = _make_taxonomy(
+    [
+        _PLANT,
+        _CANNED_FOODS,
+        _VEG,
+        _TOMATOES,
+        _TOMATO_PRODUCTS,
+        _CANNED_VEG,
+        _CANNED_TOMATO_PRODUCTS,
+        _CANNED_TOMATOES,
+        _PEELED,
+    ]
+)
+
+
+def test_off_broader_graph_stops_at_known_concepts() -> None:
+    """The walk goes up until it meets a known URI and does not continue past it."""
+    from tingbok.services import off as off_service
+
+    known = {"off:en:canned-tomato-products", "off:en:tomatoes"}
+    with patch("tingbok.services.off._get_taxonomy", return_value=_TOMATO_TAXONOMY):
+        graph = off_service.broader_graph("off:en:peeled-tomatoes", known.__contains__)
+
+    assert graph["off:en:peeled-tomatoes"]["broader"] == ["off:en:canned-tomatoes"]
+    assert graph["off:en:canned-tomatoes"]["label"] == "Canned tomatoes"
+    assert set(graph["off:en:canned-tomatoes"]["broader"]) == known
+    # Known nodes are terminal: present, but not walked further
+    assert graph["off:en:canned-tomato-products"]["broader"] == []
+    assert graph["off:en:tomatoes"]["broader"] == []
+    assert "off:en:tomatoes-and-their-products" not in graph
+    assert "off:en:vegetables" not in graph
+
+
+def test_off_broader_graph_prunes_branches_without_a_bridge() -> None:
+    """A branch that never reaches a known URI (canned-vegetables → canned-foods) is dropped."""
+    from tingbok.services import off as off_service
+
+    known = {"off:en:canned-tomato-products"}
+    with patch("tingbok.services.off._get_taxonomy", return_value=_TOMATO_TAXONOMY):
+        graph = off_service.broader_graph("off:en:peeled-tomatoes", known.__contains__)
+
+    assert graph["off:en:canned-tomatoes"]["broader"] == ["off:en:canned-tomato-products"]
+    assert "off:en:canned-vegetables" not in graph
+    assert "off:en:canned-foods" not in graph
+
+
+def test_off_broader_graph_empty_without_bridge() -> None:
+    """Nothing known above the node → empty graph, so callers fall back to other sources."""
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=_TOMATO_TAXONOMY):
+        assert off_service.broader_graph("off:en:peeled-tomatoes", lambda _uri: False) == {}
+
+
+def test_off_broader_graph_unavailable_or_unknown() -> None:
+    """Missing package, unknown node or non-OFF URI → empty graph, never an exception."""
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=None):
+        assert off_service.broader_graph("off:en:peeled-tomatoes", lambda _uri: True) == {}
+    with patch("tingbok.services.off._get_taxonomy", return_value=_TOMATO_TAXONOMY):
+        assert off_service.broader_graph("off:en:no-such-node", lambda _uri: True) == {}
+        assert off_service.broader_graph("https://example.org/x", lambda _uri: True) == {}
+
+
+def test_off_get_taxonomy_without_download_skips_missing_cache(tmp_path: Path) -> None:
+    """allow_download=False must not call get_taxonomy() when the taxonomy file is not cached.
+
+    openfoodfacts' get_taxonomy() downloads the file when it is missing, which
+    offline mode must never trigger.
+    """
+    import sys
+    import types
+
+    fake_mod = types.ModuleType("openfoodfacts.taxonomy")
+    fake_mod.DEFAULT_CACHE_DIR = tmp_path  # type: ignore[attr-defined]
+    fake_mod.get_taxonomy = MagicMock(return_value=_TOMATO_TAXONOMY)  # type: ignore[attr-defined]
+    fake_pkg = types.ModuleType("openfoodfacts")
+    fake_pkg.taxonomy = fake_mod  # type: ignore[attr-defined]
+
+    with patch.dict(sys.modules, {"openfoodfacts": fake_pkg, "openfoodfacts.taxonomy": fake_mod}):
+        with patch("tingbok.services.off._taxonomy", None):
+            assert _real_get_taxonomy(allow_download=False) is None
+            fake_mod.get_taxonomy.assert_not_called()
+
+            (tmp_path / "category.json").write_text("{}")
+            assert _real_get_taxonomy(allow_download=False) is _TOMATO_TAXONOMY
+            fake_mod.get_taxonomy.assert_called_once()
+
+
+def test_off_get_taxonomy_loads_once_under_concurrency(tmp_path: Path) -> None:
+    """Parallel first calls (resolve runs one OFF lookup per label in threads) load the taxonomy once."""
+    import sys
+    import threading
+    import time
+    import types
+
+    calls: list[int] = []
+
+    def _slow_get_taxonomy(_name: str) -> object:
+        calls.append(1)
+        time.sleep(0.05)
+        return _TOMATO_TAXONOMY
+
+    fake_mod = types.ModuleType("openfoodfacts.taxonomy")
+    fake_mod.DEFAULT_CACHE_DIR = tmp_path  # type: ignore[attr-defined]
+    fake_mod.get_taxonomy = _slow_get_taxonomy  # type: ignore[attr-defined]
+    fake_pkg = types.ModuleType("openfoodfacts")
+    fake_pkg.taxonomy = fake_mod  # type: ignore[attr-defined]
+
+    results: list[object] = []
+    with patch.dict(sys.modules, {"openfoodfacts": fake_pkg, "openfoodfacts.taxonomy": fake_mod}):
+        with patch("tingbok.services.off._taxonomy", None):
+            threads = [threading.Thread(target=lambda: results.append(_real_get_taxonomy())) for _ in range(8)]
+            for t in threads:
+                t.start()
+            for t in threads:
+                t.join()
+
+    assert len(calls) == 1
+    assert all(r is _TOMATO_TAXONOMY for r in results)
