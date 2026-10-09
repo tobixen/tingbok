@@ -560,9 +560,9 @@
   },
   "3800050405919": {
     "categories": [
-      "tomatoes"
+      "canned-tomatoes"
     ],
-    "name": "Oberon canned tomatoes",
+    "name": "OBERON ДОМАТИ Oberon canned tomatoes (gross 1.15, -0.36 promo each)",
     "prices": [
       {
         "currency": "EUR",
@@ -590,9 +590,9 @@
   },
   "3800052219118": {
     "categories": [
-      "food/beverages/beer"
+      "beer"
     ],
-    "name": "Astika бира",
+    "name": "Астика кутия 0,5л / Astika beer can (5 of 16 bought)",
     "prices": [
       {
         "currency": "EUR",
@@ -609,7 +609,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "500ml",
+    "quantity": "2500ml/5",
     "receipt_names": [
       {
         "first_seen": "2026-05-23",
@@ -755,7 +755,7 @@
     "categories": [
       "beer"
     ],
-    "name": "Черноморско пиво светло 0.5l кутия",
+    "name": "Черноморско пиво светло 0,5л кутия / Chernomorsko (Black Sea) lager can (5 of 12 bought)",
     "prices": [
       {
         "currency": "EUR",
@@ -765,6 +765,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "2500ml/5",
     "receipt_names": [
       {
         "first_seen": "2026-10-08",
@@ -2093,7 +2094,7 @@
   },
   "4009175951946": {
     "categories": [
-      "dishwashing_liquid"
+      "dishwashing-liquid"
     ],
     "name": "Frosch препарат за съдове лимон 500мл / Frosch lemon dishwashing liquid",
     "prices": [
@@ -2341,6 +2342,13 @@
         "date": "2026-10-08",
         "price": 3.32,
         "shop": "Kaufland Varna ул. Христо Смирненски 2",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 0.55,
+        "shop": null,
         "unit": "pcs"
       }
     ],
@@ -4642,7 +4650,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "300g/3",
+    "quantity": "200g/2",
     "receipt_names": [
       {
         "first_seen": "2026-10-08",
@@ -5330,7 +5338,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "6l/12",
+    "quantity": "5.5l/11",
     "receipt_names": [
       {
         "first_seen": "2026-10-08",
@@ -5342,7 +5350,7 @@
   },
   "5901713028440": {
     "categories": [
-      "peeled_tomatoes"
+      "peeled-tomatoes"
     ],
     "name": "K-Classic Geschälte Tomaten / peeled tomatoes in tomato juice (tin)",
     "prices": [
@@ -7235,7 +7243,7 @@
     "categories": [
       "cornflakes"
     ],
-    "name": "Crownfield Corn Flakes 500g / cornflakes",
+    "name": "Crownfield Corn Flakes 500g / cornflakes photos:pantry-foodbox",
     "prices": [
       {
         "currency": "EUR",
@@ -8683,7 +8691,7 @@
   },
   "lidl-20974619": {
     "categories": [
-      "paper_towel"
+      "tool/physical_tool/cleaning_tool/paper_towel"
     ],
     "name": "Кухненска хартия / kitchen paper rolls (Lidl)",
     "prices": [
