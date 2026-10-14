@@ -1742,6 +1742,12 @@
       }
     ]
   },
+  "3800748002420": {
+    "categories": [
+      "fresh-milk"
+    ],
+    "name": "Верея краве мляко 1,5% 1л / Vereya cow's milk 1.5% (purchase not identified)"
+  },
   "3800748051053": {
     "name": "Прясно мляко 3% внос",
     "prices": [
@@ -4210,6 +4216,21 @@
         "last_seen": "2026-06-21",
         "name": "ПАСТЕТ АПЕТИТ БЕЗМОМ",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "4056489942931": {
+    "categories": [
+      "preserved-vegetables"
+    ],
+    "name": "Родна стряха Печени, белени чушки с чесън и магданоз / roasted peeled peppers with garlic and parsley — opened 2026-10-14, label says eat within 3 days of opening (printed bb 2027-10-01), found in food1; the second jar is missing",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.05,
+        "shop": null,
+        "unit": "pcs"
       }
     ]
   },
