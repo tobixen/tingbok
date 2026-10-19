@@ -43,22 +43,15 @@ timestamps, with the rest behind the same gate as `paths`.
 
 Raised by a clean-context review 2026-09-06 and left as-is at the time.
 
-## The deployed vocabulary.yaml was never migrated
+## A separate data dir is never re-seeded
 
-A deployment with `TINGBOK_DATA_DIR` set keeps its own `vocabulary.yaml`, seeded
-from the packaged copy once and never re-seeded (`bootstrap_data_dir` only
-copies when the file is absent). Two fixes landed in the packaged file on
-2026-09-02 that its copy therefore still lacks:
-
-* `food/spices` declaring `food/conditment` — a missing 's', so it advertises a
-  parent that 404s and a client building a tree from `broader` gets an orphan.
-* `clothing/underwear` with a scalar `source_uris`, served as 37 one-character
-  URIs. The loader and both writers now coerce it, so nothing corrupts further,
-  but the bad shape is still on disk.
-
-Neither is fixed by deploying. Either edit tingbok.plann.no's copy directly, or
-add a migration step that reconciles a data-dir vocabulary against the packaged
-one on startup.
+A deployment whose `TINGBOK_DATA_DIR` lies outside the checkout keeps its own
+`vocabulary.yaml`, seeded from the packaged copy once and never again
+(`bootstrap_data_dir` only copies when the file is absent), so fixes to the
+packaged vocabulary never reach it.  tingbok.plann.no is not affected: its
+data dir is the checkout's own `src/tingbok/data`, updated by `git pull`.
+Should another deployment ever exist, add a startup step that reconciles a
+data-dir vocabulary against the packaged one.
 
 ## Data that should be filtered
 
