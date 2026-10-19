@@ -1380,12 +1380,58 @@
       }
     ]
   },
+  "3800214924508": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Billa Суджук слайс 100 g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-19",
+        "price": 3.93,
+        "shop": "Billa Varna бул. Сливница 185",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-19",
+        "last_seen": "2026-10-19",
+        "name": "СУДЖУК СЛАЙС",
+        "shop": "Billa Varna бул. Сливница 185"
+      }
+    ]
+  },
   "3800214924577": {
     "categories": [
       "cured-meat"
     ],
     "name": "Луканка Тракийска XXL",
     "quantity": "550g"
+  },
+  "3800214926540": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Clever Луканка нарязана",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-19",
+        "price": 2.19,
+        "shop": "Billa Varna бул. Сливница 185",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-19",
+        "last_seen": "2026-10-19",
+        "name": "ЛУКАНКА CLEVER",
+        "shop": "Billa Varna бул. Сливница 185"
+      }
+    ]
   },
   "3800214928780": {
     "categories": [
@@ -5289,6 +5335,26 @@
     ],
     "name": "Paris Cherry Blossom håndssåpe 90g vegan (N°008, Produced in Turkey)",
     "quantity": "90g"
+  },
+  "5900820024314": {
+    "name": "Пастьоризирано прясно краве мляко 3.2%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-19",
+        "price": 1.71,
+        "shop": "Billa Varna бул. Сливница 185",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-19",
+        "last_seen": "2026-10-19",
+        "name": "ПР.МЛЯКО БУЛГАРЧЕ",
+        "shop": "Billa Varna бул. Сливница 185"
+      }
+    ]
   },
   "5900951311505": {
     "categories": [
