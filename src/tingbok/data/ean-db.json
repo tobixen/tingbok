@@ -448,6 +448,12 @@
       }
     ]
   },
+  "3800022414321": {
+    "categories": [
+      "non-alcoholic-beer"
+    ],
+    "name": "Ариана 0% безалкохолна бира / alcohol-free beer, can"
+  },
   "3800038902942": {
     "categories": [
       "toothpaste"
@@ -1287,6 +1293,12 @@
         "shop": "Odesos Varna ул. Сан Стефано 23"
       }
     ]
+  },
+  "3800207942199": {
+    "categories": [
+      "food/nuts"
+    ],
+    "name": "бадем печен / roasted almonds, opened"
   },
   "3800208133541": {
     "categories": [
@@ -4897,6 +4909,12 @@
       }
     ]
   },
+  "5000299605950": {
+    "categories": [
+      "gin"
+    ],
+    "name": "Beefeater Pink Strawberry gin, opened"
+  },
   "5011007002947": {
     "categories": [
       "alcohol"
@@ -5337,7 +5355,10 @@
     "quantity": "90g"
   },
   "5900820024314": {
-    "name": "Пастьоризирано прясно краве мляко 3.2%",
+    "categories": [
+      "whole-milk"
+    ],
+    "name": "Булгарче прясно мляко 3,2% / Bulgarche fresh milk (Billa)",
     "prices": [
       {
         "currency": "EUR",
@@ -5884,6 +5905,12 @@
     ],
     "name": "Boil-in-Bag Middagsris Thai White Rice 1kg 8 poser à 125g (REMA)",
     "quantity": "1kg"
+  },
+  "7036110009834": {
+    "categories": [
+      "fish-roe-spread"
+    ],
+    "name": "Mills Kaviar / smoked cod roe spread tube, opened (bb not photographed)"
   },
   "7038010028106": {
     "categories": [
@@ -7354,6 +7381,12 @@
         "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
+  },
+  "lidl-20058852": {
+    "categories": [
+      "white-wine"
+    ],
+    "name": "Sauvignon Blanc (Lidl), opened"
   },
   "lidl-20087036": {
     "categories": [
