@@ -1800,6 +1800,12 @@
       }
     ]
   },
+  "3800740031527": {
+    "categories": [
+      "lyutenitsa"
+    ],
+    "name": "Deroni Финосмляна пикантна лютеница с люти чушки / fine-ground spicy lyutenitsa with hot peppers (heat 3/10)"
+  },
   "3800748002420": {
     "categories": [
       "fresh-milk"
@@ -3225,6 +3231,12 @@
       }
     ]
   },
+  "4056489473985": {
+    "categories": [
+      "lyutenitsa"
+    ],
+    "name": "Freshona Едромляна лютеница / coarse lyutenitsa"
+  },
   "4056489474074": {
     "categories": [
       "cured-sausage"
@@ -4279,9 +4291,9 @@
   },
   "4056489942931": {
     "categories": [
-      "preserved-vegetables"
+      "roasted-peppers"
     ],
-    "name": "Родна стряха Печени, белени чушки с чесън и магданоз / roasted peeled peppers with garlic and parsley — opened 2026-10-14, label says eat within 3 days of opening (printed bb 2027-10-01), found in food1; the second jar is missing",
+    "name": "Родна стряха Печени, белени чушки с чесън и магданоз / roasted peeled peppers with garlic & parsley (Lidl)",
     "prices": [
       {
         "currency": "EUR",
@@ -6569,6 +6581,12 @@
       }
     ]
   },
+  "8680908029017": {
+    "categories": [
+      "instant-noodles"
+    ],
+    "name": "Indomie Körili Hazır Noodle (curry) 5x75g"
+  },
   "8681465055594": {
     "categories": [
       "canned-meat"
@@ -6600,6 +6618,12 @@
       "sko/pleie/skokrem"
     ],
     "name": "Silver Premium Self Shine Shoe Cream, sort"
+  },
+  "8690998212282": {
+    "categories": [
+      "honey"
+    ],
+    "name": "Balparmak Balkovan Süzme Çiçek Balı / strained blossom honey (Turkey)"
   },
   "8697439056726": {
     "categories": [
@@ -7609,9 +7633,9 @@
   "lidl-20163402": {
     "brand": "Combino",
     "categories": [
-      "passata"
+      "tomato-passata"
     ],
-    "name": "Combino ПАСИРАНИ ДОМАТИ Passata (crushed tomatoes)",
+    "name": "Lidl Finest Tomato Passata (bright red carton, 99.6% tomatoes, sterilised, Spain)",
     "prices": [
       {
         "currency": "EUR",
@@ -8224,9 +8248,9 @@
   },
   "lidl-20400569": {
     "categories": [
-      "lentils"
+      "rice"
     ],
-    "name": "KRINA ЧЕРВЕНА ЛЕЩА red lentils (Canada)",
+    "name": "Родна стряха Бял ориз / white rice (Lidl)",
     "prices": [
       {
         "currency": "EUR",
