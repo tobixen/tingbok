@@ -492,7 +492,10 @@
     ]
   },
   "3800040806436": {
-    "name": "Сладко от боровинки",
+    "categories": [
+      "jam"
+    ],
+    "name": "Gorgy's сладко от боровинки 680g / blueberry jam",
     "prices": [
       {
         "currency": "EUR",
@@ -847,7 +850,7 @@
     "categories": [
       "rice"
     ],
-    "name": "Ориз Перлен",
+    "name": "Krina ориз перлен Камолино 1kg / Camolino pearl rice (in paper bag)",
     "prices": [
       {
         "currency": "EUR",
@@ -864,7 +867,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "1kg",
+    "quantity": "2kg/2",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -1580,7 +1583,10 @@
     ]
   },
   "3800226520798": {
-    "name": "Кашкавал",
+    "categories": [
+      "kashkaval"
+    ],
+    "name": "Milky Dream кашкавал 800g",
     "prices": [
       {
         "currency": "EUR",
@@ -1713,7 +1719,7 @@
     "categories": [
       "mushrooms"
     ],
-    "name": "Гъби печурки 500 г / white button mushrooms (Русев и Русев син)",
+    "name": "Гъби печурки 500г / white mushrooms (Русев и Русев син)",
     "prices": [
       {
         "currency": "EUR",
@@ -1827,7 +1833,10 @@
     ]
   },
   "3800501348161": {
-    "name": "Едро мляна лютеница",
+    "categories": [
+      "lyutenitsa"
+    ],
+    "name": "Булгарплод едро мляна лютеница 550g",
     "prices": [
       {
         "currency": "EUR",
@@ -1837,6 +1846,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "1650g/3",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -1935,7 +1945,7 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Чудно Прясно мляко 3.7%",
+    "name": "Верея Чудно прясно мляко 3.7% 1л / fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -1966,7 +1976,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "3l/3",
+    "quantity": "2l/2",
     "receipt_names": [
       {
         "first_seen": "2026-07-06",
@@ -2894,7 +2904,7 @@
     "categories": [
       "uht-milk"
     ],
-    "name": "Хомогенизирано пълномаслено краве мляко 3.5%",
+    "name": "Pilos мляко UHT 3,5% 1л / UHT whole milk",
     "prices": [
       {
         "currency": "EUR",
@@ -2932,7 +2942,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "1l",
+    "quantity": "2l/2",
     "receipt_names": [
       {
         "first_seen": "2026-03-04",
@@ -3052,7 +3062,10 @@
     ]
   },
   "4056489177524": {
-    "name": "Spaghetti",
+    "categories": [
+      "pasta"
+    ],
+    "name": "Combino Spaghetti, от мека пшеница 500g / soft-wheat spaghetti",
     "prices": [
       {
         "currency": "EUR",
@@ -3062,6 +3075,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "6500g/13",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -3503,7 +3517,10 @@
     ]
   },
   "4056489507802": {
-    "name": "Anacardo/Castaña-de-cajú tostado/torrada",
+    "categories": [
+      "cashews"
+    ],
+    "name": "Alesto кашу печено без сол 150g / roasted unsalted cashews",
     "prices": [
       {
         "currency": "EUR",
@@ -3523,7 +3540,10 @@
     ]
   },
   "4056489540557": {
-    "name": "Okras in tomato sauce",
+    "categories": [
+      "food/vegetables/okras"
+    ],
+    "name": "Eridanous Okra in tomato sauce 280g / бамя в доматен сос",
     "prices": [
       {
         "currency": "EUR",
@@ -3533,6 +3553,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "560g/2",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -3788,9 +3809,9 @@
   },
   "4056489693048": {
     "categories": [
-      "cured-meat"
+      "cured-sausage"
     ],
-    "name": "Lukanka From Panagyurishte",
+    "name": "Родна стряха Панагюрска луканка / lukanka",
     "prices": [
       {
         "currency": "EUR",
@@ -3882,7 +3903,10 @@
     ]
   },
   "4056489693147": {
-    "name": "Филе Елена",
+    "categories": [
+      "ham"
+    ],
+    "name": "Родна стряха Филе Елена нарязано 150g / sliced cured pork fillet",
     "prices": [
       {
         "currency": "EUR",
@@ -4113,7 +4137,7 @@
     "categories": [
       "honey"
     ],
-    "name": "Български пчелен мед (Lidl)",
+    "name": "Родна стряха български пчелен мед букет 1000g / Bulgarian honey (Lidl)",
     "prices": [
       {
         "currency": "EUR",
@@ -4450,7 +4474,7 @@
     "categories": [
       "food/processed_plant_products/syrups"
     ],
-    "name": "Родна стряха сироп цвят от бъз 750ml / elderflower syrup (Lidl)",
+    "name": "Родна стряха сироп цвят от бъз 750ml (1kg) / elderflower syrup",
     "prices": [
       {
         "currency": "EUR",
@@ -4495,7 +4519,10 @@
     ]
   },
   "4056489942436": {
-    "name": "Фъстъци",
+    "categories": [
+      "peanuts"
+    ],
+    "name": "Alesto фъстъци печени солени / roasted salted peanuts",
     "prices": [
       {
         "currency": "EUR",
@@ -4642,7 +4669,10 @@
     ]
   },
   "4056489973010": {
-    "name": "EXTRA VIRGIN OLIVE OIL",
+    "categories": [
+      "olive-oil"
+    ],
+    "name": "Primadonna Extra Virgin olive oil 750ml",
     "prices": [
       {
         "currency": "EUR",
@@ -4875,7 +4905,7 @@
     "categories": [
       "pasta"
     ],
-    "name": "Combino Spaghetti with 12% eggs 400g (спагети с яйца)",
+    "name": "Combino Spaghetti with 12% eggs 400g / спагети с яйца",
     "prices": [
       {
         "currency": "EUR",
@@ -4885,7 +4915,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "400 g",
+    "quantity": "1600g/4",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -4995,7 +5025,7 @@
     "categories": [
       "spread"
     ],
-    "name": "Lidl Hazelnut and Cocoa Cream 200g (лешников крем)",
+    "name": "Lidl Hazelnut and Cocoa Cream 200g / лешников крем с какао",
     "prices": [
       {
         "currency": "EUR",
@@ -5005,7 +5035,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "200 g",
+    "quantity": "400g/2",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -5019,7 +5049,7 @@
     "categories": [
       "spread"
     ],
-    "name": "Lidl Almond Cream 200g (бадемов крем)",
+    "name": "Lidl Almond Cream 200g / бадемов крем (2 for 1)",
     "prices": [
       {
         "currency": "EUR",
@@ -5029,7 +5059,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "200 g",
+    "quantity": "400g/2",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -5106,7 +5136,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "330 g",
+    "quantity": "660g/2",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -5143,7 +5173,7 @@
     "categories": [
       "pasta"
     ],
-    "name": "Combino Spaghetti di semola di grano duro 600g",
+    "name": "Combino Spaghetti di semola di grano duro 600g / durum spaghetti XXL",
     "prices": [
       {
         "currency": "EUR",
@@ -5153,7 +5183,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "600 g",
+    "quantity": "7800g/13",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -6085,9 +6115,9 @@
   },
   "5905858676245": {
     "categories": [
-      "chocolate"
+      "milk-chocolate"
     ],
-    "name": "Milk Chocolate With Peanuts",
+    "name": "Millano млечен шоколад с фъстъци / milk chocolate with peanuts",
     "prices": [
       {
         "currency": "EUR",
@@ -7647,6 +7677,9 @@
     "name": "James Cook Gold Oversea Rum 40%"
   },
   "lidl-20005771": {
+    "categories": [
+      "milk-chocolate"
+    ],
     "name": "Fin Carré Whole Nut млечен шоколад с цели лешници 100g",
     "prices": [
       {
@@ -7657,6 +7690,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "300g/3",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -7841,7 +7875,7 @@
     "categories": [
       "mayonnaise"
     ],
-    "name": "Kania МАЙОНЕЗА 80% mayonnaise 80%",
+    "name": "Kania майонеза 80% / mayonnaise",
     "prices": [
       {
         "currency": "EUR",
@@ -7951,6 +7985,9 @@
     ]
   },
   "lidl-20103644": {
+    "categories": [
+      "coconut-milk"
+    ],
     "name": "Freshona coconut milk 400ml",
     "prices": [
       {
@@ -7961,6 +7998,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "1600ml/4",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -8448,7 +8486,7 @@
     "categories": [
       "rusks"
     ],
-    "name": "Tastino Wheat & Rye rusks (4x11 slices)",
+    "name": "Tastino ръжени сухари 360g / wheat & rye rusks",
     "prices": [
       {
         "currency": "EUR",
@@ -8458,7 +8496,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "360g",
+    "quantity": "1080g/3",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -8694,6 +8732,9 @@
     ]
   },
   "lidl-20353032": {
+    "categories": [
+      "mixed-nuts"
+    ],
     "name": "Пържени ядки микс Oliven 200g / roasted nut mix with olives",
     "prices": [
       {
@@ -9026,6 +9067,9 @@
     ]
   },
   "lidl-20529437": {
+    "categories": [
+      "cured-sausage"
+    ],
     "name": "Pikok бирени пръчици 280g / dried pork sticks",
     "prices": [
       {
@@ -9425,6 +9469,9 @@
     ]
   },
   "lidl-20961817": {
+    "categories": [
+      "yogurt"
+    ],
     "name": "Pilos кисело краве мляко 3,6% 400g / yogurt",
     "prices": [
       {
@@ -9435,6 +9482,7 @@
         "unit": "pcs"
       }
     ],
+    "quantity": "1200g/3",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -9445,6 +9493,9 @@
     ]
   },
   "lidl-20962654": {
+    "categories": [
+      "sirene"
+    ],
     "name": "Родна стряха бяло саламурено сирене краве/биволско 400g / white brined cheese",
     "prices": [
       {
@@ -9496,6 +9547,9 @@
     ]
   },
   "lidl-20963743": {
+    "categories": [
+      "food/eggs"
+    ],
     "name": "Lidl пресни яйца M, свободно отглеждани, 10 бр. / free-range eggs",
     "prices": [
       {
@@ -9519,7 +9573,7 @@
     "categories": [
       "tool/physical_tool/cleaning_tool/paper_towel"
     ],
-    "name": "Кухненска хартия / kitchen paper rolls (Lidl)",
+    "name": "Floralys Strong kitchen towels",
     "prices": [
       {
         "currency": "EUR",
