@@ -491,6 +491,26 @@
       }
     ]
   },
+  "3800040806436": {
+    "name": "Сладко от боровинки",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.55,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "GORGY'S СЛАДКО БОРОВ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "3800045022060": {
     "categories": [
       "solvent"
@@ -1559,6 +1579,26 @@
       }
     ]
   },
+  "3800226520798": {
+    "name": "Кашкавал",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 8.49,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "КАШКАВАЛ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "3800230930019": {
     "categories": [
       "eggs"
@@ -1783,6 +1823,26 @@
         "last_seen": "2026-06-13",
         "name": "МАГДАНОЗ",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "3800501348161": {
+    "name": "Едро мляна лютеница",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.99,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ЛЮТЕНИЦА ЕДРОМЛЯНА",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -3462,6 +3522,26 @@
       }
     ]
   },
+  "4056489540557": {
+    "name": "Okras in tomato sauce",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.19,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "БАМЯ В ДОМАТЕН СОС",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "4056489586036": {
     "categories": [
       "tinned-meat"
@@ -4026,6 +4106,30 @@
         "last_seen": "2026-10-04",
         "name": "ЛЕЩА",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489940913": {
+    "categories": [
+      "honey"
+    ],
+    "name": "Български пчелен мед (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 5.11,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "1000 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "БЪЛГАРСКИ ПЧЕЛЕН МЕД",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -7652,6 +7756,13 @@
         "price": 1.08,
         "shop": "Lidl Varna бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.08,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
     "quantity": "200ml",
@@ -7667,6 +7778,12 @@
         "last_seen": "2026-10-07",
         "name": "СМЕТАНА 30 %",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "СМЕТАНА 30 %",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -7912,6 +8029,13 @@
         "price": 2.29,
         "shop": "Lidl Варна – бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.29,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -7920,6 +8044,12 @@
         "last_seen": "2026-06-13",
         "name": "ЧИЛИ КОН КАРНЕ",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ЧИЛИ КОН КАРНЕ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -8319,7 +8449,24 @@
       "rusks"
     ],
     "name": "Tastino Wheat & Rye rusks (4x11 slices)",
-    "quantity": "360g"
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.78,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "360g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "РЪЖЕНИ СУХАРИ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
   },
   "lidl-20305864": {
     "categories": [
@@ -8424,6 +8571,13 @@
         "price": 1.27,
         "shop": "Lidl Varna бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.27,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -8432,6 +8586,12 @@
         "last_seen": "2026-06-21",
         "name": "СВЕТЛА БИРА 4,0%",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "СВЕТЛА БИРА 4,0%",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
