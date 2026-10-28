@@ -827,7 +827,7 @@
     "categories": [
       "rice"
     ],
-    "name": "KRINA ОРИЗ ПЕРЛЕН pearl rice Camolino (Bulgaria)",
+    "name": "Ориз Перлен",
     "prices": [
       {
         "currency": "EUR",
@@ -835,9 +835,24 @@
         "price": 2.24,
         "shop": null,
         "unit": "kg"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.09,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
-    "quantity": "1kg"
+    "quantity": "1kg",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ОРИЗ ПЕРЛЕН",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
   },
   "3800106400073": {
     "categories": [
@@ -1654,6 +1669,30 @@
       }
     ]
   },
+  "3800500766089": {
+    "categories": [
+      "mushrooms"
+    ],
+    "name": "Гъби печурки 500 г / white button mushrooms (Русев и Русев син)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.43,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "500 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ГЪБИ ПЕЧУРКА 500Г",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "3800500766577": {
     "categories": [
       "mushrooms"
@@ -1836,7 +1875,7 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Верея Чудно прясно мляко 3.7% 1л / fresh milk",
+    "name": "Чудно Прясно мляко 3.7%",
     "prices": [
       {
         "currency": "EUR",
@@ -1857,6 +1896,13 @@
         "date": "2026-10-07",
         "price": 1.84,
         "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.84,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
         "unit": "pcs"
       }
     ],
@@ -1879,6 +1925,12 @@
         "last_seen": "2026-10-07",
         "name": "VEREYA ПРЯСНО МЛЯКО",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "VEREYA ПРЯСНО МЛЯКО",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -2782,7 +2834,7 @@
     "categories": [
       "uht-milk"
     ],
-    "name": "Pilos мляко UHT 3,5% / UHT whole milk (2 cartons)",
+    "name": "Хомогенизирано пълномаслено краве мляко 3.5%",
     "prices": [
       {
         "currency": "EUR",
@@ -2811,6 +2863,13 @@
         "price": 1.43,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.43,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
     "quantity": "1l",
@@ -2820,6 +2879,12 @@
         "last_seen": "2026-08-04",
         "name": "МЛЯКО UHT 3,5%",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "МЛЯКО UHT 3,5%",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -2926,6 +2991,26 @@
       }
     ]
   },
+  "4056489177524": {
+    "name": "Spaghetti",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 0.45,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "СПАГЕТИ ОТ МЕК.ПШ.",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "4056489177548": {
     "categories": [
       "pasta"
@@ -3014,6 +3099,13 @@
         "price": 0.97,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 0.91,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
     "quantity": "500g",
@@ -3023,6 +3115,12 @@
         "last_seen": "2026-06-07",
         "name": "ОВЕСЕНИ ЯДКИ ФИНИ",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ОВЕСЕНИ ЯДКИ ФИНИ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -3344,6 +3442,26 @@
       }
     ]
   },
+  "4056489507802": {
+    "name": "Anacardo/Castaña-de-cajú tostado/torrada",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.55,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "КАШУ БЕЗ СОЛ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "4056489586036": {
     "categories": [
       "tinned-meat"
@@ -3592,7 +3710,7 @@
     "categories": [
       "cured-meat"
     ],
-    "name": "Rodna Stryaha ПАНАГЮРСКА ЛУКАНКА Panagyurska lukanka",
+    "name": "Lukanka From Panagyurishte",
     "prices": [
       {
         "currency": "EUR",
@@ -3628,6 +3746,13 @@
         "price": 3.39,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 3.99,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
     "quantity": "150g",
@@ -3643,6 +3768,12 @@
         "last_seen": "2026-05-20",
         "name": "ПАНАГЮРСКА ЛУКАНКА",
         "shop": "Lidl Варна – бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ПАНАГЮРСКА ЛУКАНКА",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -3667,6 +3798,26 @@
         "last_seen": "2026-06-18",
         "name": "СМЯДОВСКА ЛУКАНКА",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489693147": {
+    "name": "Филе Елена",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 3.83,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ФИЛЕ ЕЛЕНА НАРЯЗАНО",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -4191,6 +4342,30 @@
       }
     ]
   },
+  "4056489942030": {
+    "categories": [
+      "food/processed_plant_products/syrups"
+    ],
+    "name": "Родна стряха сироп цвят от бъз 750ml / elderflower syrup (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 6.13,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "750 ml",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "СИРОП БЪЗ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "4056489942139": {
     "categories": [
       "food/eggs"
@@ -4212,6 +4387,26 @@
         "last_seen": "2026-06-16",
         "name": "ПРЕСНИ ЯЙЦА РАЗМ.L",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489942436": {
+    "name": "Фъстъци",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.04,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ФЪСТЪК ПЕЧЕН СОЛЕН",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -4339,6 +4534,26 @@
         "last_seen": "2026-06-06",
         "name": "МЕСНИ ПРЪЧИЦИ ЧИЛИ",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4056489973010": {
+    "name": "EXTRA VIRGIN OLIVE OIL",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 6.49,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "МАСЛ.МАСЛО EX.VIRGIN",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -4552,6 +4767,30 @@
       }
     ]
   },
+  "4335619053564": {
+    "categories": [
+      "pasta"
+    ],
+    "name": "Combino Spaghetti with 12% eggs 400g (спагети с яйца)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 0.86,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "400 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "СПАГЕТИ С ЯЙЦА",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "4335619073920": {
     "categories": [
       "pesto"
@@ -4648,6 +4887,54 @@
       }
     ]
   },
+  "4335619215405": {
+    "categories": [
+      "spread"
+    ],
+    "name": "Lidl Hazelnut and Cocoa Cream 200g (лешников крем)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.49,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "200 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "НУГА КРЕМ ЛЕШ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
+  "4335619215412": {
+    "categories": [
+      "spread"
+    ],
+    "name": "Lidl Almond Cream 200g (бадемов крем)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.49,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "200 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "НУГА КРЕМ /БАДЕМ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "4335619230897": {
     "categories": [
       "brie"
@@ -4701,6 +4988,30 @@
       }
     ]
   },
+  "4335619252783": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Родна стряха Шпек Бургас 330g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 3.89,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "330 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ШПЕК БУРГАС",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "4335619347489": {
     "categories": [
       "household"
@@ -4721,6 +5032,30 @@
         "last_seen": "2026-06-23",
         "name": "ХАРТИЯ ЗА ПЕЧЕНЕ",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "4335619458130": {
+    "categories": [
+      "pasta"
+    ],
+    "name": "Combino Spaghetti di semola di grano duro 600g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 0.99,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "600 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "СПАГЕТИ XXL",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -5648,13 +5983,20 @@
     "categories": [
       "chocolate"
     ],
-    "name": "Millano МЛЕЧ.ШОКОЛАД ФЪСЪЦИ milk chocolate with peanuts",
+    "name": "Milk Chocolate With Peanuts",
     "prices": [
       {
         "currency": "EUR",
         "date": "2026-05-11",
         "price": 1.02,
         "shop": "Lidl Varna",
+        "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.02,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
         "unit": "pcs"
       }
     ],
@@ -5668,6 +6010,12 @@
         "last_seen": "2026-05-11",
         "name": "МЛЕЧ.ШОКОЛАД ФЪСЪЦИ",
         "shop": "Lidl"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "МЛЕЧ.ШОКОЛАД ФЪСЪЦИ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -7194,6 +7542,26 @@
     ],
     "name": "James Cook Gold Oversea Rum 40%"
   },
+  "lidl-20005771": {
+    "name": "Fin Carré Whole Nut млечен шоколад с цели лешници 100g",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.78,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ШОК. С ЦЕЛИ ЛЕШНИЦИ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "lidl-20010447": {
     "categories": [
       "cured-meat"
@@ -7371,6 +7739,13 @@
         "price": 2.79,
         "shop": "Lidl Варна",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.49,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
     "quantity": "472g",
@@ -7380,6 +7755,12 @@
         "last_seen": "2026-05-08",
         "name": "МАЙОНЕЗА 80%",
         "shop": "Lidl Bulgaria"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "МАЙОНЕЗА 80%",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -7449,6 +7830,26 @@
         "last_seen": "2026-07-21",
         "name": "ГАУДА НАРЯЗАН",
         "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
+  "lidl-20103644": {
+    "name": "Freshona coconut milk 400ml",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.53,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "КОКОСОВО МЛЯКО",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -8132,6 +8533,26 @@
       }
     ]
   },
+  "lidl-20353032": {
+    "name": "Пържени ядки микс Oliven 200g / roasted nut mix with olives",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 3.57,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ПЪРЖ.ЯДКИ МИКСOLIVEN",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "lidl-20358037": {
     "categories": [
       "rice"
@@ -8441,6 +8862,26 @@
         "last_seen": "2026-10-07",
         "name": "ТОАЛ.ХАРТ100%,2ПЛ",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "lidl-20529437": {
+    "name": "Pikok бирени пръчици 280g / dried pork sticks",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 3.39,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "БИРЕНИ ПРЪЧИЦИ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
@@ -8823,6 +9264,46 @@
       }
     ]
   },
+  "lidl-20961817": {
+    "name": "Pilos кисело краве мляко 3,6% 400g / yogurt",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 0.66,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "КИСЕЛО МЛЯКО 3,6%",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
+  "lidl-20962654": {
+    "name": "Родна стряха бяло саламурено сирене краве/биволско 400g / white brined cheese",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 3.39,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "СИРЕНЕ КРАВЕ/БИВОЛСК",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
   "lidl-20962876": {
     "categories": [
       "red-beans"
@@ -8835,9 +9316,44 @@
         "price": 1.78,
         "shop": null,
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 1.39,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
-    "quantity": "500g"
+    "quantity": "500g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "CAMPOLARGO БОБ КИДНИ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
+  "lidl-20963743": {
+    "name": "Lidl пресни яйца M, свободно отглеждани, 10 бр. / free-range eggs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.49,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "ЯЙЦА 10М СВ. КОКОШКИ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
   },
   "lidl-20974619": {
     "categories": [
@@ -8851,6 +9367,13 @@
         "price": 2.19,
         "shop": "Lidl Varna бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-28",
+        "price": 2.19,
+        "shop": "Lidl Varna к.к. Св. Константин и Елена",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -8859,6 +9382,12 @@
         "last_seen": "2026-10-07",
         "name": "КУХНЕНСКА ХАРТИЯ",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-10-28",
+        "last_seen": "2026-10-28",
+        "name": "КУХНЕНСКА ХАРТИЯ",
+        "shop": "Lidl Varna к.к. Св. Константин и Елена"
       }
     ]
   },
