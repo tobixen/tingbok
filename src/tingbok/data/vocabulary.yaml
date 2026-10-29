@@ -386,6 +386,12 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_896
     - gpt:413
     - off:en:beverages
+  food/plant-based:
+    prefLabel: "Plant-based foods and beverages"
+    altLabel:
+      en: ["plant-based foods", "plant-based food"]
+    source_uris:
+    - off:en:plant-based-foods-and-beverages
   food/dairy:
     prefLabel: "Dairy"
     altLabel:

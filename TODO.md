@@ -219,11 +219,6 @@ to verify it against a generated `vocabulary.json` was inconclusive, because tha
 file is rendered for a single language and does not show which translations exist
 upstream.  Verify against `vocabulary.yaml` and the source data instead.
 
-## Data correction *(from inventory-md)*
-
-"Plant-based foods and beverages" is not the same concept as "food" — it is a
-subcategory of it.
-
 ## Follow-ups from the fastmcp migration (`5755391`)
 
 * **Five MCP tool names changed** and were not pinned: every route with a path

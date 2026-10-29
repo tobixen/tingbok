@@ -159,6 +159,19 @@ async def test_vocabulary_concept_has_excluded_sources(client):
     assert isinstance(data["excluded_sources"], list)
 
 
+@pytest.mark.anyio
+async def test_lookup_plant_based_foods_is_below_food(client):
+    """OFF's "Plant-based foods and beverages" root is a subcategory of food, not food itself."""
+    response = await client.get("/api/lookup/Plant-based foods and beverages")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "food/plant-based"
+    assert data["broader"] == ["food"]
+    assert "off:en:plant-based-foods-and-beverages" in data["source_uris"]
+    food = (await client.get("/api/vocabulary/food")).json()
+    assert "off:en:plant-based-foods-and-beverages" not in food["source_uris"]
+
+
 # ---------------------------------------------------------------------------
 # POST /api/vocabulary/resolve
 # ---------------------------------------------------------------------------
