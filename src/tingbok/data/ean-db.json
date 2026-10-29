@@ -9557,6 +9557,22 @@
       }
     ]
   },
+  "lidl-20962418": {
+    "categories": [
+      "lyutenitsa"
+    ],
+    "name": "Родна стряха лютеница едромляна 305g, with 15% roasted aubergine (receipt: ЛЮТЕНИЦА С ПАТЛАДЖАН), 3+1 гратис (4 jars; EAN is the jar, the 4-pack barcode was not read)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 1.72,
+        "shop": null,
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "1220g/4"
+  },
   "lidl-20962654": {
     "categories": [
       "sirene"
