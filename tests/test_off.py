@@ -25,7 +25,8 @@ def _make_taxonomy(nodes: list) -> MagicMock:
     taxonomy.__len__ = MagicMock(return_value=len(nodes))
     taxonomy.iter_nodes.side_effect = lambda: iter(nodes)
     node_map = {n.id: n for n in nodes}
-    taxonomy.__getitem__ = lambda self, key: node_map[key]
+    # Like openfoodfacts' Taxonomy: an unknown id gives None, not a KeyError
+    taxonomy.__getitem__ = lambda self, key: node_map.get(key)
     taxonomy.__contains__ = lambda self, key: key in node_map
     return taxonomy
 
@@ -218,6 +219,16 @@ def test_off_get_labels_unknown_node() -> None:
 
     with patch("tingbok.services.off._get_taxonomy", return_value=_SAMPLE_TAXONOMY):
         result = off_service.get_labels("off:en:nonexistent", ["en"])
+
+    assert result == {}
+
+
+def test_off_get_alt_labels_unknown_node() -> None:
+    """get_alt_labels returns empty dict for unknown node IDs."""
+    from tingbok.services import off as off_service
+
+    with patch("tingbok.services.off._get_taxonomy", return_value=_SAMPLE_TAXONOMY):
+        result = off_service.get_alt_labels("off:en:nonexistent", ["en"])
 
     assert result == {}
 

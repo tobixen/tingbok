@@ -139,6 +139,8 @@ def get_labels(uri: str, languages: list[str]) -> dict[str, str]:
         node = taxonomy[node_id]
     except (KeyError, TypeError):
         return {}
+    if node is None:
+        return {}
 
     labels: dict[str, str] = {}
     for lang in languages:
@@ -171,6 +173,8 @@ def get_alt_labels(uri: str, languages: list[str]) -> dict[str, list[str]]:
     try:
         node = taxonomy[node_id]
     except (KeyError, TypeError):
+        return {}
+    if node is None:
         return {}
 
     alts: dict[str, list[str]] = {}
@@ -306,6 +310,8 @@ def broader_graph(
     try:
         start = taxonomy[uri[4:]]  # type: ignore[index]
     except (KeyError, TypeError):
+        return {}
+    if start is None:
         return {}
 
     graph: dict[str, dict[str, Any]] = {}
