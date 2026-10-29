@@ -5604,6 +5604,31 @@
     ],
     "name": "Unknown product (black package, contents unclear)"
   },
+  "5206388015024": {
+    "categories": [
+      "keel roller",
+      "boat-equipment",
+      "non-food"
+    ],
+    "name": "Keel roller, rubber, 190x95 mm (01513-B)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-26",
+        "price": 24.0,
+        "shop": "LZ Yahten magazin Varna Морска гара ул. Вълнолома",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-26",
+        "last_seen": "2026-10-26",
+        "name": "РОЛКА КИЛОВА 95*190",
+        "shop": "LZ Yahten magazin Varna Морска гара ул. Вълнолома"
+      }
+    ]
+  },
   "5207032200554": {
     "categories": [
       "chemicals"
