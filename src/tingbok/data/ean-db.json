@@ -1306,7 +1306,7 @@
     "categories": [
       "fresh-milk"
     ],
-    "name": "Прясно мляко Тертер 3.6% 1л / Terter fresh milk 1l",
+    "name": "прясно мляко Тертер",
     "prices": [
       {
         "currency": "EUR",
@@ -1321,12 +1321,19 @@
         "price": 1.48,
         "shop": "Odesos Varna ул. Сан Стефано 23",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-10-26",
+        "price": 1.48,
+        "shop": "Odesos Varna ул. Сан Стефано 23",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
       {
         "first_seen": "2026-09-01",
-        "last_seen": "2026-09-03",
+        "last_seen": "2026-10-26",
         "name": "ПРЯСНО МЛЯКО ТЕРТЕР 1Л 3,",
         "shop": "Odesos Varna ул. Сан Стефано 23"
       }
@@ -1638,6 +1645,29 @@
       "sanding-sponge"
     ],
     "name": "GRAFFIT SB-L P80 sanding sponge (Bulgarian, medium-coarse, used)"
+  },
+  "3800235752111": {
+    "categories": [
+      "yogurt"
+    ],
+    "name": "Мургаш кисело мляко с каймак 4% 900г",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-10-26",
+        "price": 3.39,
+        "shop": "Odesos Varna ул. Сан Стефано 23",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-10-26",
+        "last_seen": "2026-10-26",
+        "name": "КИСЕЛО МЛЯКО МУРГАШ 4% 900",
+        "shop": "Odesos Varna ул. Сан Стефано 23"
+      }
+    ]
   },
   "3800500332352": {
     "categories": [
