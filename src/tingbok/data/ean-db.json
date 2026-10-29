@@ -196,6 +196,12 @@
     ],
     "name": "Today Cool Fuss-Deo fotspray 24h"
   },
+  "2801073002544": {
+    "categories": [
+      "ham"
+    ],
+    "name": "Родна стряха Филе Елена, whole piece 0.254kg (label EUR 5.19, not billed: register error)"
+  },
   "3200106407018": {
     "categories": [
       "beans"
@@ -1650,7 +1656,7 @@
     "categories": [
       "yogurt"
     ],
-    "name": "Мургаш кисело мляко с каймак 4% 900г",
+    "name": "Мургаш кисело мляко с каймак 4% 900г / Murgash yoghurt with cream top 4% 900g",
     "prices": [
       {
         "currency": "EUR",
@@ -5213,7 +5219,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "7800g/13",
+    "quantity": "8400g/14",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -5636,11 +5642,9 @@
   },
   "5206388015024": {
     "categories": [
-      "keel roller",
-      "boat-equipment",
-      "non-food"
+      "systems/anchoring"
     ],
-    "name": "Keel roller, rubber, 190x95 mm (01513-B)",
+    "name": "Rubber keel roller 190×95 mm (01513-B), to be tried as an anchor chain roller",
     "prices": [
       {
         "currency": "EUR",
@@ -8053,7 +8057,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "1600ml/4",
+    "quantity": "1200ml/3",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -8114,7 +8118,7 @@
     "categories": [
       "tinned-meat"
     ],
-    "name": "Chili con carne",
+    "name": "Chili con carne (Lidl)",
     "prices": [
       {
         "currency": "EUR",
@@ -8541,7 +8545,7 @@
     "categories": [
       "rusks"
     ],
-    "name": "Tastino ръжени сухари 360g / wheat & rye rusks",
+    "name": "Tastino ръжени сухари / wheat & rye rusks (3×360g packs opened into 12 small packs, spread over food1)",
     "prices": [
       {
         "currency": "EUR",
@@ -8551,7 +8555,7 @@
         "unit": "pcs"
       }
     ],
-    "quantity": "1080g/3",
+    "quantity": "1080g/12",
     "receipt_names": [
       {
         "first_seen": "2026-10-28",
@@ -9042,6 +9046,12 @@
         "shop": "Lidl Varna"
       }
     ]
+  },
+  "lidl-20467371": {
+    "categories": [
+      "tool/physical_tool/cleaning_tool/paper_towel"
+    ],
+    "name": "Floralys Classic kitchen towels (not billed: register error)"
   },
   "lidl-20469894": {
     "categories": [
