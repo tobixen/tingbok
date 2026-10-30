@@ -219,6 +219,17 @@ to verify it against a generated `vocabulary.json` was inconclusive, because tha
 file is rendered for a single language and does not show which translations exist
 upstream.  Verify against `vocabulary.yaml` and the source data instead.
 
+## Lookup stubs get ids from a non-English label
+
+Before `food/plant-based` existed, `GET /api/lookup/Plant-based foods and
+beverages?lang=en` returned a stub with the id
+`pflanzliche_lebensmittel_und_getränke`: the German OFF name, in an English
+lookup.  In `lookup_concept` the fallback id is the lookup label, so the German
+one probably comes from `all_paths` via `_best_vocabulary_anchored_path` — a
+path some source built from a German label.  Find which source, and make stub
+ids come from the English (or the requested-language) label.  Related to
+"Design temporary IDs for categories not in the vocabulary".
+
 ## Follow-ups from the fastmcp migration (`5755391`)
 
 * **Five MCP tool names changed** and were not pinned: every route with a path
