@@ -7217,6 +7217,26 @@
     "name": "Colgate PLAX Fresh&Protect mouthwash 24/7",
     "source": "manual"
   },
+  "8715035110502": {
+    "name": "Sojasauce",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-01",
+        "price": 6.44,
+        "shop": "Billa Sozopol ул. Републиканска 5",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-01",
+        "last_seen": "2026-11-01",
+        "name": "КИКОМАН СОЕВ СОС",
+        "shop": "Billa Sozopol ул. Републиканска 5"
+      }
+    ]
+  },
   "8715559001034": {
     "categories": [
       "varnish"
