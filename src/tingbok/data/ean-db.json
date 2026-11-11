@@ -7218,7 +7218,10 @@
     "source": "manual"
   },
   "8715035110502": {
-    "name": "Sojasauce",
+    "categories": [
+      "soy-sauce"
+    ],
+    "name": "Kikkoman соев сос / soy sauce",
     "prices": [
       {
         "currency": "EUR",
