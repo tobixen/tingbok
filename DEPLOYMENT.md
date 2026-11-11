@@ -139,27 +139,31 @@ curl -s https://tingbok.plann.no/health | jq '.status, .update'
 `status` is `degraded` — the service itself still answers — whenever the venv is behind
 the checkout, the last update run failed, or no run has happened for
 `stale_after_seconds` (a run killed before it could record anything, a stopped timer, a
-unit that will not start):
+unit that will not start).  The revisions and that limit are visible on the VM only, so
+from outside it looks like this:
 
 ```json
 {
-  "repo_rev": "5755391",
-  "venv_rev": "2686388",
+  "repo_rev": null,
+  "venv_rev": null,
   "install_failures": 4,
-  "stage": "pip",
+  "stage": null,
   "last_error": null,
   "last_attempt": "2026-09-05T14:30:04+02:00",
-  "last_success": "2026-09-05T12:00:03+02:00"
+  "last_success": "2026-09-05T12:00:03+02:00",
+  "stale_after_seconds": null
 }
 ```
 
-`last_error` is `null` for anyone but a localhost client: pip and git quote filesystem
-paths in their errors, and that is what the `paths` block is withheld for.  Read it on
-the VM, where the whole block is served:
+Anyone but a localhost client gets only the failure count and the timestamps: pip and
+git quote filesystem paths in their errors (what the `paths` block is withheld for), the
+revisions are the commit SHAs of a private checkout, and `stage` names the deploy step
+that broke.  None of it is needed to see that the deployment is stuck, which `status`
+already says.  Read the rest on the VM, where the whole block is served:
 
 ```bash
 ssh broxbox06.rl-tobias.c.bitbit.net \
-  "curl -s http://127.0.0.1:5100/health | jq -r '.update.last_error'"
+  "curl -s http://127.0.0.1:5100/health | jq '.update'"
 ```
 
 This exists because a failed update is otherwise silent: `tingbok.service` keeps serving

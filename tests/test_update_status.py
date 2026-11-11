@@ -226,11 +226,14 @@ async def test_health_reads_what_the_script_writes(update_status_file: Path):
 
 
 @pytest.mark.anyio
-async def test_remote_client_sees_the_fault_but_not_the_error_text(update_status_file: Path):
-    """pip and git errors quote filesystem paths; the rest is safe to publish.
+async def test_remote_client_sees_the_fault_but_not_the_detail(update_status_file: Path):
+    """A monitor needs to know the deployment is stuck, not why or at which commit.
 
     Dropping the whole block would defeat the point of putting it on /health,
-    which is that a monitor outside the VM can see a stuck deployment.
+    which is that a monitor outside the VM can see a stuck deployment.  But pip
+    and git errors quote filesystem paths, the revisions are the commit SHAs of
+    a private checkout, and the stage names the deploy step that broke: free
+    reconnaissance, all of it, and the status already says "degraded".
     """
     update_status_file.write_text(
         json.dumps(
@@ -240,15 +243,52 @@ async def test_remote_client_sees_the_fault_but_not_the_error_text(update_status
                 "install_failures": 4,
                 "stage": "pip",
                 "last_error": "could not install /opt/tingbok/repo",
+                "last_attempt": _stamp(4000),
+                "last_success": _stamp(9000),
+                "stale_after_seconds": 2700,
             }
         )
     )
     data = await _health(client=("2001:db8::1", 54321))
     assert data["status"] == "degraded"
-    assert data["update"]["install_failures"] == 4
-    assert data["update"]["venv_rev"] == "2686388"
-    assert data["update"]["stage"] == "pip"
-    assert data["update"]["last_error"] is None
+    update = data["update"]
+    assert update["install_failures"] == 4
+    assert update["last_attempt"] is not None
+    assert update["last_success"] is not None
+    for withheld in ("repo_rev", "venv_rev", "stage", "last_error", "stale_after_seconds"):
+        assert update[withheld] is None, withheld
+
+
+@pytest.mark.anyio
+async def test_remote_client_still_sees_an_overdue_updater(update_status_file: Path):
+    """Withholding stale_after_seconds must not withhold the verdict drawn from it."""
+    update_status_file.write_text(
+        json.dumps(
+            {
+                "repo_rev": "a",
+                "venv_rev": "a",
+                "install_failures": 0,
+                "last_attempt": _stamp(4000),
+                "stale_after_seconds": 2700,
+            }
+        )
+    )
+    assert (await _health(client=("203.0.113.5", 40000)))["status"] == "degraded"
+
+
+@pytest.mark.anyio
+async def test_localhost_gets_the_whole_update_block(update_status_file: Path):
+    """On the VM itself the detail is the whole point of looking."""
+    update_status_file.write_text(
+        json.dumps({"repo_rev": "a", "venv_rev": "b", "install_failures": 1, "stage": "pip", "stale_after_seconds": 60})
+    )
+    update = (await _health())["update"]
+    assert (update["repo_rev"], update["venv_rev"], update["stage"], update["stale_after_seconds"]) == (
+        "a",
+        "b",
+        "pip",
+        60,
+    )
 
 
 @pytest.mark.anyio

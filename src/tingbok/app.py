@@ -841,11 +841,16 @@ async def health(request: Request):
             # The service answers fine; it is the deployment that is stuck.
             result.status = "degraded"
         if not is_local:
-            # pip and git quote filesystem paths in their errors, which is the
-            # very thing the paths block below is withheld for.  The revisions
-            # and the counter carry nothing, and are what a monitor needs, so
-            # only the error text is dropped.
-            result.update.last_error = None
+            # A monitor needs the verdict, the failure counter and the
+            # timestamps.  The rest is free reconnaissance: pip and git quote
+            # filesystem paths in their errors (what the paths block below is
+            # withheld for), the revisions are commit SHAs of a private
+            # checkout, and the stage names the deploy step that broke.
+            result.update = UpdateStatus(
+                install_failures=result.update.install_failures,
+                last_attempt=result.update.last_attempt,
+                last_success=result.update.last_success,
+            )
 
     unwritable = _unwritable_data_paths()
     result.data_writable = not unwritable
