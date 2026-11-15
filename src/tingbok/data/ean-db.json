@@ -7621,6 +7621,12 @@
     ],
     "name": "BILTEMA Skarvklämma splice connectors (0.5-1.0mm²)"
   },
+  "biltema-52295": {
+    "categories": [
+      "fuel-filter"
+    ],
+    "name": "Biltema inline fuel filter, paper element (Art. 52-295)"
+  },
   "biltema-61857": {
     "categories": [
       "clamp"
