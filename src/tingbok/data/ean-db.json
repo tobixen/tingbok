@@ -1945,11 +1945,54 @@
       }
     ]
   },
+  "3800718005512": {
+    "categories": [
+      "sponge"
+    ],
+    "name": "Convoy-World super absorbent sponge cloths (ПОПИВАТЕЛНИ КЪРПИ)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 0.49,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "ПОПИВАТЕЛНИ КЪРПИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "3800740031527": {
     "categories": [
       "lyutenitsa"
     ],
     "name": "Deroni Финосмляна пикантна лютеница с люти чушки / fine-ground spicy lyutenitsa with hot peppers (heat 3/10)"
+  },
+  "3800748001317": {
+    "name": "Прясно краве мляко 3%",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 1.49,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "ВЕРЕЯ ПР. МЛЯКО 3%",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
   },
   "3800748002420": {
     "categories": [
@@ -3167,6 +3210,29 @@
       }
     ]
   },
+  "4056489178613": {
+    "categories": [
+      "dishwashing-liquid"
+    ],
+    "name": "Lidl apple dishwashing liquid (ПРЕП.ЗА СЪДОВ.ЯБЪЛКА)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 0.59,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "ПРЕП.ЗА СЪДОВ.ЯБЪЛКА",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "4056489178903": {
     "categories": [
       "food/processed_animal_products/cream/cultured_cream"
@@ -4222,7 +4288,7 @@
     "categories": [
       "yogurt"
     ],
-    "name": "Yogurt 3.6% 1kg",
+    "name": "Кисело мляко 3.6%",
     "prices": [
       {
         "currency": "EUR",
@@ -4293,6 +4359,13 @@
         "price": 1.53,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 1.53,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
       }
     ],
     "quantity": "1000g",
@@ -4326,6 +4399,12 @@
         "last_seen": "2026-06-21",
         "name": "КИСЕЛО МЛЯКО 3,6%",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "КИСЕЛО МЛЯКО 3,6%",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ],
     "source": "manual"
@@ -4937,6 +5016,52 @@
       }
     ]
   },
+  "4335619005440": {
+    "categories": [
+      "cherry-tomatoes"
+    ],
+    "name": "Черни чери домати 250г / black cherry tomatoes (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 1.29,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "ДОМАТИ, ЧЕРНИ 250G",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
+  "4335619037366": {
+    "categories": [
+      "butter"
+    ],
+    "name": "Немско краве масло / German butter (Lidl)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 0.99,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "НЕМСКО КРАВЕ МАСЛО",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
   "4335619053564": {
     "categories": [
       "pasta"
@@ -4958,6 +5083,30 @@
         "last_seen": "2026-10-28",
         "name": "СПАГЕТИ С ЯЙЦА",
         "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
+  "4335619053588": {
+    "categories": [
+      "noodles"
+    ],
+    "name": "Lidl фиде с яйца 200g / egg noodles",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 0.55,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "200g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "ФИДЕ С ЯЙЦА",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
   },
@@ -5125,6 +5274,26 @@
         "first_seen": "2026-07-21",
         "last_seen": "2026-07-21",
         "name": "СИРЕНЕ БРИ",
+        "shop": "Lidl Varna ул. Битоля 1А"
+      }
+    ]
+  },
+  "4335619251427": {
+    "name": "Българско рафинирано слънчогледово масло",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 1.78,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "СЛЪНЧОГЛ. МАСЛО 1Л",
         "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
@@ -9168,6 +9337,13 @@
         "price": 2.45,
         "shop": "Lidl Varna бул. Вл. Варненчик 257",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-11-16",
+        "price": 2.45,
+        "shop": "Lidl Varna ул. Битоля 1А",
+        "unit": "pcs"
       }
     ],
     "receipt_names": [
@@ -9176,6 +9352,12 @@
         "last_seen": "2026-10-07",
         "name": "ТОАЛ.ХАРТ100%,2ПЛ",
         "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      },
+      {
+        "first_seen": "2026-11-16",
+        "last_seen": "2026-11-16",
+        "name": "ТОАЛ.ХАРТ100%,2ПЛ",
+        "shop": "Lidl Varna ул. Битоля 1А"
       }
     ]
   },
