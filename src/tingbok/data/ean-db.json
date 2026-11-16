@@ -5306,7 +5306,7 @@
   },
   "4335619252042": {
     "categories": [
-      "toilet_paper"
+      "toilet-paper"
     ],
     "name": "ТОАЛЕТНА ХАРТИЯ 4 ПЛ toilet paper 4-ply (Lidl 2026-05-02)",
     "prices": [
@@ -9333,7 +9333,7 @@
   },
   "lidl-20519681": {
     "categories": [
-      "toilet_paper"
+      "toilet-paper"
     ],
     "name": "Тоалетна хартия 100% целулоза 2пл / toilet paper 2-ply",
     "prices": [
@@ -9350,6 +9350,13 @@
         "price": 2.45,
         "shop": "Lidl Varna ул. Битоля 1А",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": null,
+        "price": 2.45,
+        "shop": null,
+        "unit": "6"
       }
     ],
     "receipt_names": [
