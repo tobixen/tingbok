@@ -253,7 +253,8 @@ concepts:
       en: ["parts", "modules"]
     source_uris:
     - https://dbpedia.org/resource/Electronic_component
-    - https://www.wikidata.org/entity/Q5570655
+    excluded_sources:
+    - wikidata
 
   # Electronics cable mappings
   ac-cable:
@@ -261,9 +262,8 @@ concepts:
     altLabel:
       en: ["ac_cable", "mains cable", "power cord"]
     broader: electronics
-
-    source_uris:
-    - https://dbpedia.org/resource/Television
+    excluded_sources:
+    - dbpedia
   dc-cable:
     prefLabel: "DC cable"
     altLabel:
@@ -271,8 +271,9 @@ concepts:
     broader: electronics
 
     source_uris:
-    - https://dbpedia.org/resource/Matthew_Cable
     - https://www.wikidata.org/entity/Q129976738
+    excluded_sources:
+    - dbpedia
   electrical-cable:
     prefLabel: "Electrical cable"
     altLabel:
@@ -288,9 +289,10 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Cable
-    - https://www.wikidata.org/entity/Q37492867
     - https://aims.fao.org/aos/agrovoc/c_a8bcf3c5
     - gpt:259
+    excluded_sources:
+    - wikidata
 
   # Electronics connector mappings
   electrical-connector:
@@ -439,8 +441,8 @@ concepts:
   # =============================================================================
 
   food/roes:
-    sources:
-    - https://www.wikidata.org/wiki/Q12366140
+    source_uris:
+    - https://www.wikidata.org/entity/Q12366140
     - https://aims.fao.org/aos/agrovoc/c_6634
   food/caviar:
     broader: food/roes
@@ -451,8 +453,9 @@ concepts:
       en: ["staples", "basic foods"]
     source_uris:
     - https://dbpedia.org/resource/Staple_food
-    - https://www.wikidata.org/entity/Q1241622
-    - gpt:441
+    excluded_sources:
+    - gpt
+    - wikidata
 
   food/beverages:
     prefLabel: "Beverages"
@@ -484,8 +487,8 @@ concepts:
     prefLabel: "Grains & cereals"
     altLabel:
       en: ["cereals", "grains"]
-    source_uris:
-    - https://dbpedia.org/resource/Five_Grains
+    excluded_sources:
+    - dbpedia
   food/meat:
     prefLabel: "Meat"
     altLabel:
@@ -535,19 +538,21 @@ concepts:
       en: ["veggies", "greens"]
     source_uris:
     - https://dbpedia.org/resource/Vegetable
-    - https://www.wikidata.org/entity/Q1413783
     - https://aims.fao.org/aos/agrovoc/c_8174
     - off:en:vegetables
     - gpt:430
+    excluded_sources:
+    - wikidata
   food/fruits:
     prefLabel: "Fruits"
     altLabel:
       en: ["fruit"]
     source_uris:
     - https://dbpedia.org/resource/Fruit
-    - https://www.wikidata.org/entity/Q3089329
     - https://aims.fao.org/aos/agrovoc/c_3131
     - off:en:fruits
+    excluded_sources:
+    - wikidata
   food/legumes:
     prefLabel: "Legumes"
     altLabel:
@@ -586,9 +591,10 @@ concepts:
       en: ["pickled vegetables"]
     source_uris:
     - https://dbpedia.org/resource/Pickles
-    - https://www.wikidata.org/entity/Q29565778
     - https://aims.fao.org/aos/agrovoc/c_5864
     - off:en:pickles
+    excluded_sources:
+    - wikidata
   food/baking:
     prefLabel: "Baking"
     altLabel:
@@ -607,9 +613,9 @@ concepts:
     source_uris:
     - https://dbpedia.org/resource/Spice
     - https://www.wikidata.org/entity/Q42527
-    - https://aims.fao.org/aos/agrovoc/c_7042
     - https://aims.fao.org/aos/agrovoc/c_15685
-    - gpt:455
+    excluded_sources:
+    - gpt
 
   food/spices/herb:
     prefLabel: "Herb"
@@ -704,9 +710,10 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Tea
-    - https://www.wikidata.org/entity/Q15885810
     - https://aims.fao.org/aos/agrovoc/c_7634
     - off:en:teas
+    excluded_sources:
+    - wikidata
   juice:
     prefLabel: "Juice"
     altLabel:
@@ -739,8 +746,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Whole_milk
-    - https://www.wikidata.org/entity/Q3827861
     - off:en:whole-milks
+    excluded_sources:
+    - wikidata
   cheese:
     prefLabel: "Cheese"
     altLabel:
@@ -797,8 +805,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Whipped_cream
-    - https://www.wikidata.org/entity/Q1312614
     - off:en:whipping-creams
+    excluded_sources:
+    - wikidata
 
   # Grains
   pasta:
@@ -864,10 +873,11 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Buckwheat
-    - https://www.wikidata.org/entity/Q37328861
     - https://aims.fao.org/aos/agrovoc/c_9471
     - gpt:4684
     - off:en:buckwheat
+    excluded_sources:
+    - wikidata
   oats:
     prefLabel: "Oats"
     altLabel:
@@ -876,9 +886,10 @@ concepts:
     broader: food/grains
     source_uris:
     - https://dbpedia.org/resource/Oat
-    - https://www.wikidata.org/entity/Q128752
-    - https://aims.fao.org/aos/agrovoc/c_5404
     - off:en:oats
+    excluded_sources:
+    - agrovoc
+    - wikidata
   rolled-oats:
     prefLabel: "Rolled oats"
     altLabel:
@@ -888,8 +899,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Rolled_oats
-    - https://www.wikidata.org/entity/Q3411967
     - off:en:rolled-oats
+    excluded_sources:
+    - wikidata
 
   # Meat
   meat:
@@ -933,8 +945,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Cured_meat
-    - https://www.wikidata.org/entity/Q23671
     - off:en:cured-sausages
+    excluded_sources:
+    - wikidata
 
   # Seafood
   fish:
@@ -956,9 +969,10 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Tuna
-    - https://www.wikidata.org/entity/Q1245536
     - https://aims.fao.org/aos/agrovoc/c_8003
     - off:en:tunas
+    excluded_sources:
+    - wikidata
   sardines:
     prefLabel: "Sardines"
     altLabel:
@@ -967,9 +981,10 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Sardine
-    - https://www.wikidata.org/entity/Q16746397
     - https://aims.fao.org/aos/agrovoc/c_6813
     - off:en:sardines
+    excluded_sources:
+    - wikidata
 
   # Vegetables
   potatoes:
@@ -995,8 +1010,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Instant_mashed_potatoes
-    - https://www.wikidata.org/entity/Q1432106
     - off:en:instant-mashed-potatoes
+    excluded_sources:
+    - wikidata
   onions:
     prefLabel: "Onions"
     altLabel:
@@ -1006,10 +1022,11 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Onion
-    - https://www.wikidata.org/entity/Q7093938
     - https://aims.fao.org/aos/agrovoc/c_12934
     - gpt:6655
     - off:en:onions
+    excluded_sources:
+    - wikidata
   garlic:
     prefLabel: "Garlic"
     altLabel:
@@ -1044,8 +1061,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Tomato_purée
-    - https://www.wikidata.org/entity/Q3006352
     - off:en:strained-tomatoes
+    excluded_sources:
+    - wikidata
   # Common parent of every preserved tomato product, modelled on OFF's
   # en:canned-tomato-products.  Unlike OFF, it sits under tomatoes itself
   # (OFF: tomatoes-and-their-products), so a search for tomatoes finds the
@@ -1109,9 +1127,10 @@ concepts:
     source_uris:
     - "https://dbpedia.org/resource/Mushroom"
     - https://aims.fao.org/aos/agrovoc/c_2487
-    - https://www.wikidata.org/entity/Q22442668
     - gpt:6653
     - off:en:mushrooms
+    excluded_sources:
+    - wikidata
   corn:
     prefLabel: "Corn"
     altLabel:
@@ -1132,8 +1151,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Sweet_corn
-    - https://www.wikidata.org/entity/Q5678023
     - off:en:canned-sweet-corn
+    excluded_sources:
+    - wikidata
   preserved-vegetables:
     prefLabel: "Preserved vegetables"
     broader: food/preserved
@@ -1151,10 +1171,11 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Banana
-    - https://www.wikidata.org/entity/Q4853898
     - https://aims.fao.org/aos/agrovoc/c_806
     - gpt:6574
     - off:en:bananas
+    excluded_sources:
+    - wikidata
   olive:
     prefLabel: "Olives"
     altLabel:
@@ -1188,9 +1209,10 @@ concepts:
     broader: beans
     source_uris:
     - https://dbpedia.org/resource/Phaseolus_vulgaris
-    - https://www.wikidata.org/entity/Q165437
     - https://aims.fao.org/aos/agrovoc/c_5765
     - off:en:common-beans
+    excluded_sources:
+    - wikidata
   red-beans:
     prefLabel: "Red beans"
     altLabel:
@@ -1200,9 +1222,10 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Kidney_bean
-    - https://www.wikidata.org/entity/Q1066672
-    - https://aims.fao.org/aos/agrovoc/c_34724
     - off:en:red-beans
+    excluded_sources:
+    - agrovoc
+    - wikidata
   white-beans:
     prefLabel: "White beans"
     altLabel:
@@ -1211,8 +1234,9 @@ concepts:
     broader: common-beans
     source_uris:
     - https://dbpedia.org/resource/Haricot_bean
-    - https://www.wikidata.org/entity/Q1066638
     - off:en:white-beans
+    excluded_sources:
+    - wikidata
   dried-haricot-beans:
     prefLabel: "Dried haricot beans"
     altLabel:
@@ -1358,8 +1382,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Spread
-    - https://www.wikidata.org/entity/Q113128287
     - off:en:spreads
+    excluded_sources:
+    - wikidata
 
   # Snacks
   snacks:
@@ -1395,9 +1420,10 @@ concepts:
     broader: food/snacks
     source_uris:
     - https://dbpedia.org/resource/Nut_(fruit)
-    - https://www.wikidata.org/entity/Q130392098
     - https://aims.fao.org/aos/agrovoc/c_12873
     - off:en:nuts
+    excluded_sources:
+    - wikidata
   cashews:
     prefLabel: "Cashews"
     altLabel:
@@ -1441,9 +1467,10 @@ concepts:
     broader: food/nuts
     source_uris:
     - https://dbpedia.org/resource/Coconut
-    - https://www.wikidata.org/entity/Q34687
-    - https://aims.fao.org/aos/agrovoc/c_1792
     - off:en:coconuts
+    excluded_sources:
+    - agrovoc
+    - wikidata
   coconut-milk:
     prefLabel: "Coconut milk"
     altLabel:
@@ -1454,8 +1481,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Coconut_milk
-    - https://www.wikidata.org/entity/Q1093214
     - off:en:coconut-milks-and-creams
+    excluded_sources:
+    - wikidata
   pecans:
     prefLabel: "Pecans"
     altLabel:
@@ -1465,8 +1493,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Pecan
-    - https://www.wikidata.org/entity/Q131567
     - off:en:pecan-nuts
+    excluded_sources:
+    - wikidata
 
   biscuits:
     prefLabel: "Biscuits"
@@ -1477,10 +1506,11 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Biscuit
-    - https://www.wikidata.org/entity/Q19801756
     - https://aims.fao.org/aos/agrovoc/c_16475
     - gpt:2229
     - off:en:biscuits
+    excluded_sources:
+    - wikidata
   chocolate:
     prefLabel: "Chocolate"
     altLabel:
@@ -1499,8 +1529,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Milk_chocolate
-    - https://www.wikidata.org/entity/Q178156
     - off:en:milk-chocolates
+    excluded_sources:
+    - wikidata
 
   # Preserved
   canning:
@@ -1546,8 +1577,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Caper
-    - https://www.wikidata.org/entity/Q16275162
     - off:en:capers
+    excluded_sources:
+    - wikidata
 
   # Baking
   sugar:
@@ -1615,8 +1647,9 @@ concepts:
     altLabel:
       en: ["bicycle tools", "cycling tools"]
     source_uris:
-    - https://dbpedia.org/resource/Shed
     - https://www.wikidata.org/entity/Q572809
+    excluded_sources:
+    - dbpedia
 
   # Tool mappings
   bike-tool:
@@ -1635,8 +1668,9 @@ concepts:
     broader: tools/bike
 
     source_uris:
-    - https://dbpedia.org/resource/Shed
     - https://www.wikidata.org/entity/Q572809
+    excluded_sources:
+    - dbpedia
   bicycle-tools:
     prefLabel: "Bicycle tools"
     broader: tools/bike
@@ -1686,24 +1720,24 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_0c072dac
   boat-equipment/deck:
     prefLabel: "Deck hardware"
-    source_uris:
-    - https://dbpedia.org/resource/Video_game
+    excluded_sources:
+    - dbpedia
   boat-equipment/engine:
     prefLabel: "Engine parts"
     altLabel:
       en: ["motor parts"]
     source_uris:
-    - https://dbpedia.org/resource/Thomas_&_Friends
     - https://www.wikidata.org/entity/Q66150902
     - https://aims.fao.org/aos/agrovoc/c_25784
+    excluded_sources:
+    - dbpedia
 
   # Simple boat mappings
   boat-spare:
     prefLabel: "Boat spare parts"
     broader: boat-equipment
-
-    source_uris:
-    - https://dbpedia.org/resource/Central_European_Time
+    excluded_sources:
+    - dbpedia
   boat-hardware:
     prefLabel: "Boat hardware"
     broader: boat-equipment
@@ -1713,22 +1747,19 @@ concepts:
   boat-lighting:
     prefLabel: "Boat lighting"
     broader: boat-equipment
-
-    source_uris:
-    - https://dbpedia.org/resource/Lightning_bolt
+    excluded_sources:
+    - dbpedia
   boat-material:
     prefLabel: "Boat material"
     broader: boat-equipment
-
-    source_uris:
-    - https://dbpedia.org/resource/Animal
+    excluded_sources:
+    - dbpedia
   boat-repair:
     prefLabel: "Boat repair"
     broader: boat-equipment
-
-    source_uris:
-    - https://dbpedia.org/resource/Naval_Base_Brisbane
-    - https://www.wikidata.org/entity/Q7826736
+    excluded_sources:
+    - dbpedia
+    - wikidata
   sail-repair:
     prefLabel: "Sail repair"
     broader: boat-equipment/rigging
@@ -1756,9 +1787,8 @@ concepts:
     altLabel:
       en: ["pilot book", "sailing guide"]
     broader: boat-equipment/navigation
-
-    source_uris:
-    - https://dbpedia.org/resource/Hardcover
+    excluded_sources:
+    - dbpedia
   autopilot:
     prefLabel: "Autopilot"
     broader: boat-equipment/navigation
@@ -1778,9 +1808,10 @@ concepts:
     broader: boat-equipment/engine
 
     source_uris:
-    - https://dbpedia.org/resource/Proceedings_of_the_Institution_of_Electrical_Engineers
     - https://www.wikidata.org/entity/Q66150902
     - https://aims.fao.org/aos/agrovoc/c_25784
+    excluded_sources:
+    - dbpedia
 
   # =============================================================================
   # ELECTRONICS SUBCATEGORIES
@@ -1816,8 +1847,9 @@ concepts:
     altLabel:
       nb: ["rengjøring"]
     source_uris:
-    - https://dbpedia.org/resource/City
     - https://www.wikidata.org/entity/Q1974312
+    excluded_sources:
+    - dbpedia
   household/storage:
     prefLabel: "Storage"
     source_uris:
@@ -1842,11 +1874,10 @@ concepts:
   pillow:
     prefLabel: "Pillow"
     broader: bedding
-    source_uris:
-    - https://www.wikidata.org/entity/Q82821
-    - gpt:4951
     excluded_sources:
     - dbpedia
+    - gpt
+    - wikidata
     # DBpedia matches "The Pillows" (Japanese band) instead of the household item
 
   duvet:
@@ -1854,14 +1885,16 @@ concepts:
     broader: bedding
     source_uris:
     - "https://dbpedia.org/resource/Duvet"
-    - https://www.wikidata.org/entity/Q468242
+    excluded_sources:
+    - wikidata
 
   blanket:
     prefLabel: "Blanket"
     broader: bedding
     source_uris:
     - "https://dbpedia.org/resource/Blanket"
-    - https://www.wikidata.org/entity/Q131549
+    excluded_sources:
+    - wikidata
 
   # =============================================================================
   # BOOKS SUBCATEGORIES
@@ -1946,15 +1979,13 @@ concepts:
   sandpaper-sheet:
     prefLabel: "Sandpaper sheet"
     broader: sandpaper
-
-    source_uris:
-    - https://dbpedia.org/resource/West_Antarctica
+    excluded_sources:
+    - dbpedia
   sandpaper-roll:
     prefLabel: "Sandpaper roll"
     broader: sandpaper
-
-    source_uris:
-    - https://dbpedia.org/resource/Rock_music
+    excluded_sources:
+    - dbpedia
   sanding-disc:
     prefLabel: "Sanding disc"
     broader: sandpaper
@@ -2010,7 +2041,8 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Party_bike
-    - https://www.wikidata.org/entity/Q2995263
+    excluded_sources:
+    - wikidata
   bike-light:
     prefLabel: "Bike light"
     broader: electronics
@@ -2118,7 +2150,8 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Backpack
-    - https://www.wikidata.org/entity/Q654772
+    excluded_sources:
+    - wikidata
   mushroom-foraging:
     # Hardcoded: neither DBpedia "mushroom hunting" nor Wikidata Q2391676 carries
     # the canonical Norwegian term "soppsanking", so it is pinned here.
@@ -2145,7 +2178,7 @@ concepts:
   clothing/underwear:
     prefLabel: "Underwear"
     source_uris:
-      - https://www.wikidata.org/wiki/Q198763
+      - https://www.wikidata.org/entity/Q198763
 
   clothing/workwear:
     prefLabel: "Workwear"
@@ -2170,9 +2203,10 @@ concepts:
   clothing/accessories:
     prefLabel: "Clothing accessories"
     source_uris:
-    - https://dbpedia.org/resource/Che_Guevara_in_fashion
     - https://www.wikidata.org/entity/Q123152059
     - gpt:167
+    excluded_sources:
+    - dbpedia
 
   handbag:
     prefLabel: "Handbag"
@@ -2183,7 +2217,8 @@ concepts:
     source_uris:
     - https://dbpedia.org/resource/Handbag
     - https://www.wikidata.org/entity/Q467505
-    - gpt:6704
+    excluded_sources:
+    - gpt
 
   # Clothing/fashion mappings
   hat:
@@ -2238,10 +2273,10 @@ concepts:
     source_uris:
     - "https://dbpedia.org/resource/Washer_(hardware)"
     - https://dbpedia.org/resource/Washer
-    - https://www.wikidata.org/entity/Q36987046
     - gpt:2195
     excluded_sources:
     - agrovoc
+    - wikidata
     # AGROVOC returns "cleaning equipment" (washing machine) - use DBpedia
 
   # =============================================================================
@@ -2276,9 +2311,10 @@ concepts:
   office/paper:
     prefLabel: "Paper products"
     source_uris:
-    - https://dbpedia.org/resource/John_McNamara_(writer)
     - https://www.wikidata.org/entity/Q70940300
     - gpt:956
+    excluded_sources:
+    - dbpedia
   office/storage:
     prefLabel: "Office storage"
     source_uris:
@@ -2327,9 +2363,10 @@ concepts:
     broader: recreation
     source_uris:
     - https://dbpedia.org/resource/Sport
-    - https://www.wikidata.org/entity/Q123253374
     - https://aims.fao.org/aos/agrovoc/c_7328
     - gpt:988
+    excluded_sources:
+    - wikidata
   sports/cycling:
     prefLabel: "Cycling"
     source_uris:
@@ -2340,12 +2377,13 @@ concepts:
   sports/water-sports:
     prefLabel: "Water sports"
     source_uris:
-    - https://dbpedia.org/resource/Oman
     - https://www.wikidata.org/entity/Q104853375
+    excluded_sources:
+    - dbpedia
   sports/ball-sports:
     prefLabel: "Ball sports"
-    source_uris:
-    - https://dbpedia.org/resource/Basketball
+    excluded_sources:
+    - dbpedia
   games:
     prefLabel: "Games"
     altLabel:
@@ -2353,9 +2391,10 @@ concepts:
       nb: ["spill", "leker", "puslespill"]
     source_uris:
     - https://dbpedia.org/resource/Action_game
-    - https://www.wikidata.org/entity/Q1493102
     - gpt:3793
     - off:en:game
+    excluded_sources:
+    - wikidata
   medical:
     prefLabel: "Health & Safety"
     altLabel:
@@ -2421,15 +2460,13 @@ concepts:
   bike_hardware:
     prefLabel: "Bike hardware"
     broader: tools/bike
-
-    source_uris:
-    - https://dbpedia.org/resource/IOS
+    excluded_sources:
+    - dbpedia
   bike_repair_kit:
     prefLabel: "Bike repair kit"
     broader: tools/bike
-
-    source_uris:
-    - https://dbpedia.org/resource/Carlisle_United_F.C.
+    excluded_sources:
+    - dbpedia
 
   # Camping/outdoor from DBpedia
   # Electronics from DBpedia
@@ -2442,21 +2479,18 @@ concepts:
   boat_hatch:
     prefLabel: "Boat hatch"
     broader: boat-equipment/deck
-
-    source_uris:
-    - https://dbpedia.org/resource/Karachi
+    excluded_sources:
+    - dbpedia
   buoy_holder:
     prefLabel: "Buoy holder"
     broader: boat-equipment
-
-    source_uris:
-    - https://dbpedia.org/resource/Diving_equipment
+    excluded_sources:
+    - dbpedia
   cockpit_lamp:
     prefLabel: "Cockpit lamp"
     broader: boat-equipment
-
-    source_uris:
-    - https://dbpedia.org/resource/Italy
+    excluded_sources:
+    - dbpedia
 
   # Tools
   # Misc items that need parents
@@ -2478,34 +2512,31 @@ concepts:
     broader: boat-equipment/rigging
 
     source_uris:
-    - https://dbpedia.org/resource/V8_engine
     - https://www.wikidata.org/entity/Q193099
+    excluded_sources:
+    - dbpedia
   chain_lubricant:
     prefLabel: "Chain lubricant"
     broader: consumables
-
-    source_uris:
-    - https://dbpedia.org/resource/Stockholm
+    excluded_sources:
+    - dbpedia
   chemical_sealant:
     prefLabel: "Chemical sealant"
     broader: consumables
-
-    source_uris:
-    - https://dbpedia.org/resource/Green
+    excluded_sources:
+    - dbpedia
   anti_corrosion_spray:
     prefLabel: "Anti-corrosion spray"
     broader: consumables
-
-    source_uris:
-    - https://dbpedia.org/resource/Punk_rock
+    excluded_sources:
+    - dbpedia
 
   # Engineering/science (map to tools or electronics)
   current_shunt:
     prefLabel: "Current shunt"
     broader: electronics/components
-
-    source_uris:
-    - https://dbpedia.org/resource/United_Kingdom
+    excluded_sources:
+    - dbpedia
 
   # Fire safety
   # Inventions categories (map to misc)
@@ -2519,9 +2550,8 @@ concepts:
   dehumidifier_consumable:
     prefLabel: "Dehumidifier consumable"
     broader: household
-
-    source_uris:
-    - https://dbpedia.org/resource/Logistics
+    excluded_sources:
+    - dbpedia
 
   # Activities
   cigarette_lighter_plug:
@@ -2535,8 +2565,9 @@ concepts:
     broader: electronics
 
     source_uris:
-    - https://dbpedia.org/resource/Chesterfield_F.C.
     - https://www.wikidata.org/entity/Q123998515
+    excluded_sources:
+    - dbpedia
   gps:
     prefLabel: "GPS"
     altLabel:
@@ -2554,8 +2585,9 @@ concepts:
     broader: electronics
 
     source_uris:
-    - https://dbpedia.org/resource/Occupation_of_Iraq_(2003–2011)
     - https://www.wikidata.org/entity/Q133577298
+    excluded_sources:
+    - dbpedia
   led_strip:
     prefLabel: "LED strip"
     broader: electronics
@@ -2566,9 +2598,8 @@ concepts:
   resistive_components:
     prefLabel: "Resistive components"
     broader: electronics/components
-
-    source_uris:
-    - https://dbpedia.org/resource/Manhattan
+    excluded_sources:
+    - dbpedia
   sdr_receiver:
     prefLabel: "SDR receiver"
     broader: electronics
@@ -2596,17 +2627,15 @@ concepts:
   zigbee_coordinator:
     prefLabel: "Zigbee coordinator"
     broader: electronics
-
-    source_uris:
-    - https://dbpedia.org/resource/Central_European_Time
+    excluded_sources:
+    - dbpedia
 
   # More DBpedia mappings - Tools
   drill_bit_set:
     prefLabel: "Drill bit set"
     broader: tools
-
-    source_uris:
-    - https://dbpedia.org/resource/UK_Singles_Chart
+    excluded_sources:
+    - dbpedia
   sail_tool:
     prefLabel: "Sail tool"
     broader: tools
@@ -2616,29 +2645,28 @@ concepts:
     broader: tools
 
     source_uris:
-    - https://dbpedia.org/resource/Nintendo_Switch
     - https://www.wikidata.org/entity/Q116971147
+    excluded_sources:
+    - dbpedia
   sanding_delta:
     prefLabel: "Sanding delta"
     broader: tools
-
-    source_uris:
-    - https://dbpedia.org/resource/West_Bengal
+    excluded_sources:
+    - dbpedia
   sanding_sponge:
     prefLabel: "Sanding sponge"
     broader: tools
-
-    source_uris:
-    - https://dbpedia.org/resource/Painting
+    excluded_sources:
+    - dbpedia
   tool:
     prefLabel: "Tool"
     broader: tools
     uri: "https://dbpedia.org/resource/Tool"
     source_uris:
     - "https://dbpedia.org/resource/Tool"
-    - https://www.wikidata.org/entity/Q184827
     excluded_sources:
     - agrovoc
+    - wikidata
     # AGROVOC returns "equipment" - use DBpedia for general tools
 
   welding_electrode:
@@ -2653,8 +2681,9 @@ concepts:
     broader: tools
 
     source_uris:
-    - https://dbpedia.org/resource/General_Electric
     - https://www.wikidata.org/entity/Q116971324
+    excluded_sources:
+    - dbpedia
 
   # More DBpedia mappings - Household
   toilet_paper:
@@ -2668,16 +2697,16 @@ concepts:
   toilet_service_kit:
     prefLabel: "Toilet service kit"
     broader: household
-
-    source_uris:
-    - https://dbpedia.org/resource/City
+    excluded_sources:
+    - dbpedia
   water_filter_cartridge:
     prefLabel: "Water filter cartridge"
     broader: household
 
     source_uris:
-    - https://dbpedia.org/resource/Hydropower
     - https://www.wikidata.org/entity/Q116970911
+    excluded_sources:
+    - dbpedia
 
   # More DBpedia mappings - Clothing
   # More DBpedia mappings - Food
@@ -2705,16 +2734,16 @@ concepts:
   fuel_sender_flange:
     prefLabel: "Fuel sender flange"
     broader: boat-equipment/engine
-
-    source_uris:
-    - https://dbpedia.org/resource/Defender_(association_football)
+    excluded_sources:
+    - dbpedia
   hatch:
     prefLabel: "Hatch"
     broader: boat-equipment/deck
 
     source_uris:
     - https://dbpedia.org/resource/Hatch
-    - https://www.wikidata.org/entity/Q483459
+    excluded_sources:
+    - wikidata
   marine_electrical:
     prefLabel: "Marine electrical"
     broader: boat-equipment
@@ -2732,22 +2761,21 @@ concepts:
   maritime_book:
     prefLabel: "Maritime book"
     broader: boat-equipment/navigation
-
-    source_uris:
-    - https://dbpedia.org/resource/Meteorology
+    excluded_sources:
+    - dbpedia
   mast_fitting:
     prefLabel: "Mast fitting"
     broader: boat-equipment/rigging
 
     source_uris:
-    - https://dbpedia.org/resource/Gameplay_of_Pokémon
     - https://www.wikidata.org/entity/Q116435676
+    excluded_sources:
+    - dbpedia
   pump_service_kit:
     prefLabel: "Pump service kit"
     broader: boat-equipment
-
-    source_uris:
-    - https://dbpedia.org/resource/City
+    excluded_sources:
+    - dbpedia
   sail:
     prefLabel: "Sail"
     altLabel:
@@ -2761,9 +2789,8 @@ concepts:
   sailing_ship_components:
     prefLabel: "Sailing ship components"
     broader: boat-equipment/rigging
-
-    source_uris:
-    - https://dbpedia.org/resource/Manhattan
+    excluded_sources:
+    - dbpedia
   winches:
     prefLabel: "Winches"
     broader: boat-equipment
@@ -2793,7 +2820,8 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Nut_(hardware)
-    - https://www.wikidata.org/entity/Q159083
+    excluded_sources:
+    - wikidata
   plumbing:
     prefLabel: "Plumbing"
     broader: construction
@@ -2805,9 +2833,8 @@ concepts:
   screw_assortment:
     prefLabel: "Screw assortment"
     broader: construction
-
-    source_uris:
-    - https://dbpedia.org/resource/Drummer
+    excluded_sources:
+    - dbpedia
   threaded_stud:
     prefLabel: "Threaded stud"
     broader: construction
@@ -2820,15 +2847,13 @@ concepts:
   sup_repair:
     prefLabel: "SUP repair"
     broader: outdoor
-
-    source_uris:
-    - https://dbpedia.org/resource/Maintenance_(technical)
+    excluded_sources:
+    - dbpedia
   tent_spare:
     prefLabel: "Tent spare"
     broader: outdoor
-
-    source_uris:
-    - https://dbpedia.org/resource/Glossary_of_motorsport_terms
+    excluded_sources:
+    - dbpedia
 
   # More DBpedia mappings - Consumables
   patch_kit:
@@ -2840,9 +2865,8 @@ concepts:
   ph_test_strips:
     prefLabel: "pH test strips"
     broader: household
-
-    source_uris:
-    - https://dbpedia.org/resource/Newspaper
+    excluded_sources:
+    - dbpedia
   pool_chlorine:
     prefLabel: "Pool chlorine"
     broader: household
@@ -2899,15 +2923,15 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Pedal
-    - https://www.wikidata.org/entity/Q134625947
+    excluded_sources:
+    - wikidata
 
   # Misc categories
   antenna-adapter:
     prefLabel: "Antenna adapter"
     broader: electronics
-
-    source_uris:
-    - https://dbpedia.org/resource/Insect
+    excluded_sources:
+    - dbpedia
 
   # =============================================================================
   # NORWEGIAN CATEGORY MAPPINGS
@@ -2974,9 +2998,8 @@ concepts:
       nb: "Plastboks"
       en: "Plastic storage box"
     broader: storage
-
-    source_uris:
-    - https://dbpedia.org/resource/Midfielder
+    excluded_sources:
+    - dbpedia
   banana-box:
     prefLabel: "Banana box"
     labels:
@@ -3019,7 +3042,8 @@ concepts:
     source_uris:
     - https://dbpedia.org/resource/Suitcase
     - https://www.wikidata.org/entity/Q200814
-    - gpt:6705
+    excluded_sources:
+    - gpt
 
   baby-equipment:
     prefLabel: "Baby equipment"
@@ -3068,8 +3092,9 @@ concepts:
 
     source_uris:
     - https://dbpedia.org/resource/Animal
-    - https://www.wikidata.org/entity/Q2850023
     - https://aims.fao.org/aos/agrovoc/c_444
+    excluded_sources:
+    - wikidata
   garage:
     prefLabel: "Garage"
     labels:
