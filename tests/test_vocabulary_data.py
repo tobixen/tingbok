@@ -55,3 +55,40 @@ def test_no_excluded_source_is_also_listed() -> None:
         if c
     }
     assert {k: v for k, v in bad.items() if v} == {}
+
+
+def test_every_concept_reaches_a_root() -> None:
+    """No orphans: each concept's broader chain (or its path prefix) ends at a ``_root`` child."""
+    concepts = _concepts()
+    roots = set(concepts["_root"]["narrower"])
+
+    def parents(cid: str) -> list[str]:
+        broader = (concepts.get(cid) or {}).get("broader") or []
+        broader = [broader] if isinstance(broader, str) else broader
+        if not broader and "/" in cid:
+            broader = [cid.rsplit("/", 1)[0]]
+        return broader
+
+    def reaches(cid: str, seen: frozenset[str] = frozenset()) -> bool:
+        if cid in roots:
+            return True
+        if cid in seen:
+            return False
+        return any(reaches(p, seen | {cid}) for p in parents(cid))
+
+    orphans = sorted(c for c in concepts if not c.startswith("_") and c not in roots and not reaches(c))
+    assert orphans == []
+
+
+def test_narrow_curated_concepts_do_not_take_generic_ids() -> None:
+    """A source path ending in .../engine or .../water must not become the boat engine or drinking water."""
+    concepts = _concepts()
+    for generic in ("water", "engine", "roller", "grip", "cover", "optics", "jack"):
+        assert generic not in concepts, generic
+
+
+def test_ambiguous_labels_are_not_used() -> None:
+    concepts = _concepts()
+    labels = {a.lower() for c in concepts.values() if c for alts in (c.get("altLabel") or {}).values() for a in alts}
+    for ambiguous in ("dispenser", "jelly", "crispbread", "cord"):
+        assert ambiguous not in labels, ambiguous

@@ -296,12 +296,12 @@ def _wikidata_only(paths: list[str], uri_map: dict[str, str] | None = None):
 @pytest.mark.usefixtures("without_mirrored_tomatoes", "off_taxonomy")
 async def test_resolve_broader_is_union_of_off_and_skos(client) -> None:
     """A SKOS parent under a vocabulary root is kept next to the OFF parent."""
-    fake = _wikidata_only(["food/sauces/tomato_paste", "good/non_durable_goods/food_paste/tomato_paste"])
+    fake = _wikidata_only(["food/pastes/tomato_paste", "good/non_durable_goods/food_paste/tomato_paste"])
     with patch("tingbok.app._fetch_one_skos_source", side_effect=fake):
         data = await _resolve(client, ["tomato-paste"])
     broader = data["concepts"]["tomato-paste"]["broader"]
     assert "canned-tomato-products" in broader
-    assert "sauces" in broader
+    assert "pastes" in broader
     assert not any(b.startswith("good") for b in broader)
 
 
@@ -309,7 +309,7 @@ async def test_resolve_broader_is_union_of_off_and_skos(client) -> None:
 @pytest.mark.usefixtures("without_mirrored_tomatoes", "off_taxonomy")
 async def test_lookup_broader_is_union_of_off_and_skos(client) -> None:
     """GET /api/lookup: the OFF chain no longer hides the SKOS parents."""
-    fake = _wikidata_only(["food/sauces/tomato_paste", "good/non_durable_goods/food_paste/tomato_paste"])
+    fake = _wikidata_only(["food/pastes/tomato_paste", "good/non_durable_goods/food_paste/tomato_paste"])
     with (
         patch("tingbok.app._fetch_one_skos_source", side_effect=fake),
         patch("tingbok.app.skos_service.get_labels", return_value={}),
@@ -319,7 +319,7 @@ async def test_lookup_broader_is_union_of_off_and_skos(client) -> None:
         response = await client.get("/api/lookup/tomato-paste")
     broader = response.json()["broader"]
     assert "canned-tomato-products" in broader
-    assert "sauces" in broader
+    assert "pastes" in broader
     assert not any(b.startswith("good") for b in broader)
 
 

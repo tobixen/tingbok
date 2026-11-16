@@ -1539,8 +1539,8 @@ async def test_lookup_separator_variant_space_to_underscore(client):
 async def test_lookup_external_sources_use_space_normalized_label(client):
     """External SKOS sources are queried with space-normalized label.
 
-    When the query uses underscores or dashes (e.g. 'olive_oil'), the external
-    SKOS sources should be queried with spaces ('olive oil') since those sources
+    When the query uses underscores or dashes (e.g. 'walnut_oil'), the external
+    SKOS sources should be queried with spaces ('walnut oil') since those sources
     use natural-language labels.
     """
 
@@ -1553,7 +1553,7 @@ async def test_lookup_external_sources_use_space_normalized_label(client):
     with patch("tingbok.app.skos_service.lookup_concept", side_effect=recording_lookup):
         with patch("tingbok.app.off_service.lookup_concept", return_value=None):
             with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
-                await client.get("/api/lookup/olive_oil")
+                await client.get("/api/lookup/walnut_oil")
     # Should have queried with spaces, not underscores
     assert any(" " in lbl for lbl in queried_labels), (
         f"Expected SKOS sources to be queried with space-normalized label; got {queried_labels}"
@@ -1567,22 +1567,22 @@ async def test_lookup_falls_back_to_skos(client):
 
     fake_concept = {
         "uri": "https://aims.fao.org/aos/agrovoc/c_12851",
-        "prefLabel": "Cumin",
+        "prefLabel": "Caraway",
         "source": "agrovoc",
     }
-    fake_paths = (["food/spices/cumin"], True, {"food/spices/cumin": "https://aims.fao.org/aos/agrovoc/c_12851"})
+    fake_paths = (["food/spices/caraway"], True, {"food/spices/caraway": "https://aims.fao.org/aos/agrovoc/c_12851"})
 
     with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
         with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
-            with patch("tingbok.app.skos_service.get_labels", return_value={"en": "Cumin", "nb": "Karve"}):
+            with patch("tingbok.app.skos_service.get_labels", return_value={"en": "Caraway", "nb": "Karve"}):
                 with patch("tingbok.app.skos_service.get_alt_labels", return_value={}):
                     with patch("tingbok.app.skos_service.get_description", return_value=None):
-                        response = await client.get("/api/lookup/cumin")
+                        response = await client.get("/api/lookup/caraway")
 
     assert response.status_code == 200
     data = response.json()
-    assert data["prefLabel"] == "Cumin"
-    assert data["id"] == "cumin"
+    assert data["prefLabel"] == "Caraway"
+    assert data["id"] == "caraway"
     assert data["broader"] == ["food/spices"]
     # Source URIs collected from all sources
     assert "https://aims.fao.org/aos/agrovoc/c_12851" in data["source_uris"]
@@ -1594,22 +1594,22 @@ async def test_lookup_falls_back_to_skos(client):
 async def test_lookup_concept_not_in_own_broader(client):
     """The concept being looked up must not appear in its own broader list.
 
-    When build_hierarchy_paths returns 'food/spices/cumin', 'cumin' must not
-    end up in cumin's own broader list under any spelling.
+    When build_hierarchy_paths returns 'food/spices/caraway', 'caraway' must not
+    end up in caraway's own broader list under any spelling.
     """
     from unittest.mock import patch
 
     fake_concept = {
         "uri": "https://aims.fao.org/aos/agrovoc/c_12851",
-        "prefLabel": "Cumin",
+        "prefLabel": "Caraway",
         "source": "agrovoc",
     }
     fake_paths = (
-        ["food/spices/cumin"],
+        ["food/spices/caraway"],
         True,
         {
             "food/spices": "https://aims.fao.org/aos/agrovoc/c_spices",
-            "food/spices/cumin": "https://aims.fao.org/aos/agrovoc/c_12851",
+            "food/spices/caraway": "https://aims.fao.org/aos/agrovoc/c_12851",
         },
     )
 
@@ -1620,11 +1620,13 @@ async def test_lookup_concept_not_in_own_broader(client):
                     with patch("tingbok.app.skos_service.get_description", return_value=None):
                         with patch("tingbok.app.off_service.lookup_concept", return_value=None):
                             with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
-                                response = await client.get("/api/lookup/cumin")
+                                response = await client.get("/api/lookup/caraway")
 
     assert response.status_code == 200
     data = response.json()
-    assert "cumin" not in data["broader"], f"'cumin' must not appear in its own broader list, got: {data['broader']}"
+    assert "caraway" not in data["broader"], (
+        f"'caraway' must not appear in its own broader list, got: {data['broader']}"
+    )
 
 
 @pytest.mark.anyio
@@ -1634,11 +1636,11 @@ async def test_lookup_merges_descriptions_from_all_sources(client):
 
     fake_concept = {
         "uri": "https://aims.fao.org/aos/agrovoc/c_12851",
-        "prefLabel": "Cumin",
+        "prefLabel": "Caraway",
         "source": "agrovoc",
     }
-    fake_paths = (["food/spices/cumin"], True, {})
-    descriptions = {"agrovoc": "Short.", "dbpedia": "A much longer description of cumin.", "wikidata": None}
+    fake_paths = (["food/spices/caraway"], True, {})
+    descriptions = {"agrovoc": "Short.", "dbpedia": "A much longer description of caraway.", "wikidata": None}
 
     with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
         with patch("tingbok.app.skos_service.build_hierarchy_paths", return_value=fake_paths):
@@ -1648,11 +1650,11 @@ async def test_lookup_merges_descriptions_from_all_sources(client):
                         "tingbok.app.skos_service.get_description",
                         side_effect=lambda uri, source, lang, cache_dir: descriptions.get(source),
                     ):
-                        response = await client.get("/api/lookup/cumin")
+                        response = await client.get("/api/lookup/caraway")
 
     assert response.status_code == 200
     data = response.json()
-    assert data["description"] == "A much longer description of cumin."
+    assert data["description"] == "A much longer description of caraway."
 
 
 @pytest.mark.anyio
@@ -1671,22 +1673,22 @@ async def test_lookup_not_found_returns_404(client):
 async def test_lookup_prefers_vocabulary_anchored_path(client):
     """When AGROVOC returns multiple paths, the id is still the slug.
 
-    AGROVOC may return both "food/plant_products/spices/cumin" and "food/spices/cumin"
-    for the same concept; either way the concept is "cumin", and food/spices (a
+    AGROVOC may return both "food/plant_products/spices/caraway" and "food/spices/caraway"
+    for the same concept; either way the concept is "caraway", and food/spices (a
     vocabulary concept) is one of its parents.
     """
     from unittest.mock import patch
 
     fake_concept = {
         "uri": "https://aims.fao.org/aos/agrovoc/c_10205",
-        "prefLabel": "Cumin",
+        "prefLabel": "Caraway",
         "source": "agrovoc",
     }
     # AGROVOC returns the raw path first, vocabulary-anchored path second
     fake_paths = (
-        ["food/plant_products/spices/cumin", "food/spices/cumin", "food/plant_products/cumin"],
+        ["food/plant_products/spices/caraway", "food/spices/caraway", "food/plant_products/caraway"],
         True,
-        {"food/plant_products/spices/cumin": "https://aims.fao.org/aos/agrovoc/c_10205"},
+        {"food/plant_products/spices/caraway": "https://aims.fao.org/aos/agrovoc/c_10205"},
     )
 
     with patch("tingbok.app.skos_service.lookup_concept", return_value=fake_concept):
@@ -1696,12 +1698,12 @@ async def test_lookup_prefers_vocabulary_anchored_path(client):
                     with patch("tingbok.app.skos_service.get_description", return_value=None):
                         with patch("tingbok.app.off_service.lookup_concept", return_value=None):
                             with patch("tingbok.app.gpt_service.lookup_concept", return_value=None):
-                                response = await client.get("/api/lookup/cumin")
+                                response = await client.get("/api/lookup/caraway")
 
     assert response.status_code == 200
     data = response.json()
     # Ids are slugs; the vocabulary-anchored parent is among the parents
-    assert data["id"] == "cumin"
+    assert data["id"] == "caraway"
     assert "food/spices" in data["broader"]
 
 
@@ -2273,3 +2275,22 @@ async def test_the_paths_gate_admits_only_ipv4_loopback(client, expect_paths):
         response = await ac.get("/health")
     assert response.status_code == 200
     assert (response.json().get("paths") is not None) is expect_paths
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("label", "expected"),
+    [
+        ("water", "drinking-water"),
+        ("engine", "marine-engine"),
+        ("roller", "chain-roller"),
+        ("grip", "handlebar-grip"),
+        ("cover", "boat-cover"),
+        ("optics", "binoculars"),
+        ("jack", "jacking-pillow"),
+        ("systems/anchoring", "anchoring"),
+    ],
+)
+async def test_inventory_spellings_find_the_renamed_concepts(client, label, expected):
+    response = await client.get(f"/api/lookup/{label}")
+    assert response.json()["id"] == expected

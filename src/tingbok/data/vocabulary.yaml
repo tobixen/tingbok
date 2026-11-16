@@ -317,7 +317,7 @@ concepts:
   dc-power-connectors:
     prefLabel: "DC power connectors"
     altLabel:
-      en: ["dc_power_connectors"]
+      en: ["dc_power_connectors", "dc-connector"]
     broader: electronics/connectors
 
     source_uris:
@@ -364,7 +364,7 @@ concepts:
   long-johns:
     prefLabel: "Long johns"
     altLabel:
-      en: ["long underwear", "thermal underwear", "base layer"]
+      en: ["long underwear", "thermal underwear", "base layer", "long-underwear"]
       nb: ["lange underbukser", "ullundertøy", "termoundertøy"]
     source_uris:
     - gpt:1807
@@ -404,7 +404,7 @@ concepts:
   books:
     prefLabel: "Books"
     altLabel:
-      en: ["literature", "reading"]
+      en: ["literature", "reading", "book"]
       nb: ["bøker", "bok", "litteratur"]
     broader: household
 
@@ -416,7 +416,7 @@ concepts:
   documents:
     prefLabel: "Documents"
     altLabel:
-      en: ["papers", "paperwork"]
+      en: ["papers", "paperwork", "document"]
       nb: ["dokumenter", "papirer"]
     broader: household
 
@@ -692,6 +692,7 @@ concepts:
   coffee:
     prefLabel: "Coffee"
     altLabel:
+      en: ["coffee_preparation"]
       nb: ["kaffe"]
       bg: ["кафе"]
     broader: food/beverages
@@ -939,7 +940,7 @@ concepts:
   cured-sausage:
     prefLabel: "Cured sausage"
     altLabel:
-      en: ["cured sausages", "salami", "lukanka"]
+      en: ["cured sausages", "salami", "lukanka", "fermented_sausage", "fermented sausage"]
       bg: ["луканка", "салам"]
     broader: sausage
 
@@ -1004,7 +1005,7 @@ concepts:
   instant-mashed-potatoes:
     prefLabel: "Instant mashed potatoes"
     altLabel:
-      en: ["instant potatoes", "mashed potato powder", "dehydrated mashed potatoes"]
+      en: ["instant potatoes", "mashed potato powder", "dehydrated mashed potatoes", "instant-mashed-potato", "potatoes-instant"]
       bg: ["картофено пюре на прах"]
     broader: potatoes
 
@@ -1631,12 +1632,16 @@ concepts:
     - https://aims.fao.org/aos/agrovoc/c_25785
   tools/power:
     prefLabel: "Power tools"
+    altLabel:
+      en: ["power-tool"]
     source_uris:
     - https://dbpedia.org/resource/Power_tool
     - https://www.wikidata.org/entity/Q135080499
     - https://aims.fao.org/aos/agrovoc/c_25786
   tools/measuring:
     prefLabel: "Measuring tools"
+    altLabel:
+      en: ["measuring-tool"]
     source_uris:
     - https://dbpedia.org/resource/Measuring_instrument
     - https://www.wikidata.org/entity/Q19036430
@@ -1845,6 +1850,7 @@ concepts:
   household/cleaning:
     prefLabel: "Cleaning supplies"
     altLabel:
+      en: ["cleaning"]
       nb: ["rengjøring"]
     source_uris:
     - https://www.wikidata.org/entity/Q1974312
@@ -1861,6 +1867,8 @@ concepts:
   # Simple household mappings
   bedding:
     prefLabel: "Bedding"
+    altLabel:
+      en: ["bedclothes"]
     broader: household
     uri: "https://dbpedia.org/resource/Bedding"
     source_uris:
@@ -1993,7 +2001,7 @@ concepts:
   composite-material:
     prefLabel: "Composite material"
     altLabel:
-      en: ["fiberglass", "carbon fiber"]
+      en: ["fiberglass", "carbon fiber", "composite"]
     broader: consumables
 
     source_uris:
@@ -2136,7 +2144,7 @@ concepts:
   sleeping-bag:
     prefLabel: "Sleeping bag"
     altLabel:
-      en: ["sleeping_bag"]
+      en: ["sleeping_bag", "sleeping"]
     broader: outdoor
 
     source_uris:
@@ -2182,6 +2190,8 @@ concepts:
 
   clothing/workwear:
     prefLabel: "Workwear"
+    altLabel:
+      en: ["workwear"]
     source_uris:
     - https://dbpedia.org/resource/Workwear
     - https://www.wikidata.org/entity/Q828980
@@ -2678,6 +2688,8 @@ concepts:
     - https://www.wikidata.org/entity/Q1720284
   work_light:
     prefLabel: "Work light"
+    altLabel:
+      en: ["lighting-tool"]
     broader: tools
 
     source_uris:
@@ -2793,6 +2805,8 @@ concepts:
     - dbpedia
   winches:
     prefLabel: "Winches"
+    altLabel:
+      en: ["winch"]
     broader: boat-equipment
 
     source_uris:
@@ -2804,7 +2818,7 @@ concepts:
   fasteners:
     prefLabel: "Fasteners"
     altLabel:
-      en: ["screws", "bolts", "nails", "nut", "nuts", "washers"]
+      en: ["screws", "bolts", "nails", "nut", "nuts", "washers", "fastener"]
       nb: ["skruer", "bolter", "muttere", "spiker"]
     broader: construction
     source_uris:
@@ -3103,3 +3117,1188 @@ concepts:
     source_uris:
     - https://dbpedia.org/resource/Garage
     - https://www.wikidata.org/entity/Q22733
+
+  # =============================================================================
+  # CURATED FROM INVENTORY USE — categories the sources could not place
+  # =============================================================================
+
+  almond-milk:
+    prefLabel: "Almond milk"
+    broader: food/beverages
+  aquavit:
+    prefLabel: "Aquavit"
+    broader: alcohol
+  gin:
+    prefLabel: "Gin"
+    broader: alcohol
+  raki:
+    prefLabel: "Raki"
+    broader: alcohol
+  non-alcoholic-beer:
+    prefLabel: "Non-alcoholic beer"
+    broader: food/beverages
+  drinking-water:
+    prefLabel: "Drinking water"
+    altLabel:
+      en: ["water", "drinking water"]
+    broader: food/beverages
+  black-tea:
+    prefLabel: "Black tea"
+    broader: tea
+  green-tea:
+    prefLabel: "Green tea"
+    broader: tea
+  herbal-tea:
+    prefLabel: "Herbal tea"
+    altLabel:
+      en: ["herbal infusion"]
+    broader: tea
+  oolong:
+    prefLabel: "Oolong"
+    broader: tea
+  tea-bags:
+    prefLabel: "Tea bags"
+    broader: tea
+  bay-leaf:
+    prefLabel: "Bay leaf"
+    altLabel:
+      en: ["bay leaves"]
+    broader: food/spices/herb
+  cumin:
+    prefLabel: "Cumin"
+    broader: food/spices
+  ginger:
+    prefLabel: "Ginger"
+    broader: [food/spices, food/vegetables]
+  turmeric:
+    prefLabel: "Turmeric"
+    broader: food/spices
+  bread-roll:
+    prefLabel: "Bread roll"
+    altLabel:
+      en: ["bread_roll"]
+    broader: bread
+  rusks:
+    prefLabel: "Rusks"
+    broader: bread
+  breadcrumbs:
+    prefLabel: "Breadcrumbs"
+    broader: food/baking
+  semolina:
+    prefLabel: "Semolina"
+    broader: flour
+  quinoa:
+    prefLabel: "Quinoa"
+    broader: food/grains
+  pastry:
+    prefLabel: "Pastry"
+    altLabel:
+      en: ["pastries"]
+    broader: food/snacks
+  croissant:
+    prefLabel: "Croissant"
+    broader: pastry
+  wafer:
+    prefLabel: "Wafer"
+    altLabel:
+      en: ["wafers"]
+    broader: biscuits
+  gelatine-dessert:
+    prefLabel: "Gelatine dessert"
+    broader: food/snacks
+  trail-mix:
+    prefLabel: "Trail mix"
+    altLabel:
+      en: ["trail_mix"]
+    broader: food/nuts
+  hazelnuts:
+    prefLabel: "Hazelnuts"
+    broader: food/nuts
+  roasted-peanut:
+    prefLabel: "Roasted peanuts"
+    altLabel:
+      en: ["roasted_peanut"]
+    broader: peanuts
+  chocolate-bar:
+    prefLabel: "Chocolate bar"
+    altLabel:
+      en: ["chocolate_bar"]
+    broader: chocolate
+  cocoa-powder:
+    prefLabel: "Cocoa powder"
+    altLabel:
+      en: ["cocoa_powder"]
+    broader: [food/baking, food/beverages]
+  cocoa-beans:
+    prefLabel: "Cocoa beans"
+    altLabel:
+      en: ["cocoa-bean"]
+    broader: food
+  powdered-sugar:
+    prefLabel: "Powdered sugar"
+    altLabel:
+      en: ["powdered_sugar", "icing sugar"]
+    broader: sugar
+  vanilla-sugar:
+    prefLabel: "Vanilla sugar"
+    altLabel:
+      en: ["vanilla_sugar"]
+    broader: sugar
+  brunost:
+    prefLabel: "Brunost"
+    altLabel:
+      en: ["brown cheese"]
+    broader: cheese
+  evaporated-milk:
+    prefLabel: "Evaporated milk"
+    broader: milk
+  uht-milk:
+    prefLabel: "UHT milk"
+    broader: milk
+  dried-fruits:
+    prefLabel: "Dried fruits"
+    altLabel:
+      en: ["dried_fruits"]
+    broader: food/fruits
+  roasted-peppers:
+    prefLabel: "Roasted peppers"
+    broader: preserved-vegetables
+  crab:
+    prefLabel: "Crab"
+    altLabel:
+      en: ["crabmeat"]
+    broader: food/seafood
+  mackerel:
+    prefLabel: "Mackerel"
+    broader: fish
+  sprats:
+    prefLabel: "Sprats"
+    broader: fish
+  fish-roe-spread:
+    prefLabel: "Fish roe spread"
+    altLabel:
+      en: ["caviar spread"]
+    broader: [food/roes, spread]
+  ground-pork:
+    prefLabel: "Ground pork"
+    altLabel:
+      en: ["minced pork"]
+    broader: food/meat/pork
+  meatballs:
+    prefLabel: "Meatballs"
+    broader: food/meat
+  pinnekjott:
+    prefLabel: "Pinnekjøtt"
+    altLabel:
+      en: ["pinnekjøtt"]
+    broader: food/meat
+  luncheon-meat:
+    prefLabel: "Luncheon meat"
+    altLabel:
+      en: ["luncheon"]
+    broader: [food/meat, food/preserved]
+  tinned-meat:
+    prefLabel: "Tinned meat"
+    altLabel:
+      en: ["canned meat"]
+    broader: [food/meat, food/preserved]
+  dinner:
+    prefLabel: "Ready meals"
+    altLabel:
+      en: ["dinner boxes", "ready meal"]
+    broader: food
+  instant-foods:
+    prefLabel: "Instant foods"
+    broader: food
+  instant-noodles:
+    prefLabel: "Instant noodles"
+    broader: [noodles, instant-foods]
+  olive-oil:
+    prefLabel: "Olive oil"
+    altLabel:
+      en: ["olive_oil"]
+    broader: cooking-oil
+  sauce:
+    prefLabel: "Sauce"
+    broader: food/condiments
+  dip:
+    prefLabel: "Dip"
+    broader: food/condiments
+  teriyaki:
+    prefLabel: "Teriyaki sauce"
+    altLabel:
+      en: ["teriyaki"]
+    broader: sauce
+  lyutenitsa:
+    prefLabel: "Lyutenitsa"
+    altLabel:
+      en: ["ljutenica", "лютеница"]
+    broader: food/condiments
+  aluminium-foil:
+    prefLabel: "Aluminium foil"
+    altLabel:
+      en: ["tin foil"]
+    broader: kitchen
+  baking-paper:
+    prefLabel: "Baking paper"
+    altLabel:
+      en: ["parchment paper"]
+    broader: kitchen
+  cling-film:
+    prefLabel: "Cling film"
+    altLabel:
+      en: ["clingfilm"]
+    broader: kitchen
+  kitchen-paper:
+    prefLabel: "Kitchen paper"
+    altLabel:
+      en: ["paper towel"]
+    broader: kitchen
+  kitchen-towel:
+    prefLabel: "Kitchen towel"
+    altLabel:
+      en: ["kitchen_towel"]
+    broader: kitchen
+  napkin:
+    prefLabel: "Napkin"
+    altLabel:
+      en: ["napkins"]
+    broader: kitchen
+  plastic-bag:
+    prefLabel: "Plastic bag"
+    broader: storage
+  food-container:
+    prefLabel: "Food container"
+    broader: [kitchen, storage]
+  jar:
+    prefLabel: "Jar"
+    broader: [kitchen, storage]
+  cookware:
+    prefLabel: "Cookware"
+    altLabel:
+      en: ["pots and pans"]
+    broader: kitchen
+  cup:
+    prefLabel: "Cup"
+    broader: drinkware
+  drinkware:
+    prefLabel: "Drinkware"
+    broader: kitchen
+  tableware:
+    prefLabel: "Tableware"
+    broader: kitchen
+  cutting-board:
+    prefLabel: "Cutting board"
+    broader: kitchen-utensil
+  kitchen-utensil:
+    prefLabel: "Kitchen utensil"
+    altLabel:
+      en: ["kitchen-tool"]
+    broader: kitchen
+  spatula:
+    prefLabel: "Spatula"
+    broader: kitchen-utensil
+  knife:
+    prefLabel: "Knife"
+    broader: [kitchen-utensil, tools/hand]
+  measuring-jug:
+    prefLabel: "Measuring jug"
+    broader: kitchen-utensil
+  oven-glove:
+    prefLabel: "Oven glove"
+    altLabel:
+      en: ["oven_glove"]
+    broader: kitchen
+  kitchen-appliance:
+    prefLabel: "Kitchen appliance"
+    broader: kitchen
+  kitchen-scale:
+    prefLabel: "Kitchen scale"
+    broader: kitchen-appliance
+  air-freshener:
+    prefLabel: "Air freshener"
+    broader: household
+  anti-friction-mat:
+    prefLabel: "Anti-friction mat"
+    altLabel:
+      en: ["anti-slip mat"]
+    broader: household
+  chair:
+    prefLabel: "Chair"
+    broader: furniture
+  clothes-hanger:
+    prefLabel: "Clothes hanger"
+    broader: household
+  container:
+    prefLabel: "Container"
+    broader: storage
+  curtain-hardware:
+    prefLabel: "Curtain hardware"
+    broader: household
+  decor:
+    prefLabel: "Decoration"
+    altLabel:
+      en: ["decoration"]
+    broader: household
+  vase:
+    prefLabel: "Vase"
+    broader: decor
+  key:
+    prefLabel: "Key"
+    broader: household
+  heater:
+    prefLabel: "Heater"
+    broader: household
+  electric-heater:
+    prefLabel: "Electric heater"
+    broader: heater
+  fan-heater:
+    prefLabel: "Fan heater"
+    altLabel:
+      en: ["fan_heater"]
+    broader: electric-heater
+  water-heater:
+    prefLabel: "Water heater"
+    broader: heater
+  water-heater-element:
+    prefLabel: "Water heater element"
+    broader: water-heater
+  towel:
+    prefLabel: "Towel"
+    altLabel:
+      en: ["towels"]
+    broader: bathroom
+  home-clothing-use:
+    prefLabel: "Clothes for home use"
+    broader: clothing
+  sentimental-item:
+    prefLabel: "Sentimental item"
+    broader: misc
+  promotional-item:
+    prefLabel: "Promotional item"
+    broader: misc
+  pest-control:
+    prefLabel: "Pest control"
+    broader: household
+  flypaper:
+    prefLabel: "Flypaper"
+    broader: pest-control
+  mosquito-coil:
+    prefLabel: "Mosquito coil"
+    altLabel:
+      en: ["mosquito_coil"]
+    broader: pest-control
+  cleaning-chemical:
+    prefLabel: "Cleaning chemical"
+    altLabel:
+      en: ["cleaning agent"]
+    broader: [household/cleaning, chemicals]
+  bleach:
+    prefLabel: "Bleach"
+    broader: cleaning-chemical
+  degreaser:
+    prefLabel: "Degreaser"
+    broader: cleaning-chemical
+  dishwasher-detergent:
+    prefLabel: "Dishwasher detergent"
+    broader: cleaning-chemical
+  dishwashing-liquid:
+    prefLabel: "Dishwashing liquid"
+    altLabel:
+      en: ["washing-up liquid"]
+    broader: cleaning-chemical
+  soap:
+    prefLabel: "Soap"
+    broader: personal-care
+  liquid-soap:
+    prefLabel: "Liquid soap"
+    broader: soap
+  shower-gel:
+    prefLabel: "Shower gel"
+    altLabel:
+      en: ["shower_gel"]
+    broader: personal-care
+  toothpaste:
+    prefLabel: "Toothpaste"
+    broader: personal-care
+  dental-floss:
+    prefLabel: "Dental floss"
+    broader: personal-care
+  wet-wipes:
+    prefLabel: "Wet wipes"
+    broader: personal-care
+  metal-stock:
+    prefLabel: "Metal stock"
+    broader: materials
+  insulation:
+    prefLabel: "Insulation"
+    broader: materials
+  textile:
+    prefLabel: "Textile"
+    altLabel:
+      en: ["fabric", "cloth"]
+    broader: materials
+  fibre:
+    prefLabel: "Fibre"
+    altLabel:
+      en: ["fiber"]
+    broader: materials
+  glass-fibre:
+    prefLabel: "Glass fibre"
+    altLabel:
+      en: ["glass fiber"]
+    broader: [fibre, composite-material]
+  boat-paint-and-composites:
+    prefLabel: "Boat paint & composites"
+    altLabel:
+      en: ["boat_paint_&_composites"]
+    broader: boat-material
+  paint:
+    prefLabel: "Paint"
+    broader: chemicals
+  varnish:
+    prefLabel: "Varnish"
+    broader: paint
+  solvent:
+    prefLabel: "Solvent"
+    broader: chemicals
+  citric-acid:
+    prefLabel: "Citric acid"
+    broader: chemicals
+  hydrochloric-acid:
+    prefLabel: "Hydrochloric acid"
+    altLabel:
+      en: ["hydrochloric_acid"]
+    broader: chemicals
+  calcium-chloride:
+    prefLabel: "Calcium chloride"
+    altLabel:
+      en: ["calcium_chloride"]
+    broader: chemicals
+  antifreeze:
+    prefLabel: "Antifreeze"
+    altLabel:
+      en: ["coolant"]
+    broader: chemicals
+  fuel-additive:
+    prefLabel: "Fuel additive"
+    broader: chemicals
+  charcoal:
+    prefLabel: "Charcoal"
+    broader: outdoor/cooking
+  dielectric-grease:
+    prefLabel: "Dielectric grease"
+    broader: lubricant
+  construction-adhesive:
+    prefLabel: "Construction adhesive"
+    broader: adhesive
+  thread-locking-fluid:
+    prefLabel: "Thread-locking fluid"
+    altLabel:
+      en: ["thread_locking_fluid", "threadlocker"]
+    broader: adhesive
+  sealant:
+    prefLabel: "Sealant"
+    broader: consumables
+  silicone-sealant:
+    prefLabel: "Silicone sealant"
+    broader: sealant
+  tire-sealant:
+    prefLabel: "Tire sealant"
+    broader: sealant
+  maintenance-supply:
+    prefLabel: "Maintenance supply"
+    broader: consumables
+  paint-tool:
+    prefLabel: "Painting tool"
+    broader: tools/hand
+  paint-brush:
+    prefLabel: "Paint brush"
+    broader: paint-tool
+  paint-roller:
+    prefLabel: "Paint roller"
+    altLabel:
+      en: ["paint_roller"]
+    broader: paint-tool
+  putty-knife:
+    prefLabel: "Putty knife"
+    broader: paint-tool
+  applicator:
+    prefLabel: "Applicator"
+    broader: paint-tool
+  brush:
+    prefLabel: "Brush"
+    broader: tools/hand
+  wire-brush:
+    prefLabel: "Wire brush"
+    broader: brush
+  sealant-tool:
+    prefLabel: "Sealant tool"
+    broader: tools/hand
+  caulking-gun:
+    prefLabel: "Caulking gun"
+    broader: sealant-tool
+  sealant-gun:
+    prefLabel: "Sealant gun"
+    broader: sealant-tool
+  glue-gun:
+    prefLabel: "Glue gun"
+    broader: tools/power
+  epoxy-tool:
+    prefLabel: "Epoxy tool"
+    broader: tools/hand
+  syringe:
+    prefLabel: "Syringe"
+    broader: [tools, epoxy-tool]
+  chisel:
+    prefLabel: "Chisel"
+    broader: tools/hand
+  clamp:
+    prefLabel: "Clamp"
+    broader: tools/hand
+  hex-key:
+    prefLabel: "Hex key"
+    altLabel:
+      en: ["allen key"]
+    broader: tools/hand
+  pliers:
+    prefLabel: "Pliers"
+    broader: tools/hand
+  saw:
+    prefLabel: "Saw"
+    broader: tools/hand
+  scissors:
+    prefLabel: "Scissors"
+    altLabel:
+      en: ["tool-scissors"]
+    broader: tools/hand
+  screwdriver:
+    prefLabel: "Screwdriver"
+    broader: tools/hand
+  socket-set:
+    prefLabel: "Socket set"
+    broader: tools/hand
+  wrench:
+    prefLabel: "Wrench"
+    altLabel:
+      en: ["spanner"]
+    broader: tools/hand
+  utility-blade:
+    prefLabel: "Utility blade"
+    altLabel:
+      en: ["utility knife blade"]
+    broader: tools/hand
+  pickaxe:
+    prefLabel: "Pickaxe"
+    broader: tools/hand
+  cutting-tool:
+    prefLabel: "Cutting tool"
+    broader: tools/hand
+  marking-tool:
+    prefLabel: "Marking tool"
+    broader: tools/hand
+  mounting-tool:
+    prefLabel: "Mounting tool"
+    broader: tools/hand
+  misc-tool:
+    prefLabel: "Miscellaneous tools"
+    broader: tools
+  metalworking-tool:
+    prefLabel: "Metalworking tool"
+    broader: tools
+  electrical-tool:
+    prefLabel: "Electrical tool"
+    altLabel:
+      en: ["electronics-tool"]
+    broader: tools
+  grease-gun:
+    prefLabel: "Grease gun"
+    broader: tools/hand
+  funnel:
+    prefLabel: "Funnel"
+    broader: tools
+  sprayer:
+    prefLabel: "Sprayer"
+    broader: tools
+  blowtorch:
+    prefLabel: "Blowtorch"
+    broader: tools
+  sanding-block:
+    prefLabel: "Sanding block"
+    broader: tools/hand
+  drill:
+    prefLabel: "Drill"
+    broader: tools/power
+  drill-bit:
+    prefLabel: "Drill bit"
+    broader: power-tool-accessory
+  hole-saw:
+    prefLabel: "Hole saw"
+    broader: power-tool-accessory
+  grinding-tool:
+    prefLabel: "Grinding tool"
+    broader: tools/power
+  power-metalworking-tool:
+    prefLabel: "Power metalworking tool"
+    broader: [tools/power, metalworking-tool]
+  power-tool-accessory:
+    prefLabel: "Power tool accessory"
+    broader: tools/power
+  power-tool-battery:
+    prefLabel: "Power tool battery"
+    broader: [tools/power, battery]
+  caliper:
+    prefLabel: "Caliper"
+    broader: tools/measuring
+  folding-ruler:
+    prefLabel: "Folding ruler"
+    broader: tools/measuring
+  precision-scale:
+    prefLabel: "Precision scale"
+    broader: tools/measuring
+  test-lead:
+    prefLabel: "Test lead"
+    broader: tools/measuring
+  pruning-shears:
+    prefLabel: "Pruning shears"
+    altLabel:
+      en: ["secateurs"]
+    broader: garden
+  tire-iron:
+    prefLabel: "Tire lever"
+    altLabel:
+      en: ["tire_iron", "tyre lever"]
+    broader: tools/bike
+  ladder:
+    prefLabel: "Ladder"
+    broader: tools
+  soldering-equipment:
+    prefLabel: "Soldering equipment"
+    broader: tools
+  solder:
+    prefLabel: "Solder"
+    broader: soldering-equipment
+  sewing:
+    prefLabel: "Sewing kit"
+    altLabel:
+      en: ["sewing kit"]
+    broader: hobbies
+  bolt:
+    prefLabel: "Bolt"
+    broader: fasteners
+  screw:
+    prefLabel: "Screw"
+    broader: fasteners
+  dowel:
+    prefLabel: "Dowel"
+    broader: fasteners
+  grommet:
+    prefLabel: "Grommet"
+    broader: fasteners
+  hose-clamp:
+    prefLabel: "Hose clamp"
+    altLabel:
+      en: ["jubilee clip"]
+    broader: [fasteners, plumbing]
+  cable-tie:
+    prefLabel: "Cable tie"
+    altLabel:
+      en: ["zip tie"]
+    broader: fasteners
+  strap:
+    prefLabel: "Strap"
+    broader: fasteners
+  buckle:
+    prefLabel: "Buckle"
+    broader: fasteners
+  cord-lock:
+    prefLabel: "Cord lock"
+    broader: fasteners
+  clip:
+    prefLabel: "Clip"
+    altLabel:
+      en: ["cable clip"]
+    broader: fasteners
+  hook:
+    prefLabel: "Hook"
+    altLabel:
+      en: ["screw hook"]
+    broader: fasteners
+  chainlink:
+    prefLabel: "Chain link"
+    broader: hardware
+  caster:
+    prefLabel: "Caster"
+    altLabel:
+      en: ["castor"]
+    broader: hardware
+  mounting-hardware:
+    prefLabel: "Mounting hardware"
+    broader: fasteners
+  valve:
+    prefLabel: "Valve"
+    broader: plumbing
+  check-valve:
+    prefLabel: "Check valve"
+    altLabel:
+      en: ["non-return valve"]
+    broader: valve
+  flange:
+    prefLabel: "Flange"
+    broader: plumbing
+  fitting:
+    prefLabel: "Fitting"
+    broader: plumbing
+  vent:
+    prefLabel: "Vent"
+    broader: plumbing
+  thread-seal-tape:
+    prefLabel: "Thread seal tape"
+    altLabel:
+      en: ["PTFE tape"]
+    broader: plumbing
+  watertank:
+    prefLabel: "Water tank"
+    altLabel:
+      en: ["water tank"]
+    broader: plumbing
+  pump:
+    prefLabel: "Pump"
+    broader: hardware
+  hand-pump:
+    prefLabel: "Hand pump"
+    broader: pump
+  gear-pump:
+    prefLabel: "Gear pump"
+    broader: pump
+  marine-pump:
+    prefLabel: "Marine pump"
+    broader: [pump, boat-equipment]
+  transfer-pump:
+    prefLabel: "Transfer pump"
+    broader: pump
+  pump-part:
+    prefLabel: "Pump part"
+    altLabel:
+      en: ["pump-spare"]
+    broader: pump
+  filter:
+    prefLabel: "Filter"
+    broader: hardware
+  oil-filter:
+    prefLabel: "Oil filter"
+    broader: [filter, engine-part]
+  fuel-filter:
+    prefLabel: "Fuel filter"
+    broader: [filter, engine-part]
+  jacking-pillow:
+    prefLabel: "Jacking pillow"
+    altLabel:
+      en: ["jack", "air jack"]
+    broader: tools
+  adapter:
+    prefLabel: "Adapter"
+    broader: electronics/connectors
+  antenna:
+    prefLabel: "Antenna"
+    broader: electronics
+  battery:
+    prefLabel: "Battery"
+    broader: electronics/power
+  battery-charger:
+    prefLabel: "Battery charger"
+    altLabel:
+      en: ["battery_charger"]
+    broader: electronics/power
+  boost-converter:
+    prefLabel: "Boost converter"
+    altLabel:
+      en: ["boost_converter"]
+    broader: electronics/power
+  dc-to-dc-converter:
+    prefLabel: "DC-DC converter"
+    altLabel:
+      en: ["dc_to_dc_converter"]
+    broader: electronics/power
+  power-supply:
+    prefLabel: "Power supply"
+    broader: electronics/power
+  voltage-regulator:
+    prefLabel: "Voltage regulator"
+    broader: electronics/power
+  solar-panel:
+    prefLabel: "Solar panel"
+    altLabel:
+      en: ["solar"]
+    broader: electronics/power
+  coax-cable:
+    prefLabel: "Coaxial cable"
+    broader: cables
+  data-cable:
+    prefLabel: "Data cable"
+    altLabel:
+      en: ["data_cable"]
+    broader: cables
+  ethernet-cable:
+    prefLabel: "Ethernet cable"
+    broader: cables
+  speaker-wire:
+    prefLabel: "Speaker wire"
+    broader: cables
+  usb-cable:
+    prefLabel: "USB cable"
+    broader: cables
+  computer-case:
+    prefLabel: "Computer case"
+    broader: electronics
+  electrical-misc:
+    prefLabel: "Miscellaneous electrical parts"
+    broader: electronics
+  electronics-manual:
+    prefLabel: "Electronics manual"
+    broader: documents
+  switch:
+    prefLabel: "Switch"
+    altLabel:
+      en: ["electronic-switch"]
+    broader: electronics/components
+  fuse:
+    prefLabel: "Fuse"
+    broader: electronics/components
+  resistor:
+    prefLabel: "Resistor"
+    broader: electronics/components
+  prototyping:
+    prefLabel: "Prototyping board"
+    altLabel:
+      en: ["breadboard"]
+    broader: electronics/components
+  gps-tracker:
+    prefLabel: "GPS tracker"
+    broader: electronics
+  headset:
+    prefLabel: "Headset"
+    broader: electronics
+  keyboard:
+    prefLabel: "Keyboard"
+    broader: electronics
+  router:
+    prefLabel: "Router"
+    broader: network-equipment
+  network-equipment:
+    prefLabel: "Network equipment"
+    broader: electronics
+  storage-device:
+    prefLabel: "Storage device"
+    broader: electronics
+  usb-device:
+    prefLabel: "USB device"
+    broader: electronics
+  remote-control:
+    prefLabel: "Remote control"
+    broader: electronics
+  tablet:
+    prefLabel: "Tablet"
+    broader: electronics
+  thermostat:
+    prefLabel: "Thermostat"
+    broader: electronics
+  fan:
+    prefLabel: "Fan"
+    altLabel:
+      en: ["cooling-fan"]
+    broader: electronics
+  power-strip:
+    prefLabel: "Power strip"
+    broader: mains-power-connectors
+  mains-outlet:
+    prefLabel: "Mains outlet"
+    broader: mains-power-connectors
+  shore-power-connector:
+    prefLabel: "Shore power connector"
+    broader: [mains-power-connectors, boat-equipment]
+  sensor:
+    prefLabel: "Sensor"
+    broader: electronics
+  motion-sensor:
+    prefLabel: "Motion sensor"
+    broader: sensor
+  voltage-sensor:
+    prefLabel: "Voltage sensor"
+    broader: sensor
+  water-leak-sensor:
+    prefLabel: "Water leak sensor"
+    broader: sensor
+  alarm:
+    prefLabel: "Alarm"
+    broader: electronics
+  smoke-detector:
+    prefLabel: "Smoke detector"
+    broader: alarm
+  gas-alarm:
+    prefLabel: "Gas alarm"
+    broader: alarm
+  water-alarm:
+    prefLabel: "Water alarm"
+    broader: alarm
+  marine-electronics:
+    prefLabel: "Marine electronics"
+    broader: [electronics, boat-equipment]
+  led:
+    prefLabel: "LED"
+    broader: electronics/components
+  led-light:
+    prefLabel: "LED light"
+    broader: lighting
+  halogen-bulb:
+    prefLabel: "Halogen bulb"
+    broader: lighting
+  lamp-fitting:
+    prefLabel: "Lamp fitting"
+    broader: lighting
+  lighting-part:
+    prefLabel: "Lighting part"
+    altLabel:
+      en: ["lighting-spare"]
+    broader: lighting
+  kerosene-lamp:
+    prefLabel: "Kerosene lamp"
+    broader: lighting
+  flashlight:
+    prefLabel: "Flashlight"
+    altLabel:
+      en: ["torch"]
+    broader: lighting
+  headlamp:
+    prefLabel: "Headlamp"
+    altLabel:
+      en: ["head torch"]
+    broader: flashlight
+  binoculars:
+    prefLabel: "Binoculars"
+    altLabel:
+      en: ["optics"]
+    broader: boat-equipment/navigation
+  gas-cartridge:
+    prefLabel: "Gas cartridge"
+    broader: outdoor/cooking
+  gas-cylinder:
+    prefLabel: "Gas cylinder"
+    broader: outdoor/cooking
+  gas-regulator:
+    prefLabel: "Gas regulator"
+    broader: outdoor/cooking
+  barbecue-grill:
+    prefLabel: "Barbecue grill"
+    altLabel:
+      en: ["barbecue_grill"]
+    broader: outdoor/cooking
+  tent:
+    prefLabel: "Tent"
+    broader: camping
+  fishing:
+    prefLabel: "Fishing gear"
+    broader: recreation
+  fishing-hook:
+    prefLabel: "Fishing hook"
+    broader: fishing
+  fishing-line:
+    prefLabel: "Fishing line"
+    broader: fishing
+  diving-mask:
+    prefLabel: "Diving mask"
+    altLabel:
+      en: ["diving_mask"]
+    broader: sports/water-sports
+  resistance-band:
+    prefLabel: "Resistance band"
+    altLabel:
+      en: ["resistance_band"]
+    broader: sports
+  bicycle-lock:
+    prefLabel: "Bicycle lock"
+    altLabel:
+      en: ["bicycle_lock"]
+    broader: sports/cycling
+  bicycle-tire:
+    prefLabel: "Bicycle tire"
+    altLabel:
+      en: ["bicycle_tire"]
+    broader: bike-part
+  bike-bell:
+    prefLabel: "Bike bell"
+    broader: bike-part
+  brake:
+    prefLabel: "Brake"
+    altLabel:
+      en: ["brake pads"]
+    broader: bike-part
+  handlebar-grip:
+    prefLabel: "Handlebar grip"
+    altLabel:
+      en: ["grip"]
+    broader: bike-part
+  mudguard:
+    prefLabel: "Mudguard"
+    altLabel:
+      en: ["fender (bicycle)"]
+    broader: bike-part
+  phone-mount:
+    prefLabel: "Phone mount"
+    broader: bike-part
+  chain-roller:
+    prefLabel: "Chain roller"
+    altLabel:
+      en: ["roller"]
+    broader: bike-part
+  helmet:
+    prefLabel: "Helmet"
+    broader: [sports/cycling, safety-equipment]
+  boat:
+    prefLabel: "Boat"
+    broader: transport
+  anchor:
+    prefLabel: "Anchor"
+    broader: boat-equipment
+  boat-hook:
+    prefLabel: "Boat hook"
+    altLabel:
+      en: ["boat_hook"]
+    broader: boat-equipment/deck
+  cutless-bearing:
+    prefLabel: "Cutless bearing"
+    broader: engine-part
+  drive-belt:
+    prefLabel: "Drive belt"
+    broader: engine-part
+  marine-engine:
+    prefLabel: "Marine engine"
+    altLabel:
+      en: ["engine", "boat engine"]
+    broader: boat-equipment/engine
+  thruster:
+    prefLabel: "Thruster"
+    broader: boat-equipment/engine
+  day-shape:
+    prefLabel: "Day shape"
+    broader: boat-equipment/safety
+  drogue:
+    prefLabel: "Drogue"
+    altLabel:
+      en: ["sea anchor"]
+    broader: boat-equipment/safety
+  flag:
+    prefLabel: "Flag"
+    altLabel:
+      en: ["courtesy flag"]
+    broader: boat-equipment
+  oar:
+    prefLabel: "Oar"
+    broader: boat-equipment
+  rigging-hardware:
+    prefLabel: "Rigging hardware"
+    broader: boat-equipment/rigging
+  sailing-hardware:
+    prefLabel: "Sailing hardware"
+    broader: boat-equipment/rigging
+  rope:
+    prefLabel: "Rope"
+    broader: [hardware, boat-equipment/rigging]
+  wire-rope:
+    prefLabel: "Wire rope"
+    broader: rope
+  shock-absorber:
+    prefLabel: "Mooring shock absorber"
+    broader: boat-equipment
+  boat-cover:
+    prefLabel: "Boat cover"
+    altLabel:
+      en: ["cover", "canvas cover"]
+    broader: boat-equipment
+  anchoring:
+    prefLabel: "Anchoring"
+    altLabel:
+      en: ["systems/anchoring"]
+    broader: boat-equipment
+  gloves:
+    prefLabel: "Gloves"
+    broader: clothing/accessories
+  work-gloves:
+    prefLabel: "Work gloves"
+    broader: [gloves, clothing/workwear]
+  safety-glasses:
+    prefLabel: "Safety glasses"
+    broader: safety-equipment
+  sunglasses:
+    prefLabel: "Sunglasses"
+    broader: clothing/accessories
+  jewelry:
+    prefLabel: "Jewelry"
+    altLabel:
+      en: ["jewellery"]
+    broader: clothing/accessories
+  wallet:
+    prefLabel: "Wallet"
+    broader: clothing/accessories
+  shirt:
+    prefLabel: "Shirt"
+    broader: clothing
+  t-shirt:
+    prefLabel: "T-shirt"
+    broader: shirt
+  socks:
+    prefLabel: "Socks"
+    broader: clothing
+  swimwear:
+    prefLabel: "Swimwear"
+    broader: clothing
+  sportswear:
+    prefLabel: "Sportswear"
+    broader: clothing
+  outdoor-clothing:
+    prefLabel: "Outdoor clothing"
+    broader: clothing
+  hiking-pants:
+    prefLabel: "Hiking pants"
+    broader: outdoor-clothing
+  comic-book:
+    prefLabel: "Comic book"
+    altLabel:
+      en: ["comic"]
+    broader: books
+  activity-book:
+    prefLabel: "Activity book"
+    broader: books
+  magazine:
+    prefLabel: "Magazine"
+    broader: documents
+  catalog:
+    prefLabel: "Catalog"
+    altLabel:
+      en: ["catalogue"]
+    broader: documents
+  manual:
+    prefLabel: "Manual"
+    broader: documents
+  map:
+    prefLabel: "Map"
+    broader: documents
+  media:
+    prefLabel: "Media"
+    broader: recreation
+  dvd:
+    prefLabel: "DVD"
+    broader: media
+  permanent-marker:
+    prefLabel: "Permanent marker"
+    altLabel:
+      en: ["permanent_marker"]
+    broader: office/writing
+  stapler:
+    prefLabel: "Stapler"
+    broader: office
+  compressor:
+    prefLabel: "Compressor"
+    altLabel:
+      en: ["air compressor", "air_compressor"]
+    broader: tools/power
