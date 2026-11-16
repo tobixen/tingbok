@@ -339,6 +339,8 @@ async def test_resolve_drops_upper_ontology_paths(client) -> None:
     broader = data["concepts"]["widget"]["broader"]
     assert "hand-tools" in broader
     assert not any("entity_(bfo)" in b or "continuant" in b for b in broader)
+    # The parent's own parent is in its stub, by slug as well
+    assert data["concepts"]["hand-tools"]["broader"] == ["tools"]
     assert not any("entity_(bfo)" in cid or "continuant" in cid for cid in data["concepts"])
 
 

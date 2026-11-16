@@ -12,7 +12,7 @@ _WD = "https://www.wikidata.org/entity/"
 
 
 def test_slug_is_last_segment() -> None:
-    assert _slug_id("food/condiments/oil/cooking_oil", None) == "cooking-oil"
+    assert _slug_id("materials/substances/frying_oil", None) == "frying-oil"
 
 
 def test_uri_bridging_into_vocabulary_wins() -> None:
@@ -37,7 +37,7 @@ def test_slug_colliding_with_concept_under_other_root_keeps_its_root() -> None:
 
 @pytest.mark.anyio
 async def test_resolve_broader_is_direct_parent_slug(client) -> None:
-    """olive-oil's parent is cooking-oil, whose parent is oil — not path strings."""
+    """sunflower-oil's parent is cooking-oil (bridged by URI), not a path string."""
     from tests.test_app import _skos_hierarchy_mock, _skos_lookup_mock
 
     with (
@@ -46,11 +46,9 @@ async def test_resolve_broader_is_direct_parent_slug(client) -> None:
         patch("tingbok.app.gpt_service.lookup_concept", return_value=None),
         patch("tingbok.app._lookup_off", return_value=(None, {})),
     ):
-        response = await client.post("/api/vocabulary/resolve", json={"labels": ["olive-oil"], "lang": "en"})
+        response = await client.post("/api/vocabulary/resolve", json={"labels": ["sunflower-oil"], "lang": "en"})
     concepts = response.json()["concepts"]
-    assert concepts["olive-oil"]["broader"] == ["cooking-oil"]
-    assert concepts["cooking-oil"]["broader"] == ["oil"]
-    assert concepts["oil"]["broader"] == ["food/condiments"]
+    assert concepts["sunflower-oil"]["broader"] == ["cooking-oil"]
     assert not any("/" in b and b not in concepts for c in concepts.values() for b in c["broader"])
 
 

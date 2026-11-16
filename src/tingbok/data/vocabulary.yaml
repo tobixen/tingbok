@@ -35,6 +35,7 @@ concepts:
     - household
     - clothing
     - hardware
+    - materials
     - recreation
     - medical
     - games
@@ -142,6 +143,83 @@ concepts:
     - https://www.wikidata.org/entity/Q11650
     - https://aims.fao.org/aos/agrovoc/c_2522
     - gpt:222
+
+  # =============================================================================
+  # MATERIALS — substances and raw materials, whatever they end up used for
+  # =============================================================================
+
+  materials:
+    prefLabel: "Materials"
+    altLabel:
+      en: ["material", "raw materials"]
+      nb: ["materialer"]
+    source_uris:
+    - https://www.wikidata.org/entity/Q214609
+    - https://aims.fao.org/aos/agrovoc/c_92337
+    excluded_sources:
+    - dbpedia  # matches "Materials science", the field of study
+  chemicals:
+    prefLabel: "Chemicals"
+    altLabel:
+      en: ["chemical", "chemical substances", "chemical substance"]
+      nb: ["kjemikalier"]
+    broader: materials
+    source_uris:
+    - https://www.wikidata.org/entity/Q79529
+    - https://dbpedia.org/resource/Chemical_substance
+    - https://aims.fao.org/aos/agrovoc/c_49872
+  # Every oil — mineral, synthetic, vegetable, animal — is an oil, edible or not.
+  # Edibility is the separate cooking-oil parent; oil itself is not food.
+  oil:
+    prefLabel: "Oil"
+    altLabel:
+      en: ["oils"]
+      nb: ["olje", "oljer"]
+    broader: chemicals
+    source_uris:
+    - https://www.wikidata.org/entity/Q42962
+    - https://dbpedia.org/resource/Oil
+    - https://aims.fao.org/aos/agrovoc/c_5334
+  cooking-oil:
+    prefLabel: "Cooking oil"
+    altLabel:
+      en: ["cooking oils", "edible oil", "edible oils"]
+      nb: ["matolje"]
+      bg: ["олио", "готварско масло"]
+    broader: [food, oil]
+    source_uris:
+    - https://www.wikidata.org/entity/Q427457
+    - https://dbpedia.org/resource/Cooking_oil
+    - https://aims.fao.org/aos/agrovoc/c_1853
+    - gpt:2126
+  engine-oil:
+    prefLabel: "Engine oil"
+    altLabel:
+      en: ["motor oil", "engine lubricant"]
+      nb: ["motorolje"]
+    broader: [oil, lubricant]
+    source_uris:
+    - https://www.wikidata.org/entity/Q193784
+    - https://dbpedia.org/resource/Motor_oil
+  epoxy:
+    prefLabel: "Epoxy"
+    altLabel:
+      en: ["epoxy resin", "epoxies"]
+      nb: ["epoksy"]
+    broader: chemicals
+    source_uris:
+    - https://dbpedia.org/resource/Epoxy
+    excluded_sources:
+    - wikidata  # "epoxy" matches a comic book (Q2011111)
+  wood:
+    prefLabel: "Wood"
+    altLabel:
+      nb: ["tre", "treverk"]
+    broader: materials
+    source_uris:
+    - https://aims.fao.org/aos/agrovoc/c_8421
+    excluded_sources:
+    - dbpedia  # "wood" matches Boreham Wood F.C.
 
   # =============================================================================
   # ELECTRONICS SUBCATEGORIES
@@ -2137,7 +2215,8 @@ concepts:
   construction/lumber:
     prefLabel: "Lumber"
     altLabel:
-      en: ["wood", "timber"]
+      en: ["timber"]
+    broader: [construction, wood]
     uri: "https://dbpedia.org/resource/Lumber"
     source_uris:
     - "https://dbpedia.org/resource/Lumber"

@@ -8,7 +8,8 @@ import yaml as _yaml
 from httpx import ASGITransport, AsyncClient
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
-from tingbok.app import app
+import tingbok.app as app_module
+from tingbok.app import ancestors_of, app
 
 
 @pytest.mark.anyio
@@ -344,35 +345,35 @@ _SKOS_MOCK_CONCEPTS = {
     "sunflower oil": {"uri": _WD_SUNFLOWER_OIL_URI, "prefLabel": "sunflower oil", "source": "wikidata"},
 }
 
+_WD_FOOD_INGREDIENT_URI = "https://www.wikidata.org/entity/Q25403900"
+
+
+def _oil_paths(leaf: str | None, leaf_uri: str | None) -> tuple[list[str], bool, dict[str, str]]:
+    """Wikidata-shaped paths for an edible oil.
+
+    As in Wikidata, cooking oil (Q427457) has two parents: oil (Q42962), which is a
+    substance and *not* food — engine oil is an oil too — and food ingredient.  Keys
+    are full path prefixes built with underscores, as skos_service._normalize_label
+    produces, matching real build_hierarchy_paths output.
+    """
+    bases = ["chemicals/oil/cooking_oil", "food/food_ingredient/cooking_oil"]
+    uri_map = {
+        "chemicals/oil": _WD_OIL_URI,
+        "chemicals/oil/cooking_oil": _WD_COOKING_OIL_URI,
+        "food/food_ingredient": _WD_FOOD_INGREDIENT_URI,
+        "food/food_ingredient/cooking_oil": _WD_COOKING_OIL_URI,
+    }
+    if leaf is None:
+        return bases, True, uri_map
+    for base in bases:
+        uri_map[f"{base}/{leaf}"] = leaf_uri or ""
+    return [f"{base}/{leaf}" for base in bases], True, uri_map
+
+
 _SKOS_MOCK_PATHS: dict[str, tuple[list[str], bool, dict[str, str]]] = {
-    # Keys are full path prefixes built with underscores, as skos_service._normalize_label
-    # produces (spaces → underscores).  This matches real build_hierarchy_paths output.
-    "cooking oil": (
-        ["food/condiments/oil/cooking_oil"],
-        True,
-        {
-            "food/condiments/oil": _WD_OIL_URI,
-            "food/condiments/oil/cooking_oil": _WD_COOKING_OIL_URI,
-        },
-    ),
-    "olive oil": (
-        ["food/condiments/oil/cooking_oil/olive_oil"],
-        True,
-        {
-            "food/condiments/oil": _WD_OIL_URI,
-            "food/condiments/oil/cooking_oil": _WD_COOKING_OIL_URI,
-            "food/condiments/oil/cooking_oil/olive_oil": _WD_OLIVE_OIL_URI,
-        },
-    ),
-    "sunflower oil": (
-        ["food/condiments/oil/cooking_oil/sunflower_oil"],
-        True,
-        {
-            "food/condiments/oil": _WD_OIL_URI,
-            "food/condiments/oil/cooking_oil": _WD_COOKING_OIL_URI,
-            "food/condiments/oil/cooking_oil/sunflower_oil": _WD_SUNFLOWER_OIL_URI,
-        },
-    ),
+    "cooking oil": _oil_paths(None, None),
+    "olive oil": _oil_paths("olive_oil", _WD_OLIVE_OIL_URI),
+    "sunflower oil": _oil_paths("sunflower_oil", _WD_SUNFLOWER_OIL_URI),
 }
 
 
@@ -391,21 +392,42 @@ def _skos_hierarchy_mock(
 
 
 @pytest.mark.anyio
-async def test_resolve_cooking_oil_has_oil_as_ancestor(client):
-    """resolve should return 'cooking-oil' as a SKOS-resolved concept with 'oil' as ancestor.
+async def test_resolve_cooking_oil_is_food_and_oil_but_oil_is_not_food(client):
+    """An edible oil the vocabulary lacks lands under cooking-oil, which is food and oil; oil is not food.
 
-    'cooking-oil' is not in the local vocabulary, so the endpoint falls back to SKOS sources.
-    The Wikidata hierarchy for cooking oil passes through Q42962 (Oil), which maps to the
-    vocabulary concept 'oil' via URI bridging — so 'oil' must appear in the response concepts.
+    sunflower-oil is not a vocabulary concept, so this goes through the (mocked)
+    Wikidata paths: its parent cooking_oil bridges to cooking-oil by URI.
     """
+    assert "sunflower-oil" not in app_module.vocabulary
     with patch("tingbok.app.skos_service.lookup_concept", side_effect=_skos_lookup_mock):
         with patch("tingbok.app.skos_service.build_hierarchy_paths", side_effect=_skos_hierarchy_mock):
-            response = await client.post("/api/vocabulary/resolve", json={"labels": ["cooking-oil"], "lang": "en"})
+            response = await client.post("/api/vocabulary/resolve", json={"labels": ["sunflower-oil"], "lang": "en"})
     assert response.status_code == 200
-    data = response.json()
-    assert "oil" in data["concepts"], "Expected 'oil' in concepts, got: " + str(list(data["concepts"].keys()))
-    assert "cooking-oil" not in data["unresolved"], "'cooking-oil' should resolve via SKOS, not be a stub"
-    assert "cooking-oil" in data["concepts"], "Expected 'cooking-oil' concept (input label as concept ID)"
+    concepts = response.json()["concepts"]
+    assert "cooking-oil" in concepts["sunflower-oil"]["broader"]
+    assert sorted(concepts["cooking-oil"]["broader"]) == ["food", "oil"]
+    assert concepts["oil"]["broader"] == ["chemicals"]
+    assert concepts["chemicals"]["broader"] == ["materials"]
+    assert "food" not in ancestors_of("oil", app_module.vocabulary)
+
+
+@pytest.mark.anyio
+async def test_bulgarian_maslo_is_butter_not_oil(client):
+    """масло on a Bulgarian receipt is butter; oil is олио."""
+    response = await client.get("/api/lookup/масло", params={"lang": "bg"})
+    assert response.json()["id"] == "butter"
+
+
+@pytest.mark.anyio
+async def test_timber_is_lumber_under_wood(client):
+    response = await client.get("/api/lookup/timber")
+    assert response.json()["id"] == "construction/lumber"
+    assert "wood" in ancestors_of("construction/lumber", app_module.vocabulary)
+
+
+def test_engine_oil_is_oil_but_not_food() -> None:
+    assert "oil" in ancestors_of("engine-oil", app_module.vocabulary)
+    assert "food" not in ancestors_of("engine-oil", app_module.vocabulary)
 
 
 @pytest.mark.anyio
@@ -497,17 +519,17 @@ async def test_resolve_no_duplicate_stub_for_same_uri_different_path_segment(cli
     }
     mock_paths = {
         "cooking oil": (
-            ["food/oils/cooking_oil"],
+            ["food/foods/cooking_oil"],
             True,
-            {"food/oils/cooking_oil": _COOKING_OIL_URI},
+            {"food/foods/cooking_oil": _COOKING_OIL_URI},
         ),
         "olive oil": (
             # Plural segment name (cooking_oils) vs input label (cooking-oil): same URI, different name
-            ["food/oils/cooking_oils/olive_oil"],
+            ["food/foods/cooking_oils/olive_oil"],
             True,
             {
-                "food/oils/cooking_oils": _COOKING_OIL_URI,
-                "food/oils/cooking_oils/olive_oil": _OLIVE_OIL_URI,
+                "food/foods/cooking_oils": _COOKING_OIL_URI,
+                "food/foods/cooking_oils/olive_oil": _OLIVE_OIL_URI,
             },
         ),
     }
