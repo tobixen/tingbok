@@ -61,11 +61,17 @@ current v0.x stage.  When/if a rename happens, the old URL should redirect to th
 ### Dynamic/cached concepts
 
 Concepts that are not in `vocabulary.yaml` but are resolved on demand (e.g. a label
-looked up via AGROVOC that produces a path like `food/spices/cumin`) should also receive
-a canonical URL once they have been resolved.  These are "semi-persistent": retained as
-long as an inventory references them (see the cache TTL rules).  Their URL follows the
-same scheme — `https://tingbok.plann.no/concept/food/spices/cumin` — even though the
-concept does not appear in `vocabulary.yaml`.
+looked up via AGROVOC under the path `food/spices/cumin`) should also receive a
+canonical URL once they have been resolved.  These are "semi-persistent": retained as
+long as an inventory references them (see the cache TTL rules).
+
+Their id is a **slug** (`cumin`), not the source path: the same concept reached through
+different sources or paths must get the same id, and a source path often runs through
+upper-ontology classes that mean nothing in an inventory.  A path prefix is kept only
+to tell apart concepts that share a slug: a slug matching a vocabulary concept under
+another root keeps its own root (`tools/nut` next to `hardware/nut` and `food/nuts`).
+The URL follows the same scheme — `https://tingbok.plann.no/concept/cumin` — even though
+the concept does not appear in `vocabulary.yaml`.
 
 ### The existing `uri` field
 

@@ -1560,7 +1560,8 @@ async def test_lookup_falls_back_to_skos(client):
     assert response.status_code == 200
     data = response.json()
     assert data["prefLabel"] == "Cumin"
-    assert data["id"] == "food/spices/cumin"
+    assert data["id"] == "cumin"
+    assert data["broader"] == ["food/spices"]
     # Source URIs collected from all sources
     assert "https://aims.fao.org/aos/agrovoc/c_12851" in data["source_uris"]
     # Labels merged from all sources
@@ -1571,10 +1572,8 @@ async def test_lookup_falls_back_to_skos(client):
 async def test_lookup_concept_not_in_own_broader(client):
     """The concept being looked up must not appear in its own broader list.
 
-    When build_hierarchy_paths returns 'food/spices/cumin', the URI bridging
-    step must not add 'cumin' to cumin's broader — even though
-    _concept_id_from_path_seg('food/spices/cumin') returns 'cumin' and
-    concept_id ('food/spices/cumin') != 'cumin'.
+    When build_hierarchy_paths returns 'food/spices/cumin', 'cumin' must not
+    end up in cumin's own broader list under any spelling.
     """
     from unittest.mock import patch
 
@@ -1648,11 +1647,11 @@ async def test_lookup_not_found_returns_404(client):
 
 @pytest.mark.anyio
 async def test_lookup_prefers_vocabulary_anchored_path(client):
-    """When AGROVOC returns multiple paths, prefer the one rooted at a vocabulary concept.
+    """When AGROVOC returns multiple paths, the id is still the slug.
 
     AGROVOC may return both "food/plant_products/spices/cumin" and "food/spices/cumin"
-    for the same concept.  Since food/spices is in the vocabulary, the canonical ID
-    should be food/spices/cumin, not food/plant_products/spices/cumin.
+    for the same concept; either way the concept is "cumin", and food/spices (a
+    vocabulary concept) is one of its parents.
     """
     from unittest.mock import patch
 
@@ -1679,11 +1678,9 @@ async def test_lookup_prefers_vocabulary_anchored_path(client):
 
     assert response.status_code == 200
     data = response.json()
-    # Must prefer the vocabulary-anchored path
-    assert data["id"] == "food/spices/cumin", (
-        f"Expected food/spices/cumin but got {data['id']!r}. "
-        "food/spices is in the vocabulary so paths through it should be preferred."
-    )
+    # Ids are slugs; the vocabulary-anchored parent is among the parents
+    assert data["id"] == "cumin"
+    assert "food/spices" in data["broader"]
 
 
 @pytest.mark.anyio
@@ -1987,7 +1984,7 @@ async def test_lookup_reverse_label_cache_finds_non_vocab_concept(client) -> Non
         assert r2.status_code == 200, f"Expected 200, got {r2.status_code}: {r2.text}"
         data = r2.json()
         assert data["prefLabel"] == "skrivemaskin"
-        assert data["id"] == "tools/typewriter"
+        assert data["id"] == "typewriter"
     finally:
         app_module._skos_label_cache.clear()
         app_module._skos_label_cache.update(saved)
@@ -2028,7 +2025,7 @@ async def test_lookup_lang_fallback_for_scandinavian(client) -> None:
 
     assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
     data = response.json()
-    assert data["id"] == "tools/typewriter"
+    assert data["id"] == "typewriter"
     assert data["prefLabel"] == "skrivemaskin"
 
 
@@ -2079,7 +2076,7 @@ async def test_lookup_lang_fallback_to_english(client) -> None:
 
     assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
     data = response.json()
-    assert data["id"] == "tools/typewriter"
+    assert data["id"] == "typewriter"
     assert data["prefLabel"] == "typewriter"
 
 

@@ -282,6 +282,18 @@ async def _do_git_commit_after_delay() -> None:
         await asyncio.to_thread(_git_commit_data, _DATA_BASE, ips)
 
 
+def _lookup_gpt_path(lookup_label: str, lang: str) -> tuple[str | None, str | None]:
+    """``(gpt_uri, tingbok_path)`` for *lookup_label* in the local GPT file; ``(None, None)`` if absent.  Never raises."""
+    try:
+        concept = gpt_service.lookup_concept(lookup_label, lang, _CACHE_BASE)
+    except Exception as exc:  # noqa: BLE001
+        logger.debug("GPT lookup failed for '%s': %s", lookup_label, exc)
+        return None, None
+    if not concept:
+        return None, None
+    return concept.get("uri") or None, _gpt_path_from_parts(concept.get("path_parts", []))
+
+
 def _gpt_path_from_parts(path_parts: list[str]) -> str | None:
     """Derive a tingbok hierarchy path from a GPT taxonomy path_parts list.
 
@@ -937,23 +949,24 @@ def _build_broader_from_paths(
     def _is_self(candidate: str) -> bool:
         return _normalise_self_id(candidate) in self_norms
 
+    def _parent_id(parent_path: str) -> str:
+        return _segment_id(parent_path, uri_map, uri_index)
+
+    # Direct parents only, as slug ids: a parent's own ancestry is its own
+    # concept's business (a stub in a resolve response, a lookup of its own).
     broader: list[str] = []
     for p in all_paths:
         parent = "/".join(p.split("/")[:-1])
-        if parent and parent not in broader and not _is_self(parent):
-            broader.append(parent)
+        if not parent:
+            continue
+        parent_id = _parent_id(parent)
+        if parent_id not in broader and not _is_self(parent_id):
+            broader.append(parent_id)
 
     if not broader and fallback_concept_id and "/" in fallback_concept_id:
-        parent = "/".join(fallback_concept_id.split("/")[:-1])
-        if parent and not _is_self(parent):
-            broader.append(parent)
-
-    for _path_seg, seg_uri in uri_map.items():
-        bridged = uri_index.get(_normalise_uri(seg_uri))
-        if not bridged:
-            bridged = _concept_id_from_path_seg(_path_seg)
-        if bridged and not _is_self(bridged) and bridged not in broader:
-            broader.append(bridged)
+        parent_id = _parent_id("/".join(fallback_concept_id.split("/")[:-1]))
+        if not _is_self(parent_id):
+            broader.append(parent_id)
 
     return broader
 
@@ -1035,6 +1048,97 @@ def _off_vocabulary_broader(uri: str, graph: dict[str, dict[str, Any]], self_id:
     return _drop_implied_parents(found)
 
 
+_NON_INVENTORY_ROOTS = frozenset({"organisms"})
+
+
+def _inventory_roots() -> set[str]:
+    """The roots an inventory hierarchy may hang from: top-level vocabulary concepts and mapped source roots."""
+    root = vocabulary.get("_root") or {}
+    narrower = root.get("narrower", []) if isinstance(root, dict) else getattr(root, "narrower", [])
+    # Roots the curated sources map their top levels to (GPT, AGROVOC) count too:
+    # product taxonomies, not upper ontologies.  AGROVOC's "organisms" is biology
+    # (species and genera), not something an inventory hangs things from.
+    mapped = set(_GPT_ROOT_MAPPING.values())
+    for source_map in skos_service.ROOT_MAPPING.values():
+        mapped.update(v for v in source_map.values() if v not in _NON_INVENTORY_ROOTS)
+    return set(narrower or []) | mapped
+
+
+def _relevant_skos(
+    all_paths: list[str], uri_map: dict[str, str], uri_index: dict[str, str] | None = None
+) -> tuple[list[str], dict[str, str]]:
+    """Keep the SKOS hierarchy paths that are meaningful in an inventory.
+
+    Wikidata in particular climbs into upper ontologies (``entity_(bfo)/…``,
+    ``good/s/commodity/…``, ``particular/endurant/…``) that mean nothing in an
+    inventory.  A path is kept whole when its root is an inventory root.  A path
+    that is not is cut at its deepest segment whose URI bridges into the
+    vocabulary (*uri_index*), and kept from there: ``entity/…/oil/cooking_oil/
+    walnut_oil`` with Q427457 on ``cooking_oil`` becomes ``cooking-oil/walnut_oil``.
+    A path with neither is dropped.  The returned uri map is keyed by the kept
+    paths' prefixes.
+    """
+    index = _vocab_uri_index if uri_index is None else uri_index
+    roots = _inventory_roots()
+    paths: list[str] = []
+    segs: dict[str, str] = {}
+
+    def _keep(new_parts: list[str], old_parts: list[str], offset: int) -> None:
+        path = "/".join(new_parts)
+        if path not in paths:
+            paths.append(path)
+        for j in range(offset + 1, len(old_parts) + 1):
+            old_key = "/".join(old_parts[:j])
+            if old_key in uri_map:
+                segs["/".join(new_parts[: len(new_parts) - (len(old_parts) - j)])] = uri_map[old_key]
+
+    for path in all_paths:
+        parts = path.split("/")
+        if parts[0] in roots:
+            _keep(parts, parts, 0)
+            continue
+        for i in range(len(parts) - 1, 0, -1):
+            seg_uri = uri_map.get("/".join(parts[:i]))
+            bridged = index.get(_normalise_uri(seg_uri)) if seg_uri else None
+            if bridged:
+                new_parts = [bridged, *parts[i:]]
+                segs[bridged] = seg_uri
+                _keep(new_parts, parts, i)
+                break
+    return paths, segs
+
+
+def _segment_id(prefix: str, uri_map: dict[str, str], uri_index: dict[str, str]) -> str:
+    """Concept id of one path prefix: the concept its URI bridges to, else its slug id."""
+    seg_uri = uri_map.get(prefix)
+    bridged = uri_index.get(_normalise_uri(seg_uri)) if seg_uri else None
+    return bridged or _slug_id(prefix, seg_uri)
+
+
+def _nearest_vocabulary_ancestors(paths: list[str], uri_map: dict[str, str], self_ids: set[str]) -> list[str]:
+    """For each path, the deepest proper prefix that is a vocabulary concept."""
+    found: list[str] = []
+    for path in paths:
+        parts = path.split("/")
+        for i in range(len(parts) - 1, 0, -1):
+            cid = _segment_id("/".join(parts[:i]), uri_map, _vocab_uri_index)
+            if cid in vocabulary and not cid.startswith("_"):
+                if cid not in found and cid not in self_ids:
+                    found.append(cid)
+                break
+    return found
+
+
+def _union_broader(*parent_lists: list[str]) -> list[str]:
+    """All parents from every source, in order, without duplicates or implied ancestors."""
+    merged: list[str] = []
+    for parents in parent_lists:
+        for p in parents:
+            if p not in merged:
+                merged.append(p)
+    return _drop_implied_parents(merged)
+
+
 def _drop_implied_parents(broader: list[str]) -> list[str]:
     """Drop parents that are vocabulary ancestors of another parent in *broader*."""
     implied = {a for p in broader if p in vocabulary for a in ancestors_of(p, vocabulary)}
@@ -1072,26 +1176,51 @@ def _add_off_graph_concepts(
             )
 
 
-def _concept_id_from_path_seg(path_seg: str) -> str | None:
-    """Derive a concept ID from a uri_map path-segment key if its root is a vocabulary concept.
+_slug_index_cache: tuple[int, int, int, dict[str, list[str]]] | None = None
 
-    uri_map keys from skos_service.build_hierarchy_paths are full path prefixes built with
-    _normalize_label (underscores), e.g. "food/condiments/oil/cooking_oil".  The last
-    component is the concept's own normalised label; converting underscores to hyphens yields
-    the concept ID ("cooking-oil").
 
-    Returns None when the path root is not a vocabulary concept (filters out Wikidata
-    encyclopedic paths like "juridical_person/..." and "primary_commodity/..." that
-    produce spurious ancestors).
+def _vocab_slug_index() -> dict[str, list[str]]:
+    """Vocabulary ids by normalised last segment: ``nut`` → ``["food/nuts", "hardware/nut"]``."""
+    global _slug_index_cache  # noqa: PLW0603
+    # _vocab_uri_index is rebuilt, as a new dict, wherever the vocabulary changes
+    key = (id(vocabulary), len(vocabulary), id(_vocab_uri_index))
+    if _slug_index_cache is None or _slug_index_cache[:3] != key:
+        index: dict[str, list[str]] = {}
+        for cid in vocabulary:
+            if cid.startswith("_"):
+                continue
+            index.setdefault(_normalise_self_id(cid.split("/")[-1]), []).append(cid)
+        _slug_index_cache = (*key, index)
+    return _slug_index_cache[3]
+
+
+def _slug_id(path_seg: str, uri: str | None) -> str:
+    """Concept id for a SKOS hierarchy path segment: a slug, prefixed only to avoid a collision.
+
+    * A segment whose URI a vocabulary concept lists *is* that concept.
+    * Otherwise the id is the slug of the last segment (``…/cooking_oil`` →
+      ``cooking-oil``), so the same concept gets the same id whichever path
+      reached it, and the deep ontology path never becomes part of an id.
+    * When the slug names a vocabulary concept, it is that concept if the
+      vocabulary id is unprefixed or shares the segment's root (``food/…/nut``
+      → ``food/nuts``).  If it only matches concepts under other roots, the
+      segment's root is kept to tell them apart (``tools/…/nut`` → ``tools/nut``,
+      not ``hardware/nut``).
     """
+    if uri:
+        bridged = _vocab_uri_index.get(_normalise_uri(uri))
+        if bridged:
+            return bridged
     parts = path_seg.split("/")
+    slug = parts[-1].replace("_", "-").replace(" ", "-").lower()
+    if len(parts) == 1:
+        return slug
     root = parts[0]
-    if root not in vocabulary:
-        return None
-    last = parts[-1]
-    if not last:
-        return None
-    return last.replace("_", "-").replace(" ", "-").lower()
+    matches = _vocab_slug_index().get(_normalise_self_id(slug), [])
+    for cid in matches:
+        if "/" not in cid or cid.split("/", 1)[0] == root:
+            return cid
+    return f"{root}/{slug}" if matches else slug
 
 
 def _build_source_uris(concept_id: str, data: dict[str, Any]) -> list[str]:
@@ -1694,6 +1823,11 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
         return label, per_source, uri_map, off_result
 
     skos_fetches = await asyncio.gather(*(_fetch_all_sources(lbl) for lbl in skos_labels))
+    # GPT is a local taxonomy file too, so it is consulted offline as well.
+    gpt_hits = await asyncio.gather(
+        *(asyncio.to_thread(_lookup_gpt_path, lbl.replace("_", " ").replace("-", " "), lang) for lbl in skos_labels)
+    )
+    gpt_by_label = dict(zip(skos_labels, gpt_hits, strict=True))
 
     # Phase 2: build per-label URI → input_label index so descendants can reference
     # sibling labels resolved in the same batch by their input label (not SKOS concept_id).
@@ -1755,6 +1889,9 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
             if lang not in merged_labels:
                 pref_label_val = concept.get("prefLabel", label)
                 merged_labels[lang] = pref_label_val
+        gpt_uri, gpt_path = gpt_by_label.get(label) or (None, None)
+        if gpt_uri and gpt_uri not in source_uris:
+            source_uris.append(gpt_uri)
         # An OFF match that does not lead into the vocabulary places nothing:
         # without SKOS results the label stays unresolved (with its OFF URI),
         # so a client still knows to look again later.
@@ -1774,13 +1911,19 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
             source_uris.append(off_uri)
             merged_labels.setdefault(lang, off_concept.get("prefLabel", lookup_label))
 
-        # When OFF's taxonomy leads into the vocabulary, its chain is the hierarchy:
-        # it is curated food data, where the SKOS paths for food are often deep
-        # ontology chains (good/non_durable_goods/.../food_paste) that would only
-        # add noise next to it.  Otherwise build broader from SKOS paths and URI bridging.
-        if off_graph:
-            broader = _off_broader(off_uri, off_graph, local_uri_to_label, label)
-        else:
+        # broader is the union of every source's parents: the OFF chain where it
+        # leads into the vocabulary, and the SKOS paths that hang from an inventory
+        # root.  Only when nothing survives that filter are the unfiltered SKOS
+        # paths used, so a concept is never left without a parent it used to have.
+        rel_paths, rel_uri_map = _relevant_skos(all_paths, uri_map, local_uri_to_label)
+        if gpt_path and gpt_path not in rel_paths:
+            rel_paths.append(gpt_path)
+        broader = _union_broader(
+            _off_broader(off_uri, off_graph, local_uri_to_label, label) if off_graph else [],
+            _build_broader_from_paths(rel_paths, rel_uri_map, local_uri_to_label, {label}),
+        )
+        if not broader:
+            rel_paths, rel_uri_map = all_paths, uri_map
             broader = _build_broader_from_paths(all_paths, uri_map, local_uri_to_label, {label})
 
         # Use INPUT LABEL as concept ID (not the SKOS-derived vocabulary-anchored path)
@@ -1805,36 +1948,28 @@ async def resolve_vocabulary(request: VocabularyResolveRequest) -> VocabularyRes
                 _collect_with_ancestors(parent_id, concepts)
         if off_graph:
             _add_off_graph_concepts(off_uri, off_graph, local_uri_to_label, concepts, lang)
-            continue
-        for path_seg, seg_uri in uri_map.items():
-            if _vocab_uri_index.get(_normalise_uri(seg_uri)):
-                continue  # vocabulary concept — already handled above
-            already = local_uri_to_label.get(_normalise_uri(seg_uri))
-            if already and already in concepts:
-                continue  # same URI already bridges to a resolved concept in this batch
-            derived_id = _concept_id_from_path_seg(path_seg)
-            if not derived_id or derived_id == label or derived_id in concepts:
-                continue
-            parent_path = "/".join(path_seg.split("/")[:-1])
+        # Every path prefix above the concept is a concept too: the vocabulary's
+        # own (with its ancestors), or a stub, so no parent named here dangles.
+        for path in rel_paths:
+            parts = path.split("/")
             parent_id: str | None = None
-            if parent_path:
-                parent_uri = uri_map.get(parent_path)
-                if parent_uri:
-                    parent_id = _vocab_uri_index.get(_normalise_uri(parent_uri))
-                if not parent_id and parent_path:
-                    parent_id = _concept_id_from_path_seg(parent_path)
-            raw_label = path_seg.split("/")[-1].replace("_", " ").replace("-", " ")
-            concepts[derived_id] = VocabularyConcept(
-                id=derived_id,
-                prefLabel=raw_label.title(),
-                broader=[parent_id] if parent_id else [],
-                narrower=[],
-                uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{derived_id}",
-                source_uris=[seg_uri] if seg_uri else [],
-                labels={},
-            )
-            if parent_id and parent_id in vocabulary:
-                _collect_with_ancestors(parent_id, concepts)
+            for i in range(1, len(parts)):
+                prefix = "/".join(parts[:i])
+                derived_id = _segment_id(prefix, rel_uri_map, local_uri_to_label)
+                if derived_id in vocabulary:
+                    _collect_with_ancestors(derived_id, concepts)
+                elif derived_id != label and derived_id not in concepts:
+                    seg_uri = rel_uri_map.get(prefix)
+                    concepts[derived_id] = VocabularyConcept(
+                        id=derived_id,
+                        prefLabel=parts[i - 1].replace("_", " ").replace("-", " ").title(),
+                        broader=[parent_id] if parent_id and parent_id != derived_id else [],
+                        narrower=[],
+                        uri=f"{TINGBOK_BASE_URL}/api/vocabulary/{derived_id}",
+                        source_uris=[seg_uri] if seg_uri else [],
+                        labels={},
+                    )
+                parent_id = derived_id
 
     return VocabularyResolveResponse(concepts=concepts, unresolved=unresolved)
 
@@ -1959,13 +2094,12 @@ async def lookup_concept(
 
     # Also query GPT (local taxonomy, no network) — provides product hierarchy paths
     gpt_concept = await asyncio.to_thread(gpt_service.lookup_concept, lookup_label, lang, _CACHE_BASE)
+    gpt_path_for_broader: str | None = None
     if gpt_concept:
         gpt_uri = gpt_concept.get("uri", "")
         if gpt_uri and gpt_uri not in source_uris:
             source_uris.append(gpt_uri)
-        gpt_path = _gpt_path_from_parts(gpt_concept.get("path_parts", []))
-        if gpt_path and concept_id is None:
-            concept_id = gpt_path
+        gpt_path_for_broader = _gpt_path_from_parts(gpt_concept.get("path_parts", []))
         gpt_labels = await asyncio.to_thread(gpt_service.get_labels, gpt_uri, fetch_languages, _CACHE_BASE)
         for lg, lbl in gpt_labels.items():
             merged_labels.setdefault(lg, lbl)
@@ -2001,11 +2135,26 @@ async def lookup_concept(
     if len(set(warn_roots.values())) > 1:
         _record_lookup_warning(label, warn_roots, warn_paths)
 
-    # Pick vocabulary-anchored canonical path as concept ID; fall back to label slug
-    if all_paths:
-        concept_id = _best_vocabulary_anchored_path(all_paths, vocabulary)
+    # Paths under an inventory root (or cut at a vocabulary bridge), plus GPT's
+    rel_paths, rel_uri_map = _relevant_skos(all_paths, combined_uri_map)
+    if gpt_path_for_broader and gpt_path_for_broader not in rel_paths:
+        rel_paths.append(gpt_path_for_broader)
+
+    # Concept ID: the slug of the best path, preferring the relevant ones; else the label's slug
+    if rel_paths or all_paths:
+        id_paths, id_uri_map = (rel_paths, rel_uri_map) if rel_paths else (all_paths, combined_uri_map)
+        best_path = _best_vocabulary_anchored_path(id_paths, vocabulary)
+        concept_id = _slug_id(best_path, id_uri_map.get(best_path))
     if concept_id is None:
-        concept_id = lookup_label.lower().replace(" ", "_")
+        concept_id = lookup_label.lower().replace(" ", "-")
+
+    # The sources say this is a concept the vocabulary has (the label was a
+    # spelling the vocabulary lookup missed): answer with the vocabulary's own
+    # concept, the label added as an altLabel, as resolve does.
+    if concept_id in vocabulary and not concept_id.startswith("_"):
+        known = _vocabulary_concept_from_data(concept_id, vocabulary[concept_id])
+        _add_input_label_as_altlabel(known, label, lang)
+        return known
 
     # Build broader from ALL paths and URI bridging.
     # self_ids excludes both the full concept_id path and its normalised last segment
@@ -2014,11 +2163,20 @@ async def lookup_concept(
     _self_ids: set[str] = {concept_id} if concept_id else set()
     if _concept_seg:
         _self_ids.add(_concept_seg)
-    # OFF's chain wins over SKOS paths when it bridges into the vocabulary
-    # (same rule as resolve_vocabulary).
-    if off_graph:
-        broader = _off_vocabulary_broader(off_concept["uri"], off_graph, _concept_seg or label)
-    else:
+    # Union of OFF's chain and the SKOS paths under an inventory root (same
+    # rule as resolve_vocabulary); unfiltered SKOS only when nothing else is left.
+    rel_fallback = concept_id if concept_id and concept_id.split("/", 1)[0] in _inventory_roots() else None
+    broader = _union_broader(
+        _off_vocabulary_broader(off_concept["uri"], off_graph, _concept_seg or label) if off_graph else [],
+        _build_broader_from_paths(
+            rel_paths, rel_uri_map, _vocab_uri_index, _self_ids, fallback_concept_id=rel_fallback
+        ),
+    )
+    if broader and not any(b in vocabulary for b in broader):
+        # Lookup emits no stubs: name the nearest vocabulary anchor too, so one
+        # call still places the concept in the vocabulary.
+        broader = _union_broader(broader, _nearest_vocabulary_ancestors(rel_paths, rel_uri_map, _self_ids))
+    if not broader:
         broader = _build_broader_from_paths(
             all_paths, combined_uri_map, _vocab_uri_index, _self_ids, fallback_concept_id=concept_id
         )

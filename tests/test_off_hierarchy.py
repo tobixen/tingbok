@@ -275,3 +275,121 @@ async def test_resolve_bridges_only_by_declared_off_uri(client) -> None:
         data = await _resolve(client, ["gizmo-bits"])
     assert "gizmo-bits" in data["unresolved"]
     assert data["concepts"]["gizmo-bits"]["broader"] == []
+
+
+def _wikidata_only(paths: list[str], uri_map: dict[str, str] | None = None):
+    """A ``_fetch_one_skos_source`` fake where only Wikidata finds the label."""
+    found = (
+        {"uri": "https://www.wikidata.org/entity/Q1", "prefLabel": "tomato paste"},
+        paths,
+        ["https://www.wikidata.org/entity/Q1"],
+        uri_map or {},
+    )
+
+    async def _fake_fetch(lookup_label: str, source: str, lang: str):
+        return found if source == "wikidata" else (None, [], [], {})
+
+    return _fake_fetch
+
+
+@pytest.mark.anyio
+@pytest.mark.usefixtures("without_mirrored_tomatoes", "off_taxonomy")
+async def test_resolve_broader_is_union_of_off_and_skos(client) -> None:
+    """A SKOS parent under a vocabulary root is kept next to the OFF parent."""
+    fake = _wikidata_only(["food/sauces/tomato_paste", "good/non_durable_goods/food_paste/tomato_paste"])
+    with patch("tingbok.app._fetch_one_skos_source", side_effect=fake):
+        data = await _resolve(client, ["tomato-paste"])
+    broader = data["concepts"]["tomato-paste"]["broader"]
+    assert "canned-tomato-products" in broader
+    assert "sauces" in broader
+    assert not any(b.startswith("good") for b in broader)
+
+
+@pytest.mark.anyio
+@pytest.mark.usefixtures("without_mirrored_tomatoes", "off_taxonomy")
+async def test_lookup_broader_is_union_of_off_and_skos(client) -> None:
+    """GET /api/lookup: the OFF chain no longer hides the SKOS parents."""
+    fake = _wikidata_only(["food/sauces/tomato_paste", "good/non_durable_goods/food_paste/tomato_paste"])
+    with (
+        patch("tingbok.app._fetch_one_skos_source", side_effect=fake),
+        patch("tingbok.app.skos_service.get_labels", return_value={}),
+        patch("tingbok.app.skos_service.get_alt_labels", return_value={}),
+        patch("tingbok.app.skos_service.get_description", return_value=None),
+    ):
+        response = await client.get("/api/lookup/tomato-paste")
+    broader = response.json()["broader"]
+    assert "canned-tomato-products" in broader
+    assert "sauces" in broader
+    assert not any(b.startswith("good") for b in broader)
+
+
+@pytest.mark.anyio
+@pytest.mark.usefixtures("off_taxonomy")
+async def test_resolve_drops_upper_ontology_paths(client) -> None:
+    """Without OFF, a SKOS path outside the inventory roots is not a parent when another path is."""
+    fake = _wikidata_only(
+        ["tools/hand_tools/widget", "entity_(bfo)/continuant/widget"],
+        {
+            "tools/hand_tools": "https://www.wikidata.org/entity/Q10",
+            "entity_(bfo)/continuant": "https://www.wikidata.org/entity/Q11",
+        },
+    )
+    with patch("tingbok.app._fetch_one_skos_source", side_effect=fake):
+        data = await _resolve(client, ["widget"])
+    broader = data["concepts"]["widget"]["broader"]
+    assert "hand-tools" in broader
+    assert not any("entity_(bfo)" in b or "continuant" in b for b in broader)
+    assert not any("entity_(bfo)" in cid or "continuant" in cid for cid in data["concepts"])
+
+
+@pytest.mark.anyio
+@pytest.mark.usefixtures("off_taxonomy")
+async def test_resolve_keeps_unfiltered_paths_as_last_resort(client) -> None:
+    """A concept whose only parents are outside the inventory roots keeps them rather than none."""
+    fake = _wikidata_only(["artificial_object/device/widget"])
+    with patch("tingbok.app._fetch_one_skos_source", side_effect=fake):
+        data = await _resolve(client, ["widget"])
+    assert data["concepts"]["widget"]["broader"] == ["device"]
+
+
+_GPT_WIDGET = {
+    "uri": "gpt:9",
+    "prefLabel": "Widget",
+    "source": "gpt",
+    "broader": [],
+    "path_parts": ["Home & Garden", "Kitchen & Dining", "Widget"],
+}
+
+
+@pytest.mark.anyio
+@pytest.mark.usefixtures("off_taxonomy")
+async def test_resolve_broader_includes_gpt_parent(client) -> None:
+    """The Google Product Taxonomy path is one more source of parents."""
+    fake = _wikidata_only(["tools/hand_tools/widget"])
+    with (
+        patch("tingbok.app._fetch_one_skos_source", side_effect=fake),
+        patch("tingbok.app.gpt_service.lookup_concept", return_value=_GPT_WIDGET),
+    ):
+        data = await _resolve(client, ["widget"])
+    widget = data["concepts"]["widget"]
+    assert "kitchen-and-dining" in widget["broader"]
+    assert "hand-tools" in widget["broader"]
+    assert "gpt:9" in widget["source_uris"]
+
+
+@pytest.mark.anyio
+@pytest.mark.usefixtures("off_taxonomy")
+async def test_lookup_broader_includes_gpt_parent(client) -> None:
+    fake = _wikidata_only(["tools/hand_tools/widget"])
+    with (
+        patch("tingbok.app._fetch_one_skos_source", side_effect=fake),
+        patch("tingbok.app.gpt_service.lookup_concept", return_value=_GPT_WIDGET),
+        patch("tingbok.app.gpt_service.get_labels", return_value={}),
+        patch("tingbok.app.skos_service.get_labels", return_value={}),
+        patch("tingbok.app.skos_service.get_alt_labels", return_value={}),
+        patch("tingbok.app.skos_service.get_description", return_value=None),
+    ):
+        response = await client.get("/api/lookup/widget")
+    broader = response.json()["broader"]
+    assert "kitchen-and-dining" in broader
+    assert "hand-tools" in broader
