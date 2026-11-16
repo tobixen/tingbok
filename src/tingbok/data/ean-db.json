@@ -1949,7 +1949,7 @@
     "categories": [
       "sponge"
     ],
-    "name": "Convoy-World super absorbent sponge cloths (ПОПИВАТЕЛНИ КЪРПИ)",
+    "name": "Convoy-World попивателни кърпи / super absorbent sponge cloths",
     "prices": [
       {
         "currency": "EUR",
@@ -1975,7 +1975,10 @@
     "name": "Deroni Финосмляна пикантна лютеница с люти чушки / fine-ground spicy lyutenitsa with hot peppers (heat 3/10)"
   },
   "3800748001317": {
-    "name": "Прясно краве мляко 3%",
+    "categories": [
+      "fresh-milk"
+    ],
+    "name": "Верея прясно краве мляко 3% 1л / fresh milk",
     "prices": [
       {
         "currency": "EUR",
@@ -2157,7 +2160,7 @@
   },
   "4000607854705": {
     "categories": [
-      "chocolate_bar"
+      "chocolate-bar"
     ],
     "name": "Trumpf Schogetten йогурт-ягода / yoghurt-strawberry",
     "prices": [
@@ -2761,7 +2764,7 @@
   },
   "4054599116914": {
     "categories": [
-      "bicycle_lock"
+      "bicycle-lock"
     ],
     "name": "Заключване механично за велосипед / bike chain lock, 6mm links, 117cm, 5-digit code (Delta-Sport, IAN 500577)",
     "prices": [
@@ -3214,7 +3217,7 @@
     "categories": [
       "dishwashing-liquid"
     ],
-    "name": "Lidl apple dishwashing liquid (ПРЕП.ЗА СЪДОВ.ЯБЪЛКА)",
+    "name": "Препарат за съдове ябълка / apple dishwashing liquid (Lidl)",
     "prices": [
       {
         "currency": "EUR",
@@ -4288,7 +4291,7 @@
     "categories": [
       "yogurt"
     ],
-    "name": "Кисело мляко 3.6%",
+    "name": "Кисело мляко 3.6% 1kg / yogurt",
     "prices": [
       {
         "currency": "EUR",
@@ -5020,7 +5023,7 @@
     "categories": [
       "cherry-tomatoes"
     ],
-    "name": "Черни чери домати 250г / black cherry tomatoes (Lidl)",
+    "name": "Черни чери домати Keisha 250г / black cherry tomatoes (Spain)",
     "prices": [
       {
         "currency": "EUR",
@@ -5043,7 +5046,7 @@
     "categories": [
       "butter"
     ],
-    "name": "Немско краве масло / German butter (Lidl)",
+    "name": "Немско краве масло / German butter",
     "prices": [
       {
         "currency": "EUR",
@@ -5090,7 +5093,7 @@
     "categories": [
       "noodles"
     ],
-    "name": "Lidl фиде с яйца 200g / egg noodles",
+    "name": "Фиде с яйца / egg noodles (Lidl)",
     "prices": [
       {
         "currency": "EUR",
@@ -5163,7 +5166,7 @@
   "4335619175600": {
     "categories": [
       "coffee",
-      "coffee_preparation"
+      "coffee"
     ],
     "name": "Мляно кафе еспресо / ground espresso coffee",
     "prices": [
@@ -5186,7 +5189,7 @@
   },
   "4335619208247": {
     "categories": [
-      "shower_gel"
+      "shower-gel"
     ],
     "name": "Cien Shower Gel ZERO XXL 1l / душгел",
     "prices": [
@@ -5279,7 +5282,10 @@
     ]
   },
   "4335619251427": {
-    "name": "Българско рафинирано слънчогледово масло",
+    "categories": [
+      "sunflower-oil"
+    ],
+    "name": "Българско рафинирано слънчогледово олио 1л / sunflower oil",
     "prices": [
       {
         "currency": "EUR",
@@ -7069,7 +7075,7 @@
   },
   "7622210194046": {
     "categories": [
-      "chocolate_bar"
+      "chocolate-bar"
     ],
     "name": "Milka шоколад Oreo 100g",
     "prices": [
@@ -7839,7 +7845,7 @@
   },
   "lidl-20003326": {
     "categories": [
-      "vanilla_sugar"
+      "vanilla-sugar"
     ],
     "name": "Ванилова захар 10бр. / vanilla sugar, 10 sachets",
     "prices": [
@@ -9689,7 +9695,7 @@
   },
   "lidl-20815400": {
     "categories": [
-      "trail_mix"
+      "trail-mix"
     ],
     "name": "Суров микс кашу и червена боровинка / raw cashew & cranberry mix",
     "prices": [
