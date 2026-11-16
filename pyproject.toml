@@ -75,7 +75,10 @@ testpaths = ["tests"]
 # AF_UNIX is allowed because the asyncio event loop uses it for its self-pipe.
 # Tests that legitimately need a network connection must opt in with the
 # @pytest.mark.enable_socket marker.
-addopts = ["--disable-socket", "--allow-unix-socket"]
+# Async tests run through anyio. Block pytest-asyncio, which some
+# distributions install system-wide: it warns about unset config, and
+# filterwarnings = error turns that into an aborted run.
+addopts = ["--disable-socket", "--allow-unix-socket", "-p", "no:asyncio"]
 filterwarnings = [
     "error",
 ]
