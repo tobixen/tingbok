@@ -2109,6 +2109,12 @@
       }
     ]
   },
+  "3850104020353": {
+    "categories": [
+      "tinned-meat"
+    ],
+    "name": "podravka beef hash with liver, lungs, etc (moved from food2 2026-11-17)"
+  },
   "3858890178678": {
     "categories": [
       "mayonnaise"
@@ -7353,6 +7359,13 @@
       "honey"
     ],
     "name": "Balparmak Balkovan Süzme Çiçek Balı / strained blossom honey (Turkey)"
+  },
+  "8691004154022": {
+    "categories": [
+      "canning",
+      "dinner"
+    ],
+    "name": "(2026-11, but rusty) YURT Yaprak Sarma Turkish stuffed vine leaves"
   },
   "8695077000316": {
     "categories": [
