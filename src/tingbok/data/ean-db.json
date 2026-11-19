@@ -423,6 +423,52 @@
       }
     ]
   },
+  "3800022405282": {
+    "categories": [
+      "beer"
+    ],
+    "name": "Stolichno Bock beer multipack 4×0.5l cans",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 3.59,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "STOLICHNO БОК БИРА",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
+  "3800022406289": {
+    "categories": [
+      "beer"
+    ],
+    "name": "Amstel Premium Pilsener multipack 6×0.5l cans (single can EAN 3800022406418)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 3.32,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "AMSTEL МУЛТИПАК БИРА",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
+      }
+    ]
+  },
   "3800022414079": {
     "categories": [
       "beer"
@@ -1102,6 +1148,29 @@
       }
     ]
   },
+  "3800136500552": {
+    "categories": [
+      "duvet-cover"
+    ],
+    "name": "Duvet cover single 150×200 yellow (Плик единичен 150/200 жълт)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 16.36,
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "Плик единичен 150x200",
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271"
+      }
+    ]
+  },
   "3800144703495": {
     "categories": [
       "alcohol"
@@ -1652,6 +1721,29 @@
     ],
     "name": "GRAFFIT SB-L P80 sanding sponge (Bulgarian, medium-coarse, used)"
   },
+  "3800235305744": {
+    "categories": [
+      "moka-pot"
+    ],
+    "name": "Moka pot 6 cups aluminium (Кафеварка 6 чаши, R51173BA6)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 9.4,
+        "shop": "Praktiker Varna бул. Република 49",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "КАФЕВАРКА 6 ЧАШИ АЛУМИНИЙ INOX",
+        "shop": "Praktiker Varna бул. Република 49"
+      }
+    ]
+  },
   "3800235752111": {
     "categories": [
       "yogurt"
@@ -2083,6 +2175,29 @@
         "last_seen": "2026-10-28",
         "name": "VEREYA ПРЯСНО МЛЯКО",
         "shop": "Lidl Varna к.к. Св. Константин и Елена"
+      }
+    ]
+  },
+  "3800820220131": {
+    "categories": [
+      "french-press"
+    ],
+    "name": "French press for tea and coffee 800 ml (Преса за чай и кафе)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 7.66,
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "Преса за чай и кафе",
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271"
       }
     ]
   },
@@ -2765,6 +2880,52 @@
         "last_seen": "2026-05-24",
         "name": "ST.BREW КРАФТ БИРА",
         "shop": "Lidl Varna"
+      }
+    ]
+  },
+  "4054596613775": {
+    "categories": [
+      "electrical-tape"
+    ],
+    "name": "3M electrical insulating tape 10 m × 15 mm red",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 1.02,
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "3M Изолирб.10м/15мм-черв",
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271"
+      }
+    ]
+  },
+  "4054596614291": {
+    "categories": [
+      "electrical-tape"
+    ],
+    "name": "3M electrical insulating tape 20 m × 19 mm black",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 1.89,
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "3M Изолирб.20м/19мм-черен",
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271"
       }
     ]
   },
@@ -5614,6 +5775,29 @@
     ],
     "name": "Beefeater Pink Strawberry gin, opened"
   },
+  "5000394123106": {
+    "categories": [
+      "battery"
+    ],
+    "name": "1 X Genuine Duracell Cr123a Cr123 123 3v Lithium Photo Battery",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 3.68,
+        "shop": "Praktiker Varna бул. Република 49",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "БАТ.DURACELL 123PHOTO",
+        "shop": "Praktiker Varna бул. Република 49"
+      }
+    ]
+  },
   "5011007002947": {
     "categories": [
       "alcohol"
@@ -6088,6 +6272,26 @@
     "name": "Paris Cherry Blossom håndssåpe 90g vegan (N°008, Produced in Turkey)",
     "quantity": "90g"
   },
+  "5900130045269": {
+    "name": "Сладолед Милка Peanut Caramel",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 1.89,
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "Сладолед MILKA Стик",
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271"
+      }
+    ]
+  },
   "5900820024314": {
     "categories": [
       "whole-milk"
@@ -6518,6 +6722,29 @@
       "smart-home-sensor"
     ],
     "name": "Sonoff SNZB-03 Motion Sensor (Zigbee, CR2450)"
+  },
+  "6923295805508": {
+    "categories": [
+      "tape-measure"
+    ],
+    "name": "HomeMax tape measure 5 m × 25 mm (РОЛЕТКА)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 4.09,
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "РОЛЕТКА HomeMax 5mX25mm",
+        "shop": "HomeMax Varna бул. Владислав Варненчик 271"
+      }
+    ]
   },
   "6940322700049": {
     "categories": [
@@ -9269,7 +9496,7 @@
     "categories": [
       "food/beer"
     ],
-    "name": "Pilos Light Beer 3% 500ml can",
+    "name": "Deep light beer 3% 2.5 l PET bottle (Lidl)",
     "prices": [
       {
         "currency": "EUR",
@@ -9284,14 +9511,28 @@
         "price": 1.17,
         "shop": "Lidl Varna",
         "unit": "pcs"
+      },
+      {
+        "currency": "EUR",
+        "date": "2026-11-18",
+        "price": 1.17,
+        "shop": "Lidl Varna бул. Вл. Варненчик 257",
+        "unit": "pcs"
       }
     ],
+    "quantity": "2.5 l",
     "receipt_names": [
       {
         "first_seen": "2026-05-28",
         "last_seen": "2026-05-31",
         "name": "СВЕТЛА БИРА 3,0%",
         "shop": "Lidl Varna"
+      },
+      {
+        "first_seen": "2026-11-18",
+        "last_seen": "2026-11-18",
+        "name": "СВЕТЛА БИРА 3,0%",
+        "shop": "Lidl Varna бул. Вл. Варненчик 257"
       }
     ]
   },
