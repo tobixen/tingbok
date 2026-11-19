@@ -427,7 +427,7 @@
     "categories": [
       "beer"
     ],
-    "name": "Stolichno Bock beer multipack 4×0.5l cans",
+    "name": "Stolichno Bock beer multipack 4×0.5 l cans",
     "prices": [
       {
         "currency": "EUR",
@@ -450,7 +450,7 @@
     "categories": [
       "beer"
     ],
-    "name": "Amstel Premium Pilsener multipack 6×0.5l cans (single can EAN 3800022406418)",
+    "name": "Amstel Premium Pilsener multipack 6×0.5 l cans",
     "prices": [
       {
         "currency": "EUR",
@@ -1152,7 +1152,7 @@
     "categories": [
       "duvet-cover"
     ],
-    "name": "Duvet cover single 150×200 yellow (Плик единичен 150/200 жълт)",
+    "name": "Duvet cover single 150×200, yellow (bought by mistake — wanted a sheet)",
     "prices": [
       {
         "currency": "EUR",
@@ -1725,7 +1725,7 @@
     "categories": [
       "moka-pot"
     ],
-    "name": "Moka pot 6 cups aluminium (Кафеварка 6 чаши, R51173BA6)",
+    "name": "Moka pot (stovetop espresso maker), 6 cups, aluminium — replaces a broken one",
     "prices": [
       {
         "currency": "EUR",
@@ -2182,7 +2182,7 @@
     "categories": [
       "french-press"
     ],
-    "name": "French press for tea and coffee 800 ml (Преса за чай и кафе)",
+    "name": "French press for tea and coffee, 800 ml, glass",
     "prices": [
       {
         "currency": "EUR",
@@ -2887,7 +2887,7 @@
     "categories": [
       "electrical-tape"
     ],
-    "name": "3M electrical insulating tape 10 m × 15 mm red",
+    "name": "3M electrical insulating tape 10 m × 15 mm, red",
     "prices": [
       {
         "currency": "EUR",
@@ -2910,7 +2910,7 @@
     "categories": [
       "electrical-tape"
     ],
-    "name": "3M electrical insulating tape 20 m × 19 mm black",
+    "name": "3M electrical insulating tape 20 m × 19 mm, black",
     "prices": [
       {
         "currency": "EUR",
@@ -5779,7 +5779,7 @@
     "categories": [
       "battery"
     ],
-    "name": "1 X Genuine Duracell Cr123a Cr123 123 3v Lithium Photo Battery",
+    "name": "Duracell CR123A lithium photo battery (spare)",
     "prices": [
       {
         "currency": "EUR",
@@ -6727,7 +6727,7 @@
     "categories": [
       "tape-measure"
     ],
-    "name": "HomeMax tape measure 5 m × 25 mm (РОЛЕТКА)",
+    "name": "Tape measure HomeMax 5 m × 25 mm",
     "prices": [
       {
         "currency": "EUR",
@@ -9494,9 +9494,9 @@
   },
   "lidl-20431877": {
     "categories": [
-      "food/beer"
+      "beer"
     ],
-    "name": "Deep light beer 3% 2.5 l PET bottle (Lidl)",
+    "name": "Deep light beer 3%, 2.5 l PET bottle (Lidl brand)",
     "prices": [
       {
         "currency": "EUR",
