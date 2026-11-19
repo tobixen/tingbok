@@ -30,6 +30,10 @@ and this project should adhere to [Semantic Versioning](https://semver.org/spec/
 - **`mushroom-foraging` (soppsanking) vocabulary concept** — neither DBpedia "mushroom
   hunting" nor Wikidata `Q2391676` carries the canonical Norwegian term, so it is pinned
   in `vocabulary.yaml` with nb altLabels (soppsanking, sopplukking, …) under `outdoor`.
+- **`oranges` and `citrus-fruits` vocabulary concepts** — looking up "oranges" or
+  "orange" answered "War of the Oranges" and "Orange (colour)", because DBpedia's
+  label search wins the concept id. Oranges are now pinned under `citrus-fruits`
+  (under `food/fruits`), with Bulgarian labels.
 - **`canned-tomato-products` vocabulary concept** — the common parent of `canned-tomatoes`
   (with `peeled-tomatoes` under it), `chopped-tomatoes`, `passata` and `tomato-paste`,
   modelled on OFF's `en:canned-tomato-products`. It sits under both `tomatoes` and

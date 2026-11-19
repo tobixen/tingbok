@@ -553,6 +553,27 @@ concepts:
     - off:en:fruits
     excluded_sources:
     - wikidata
+  citrus-fruits:
+    prefLabel: "Citrus fruits"
+    altLabel:
+      en: ["citrus", "citrus fruit"]
+      bg: ["цитрусови плодове"]
+    broader: food/fruits
+    source_uris:
+    - https://aims.fao.org/aos/agrovoc/c_1641
+    - off:en:citrus
+  oranges:
+    # DBpedia's label search answers "War of the Oranges" for "oranges" and
+    # "Orange (colour)" for "orange", so the fruit is pinned here (2026-11-19).
+    prefLabel: "Oranges"
+    altLabel:
+      en: ["orange", "sweet oranges"]
+      bg: ["портокали", "портокал"]
+    broader: citrus-fruits
+    source_uris:
+    - https://dbpedia.org/resource/Orange_(fruit)
+    - https://www.wikidata.org/entity/Q13191
+    - off:en:oranges
   food/legumes:
     prefLabel: "Legumes"
     altLabel:

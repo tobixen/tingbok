@@ -2294,3 +2294,23 @@ async def test_the_paths_gate_admits_only_ipv4_loopback(client, expect_paths):
 async def test_inventory_spellings_find_the_renamed_concepts(client, label, expected):
     response = await client.get(f"/api/lookup/{label}")
     assert response.json()["id"] == expected
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(("label", "lang"), [("oranges", "en"), ("orange", "en"), ("Портокали", "bg")])
+async def test_lookup_oranges_is_the_fruit(client, label, lang):
+    """DBpedia's label search answered 'War of the Oranges' / 'Orange (colour)' (2026-11-19)."""
+    response = await client.get(f"/api/lookup/{label}", params={"lang": lang})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "oranges"
+    assert "citrus-fruits" in data["broader"]
+
+
+@pytest.mark.anyio
+async def test_lookup_citrus_fruits_is_below_fruits(client):
+    response = await client.get("/api/lookup/citrus-fruits")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == "citrus-fruits"
+    assert "food/fruits" in data["broader"]
