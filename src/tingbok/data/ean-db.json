@@ -2605,6 +2605,56 @@
     "quantity": "360ml",
     "source": "manual"
   },
+  "4022697002781": {
+    "categories": [
+      "machine screw",
+      "boat-equipment",
+      "non-food"
+    ],
+    "name": "Marinetech DIN 84 A2 slotted cheese head screw M8x80 + nut, 2 pcs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 2.275,
+        "shop": "LZ Yahten magazin Varna Морска гара ул. Вълнолома",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "8008428/80 ВИНТ + ГАЙКА, DIN 84, 8*80",
+        "shop": "LZ Yahten magazin Varna Морска гара ул. Вълнолома"
+      }
+    ]
+  },
+  "4022697002798": {
+    "categories": [
+      "machine screw",
+      "boat-equipment",
+      "non-food"
+    ],
+    "name": "Marinetech DIN 84 A2 slotted cheese head screw M8x100 + nut, 2 pcs",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 2.28,
+        "shop": "LZ Yahten magazin Varna Морска гара ул. Вълнолома",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "8008428/100 ВИНТ + ГАЙКА, DIN 84, 8*1",
+        "shop": "LZ Yahten magazin Varna Морска гара ул. Вълнолома"
+      }
+    ]
+  },
   "4026495100007": {
     "categories": [
       "bicycle-tube"
