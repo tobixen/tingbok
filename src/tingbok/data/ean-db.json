@@ -510,7 +510,7 @@
     "categories": [
       "red-wines"
     ],
-    "name": "Trevite Гъмза 0.75l / Gamza dry red wine (Magura)",
+    "name": "Trevite Гъмза 0.75l / Gamza dry red wine (Magura winery)",
     "prices": [
       {
         "currency": "EUR",
@@ -663,7 +663,10 @@
     ]
   },
   "3800047777029": {
-    "name": "орехите луканка смядовска спайс 100 г",
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Орехите луканка смядовска 100g / Orehite Smyadovska lukanka",
     "prices": [
       {
         "currency": "EUR",
@@ -942,7 +945,10 @@
     ]
   },
   "3800102702010": {
-    "name": "Тунквана вафла с какаова глазура",
+    "categories": [
+      "wafer"
+    ],
+    "name": "Боровец тунквана вафла с какаова глазура / Borovets cocoa-glazed wafer",
     "prices": [
       {
         "currency": "EUR",
@@ -1235,7 +1241,10 @@
     ]
   },
   "3800137001720": {
-    "name": "Колбас Мелник",
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Меско Мелник траен колбас 230g / Mesko Melnik dry sausage",
     "prices": [
       {
         "currency": "EUR",
@@ -1403,7 +1412,7 @@
     "categories": [
       "cured-sausage"
     ],
-    "name": "Майстор Цветко Амбарица луканка XXL 200g (Лалов и Вачев)",
+    "name": "Амбарица луканка 200g (Лалов и Вачев) / Ambaritsa lukanka",
     "prices": [
       {
         "currency": "EUR",
@@ -1450,7 +1459,7 @@
     "categories": [
       "red-wines"
     ],
-    "name": "Villa Yambol Mavrud 0.75l dry red wine",
+    "name": "Villa Yambol Mavrud 0.75l / dry red wine PGI, 13%",
     "prices": [
       {
         "currency": "EUR",
@@ -5838,7 +5847,10 @@
     "name": "\"Доктор Айболит\" (Doctor Aibolit, based on K.I. Chukovsky, Russian, 99 min, Region ALL)"
   },
   "4820062643009": {
-    "name": "Mayonnaise 40% Fat",
+    "categories": [
+      "mayonnaise"
+    ],
+    "name": "Zhirnov майонезен сос 40% / mayonnaise sauce",
     "prices": [
       {
         "currency": "EUR",
