@@ -506,6 +506,29 @@
     ],
     "name": "Ариана 0% безалкохолна бира / alcohol-free beer, can"
   },
+  "3800030012731": {
+    "categories": [
+      "red-wines"
+    ],
+    "name": "Trevite Гъмза 0.75l / Gamza dry red wine (Magura)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 8.18,
+        "shop": "Kaufland Varna ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "Trevite Гъмза 0,75",
+        "shop": "Kaufland Varna ул. Девня 24"
+      }
+    ]
+  },
   "3800038902942": {
     "categories": [
       "toothpaste"
@@ -636,6 +659,26 @@
         "price": 0.92,
         "shop": null,
         "unit": "pcs"
+      }
+    ]
+  },
+  "3800047777029": {
+    "name": "орехите луканка смядовска спайс 100 г",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 1.69,
+        "shop": "Kaufland Varna ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "Смядовска луканка",
+        "shop": "Kaufland Varna ул. Девня 24"
       }
     ]
   },
@@ -895,6 +938,26 @@
         "last_seen": "2026-06-18",
         "name": "JIP НОЖИЦА КАНЦЕЛАРСКА 25.5 CM",
         "shop": "Praktiker Varna"
+      }
+    ]
+  },
+  "3800102702010": {
+    "name": "Тунквана вафла с какаова глазура",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 0.35,
+        "shop": "Kaufland Varna ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "Боровецвафла какао",
+        "shop": "Kaufland Varna ул. Девня 24"
       }
     ]
   },
@@ -1171,6 +1234,26 @@
       }
     ]
   },
+  "3800137001720": {
+    "name": "Колбас Мелник",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 4.25,
+        "shop": "Kaufland Varna ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "Шпек Мелник 230г",
+        "shop": "Kaufland Varna ул. Девня 24"
+      }
+    ]
+  },
   "3800144703495": {
     "categories": [
       "alcohol"
@@ -1316,6 +1399,29 @@
       }
     ]
   },
+  "3800203656922": {
+    "categories": [
+      "cured-sausage"
+    ],
+    "name": "Майстор Цветко Амбарица луканка XXL 200g (Лалов и Вачев)",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 3.59,
+        "shop": "Kaufland Varna ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "Салам Амбарица",
+        "shop": "Kaufland Varna ул. Девня 24"
+      }
+    ]
+  },
   "3800206372485": {
     "categories": [
       "olive_oil"
@@ -1337,6 +1443,29 @@
         "last_seen": "2026-07-08",
         "name": "МАСЛО МАСЛИНОВО ЕКСТРА ВЪРДЖИН",
         "shop": "Бурлекс Галата Varna ул. Кап. 1-ви ранг Г. Купов 36А"
+      }
+    ]
+  },
+  "3800206569540": {
+    "categories": [
+      "red-wines"
+    ],
+    "name": "Villa Yambol Mavrud 0.75l dry red wine",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 5.31,
+        "shop": "Kaufland Varna ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "Villa Yambol 0,75л",
+        "shop": "Kaufland Varna ул. Девня 24"
       }
     ]
   },
@@ -5707,6 +5836,27 @@
       "dvd"
     ],
     "name": "\"Доктор Айболит\" (Doctor Aibolit, based on K.I. Chukovsky, Russian, 99 min, Region ALL)"
+  },
+  "4820062643009": {
+    "name": "Mayonnaise 40% Fat",
+    "prices": [
+      {
+        "currency": "EUR",
+        "date": "2026-11-19",
+        "price": 0.71,
+        "shop": "Kaufland Varna ул. Девня 24",
+        "unit": "pcs"
+      }
+    ],
+    "quantity": "180 g",
+    "receipt_names": [
+      {
+        "first_seen": "2026-11-19",
+        "last_seen": "2026-11-19",
+        "name": "Майонезен сос",
+        "shop": "Kaufland Varna ул. Девня 24"
+      }
+    ]
   },
   "4823077634420": {
     "categories": [
